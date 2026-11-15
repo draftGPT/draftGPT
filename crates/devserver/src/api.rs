@@ -194,7 +194,11 @@ fn capture_files(dir: &Path) -> std::io::Result<Vec<CaptureFile>> {
         if !is_capture_file_name(&file) {
             continue;
         }
-        let meta = entry.metadata()?;
+        // Not `entry.metadata()`: on Windows that comes from the directory
+        // listing, which doesn't update the size of a file another handle is
+        // still writing (an active recording shows 0 bytes). This queries the
+        // file itself.
+        let meta = std::fs::metadata(entry.path())?;
         let modified = meta
             .modified()
             .ok()
