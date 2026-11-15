@@ -114,6 +114,20 @@ impl Recorder {
     /// only its size and the error). After a write error the wire file is
     /// abandoned: that error is returned once, later frames are dropped.
     pub fn write_wire(&mut self, frame: &WireFrame) -> io::Result<()> {
+        let t = self.relative(frame.t);
+        self.write_wire_at(t, &frame.text)
+    }
+
+    /// Writes a frame from before the recording started (the controller's
+    /// preroll) at `t = 0`. It doesn't start the clock: otherwise the main
+    /// file's first live event would sit seconds after its snapshots (12.5 s
+    /// in a live capture), the age of the oldest preroll frame. Line order
+    /// still gives the sequence.
+    pub fn write_preroll_wire(&mut self, frame: &WireFrame) -> io::Result<()> {
+        self.write_wire_at(0, &frame.text)
+    }
+
+    fn write_wire_at(&mut self, t: u64, text: &str) -> io::Result<()> {
         if matches!(self.wire, Wire::NotOpened) {
             self.wire = match JsonlWriter::create_new(&wire_path_for(&self.info.path)) {
                 Ok(out) => Wire::Open { out, frames: 0 },
@@ -127,8 +141,8 @@ impl Recorder {
             return Ok(());
         }
         let line = WireLine {
-            t: self.relative(frame.t),
-            ..self.wire_line(&frame.text)
+            t,
+            ..self.wire_line(text)
         };
         let Wire::Open { out, frames } = &mut self.wire else {
             return Ok(());

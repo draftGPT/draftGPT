@@ -235,7 +235,7 @@ impl Controller {
         }
         let mut notice = None;
         for frame in self.preroll.drain(..) {
-            if let Err(e) = recorder.write_wire(&frame) {
+            if let Err(e) = recorder.write_preroll_wire(&frame) {
                 notice = Some(e);
                 break;
             }
@@ -445,6 +445,33 @@ mod tests {
             Vec::<String>::new()
         );
         assert_eq!(wire[2].unparsable.as_ref().unwrap().bytes, 15);
+    }
+
+    #[test]
+    fn old_preroll_doesnt_delay_the_main_timeline() {
+        // Live 16.22 capture: the oldest preroll frame was 12.5 s before the
+        // start, so the first live event landed at t = 12537.
+        let dir = tempfile::tempdir().unwrap();
+        let mut f = Feed::new();
+        let mut c = Controller::new(dir.path(), true);
+        c.handle(
+            &f.wire(r#"[8,"OnJsonApiEvent",{"uri":"/lol-matchmaking/v1/ready-check","data":{}}]"#),
+        );
+        f.t += 12_500;
+        c.handle(&f.phase("ChampSelect"));
+        c.handle(&f.session(1));
+        c.handle(&f.wire("[0]"));
+        c.handle(&f.session(2));
+        let info = c.stop().unwrap().unwrap();
+
+        // Phase snapshot, then the first live event at 0 (was 12_600).
+        let (_, events) = read_file(&info.path).unwrap();
+        assert_eq!(
+            events.iter().map(|e| e.t).collect::<Vec<_>>(),
+            vec![0, 0, 200]
+        );
+        let wire = read_wire_file(&wire_path_for(&info.path)).unwrap();
+        assert_eq!(wire.iter().map(|w| w.t).collect::<Vec<_>>(), vec![0, 100]);
     }
 
     #[test]
