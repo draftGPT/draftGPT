@@ -52,6 +52,9 @@ pub struct ChampSelectSession {
     pub allow_duplicate_picks: bool,
     pub bench_enabled: bool,
     pub bench_champions: Vec<BenchChampion>,
+    /// ARAM-style modes; `rerolls_remaining` is the local player's count.
+    pub allow_rerolling: bool,
+    pub rerolls_remaining: i64,
     pub trades: Vec<SwapContract>,
     pub pick_order_swaps: Vec<SwapContract>,
     pub position_swaps: Vec<SwapContract>,
