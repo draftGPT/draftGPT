@@ -179,7 +179,11 @@ async fn connect(live: &Live) -> Result<(LcuHttp, ws::WsStream, ClientInfo), Str
     let subscriptions: Vec<&str> = if live.wire {
         WIRE_EVENTS.to_vec()
     } else {
-        live.resources.iter().map(|r| r.event).collect()
+        // Several resources share a prefix event; subscribe to each once.
+        let mut events: Vec<&str> = live.resources.iter().map(|r| r.event).collect();
+        events.sort_unstable();
+        events.dedup();
+        events
     };
     for sub in subscriptions {
         socket

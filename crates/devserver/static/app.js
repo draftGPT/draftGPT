@@ -4,6 +4,10 @@
 
 // The session is served under two plugins; same shape.
 const SESSION_URIS = ["/lol-champ-select/v1/session", "/lol-lobby-team-builder/champ-select/v1/session"];
+// Champions offered in subset-pick modes; the session doesn't list them.
+const SUBSET_URI = "/lol-lobby-team-builder/champ-select/v1/subset-champion-list";
+// Carries dodgeData, which says why a champ select ended early.
+const MATCHMAKING_URI = "/lol-lobby-team-builder/v1/matchmaking";
 const MAX_LOG = 500;
 
 const $ = (id) => document.getElementById(id);
@@ -61,6 +65,8 @@ let wasRecording = false;
 // ---- session view ----------------------------------------------------------
 
 let lastSession = null;
+let lastOffer = null;
+let lastDodge = "Invalid";
 let timerEnd = null;
 
 function renderSession(s) {
@@ -88,6 +94,7 @@ function renderSession(s) {
   if (s.queueId != null) timer.append(el("span", "muted", `queue ${s.queueId}`));
   root.append(timer);
 
+  if (Array.isArray(lastOffer) && lastOffer.length) root.append(offerRow(lastOffer, s));
   // ARAM-style modes: the shared bench, plus rerolls when allowed.
   if (s.benchEnabled) root.append(benchRow(s));
 
@@ -99,6 +106,18 @@ function renderSession(s) {
   );
   root.append(teams);
   tickTimer();
+}
+
+function offerRow(offer, s) {
+  const me = (s.myTeam || []).find((p) => p.cellId === s.localPlayerCellId);
+  const row = el("div", "bans offer");
+  row.append(el("b", "", `Offered (${offer.length})`));
+  for (const id of offer) {
+    const chip = el("span", "ban", champ(id) || "none");
+    if (me && me.championId === id) chip.classList.add("picked");
+    row.append(chip);
+  }
+  return row;
 }
 
 function benchRow(s) {
@@ -257,7 +276,16 @@ function connect() {
     else if (msg.type === "notice") notice(msg.level, msg.message);
     else if (msg.type === "event") {
       addLog(msg.event, msg.problem);
-      if (SESSION_URIS.includes(msg.event.uri)) renderSession(msg.event.kind === "Delete" ? null : msg.event.data);
+      const { uri, kind, data } = msg.event;
+      if (SESSION_URIS.includes(uri)) renderSession(kind === "Delete" ? null : data);
+      else if (uri === SUBSET_URI) {
+        lastOffer = kind === "Delete" ? null : data;
+        if (lastSession) renderSession(lastSession);
+      } else if (uri === MATCHMAKING_URI) {
+        const state = (kind !== "Delete" && data && data.dodgeData && data.dodgeData.state) || "Invalid";
+        if (state !== lastDodge && state !== "Invalid") notice("warn", `champ select ended early: ${state}`);
+        lastDodge = state;
+      }
     }
   };
   ws.onclose = () => {

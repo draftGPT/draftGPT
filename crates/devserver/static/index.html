@@ -42,6 +42,8 @@
   .ban { font-size: 12px; padding: 1px 6px; border-radius: 4px; border: 1px solid var(--line); }
   .bench { align-items: baseline; }
   .ban.priority { border-color: var(--warn); }
+  .ban.picked { border-color: var(--accent); font-weight: 600; }
+  .offer { align-items: baseline; }
   .timer { display: flex; gap: 16px; align-items: baseline; margin-bottom: 10px; }
   .timer .big { font: 600 22px var(--mono); }
   .controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 10px; }
@@ -60,6 +62,7 @@
   .ev pre { margin: 4px 0; white-space: pre-wrap; overflow-wrap: anywhere; color: var(--text); cursor: text; }
   #notices div { font-size: 13px; padding: 2px 0; }
   #notices .error { color: var(--err); }
+  #notices .warn { color: var(--warn); }
   .wide { grid-column: 1 / -1; }
 </style>
 </head>
