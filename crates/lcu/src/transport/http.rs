@@ -58,6 +58,12 @@ impl LcuHttp {
         })
     }
 
+    /// `https://127.0.0.1:<port>`. The port changes on every client launch, so
+    /// this identifies the launch. Holds no credentials.
+    pub fn base_url(&self) -> &str {
+        &self.base
+    }
+
     /// GET a resource. Returns `None` on 404 (e.g. the champ select session when
     /// not in champ select).
     pub async fn get_json(&self, path: &str) -> Result<Option<Value>, TransportError> {

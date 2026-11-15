@@ -23,9 +23,9 @@ Read it before structural changes and keep it up to date when the design changes
 - **Wire and sweep files (`*.wire.jsonl`, `*.sweep.json`) are local-only, never committed**
   (gitignored). Wire files hold every client frame while recording, including chat and lobby
   data; sweep files hold a GET of the spec plugins' endpoints that take no parameters, at the
-  start of a recording. Chat resources lose all their text, ID-like URI segments and JWTs
-  are replaced, but a free-text field with a generic name can't be caught. Fixtures in the
-  repo come only from the main `.jsonl`.
+  start of the first recording of each client launch. Chat resources lose all their text,
+  ID-like URI segments and JWTs are replaced, but a free-text field with a generic name
+  can't be caught. Fixtures in the repo come only from the main `.jsonl`.
 - **The sweep never calls de-anonymizing, credential, chat or lookup endpoints.** The list is
   generated (`crates/capture/sweep-paths.txt`); exclusions live in `SWEEP_EXCLUDE` in
   `tools/lcu_spec.py`. Check new plugins against them before adding.

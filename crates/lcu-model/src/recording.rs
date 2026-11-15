@@ -9,8 +9,9 @@
 //!   dump came back incomplete is it written per recording, `<name>.help.json`.
 //! - `<name>.wire.jsonl`: every raw WebSocket frame received while recording,
 //!   one [`WireLine`] per line. Local only, never committed.
-//! - `<name>.sweep.json`: a one-time snapshot of client state at the start
-//!   (GETs of parameterless endpoints). Local only, never committed.
+//! - `<name>.sweep.json`: a snapshot of client state (GETs of parameterless
+//!   endpoints), for the first recording of each client launch. Local only,
+//!   never committed.
 
 use std::io::BufRead;
 use std::marker::PhantomData;

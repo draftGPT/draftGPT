@@ -19,8 +19,9 @@ draftGPT/
 │   ├── capture/            recorder lib + small CLI
 │   │   ├── recorder        RawEvent → redacted .jsonl, raw frames → redacted .wire.jsonl
 │   │   ├── redact          PII fields → stable fake values per recording
-│   │   ├── sweep           GET of sweep-paths.txt at recording start → <name>.sweep.json
 │   │   ├── help_dump       client /help (Full + Console) → client-<version>.help.json, once per build
+│   │   ├── sweep           GET of sweep-paths.txt, first recording per client launch →
+│   │   │                   <name>.sweep.json (compact; big Clash endpoints only in Clash)
 │   │   ├── extras          per-recording background work: sweep, then help dump
 │   │   ├── auto            record while gameflow phase == ChampSelect
 │   │   ├── controller      SourceEvents → recordings; shared by CLI and devserver
@@ -68,7 +69,9 @@ draftGPT/
     its own `<name>.help.json` (and the next recording retries the version file).
   - A `<name>.wire.jsonl` holds every raw client frame received while recording.
   - A `<name>.sweep.json` holds the client state at the start (GETs of the spec plugins'
-    endpoints that take no parameters, minus exclusions).
+    endpoints that take no parameters, minus exclusions). Only the first recording of each
+    client launch gets one, since it's mostly account state; later recordings get one only
+    in a Clash queue, holding just the large Clash endpoints the full sweep skips elsewhere.
   - Wire and sweep files stay local and are never committed.
 
 ## Data flow
