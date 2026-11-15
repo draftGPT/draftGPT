@@ -79,10 +79,12 @@ impl AppState {
     /// nothing falls in between.
     pub fn subscribe(&self) -> (Vec<PageMsg>, broadcast::Receiver<PageMsg>) {
         let rx = self.tx.subscribe();
-        let (status, latest) = {
+        let (status, mut latest) = {
             let c = self.controller();
             (c.status(), c.latest().cloned().collect::<Vec<_>>())
         };
+        // `latest()` is in URI order; the page's log should read in time order.
+        latest.sort_by_key(|ev| ev.t);
         let mut feed = lock(&self.feed);
         let initial = std::iter::once(PageMsg::Status(status))
             .chain(latest.iter().map(|ev| feed.event(ev)))
