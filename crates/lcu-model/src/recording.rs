@@ -2,8 +2,11 @@
 //!
 //! A recording `<name>.jsonl` is a [`Header`] line followed by one
 //! [`RawEvent`] per line, with `t` in milliseconds since the start of the
-//! recording. Next to it:
-//! - `<name>.help.json`: the client's `/help` schema from the same session.
+//! recording. In the same directory:
+//! - `client-<version>.help.json`: the client's `/help` schema, one per client
+//!   build, shared by every recording whose header has that `client_version`
+//!   (see [`help_path_for_version`]). Only when the version is unknown or the
+//!   dump came back incomplete is it written per recording, `<name>.help.json`.
 //! - `<name>.wire.jsonl`: every raw WebSocket frame received while recording,
 //!   one [`WireLine`] per line. Local only, never committed.
 //! - `<name>.sweep.json`: a one-time snapshot of client state at the start
@@ -142,9 +145,21 @@ pub fn read_wire_file(path: &Path) -> Result<Vec<WireLine>, RecordingError> {
     read_wire(file).collect()
 }
 
-/// `<dir>/<name>.help.json` for a recording at `<dir>/<name>.jsonl`.
+/// `<dir>/<name>.help.json` for a recording at `<dir>/<name>.jsonl`: the
+/// fallback when there's no per-version schema (see [`help_path_for_version`]).
 pub fn help_path_for(recording: &Path) -> std::path::PathBuf {
     sibling(recording, HELP_SUFFIX)
+}
+
+/// `<dir>/client-<version>.help.json`, the `/help` schema shared by every
+/// recording in `dir` from client build `version` (`16.22.834.8910` →
+/// `client-16-22-834-8910.help.json`).
+pub fn help_path_for_version(dir: &Path, version: &str) -> std::path::PathBuf {
+    let slug: String = version
+        .chars()
+        .map(|c| if c.is_ascii_alphanumeric() { c } else { '-' })
+        .collect();
+    dir.join(format!("client-{slug}{HELP_SUFFIX}"))
 }
 
 /// `<dir>/<name>.wire.jsonl` for a recording at `<dir>/<name>.jsonl`.
@@ -215,6 +230,10 @@ mod tests {
         assert_eq!(help_path_for(rec), PathBuf::from("/r/2026_x.help.json"));
         assert_eq!(wire_path_for(rec), PathBuf::from("/r/2026_x.wire.jsonl"));
         assert_eq!(sweep_path_for(rec), PathBuf::from("/r/2026_x.sweep.json"));
+        assert_eq!(
+            help_path_for_version(Path::new("/r"), "16.22.834.8910"),
+            PathBuf::from("/r/client-16-22-834-8910.help.json")
+        );
     }
 
     #[test]

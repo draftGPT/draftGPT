@@ -19,8 +19,8 @@ draftGPT/
 │   ├── capture/            recorder lib + small CLI
 │   │   ├── recorder        RawEvent → redacted .jsonl, raw frames → redacted .wire.jsonl
 │   │   ├── redact          PII fields → stable fake values per recording
-│   │   ├── help_dump       client /help (Full + Console) → <name>.help.json, cached per version
 │   │   ├── sweep           GET of sweep-paths.txt at recording start → <name>.sweep.json
+│   │   ├── help_dump       client /help (Full + Console) → client-<version>.help.json, once per build
 │   │   ├── extras          per-recording background work: sweep, then help dump
 │   │   ├── auto            record while gameflow phase == ChampSelect
 │   │   ├── controller      SourceEvents → recordings; shared by CLI and devserver
@@ -57,12 +57,15 @@ draftGPT/
   web drafter, tools) depends on it, never on `lcu`, so it can't pull in tokio or TLS.
 - **Recording format** (`lcu_model::recording`).
   - A header line: `{format_version, client_version, started_at, label}`.
-  - A `<name>.help.json` from the same session sits next to it.
   - Then one `RawEvent` per line, with `t` in milliseconds from the start of the recording,
     for the core resources only: the champ select session (under `lol-champ-select` and
     `lol-lobby-team-builder`), the subset champion list (champions offered in pick-one-of-few
     modes, not in the session), team-builder matchmaking (`dodgeData`: why champ select
     ended early) and the gameflow phase.
+  - The client's `/help` schema is saved once per client build as
+    `client-<version>.help.json` in the same directory; the header's `client_version`
+    names it. Only if the version is unknown or the dump is incomplete does a recording get
+    its own `<name>.help.json` (and the next recording retries the version file).
   - A `<name>.wire.jsonl` holds every raw client frame received while recording.
   - A `<name>.sweep.json` holds the client state at the start (GETs of the spec plugins'
     endpoints that take no parameters, minus exclusions).

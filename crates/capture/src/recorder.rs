@@ -10,9 +10,7 @@ use std::fs::{File, OpenOptions};
 use std::io::{self, BufWriter, Write};
 use std::path::{Path, PathBuf};
 
-use lcu::recording::{
-    EXTENSION, FORMAT_VERSION, Header, Unparsable, WireLine, help_path_for, wire_path_for,
-};
+use lcu::recording::{EXTENSION, FORMAT_VERSION, Header, Unparsable, WireLine, wire_path_for};
 use lcu::{EventKind, RawEvent, WireFrame};
 use serde::Serialize;
 
@@ -168,10 +166,6 @@ impl Recorder {
             Wire::Open { frames, .. } => *frames,
             Wire::NotOpened | Wire::Failed => 0,
         }
-    }
-
-    pub fn help_path(&self) -> PathBuf {
-        help_path_for(&self.info.path)
     }
 
     pub fn finish(mut self) -> io::Result<RecordingInfo> {

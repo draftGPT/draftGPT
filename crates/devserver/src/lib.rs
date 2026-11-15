@@ -42,7 +42,7 @@ impl AppState {
         let dir = captures_dir.into();
         let (tx, _) = broadcast::channel(1024);
         Arc::new(Self {
-            extras: Mutex::new(RecordingExtras::new(&dir)),
+            extras: Mutex::new(RecordingExtras::new()),
             controller: Mutex::new(Controller::new(dir, auto)),
             feed: Mutex::new(PageFeed::default()),
             live,
@@ -102,7 +102,7 @@ impl AppState {
         if let Err(e) = self.controller().stop() {
             tracing::error!("finishing recording on exit failed: {e}");
         }
-        let extras = std::mem::replace(&mut *lock(&self.extras), RecordingExtras::new(""));
+        let extras = std::mem::take(&mut *lock(&self.extras));
         extras.finish().await;
     }
 
