@@ -1,0 +1,10 @@
+notes/
+/target
+captures/
+# Raw client frames; local only, wherever they end up.
+*.wire.jsonl
+*.sweep.json
+# Temp files of interrupted atomic writes.
+.*.tmp
+# Full LCU spec, downloaded by tools/lcu_spec.py.
+docs/lcu-spec/full/

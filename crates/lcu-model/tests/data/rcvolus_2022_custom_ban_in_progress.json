@@ -1,0 +1,86 @@
+{
+ "actions": [
+  [
+   {
+    "actorCellId": 0,
+    "championId": 28,
+    "completed": true,
+    "id": 1,
+    "isAllyAction": true,
+    "isInProgress": false,
+    "pickTurn": 1,
+    "type": "ban"
+   }
+  ],
+  [
+   {
+    "actorCellId": 0,
+    "championId": 0,
+    "completed": false,
+    "id": 2,
+    "isAllyAction": true,
+    "isInProgress": true,
+    "pickTurn": 3,
+    "type": "ban"
+   }
+  ]
+ ],
+ "allowBattleBoost": false,
+ "allowDuplicatePicks": false,
+ "allowLockedEvents": false,
+ "allowRerolling": false,
+ "allowSkinSelection": true,
+ "bans": {
+  "myTeamBans": [
+   28
+  ],
+  "numBans": 6,
+  "theirTeamBans": []
+ },
+ "benchChampionIds": [],
+ "benchEnabled": false,
+ "boostableSkinCount": 1,
+ "chatDetails": {
+  "chatRoomName": "",
+  "chatRoomPassword": null
+ },
+ "counter": -1,
+ "entitledFeatureState": {
+  "additionalRerolls": 0,
+  "unlockedSkinIds": []
+ },
+ "gameId": 0,
+ "hasSimultaneousBans": false,
+ "hasSimultaneousPicks": false,
+ "isCustomGame": true,
+ "isSpectating": false,
+ "localPlayerCellId": 0,
+ "lockedEventIndex": -1,
+ "myTeam": [
+  {
+   "assignedPosition": "",
+   "cellId": 0,
+   "championId": 0,
+   "championPickIntent": 0,
+   "entitledFeatureType": "",
+   "selectedSkinId": 0,
+   "spell1Id": 4,
+   "spell2Id": 7,
+   "summonerId": 1,
+   "team": 1,
+   "wardSkinId": -1
+  }
+ ],
+ "recoveryCounter": 0,
+ "rerollsRemaining": 0,
+ "skipChampionSelect": false,
+ "theirTeam": [],
+ "timer": {
+  "adjustedTimeLeftInPhase": 34932,
+  "internalNowInEpochMs": 1643987547197,
+  "isInfinite": false,
+  "phase": "BAN_PICK",
+  "totalTimeInPhase": 37833
+ },
+ "trades": []
+}
