@@ -1,6 +1,6 @@
-//! Recording LCU events to redacted `.jsonl` files, with a raw wire file, a
-//! state sweep and a `/help` schema dump next to each recording. The file format is defined in
-//! `lcu::recording`.
+//! Recording LCU events to redacted `.jsonl` files, with a raw wire file next
+//! to each recording, a state sweep per client launch and a `/help` schema
+//! dump per client version. The file format is defined in `lcu::recording`.
 
 pub mod auto;
 pub mod controller;

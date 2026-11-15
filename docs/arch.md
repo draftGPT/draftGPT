@@ -41,7 +41,7 @@ draftGPT/
 ├── tools/
 │   ├── lcu_spec.py         full LCU spec → docs/lcu-spec subset + capture/sweep-paths.txt
 │   └── convert-rcvolus     RCVolus recordings → our .jsonl (redacted)
-├── fixtures/               *.jsonl + *.help.json, named by situation
+├── fixtures/               *.jsonl recordings named by situation (README lists them)
 └── docs/
     ├── arch.md             this file
     └── lcu-spec/           LCU spec, subset: champ select, team builder, gameflow,
