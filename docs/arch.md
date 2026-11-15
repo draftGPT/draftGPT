@@ -45,7 +45,8 @@ draftGPT/
 └── docs/
     ├── arch.md             this file
     └── lcu-spec/           LCU spec, subset: champ select, team builder, gameflow,
-                            lobby, clash, ranked, champions, mastery, summoner
+        │                   lobby, clash, ranked, champions, mastery, summoner
+        └── help/           our /help dumps, client-<version>.help.json per client build
 ```
 
 ## Notes

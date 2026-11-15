@@ -50,7 +50,8 @@ until asked.
   subset of the community spec (dysolix/hasagi-types, generated from the client's `/help`)
   for the plugins we use. `python3 tools/lcu_spec.py` rebuilds it and saves the full spec to
   `docs/lcu-spec/full/` (gitignored); to keep another plugin, add it to `PLUGINS` there.
-  Our own captures' `/help` dumps replace it later. Recorded captures win over the spec
+  Our own captures' `/help` dumps (`docs/lcu-spec/help/`, one per client build) replace it
+  later. Recorded captures win over the spec
   wherever they disagree.
 - Keep raw and typed separate: the recorder never parses or types event data (it only
   redacts it and rebases `t`). Typed structs are
