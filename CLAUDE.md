@@ -16,7 +16,7 @@ Read it before structural changes and keep it up to date when the design changes
   chat, store or auth endpoints. (The wire capture receives their events passively, only
   into local files; nothing uses them.)
 - **Nothing identifying in fixtures.** Recordings are redacted on write by
-  `capture::redact`: player and game IDs, Riot IDs and names, `obfuscated*`, chat
+  `capture::redact`: player, game and session IDs, Riot IDs and names, `obfuscated*`, chat
   credentials, anything named like a password/token/JWT (key fragments, case-insensitive),
   chat IDs by value. `capture::recorder::Recorder` does it, so every file it writes is
   redacted. Don't commit an unredacted capture.
