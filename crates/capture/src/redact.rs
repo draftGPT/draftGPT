@@ -10,9 +10,14 @@
 //! 1. Keys containing an identity or secret fragment ([`SENSITIVE_KEY_PARTS`]).
 //! 2. String values that are chat IDs (`<puuid>@<region>.pvp.net`) or JWTs,
 //!    whatever the key (a bare value has no key to match).
-//! 3. Wire frames for chat resources: every string is replaced (message text by
-//!    its length), since friend names, notes and messages are free text.
-//! 4. Wire frame URIs: path segments that hold an ID are replaced.
+//! 3. Wire frames for chat-like resources (chat, friend hover cards, in-game
+//!    buddies): every string is replaced (message text by its length), since
+//!    friend names, notes and messages are free text.
+//! 4. Wire frame URIs: path segments that hold an ID (also percent-encoded, or
+//!    a summoner-sized number) are replaced.
+//!
+//! JSON nested in a string value (a friend's party `pty`) is parsed, redacted
+//! the same way and put back.
 //!
 //! What this can't catch: a free-text field with a generic name (like `name`)
 //! outside chat resources. That's why wire files never leave the machine.
@@ -49,6 +54,9 @@ pub const SENSITIVE_KEY_PARTS: &[&str] = &[
     // Lets anyone spectate or connect to the game.
     "spectatorkey",
     "serverip",
+    // Player names in a friend's party, and linked accounts.
+    "partysummoners",
+    "discord",
     // Chat rooms and credentials.
     "multiuserchatid",
     "chatroomname",
@@ -58,9 +66,17 @@ pub const SENSITIVE_KEY_PARTS: &[&str] = &[
     "jwt",
 ];
 
+/// Keys sensitive only as a whole: as a fragment they'd also hit drafting
+/// data (`pinDropSummoners` in champ select holds positions).
+pub const SENSITIVE_EXACT_KEYS: &[&str] = &[
+    // A party's summoner IDs (inside a friend's `pty`).
+    "summoners",
+];
+
 pub fn is_sensitive_key(key: &str) -> bool {
     let lower = key.to_ascii_lowercase();
     SENSITIVE_KEY_PARTS.iter().any(|p| lower.contains(p))
+        || SENSITIVE_EXACT_KEYS.contains(&lower.as_str())
 }
 
 /// Chat IDs look like `<puuid>@eu1.pvp.net` or `<room>@sec.pvp.net`.
@@ -87,8 +103,53 @@ fn is_sensitive_value(s: &str) -> bool {
     is_chat_id(s) || is_jwt(s)
 }
 
-/// URI prefix of chat resources (friends, conversations, messages, presence).
-const CHAT_URI_PREFIX: &str = "/lol-chat/";
+/// URI prefixes of chat-like resources (friends, conversations, messages,
+/// presence, friend hover cards, in-game buddy list): free text about other
+/// people, so every string in them is replaced.
+const CHAT_URI_PREFIXES: &[&str] = &["/lol-chat/", "/lol-hovercard/", "/lol-game-client-chat/"];
+
+fn is_chat_uri(uri: &str) -> bool {
+    CHAT_URI_PREFIXES.iter().any(|p| uri.starts_with(p))
+}
+
+/// Summoner and account IDs in URIs (`/buddies/38449345`). Champion, skin and
+/// item IDs have at most six digits, cell IDs one.
+fn is_numeric_id(s: &str) -> bool {
+    s.len() >= 7 && s.bytes().all(|b| b.is_ascii_digit())
+}
+
+/// `%40` → `@` and so on, so an encoded chat ID in a URI is still recognised
+/// (and gets the same fake as the plain value elsewhere).
+fn percent_decode(s: &str) -> String {
+    let bytes = s.as_bytes();
+    let mut out = Vec::with_capacity(bytes.len());
+    let mut i = 0;
+    while i < bytes.len() {
+        if bytes[i] == b'%'
+            && let Some(hex) = s.get(i + 1..i + 3)
+            && let Ok(b) = u8::from_str_radix(hex, 16)
+        {
+            out.push(b);
+            i += 3;
+        } else {
+            out.push(bytes[i]);
+            i += 1;
+        }
+    }
+    String::from_utf8_lossy(&out).into_owned()
+}
+
+/// A string that holds a JSON object or array (the client nests some payloads,
+/// like a party's `pty`, as strings).
+fn parse_nested_json(s: &str) -> Option<Value> {
+    let t = s.trim_start();
+    if !(t.starts_with('{') || t.starts_with('[')) {
+        return None;
+    }
+    serde_json::from_str::<Value>(s)
+        .ok()
+        .filter(|v| v.is_object() || v.is_array())
+}
 
 #[derive(Debug, Default)]
 pub struct Redactor {
@@ -128,6 +189,12 @@ impl Redactor {
             Value::String(s) if is_sensitive_value(s) => {
                 *value = Value::String(self.fake_string(s.clone()));
             }
+            Value::String(s) => {
+                if let Some(mut nested) = parse_nested_json(s) {
+                    self.redact(&mut nested);
+                    *value = Value::String(nested.to_string());
+                }
+            }
             _ => {}
         }
     }
@@ -141,7 +208,7 @@ impl Redactor {
                 .and_then(Value::as_str)
                 .map(str::to_owned);
             if let Some(uri) = uri {
-                if uri.starts_with(CHAT_URI_PREFIX)
+                if is_chat_uri(&uri)
                     && let Some(data) = payload.get_mut("data")
                 {
                     self.replace_chat_text(data);
@@ -152,14 +219,18 @@ impl Redactor {
         self.redact(frame);
     }
 
-    /// Replaces path segments that look like IDs: chat IDs, and long opaque
-    /// tokens like puuids (78 characters). Short segments (`v1`, `session`,
-    /// numeric champion IDs) stay.
+    /// Replaces path segments that look like IDs: chat IDs (also percent-encoded),
+    /// long opaque tokens like puuids, and summoner-sized numbers. Short
+    /// segments (`v1`, `session`, champion IDs) stay. Fakes match the ones the
+    /// same value gets elsewhere in the recording.
     pub fn redact_uri(&mut self, uri: &str) -> String {
         uri.split('/')
             .map(|seg| {
-                if is_id_like(seg) {
-                    self.fake_string(seg.to_owned())
+                let decoded = percent_decode(seg);
+                if is_id_like(&decoded) {
+                    self.fake_string(decoded)
+                } else if is_numeric_id(&decoded) {
+                    self.fake_for(decoded).to_string()
                 } else {
                     seg.to_owned()
                 }
@@ -241,6 +312,11 @@ fn walk(value: &Value, path: &str, found: &mut Vec<String>) {
             }
         }
         Value::String(s) if is_sensitive_value(s) => found.push(path.to_string()),
+        Value::String(s) => {
+            if let Some(nested) = parse_nested_json(s) {
+                walk(&nested, &format!("{path}<json>"), found);
+            }
+        }
         _ => {}
     }
 }
@@ -336,6 +412,9 @@ mod tests {
             "remotingAuthToken",
             "chatRoomPassword",
             "mucJWT",
+            "partySummoners",
+            "discordId",
+            "summoners",
         ] {
             assert!(is_sensitive_key(key), "{key}");
         }
@@ -347,6 +426,7 @@ mod tests {
             "queueId",
             "assignedPosition",
             "name",
+            "pinDropSummoners",
         ] {
             assert!(!is_sensitive_key(key), "{key}");
         }
@@ -485,5 +565,76 @@ mod tests {
             r.redact_uri("/lol-champ-select/v1/grid-champions/103"),
             "/lol-champ-select/v1/grid-champions/103"
         );
+        assert_eq!(
+            r.redact_uri("/lol-champ-select/v1/skin-carousel-skins/266012"),
+            "/lol-champ-select/v1/skin-carousel-skins/266012"
+        );
+    }
+
+    // Leaks found in a live 16.22 wire capture (ARAM, friends online).
+
+    #[test]
+    fn percent_encoded_chat_ids_in_uris_get_the_value_fake() {
+        let mut r = Redactor::new();
+        let mut v = json!({"multiUserChatId": "0aeb-1234@eu2.pvp.net"});
+        r.redact(&mut v);
+        let uri = r.redact_uri("/lol-chat/v1/conversations/0aeb-1234%40eu2.pvp.net/participants");
+        assert_eq!(
+            uri,
+            format!(
+                "/lol-chat/v1/conversations/{}/participants",
+                v["multiUserChatId"].as_str().unwrap()
+            )
+        );
+    }
+
+    #[test]
+    fn summoner_ids_in_uris_get_the_value_fake() {
+        let mut r = Redactor::new();
+        let mut v = json!({"summonerId": 38_449_345});
+        r.redact(&mut v);
+        assert_eq!(
+            r.redact_uri("/lol-game-client-chat/v2/buddies/38449345"),
+            format!("/lol-game-client-chat/v2/buddies/{}", v["summonerId"])
+        );
+    }
+
+    #[test]
+    fn json_nested_in_strings_is_redacted() {
+        let pty = r#"{"partyId":"p","summonerPuuids":["aaaa-bbbb"],"summoners":[79637248,38449345],"queueId":2400}"#;
+        let mut v =
+            json!({"lol": {"pty": pty, "regalia": "{\"crestType\":1}", "plain": "{not json"}});
+        Redactor::new().redact(&mut v);
+        let inner: Value = serde_json::from_str(v["lol"]["pty"].as_str().unwrap()).unwrap();
+        assert!(is_fake(&inner["summonerPuuids"][0]));
+        assert!(inner["summoners"].as_array().unwrap().iter().all(is_fake));
+        assert_eq!(inner["queueId"], json!(2400));
+        assert_eq!(v["lol"]["regalia"], json!(r#"{"crestType":1}"#));
+        assert_eq!(v["lol"]["plain"], json!("{not json"));
+        assert_eq!(find_unredacted(&v), Vec::<String>::new());
+        // The safety net looks inside nested JSON too.
+        let leaky = json!({"pty": r#"{"puuid":"real"}"#});
+        assert_eq!(
+            find_unredacted(&leaky),
+            vec![".pty<json>.puuid".to_string()]
+        );
+    }
+
+    #[test]
+    fn hovercard_frames_are_cleaned_like_chat() {
+        let mut frame = json!([8, "OnJsonApiEvent", {
+            "uri": "/lol-hovercard/v1/friend-info/aaaa",
+            "eventType": "Update",
+            "data": {
+                "discordId": "Dave 6.0", "statusMessage": "throat goat",
+                "partySummoners": ["Friend1", "Friend2"], "summonerId": 38_449_345,
+                "lol": {"pty": "{\"summoners\":[38449345]}", "gameMode": "KIWI"}
+            }
+        }]);
+        Redactor::new().redact_frame(&mut frame);
+        let s = frame.to_string();
+        for leak in ["Dave", "throat", "Friend1", "38449345"] {
+            assert!(!s.contains(leak), "{leak} in {s}");
+        }
     }
 }
