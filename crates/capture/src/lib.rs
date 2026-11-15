@@ -8,6 +8,7 @@ pub mod extras;
 mod fsutil;
 pub mod help_dump;
 pub mod logging;
+pub mod rcvolus;
 pub mod recorder;
 pub mod redact;
 pub mod sweep;
