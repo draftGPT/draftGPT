@@ -1,0 +1,10 @@
+# LF everywhere, in the repo and in working trees, whatever core.autocrlf says
+# (development is on Linux, the client runs on Windows).
+* text=auto eol=lf
+
+# Never touch binaries.
+*.png binary
+*.jpg binary
+*.ico binary
+*.exe binary
+*.dll binary
