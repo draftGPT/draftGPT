@@ -100,6 +100,12 @@ fn is_id_like(s: &str) -> bool {
     is_chat_id(s) || opaque
 }
 
+/// A bare `id` holding an opaque token, like the champ select session's UUID.
+/// Numeric `id`s (actions, champions) are drafting data and stay.
+fn is_opaque_id(key: &str, value: &Value) -> bool {
+    key == "id" && value.as_str().is_some_and(is_id_like)
+}
+
 /// String values redacted whatever key holds them.
 fn is_sensitive_value(s: &str) -> bool {
     is_chat_id(s) || is_jwt(s)
@@ -180,7 +186,7 @@ impl Redactor {
                     }
                 }
                 for (k, v) in map.iter_mut() {
-                    if is_sensitive_key(k) {
+                    if is_sensitive_key(k) || is_opaque_id(k, v) {
                         self.replace_all(v);
                     } else {
                         self.redact(v);
@@ -301,7 +307,7 @@ fn walk(value: &Value, path: &str, found: &mut Vec<String>) {
         Value::Object(map) => {
             for (k, v) in map {
                 let p = format!("{path}.{k}");
-                if is_sensitive_key(k) {
+                if is_sensitive_key(k) || is_opaque_id(k, v) {
                     check_leaves(v, &p, found);
                 } else {
                     walk(v, &p, found);
@@ -485,6 +491,19 @@ mod tests {
         ] {
             assert!(is_fake(v.pointer(path).unwrap()), "{path}");
         }
+    }
+
+    #[test]
+    fn opaque_ids_are_redacted_numeric_ids_stay() {
+        let mut v = json!({
+            "id": "ff0a24d1-c02e-4e8c-84c5-9f65126c6c85",
+            "actions": [[{"id": 3, "championId": 157}]]
+        });
+        assert_eq!(find_unredacted(&v), vec![".id".to_string()]);
+        Redactor::new().redact(&mut v);
+        assert!(is_fake(&v["id"]), "{}", v["id"]);
+        assert_eq!(v["actions"][0][0]["id"], json!(3));
+        assert_eq!(find_unredacted(&v), Vec::<String>::new());
     }
 
     #[test]
