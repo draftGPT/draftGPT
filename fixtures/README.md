@@ -23,3 +23,19 @@ The first two were recorded before matchmaking and the subset list were core res
 they lack those events. Not covered yet (needs other players): teammate hovers, trades and
 swap requests, ranked (hidden names, positions), the simultaneous-ban reveal, another player
 dodging.
+
+## Converted RCVolus recordings
+
+`rcvolus_*` files are converted from the sample recordings in
+[RCVolus/lol-pick-ban-ui](https://github.com/RCVolus/lol-pick-ban-ui) (`recordings/`,
+MIT License, Copyright (c) 2020 Riot Community Volunteers) with
+`capture convert-rcvolus <in.json> <out.jsonl>`. They hold only `/lol-champ-select/v1/session`,
+polled about once per second (identical polls collapsed), so there are no gameflow or
+matchmaking events, `client_version` is unknown (label `rcvolus`), and newer fields are
+missing. They stay as compatibility tests for old session shapes.
+
+| File | What it shows |
+|---|---|
+| `rcvolus_2019_solo_custom_ban_pick` | Solo custom (one player, no enemies): ban, pick, finalization |
+| `rcvolus_2022_solo_custom_ban_pick` | Same situation, 2022 schema (`gameId`, `isAllyAction`, `recoveryCounter`) |
+| `rcvolus_2019_tournament_draft_spectated` | Spectated 5v5 tournament draft: 20 turns, second ban phase after six picks, both teams' picks visible, `localPlayerCellId: -1` |

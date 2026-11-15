@@ -1,9 +1,10 @@
 //! `capture`: records champ select from the running League client without the
-//! dev page. `devserver` does the same with a UI.
+//! dev page. `devserver` does the same with a UI. Also converts RCVolus
+//! recordings into fixtures.
 
 use std::path::{Path, PathBuf};
 
-use capture::{Controller, Notice, RecordingExtras, help_dump};
+use capture::{Controller, Notice, RecordingExtras, help_dump, rcvolus};
 use clap::{ArgAction, Parser, Subcommand};
 use futures::StreamExt;
 use lcu::{Live, SourceEvent};
@@ -36,6 +37,9 @@ enum Cmd {
         #[arg(long)]
         file: Option<PathBuf>,
     },
+    /// Convert an RCVolus/lol-pick-ban-ui recording (.json) into a redacted
+    /// recording (.jsonl), then exit. Needs no client.
+    ConvertRcvolus { input: PathBuf, output: PathBuf },
 }
 
 enum Mode {
@@ -47,6 +51,13 @@ enum Mode {
 async fn main() {
     lcu::transport::tls::install_crypto_provider();
     let args = Args::parse();
+    if let Some(Cmd::ConvertRcvolus { input, output }) = &args.cmd {
+        if let Err(e) = convert_rcvolus(input, output) {
+            eprintln!("capture: {e}");
+            std::process::exit(1);
+        }
+        return;
+    }
     capture::logging::init(&args.out, "capture");
     let result = match args.cmd.unwrap_or(Cmd::Auto) {
         Cmd::HelpDump { file } => {
@@ -61,6 +72,7 @@ async fn main() {
             record(&args.out, args.wire, Mode::Manual { label }).await;
             Ok(())
         }
+        Cmd::ConvertRcvolus { .. } => unreachable!("handled before logging starts"),
     };
     if let Err(e) = result {
         tracing::error!("{e:#}");
@@ -120,6 +132,17 @@ async fn record(out: &Path, wire: bool, mode: Mode) {
 
 type BoxError = Box<dyn std::error::Error + Send + Sync>;
 
+fn convert_rcvolus(input: &Path, output: &Path) -> Result<(), BoxError> {
+    let text =
+        std::fs::read_to_string(input).map_err(|e| format!("reading {}: {e}", input.display()))?;
+    let (header, events) =
+        rcvolus::convert(&text).map_err(|e| format!("{}: {e}", input.display()))?;
+    std::fs::write(output, rcvolus::to_jsonl(&header, &events))
+        .map_err(|e| format!("writing {}: {e}", output.display()))?;
+    println!("{} events → {}", events.len(), output.display());
+    Ok(())
+}
+
 async fn full_help(file: &Path) -> Result<(), BoxError> {
     let creds = tokio::task::spawn_blocking(lcu::discovery::discover).await??;
     let http = lcu::LcuHttp::new(&creds)?;
@@ -153,6 +176,7 @@ mod tests {
             vec!["capture", "record", "--label", "x", "--out", "c"],
             vec!["capture", "--wire", "false", "auto"],
             vec!["capture", "help-dump", "--file", "f.json"],
+            vec!["capture", "convert-rcvolus", "in.json", "out.jsonl"],
         ] {
             Args::try_parse_from(&argv).unwrap_or_else(|e| panic!("{argv:?}: {e}"));
         }

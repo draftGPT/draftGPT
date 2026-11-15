@@ -34,11 +34,12 @@ fn load(name: &str) -> (Header, Vec<RawEvent>) {
     read_file(&path).unwrap_or_else(|e| panic!("{}: {e}", path.display()))
 }
 
-/// Sessions under `/lol-champ-select/v1/session`, typed, in order.
+/// Sessions under `/lol-champ-select/v1/session`, typed, in order (skipping
+/// the null snapshot of a recording that starts outside champ select).
 fn sessions(events: &[RawEvent]) -> Vec<ChampSelectSession> {
     events
         .iter()
-        .filter(|e| e.uri == SESSION_URI && e.kind != EventKind::Delete)
+        .filter(|e| e.uri == SESSION_URI && e.kind != EventKind::Delete && !e.data.is_null())
         .map(|e| types::parse(&e.data).unwrap())
         .collect()
 }
@@ -75,11 +76,15 @@ fn my_pick(s: &ChampSelectSession) -> &types::Action {
 #[test]
 fn every_fixture_parses_is_redacted_and_typed() {
     let files = all_fixtures();
-    assert!(files.len() >= 7, "{files:?}");
+    assert!(files.len() >= 10, "{files:?}");
     for path in files {
         let name = path.file_name().unwrap().to_string_lossy();
         let (header, events) = read_file(&path).unwrap_or_else(|e| panic!("{name}: {e}"));
-        assert!(header.client_version.is_some(), "{name}: no client_version");
+        // Converted RCVolus recordings don't know their client version.
+        assert!(
+            header.client_version.is_some() || header.label == capture::rcvolus::LABEL,
+            "{name}: no client_version"
+        );
         assert!(!events.is_empty(), "{name}: no events");
         assert_eq!(
             events[0].kind,
@@ -235,4 +240,48 @@ fn client_closed_mid_champ_select() {
     assert_eq!(phases(&events).last(), Some(&GameflowPhase::None));
     // Closing the client isn't a dodge.
     assert!(!dodge_states(&events).contains(&DodgeState::PartyDodged));
+}
+
+#[test]
+fn rcvolus_solo_custom_ban_pick() {
+    for name in [
+        "rcvolus_2019_solo_custom_ban_pick",
+        "rcvolus_2022_solo_custom_ban_pick",
+    ] {
+        let (header, events) = load(name);
+        assert_eq!(header.label, capture::rcvolus::LABEL);
+        let s = sessions(&events);
+        assert!(
+            s.iter()
+                .all(|s| s.my_team.len() == 1 && s.their_team.is_empty()),
+            "{name}"
+        );
+        let last = s.last().unwrap();
+        assert_eq!(last.timer.phase, TimerPhase::Finalization, "{name}");
+        let pick = my_pick(last);
+        assert!(pick.completed && pick.champion().is_some(), "{name}");
+    }
+}
+
+#[test]
+fn rcvolus_2019_tournament_draft_spectated() {
+    let (_, events) = load("rcvolus_2019_tournament_draft_spectated");
+    let s = sessions(&events);
+    let last = s.last().unwrap();
+    assert!(last.is_spectating);
+    assert_eq!(last.local_player_cell_id, -1);
+    assert_eq!((last.my_team.len(), last.their_team.len()), (5, 5));
+    // Tournament draft: 10 bans and 10 picks, a second ban phase after six picks.
+    let order: Vec<ActionType> = last.actions.iter().flatten().map(|a| a.kind).collect();
+    assert_eq!(order.len(), 20);
+    assert_eq!(order.iter().filter(|k| **k == ActionType::Ban).count(), 10);
+    assert_eq!(order[12], ActionType::Ban);
+    assert!(
+        last.actions
+            .iter()
+            .flatten()
+            .all(|a| a.completed && a.champion().is_some())
+    );
+    // Spectators see both teams' picks.
+    assert!(last.their_team.iter().all(|p| p.champion().is_some()));
 }

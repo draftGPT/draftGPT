@@ -25,6 +25,7 @@ draftGPT/
 │   │   ├── extras          per-recording background work: sweep, then help dump
 │   │   ├── auto            record while gameflow phase == ChampSelect
 │   │   ├── controller      SourceEvents → recordings; shared by CLI and devserver
+│   │   ├── rcvolus         RCVolus recordings → our .jsonl (redacted); CLI convert-rcvolus
 │   │   ├── logging         console + <out>/<binary>.log
 │   │   └── fsutil          atomic writes
 │   ├── devserver/          axum dev server, 127.0.0.1 + same-origin only
@@ -40,8 +41,7 @@ draftGPT/
 │   └── desktop/            Tauri side panel, live only
 │       └── dock            follows client window; floats if fullscreen or toggled
 ├── tools/
-│   ├── lcu_spec.py         full LCU spec → docs/lcu-spec subset + capture/sweep-paths.txt
-│   └── convert-rcvolus     RCVolus recordings → our .jsonl (redacted)
+│   └── lcu_spec.py         full LCU spec → docs/lcu-spec subset + capture/sweep-paths.txt
 ├── fixtures/               *.jsonl recordings named by situation (README lists them)
 └── docs/
     ├── arch.md             this file
