@@ -1,7 +1,8 @@
 //! Background work for each new recording, needing the live client: the
-//! state sweep (first, so it reflects the start of the recording), then the
-//! `/help` dump (only when this client version has none yet). Both binaries
-//! use it: `spawn` per new recording, `finish` on exit.
+//! state sweep (first, so it reflects the start of the recording; only for the
+//! first recording of each client launch), then the `/help` dump (only when
+//! this client version has none yet). Both binaries use it: `spawn` per new
+//! recording, `finish` on exit.
 
 use std::time::Duration;
 
@@ -16,6 +17,9 @@ use crate::{help_dump, sweep};
 #[derive(Default)]
 pub struct RecordingExtras {
     tasks: JoinSet<()>,
+    /// Client launch (its base URL, which has the per-launch port) the last
+    /// sweep was taken for.
+    swept_launch: Option<String>,
 }
 
 impl RecordingExtras {
@@ -28,18 +32,32 @@ impl RecordingExtras {
 
     /// Starts the sweep and `/help` dump for a recording. Needs a tokio runtime.
     pub fn spawn(&mut self, http: LcuHttp, recording: &RecordingInfo) {
-        let sweep_dest = sweep_path_for(&recording.path);
+        let full_sweep = self.claim_sweep(http.base_url());
+        let dest = sweep_path_for(&recording.path);
         let recording_path = recording.path.clone();
         self.tasks.spawn(async move {
-            match sweep::run(&http, &sweep_dest).await {
-                Ok(s) => tracing::info!(
-                    "saved state sweep to {} ({} ok, {} not found, {} failed)",
-                    sweep_dest.display(),
-                    s.ok,
-                    s.not_found,
-                    s.failed
-                ),
-                Err(e) => tracing::warn!("state sweep failed: {e}"),
+            match full_sweep {
+                false => match sweep::run_clash_only(&http, &dest).await {
+                    Ok(Some(s)) => tracing::info!(
+                        "Clash queue: saved Clash endpoints to {} ({} ok, {} failed)",
+                        dest.display(),
+                        s.ok,
+                        s.failed
+                    ),
+                    Ok(None) => tracing::info!("state sweep already taken this client launch"),
+                    Err(e) => tracing::warn!("Clash sweep failed: {e}"),
+                },
+                true => match sweep::run(&http, &dest).await {
+                    Ok(s) => tracing::info!(
+                        "saved state sweep to {} ({} ok, {} not found, {} failed, {} skipped)",
+                        dest.display(),
+                        s.ok,
+                        s.not_found,
+                        s.failed,
+                        s.skipped
+                    ),
+                    Err(e) => tracing::warn!("state sweep failed: {e}"),
+                },
             }
             match help_dump::dump_for_recording(&http, &recording_path).await {
                 Ok(HelpOutcome::AlreadySaved(p)) => {
@@ -56,6 +74,15 @@ impl RecordingExtras {
         });
     }
 
+    /// True if `launch` hasn't been swept yet (and marks it swept).
+    fn claim_sweep(&mut self, launch: &str) -> bool {
+        if self.swept_launch.as_deref() == Some(launch) {
+            return false;
+        }
+        self.swept_launch = Some(launch.to_owned());
+        true
+    }
+
     /// Waits up to [`Self::GRACE`] for running work; the rest is cancelled.
     pub async fn finish(self) {
         if self.tasks.is_empty() {
@@ -68,5 +95,20 @@ impl RecordingExtras {
         {
             tracing::warn!("sweep or /help dump didn't finish in time; cancelled");
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn one_full_sweep_per_client_launch() {
+        let mut e = RecordingExtras::new();
+        assert!(e.claim_sweep("https://127.0.0.1:49419"));
+        assert!(!e.claim_sweep("https://127.0.0.1:49419"), "same launch");
+        // A relaunched client gets a new port, so a new sweep.
+        assert!(e.claim_sweep("https://127.0.0.1:51234"));
+        assert!(!e.claim_sweep("https://127.0.0.1:51234"));
     }
 }
