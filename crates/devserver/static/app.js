@@ -88,6 +88,9 @@ function renderSession(s) {
   if (s.queueId != null) timer.append(el("span", "muted", `queue ${s.queueId}`));
   root.append(timer);
 
+  // ARAM-style modes: the shared bench, plus rerolls when allowed.
+  if (s.benchEnabled) root.append(benchRow(s));
+
   const bans = s.bans || {};
   const teams = el("div", "teams");
   teams.append(
@@ -96,6 +99,20 @@ function renderSession(s) {
   );
   root.append(teams);
   tickTimer();
+}
+
+function benchRow(s) {
+  const bench = s.benchChampions || [];
+  const row = el("div", "bans bench");
+  row.append(el("b", "", `Bench (${bench.length})`));
+  if (bench.length === 0) row.append(el("span", "muted", "empty"));
+  for (const b of bench) {
+    const chip = el("span", b.isPriority ? "ban priority" : "ban", champ(b.championId) || "none");
+    if (b.isPriority) chip.title = "priority";
+    row.append(chip);
+  }
+  if (s.allowRerolling) row.append(el("span", "muted", `rerolls left: ${s.rerollsRemaining ?? 0}`));
+  return row;
 }
 
 function teamColumn(title, cls, players, bans, me, acting) {
