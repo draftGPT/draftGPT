@@ -28,8 +28,9 @@ draftGPT/
 │   │   ├── logging         console + <out>/<binary>.log
 │   │   └── fsutil          atomic writes
 │   ├── devserver/          axum dev server, 127.0.0.1 + same-origin only
+│   │   ├── (main)          --replay FILE --speed N|instant: Replay instead of Live
 │   │   ├── api             status · ws events · capture start/stop/auto ·
-│   │   │                   captures list/download · replay
+│   │   │                   captures list/download
 │   │   ├── page            page feed: messages, redaction, logged-once problems
 │   │   ├── check           flags parse failures / unknown enum values per event
 │   │   └── static/         dev page, plain HTML/JS via include_str!

@@ -30,5 +30,5 @@ x509-parser = { version = "0.18.1", features = ["verify"] }
 
 [dev-dependencies]
 rcgen = "0.14.10"
-tokio = { workspace = true, features = ["full"] }
+tokio = { workspace = true, features = ["full", "test-util"] }
 tokio-rustls = { version = "0.26.6", default-features = false, features = ["ring", "tls12"] }

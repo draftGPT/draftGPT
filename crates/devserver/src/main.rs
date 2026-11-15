@@ -1,11 +1,12 @@
-//! `devserver`: capture test tool. Connects to the running League client,
-//! records champ selects, and serves a dev page at http://127.0.0.1:<port>.
+//! `devserver`: capture test tool. Connects to the running League client (or
+//! replays a recording), records champ selects, and serves a dev page at
+//! http://127.0.0.1:<port>.
 
 use std::net::{Ipv4Addr, SocketAddr};
 use std::path::PathBuf;
 
 use clap::{ArgAction, Parser};
-use lcu::Live;
+use lcu::{EventSource, Live, Replay, Speed};
 
 #[derive(Parser)]
 #[command(about = "Dev page for testing LCU capture (binds to 127.0.0.1 only)")]
@@ -15,12 +16,18 @@ struct Args {
     /// Directory for recordings and the log file.
     #[arg(long, default_value = "captures")]
     out: PathBuf,
-    /// Record every champ select automatically.
+    /// Record every champ select automatically (always off with --replay).
     #[arg(long, default_value_t = true, action = ArgAction::Set)]
     auto: bool,
     /// Also record every raw client frame to <name>.wire.jsonl (local only).
     #[arg(long, default_value_t = true, action = ArgAction::Set)]
     wire: bool,
+    /// Play this recording (.jsonl) instead of connecting to the client.
+    #[arg(long, value_name = "FILE")]
+    replay: Option<PathBuf>,
+    /// Replay speed: a factor such as 1, 4 or 0.5, or `instant`.
+    #[arg(long, default_value = "1", requires = "replay")]
+    speed: Speed,
 }
 
 #[tokio::main]
@@ -38,18 +45,51 @@ async fn main() {
         }
     };
 
-    let (stream, live) = Live {
-        wire: args.wire,
-        ..Live::default()
-    }
-    .spawn();
-    let state = devserver::AppState::new(&args.out, args.auto, Some(live));
-    let source_task = tokio::spawn(devserver::run_source(state.clone(), stream));
+    let (stream, live) = match &args.replay {
+        Some(path) => match Replay::open(path, args.speed) {
+            Ok(r) => (Box::new(r).into_stream(), None),
+            Err(e) => {
+                tracing::error!("can't replay {}: {e}", path.display());
+                std::process::exit(1);
+            }
+        },
+        None => {
+            let (stream, live) = Live {
+                wire: args.wire,
+                ..Live::default()
+            }
+            .spawn();
+            (stream, Some(live))
+        }
+    };
+    // Recording a replay would only copy it into the captures directory.
+    let auto = args.auto && args.replay.is_none();
+    let state = devserver::AppState::new(&args.out, auto, live);
+    let source_task = tokio::spawn({
+        let state = state.clone();
+        let replay = args.replay.clone();
+        async move {
+            devserver::run_source(state.clone(), stream).await;
+            if let Some(path) = replay {
+                state.notice(
+                    devserver::Level::Info,
+                    format!("replay of {} finished", path.display()),
+                );
+            }
+        }
+    });
 
-    println!(
-        "devserver: open http://{addr}  (recordings in {})",
-        args.out.display()
-    );
+    match &args.replay {
+        Some(path) => println!(
+            "devserver: open http://{addr}  (replaying {} at {:?})",
+            path.display(),
+            args.speed
+        ),
+        None => println!(
+            "devserver: open http://{addr}  (recordings in {})",
+            args.out.display()
+        ),
+    }
     let server = axum::serve(listener, devserver::router(state.clone(), args.port));
     if let Err(e) = server
         .with_graceful_shutdown(async {

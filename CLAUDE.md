@@ -107,6 +107,7 @@ cargo test --workspace                          # all tests (no League client ne
 cargo clippy --workspace --all-targets -- -D warnings
 cargo fmt --all
 cargo run -p devserver -- --port 8790 --out captures      # dev page at http://127.0.0.1:8790
+cargo run -p devserver -- --replay fixtures/x.jsonl --speed 4   # replay instead of the client
 cargo run -p capture -- --out captures [auto | record --label x | help-dump --file f.json]
 # both: --wire true|false (raw frame capture, default on); logs go to <out>/<binary>.log
 cargo build -p devserver --release              # on Windows: target/release/devserver.exe

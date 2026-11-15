@@ -1,8 +1,9 @@
-//! Event sources. Every input (live client now, replay later) produces the same
+//! Event sources. Every input (live client, replayed recording) produces the same
 //! stream of [`SourceEvent`]s. Live-only capabilities, like HTTP access to the
 //! client, live on the source's own handle, not in the events.
 
 mod live;
+mod replay;
 
 use std::pin::Pin;
 
@@ -13,6 +14,7 @@ use tokio::sync::mpsc;
 use crate::raw::RawEvent;
 
 pub use live::{Live, LiveHandle};
+pub use replay::{Replay, Speed};
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize)]
 pub struct ClientInfo {

@@ -106,6 +106,14 @@ impl AppState {
         extras.finish().await;
     }
 
+    /// Shows a message on the page.
+    pub fn notice(&self, level: Level, message: impl Into<String>) {
+        self.broadcast(PageMsg::Notice {
+            level,
+            message: message.into(),
+        });
+    }
+
     fn controller(&self) -> MutexGuard<'_, Controller> {
         lock(&self.controller)
     }

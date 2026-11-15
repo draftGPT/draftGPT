@@ -14,6 +14,7 @@ pub use lcu_model::*;
 
 pub use discovery::Credentials;
 pub use source::{
-    ChannelSource, ClientInfo, EventSource, Live, LiveHandle, SourceEvent, SourceStream, WireFrame,
+    ChannelSource, ClientInfo, EventSource, Live, LiveHandle, Replay, SourceEvent, SourceStream,
+    Speed, WireFrame,
 };
 pub use transport::http::LcuHttp;

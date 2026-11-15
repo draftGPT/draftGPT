@@ -40,7 +40,9 @@ function renderStatus(s) {
   if (c.state === "connected") {
     dot.className = "dot ok";
     const v = c.client.version ? ` · client ${c.client.version}` : "";
-    $("conn").textContent = `League client connected (port ${c.client.port})${v}`;
+    $("conn").textContent = c.client.port == null
+      ? `Replaying a recording${v}`
+      : `League client connected (port ${c.client.port})${v}`;
   } else if (c.state === "disconnected") {
     dot.className = "dot err";
     $("conn").textContent = `League client: ${c.reason}`;
