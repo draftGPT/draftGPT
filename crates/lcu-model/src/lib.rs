@@ -36,13 +36,39 @@ pub const GAMEFLOW_PHASE: Resource = Resource {
     uri: "/lol-gameflow/v1/gameflow-phase",
 };
 
-/// Resources the typed pipeline uses: the champ select session (under both
-/// plugins) and the gameflow phase.
-pub const CORE_RESOURCES: &[Resource] = &[SESSION, TEAM_BUILDER_SESSION, GAMEFLOW_PHASE];
+/// Champions offered to the local player when the session has
+/// `allowSubsetChampionPicks` (pick one of a few, as in queue 3270). The
+/// session never lists them; a bare array of champion IDs, sent at the start
+/// of champ select. Only the team-builder plugin serves it (16.22).
+pub const SUBSET_CHAMPION_LIST: Resource = Resource {
+    event: TEAM_BUILDER_SESSION.event,
+    uri: "/lol-lobby-team-builder/champ-select/v1/subset-champion-list",
+};
+
+/// Queue, ready check and dodge state. When champ select ends early,
+/// `dodgeData.state` says why (`PartyDodged` when the local party left); the
+/// session only disappears.
+pub const MATCHMAKING: Resource = Resource {
+    event: "OnJsonApiEvent_lol-lobby-team-builder_v1_matchmaking",
+    uri: "/lol-lobby-team-builder/v1/matchmaking",
+};
+
+/// Resources the typed pipeline uses and main recordings contain: the champ
+/// select session (under both plugins), the offered champions, matchmaking
+/// (dodges) and the gameflow phase.
+pub const CORE_RESOURCES: &[Resource] = &[
+    SESSION,
+    TEAM_BUILDER_SESSION,
+    SUBSET_CHAMPION_LIST,
+    MATCHMAKING,
+    GAMEFLOW_PHASE,
+];
 
 // Plain `&str` copies, because match patterns can't use a struct field.
 pub const SESSION_URI: &str = SESSION.uri;
 pub const TEAM_BUILDER_SESSION_URI: &str = TEAM_BUILDER_SESSION.uri;
+pub const SUBSET_CHAMPION_LIST_URI: &str = SUBSET_CHAMPION_LIST.uri;
+pub const MATCHMAKING_URI: &str = MATCHMAKING.uri;
 pub const GAMEFLOW_PHASE_URI: &str = GAMEFLOW_PHASE.uri;
 
 /// True for either URI the champ select session is served under.

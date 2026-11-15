@@ -52,6 +52,9 @@ pub struct ChampSelectSession {
     pub allow_duplicate_picks: bool,
     pub bench_enabled: bool,
     pub bench_champions: Vec<BenchChampion>,
+    /// Pick-one-of-a-few modes (queue 3270); the offered champions come from
+    /// `SUBSET_CHAMPION_LIST`, not the session.
+    pub allow_subset_champion_picks: bool,
     /// ARAM-style modes; `rerolls_remaining` is the local player's count.
     pub allow_rerolling: bool,
     pub rerolls_remaining: i64,
@@ -239,6 +242,38 @@ pub enum GameflowPhase {
     Unknown,
 }
 
+/// `/lol-lobby-team-builder/champ-select/v1/subset-champion-list`: champions
+/// offered to the local player, a bare array of IDs.
+pub type SubsetChampionList = Vec<i64>;
+
+/// `/lol-lobby-team-builder/v1/matchmaking`. Only what explains how a champ
+/// select ended; IDs (`dodgerId`, `declinerIds`) aren't modelled.
+#[derive(Debug, Clone, Default, PartialEq, Deserialize)]
+#[serde(default, rename_all = "camelCase")]
+pub struct Matchmaking {
+    pub search_state: String,
+    pub is_currently_in_queue: bool,
+    pub queue_id: i64,
+    pub dodge_data: DodgeData,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Deserialize)]
+#[serde(default, rename_all = "camelCase")]
+pub struct DodgeData {
+    pub state: DodgeState,
+}
+
+/// Values from 16.22 captures. `Invalid` is "no dodge".
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq, Deserialize)]
+pub enum DodgeState {
+    Invalid,
+    /// The local party (you) left champ select.
+    PartyDodged,
+    #[default]
+    #[serde(other)]
+    Unknown,
+}
+
 /// Champion IDs are positive. `0` means none; a missed ban completes with `-1`.
 fn champion_id(id: i64) -> Option<i64> {
     (id > 0).then_some(id)
@@ -328,6 +363,22 @@ mod tests {
         ] {
             assert_eq!(serde_json::from_value::<Position>(json!(s)).unwrap(), p);
         }
+    }
+
+    #[test]
+    fn subset_list_and_dodge_parse() {
+        // Shapes from a 16.22 capture (custom, queue 3270, left champ select).
+        let offer: SubsetChampionList = parse(&json!([57, 45, 53])).unwrap();
+        assert_eq!(offer, vec![57, 45, 53]);
+        let m: Matchmaking = parse(&json!({
+            "dodgeData": {"dodgerId": 9, "state": "PartyDodged"},
+            "errors": [], "isCurrentlyInQueue": false, "lobbyId": "", "queueId": 0,
+            "readyCheck": {"state": "Invalid"}, "searchState": "Invalid"
+        }))
+        .unwrap();
+        assert_eq!(m.dodge_data.state, DodgeState::PartyDodged);
+        let m: Matchmaking = parse(&json!({"dodgeData": {"state": "SomethingNew"}})).unwrap();
+        assert_eq!(m.dodge_data.state, DodgeState::Unknown);
     }
 
     #[test]

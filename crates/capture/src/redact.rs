@@ -49,8 +49,10 @@ pub const SENSITIVE_KEY_PARTS: &[&str] = &[
     "dodgerid",
     "dodgeid",
     "participantid",
-    // A game ID plus region finds the match and everyone in it.
+    // A game ID plus region finds the match and everyone in it; a lobby ID
+    // (matchmaking, while queued) the party.
     "gameid",
+    "lobbyid",
     // Lets anyone spectate or connect to the game.
     "spectatorkey",
     "serverip",

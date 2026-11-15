@@ -6,9 +6,10 @@ draftGPT/
 ├── crates/
 │   ├── lcu-model/          what the client sends, no I/O, native + wasm32
 │   │   ├── raw             RawEvent { t, uri, kind, data: Value }
-│   │   ├── types           lenient typed structs: ChampSelectSession, GameflowPhase
+│   │   ├── types           lenient typed structs: ChampSelectSession, GameflowPhase,
+│   │   │                   SubsetChampionList, Matchmaking
 │   │   ├── recording       file format: header + RawEvent lines, wire lines, reader
-│   │   └── (lib)           resources we use: event name + URI pairs
+│   │   └── (lib)           resources we use (CORE_RESOURCES): event name + URI pairs
 │   ├── lcu/                talking to the running client; re-exports lcu-model
 │   │   ├── discovery       lockfile / LeagueClientUx args → port + password
 │   │   ├── transport       HTTPS (Riot cert, Basic auth) + WebSocket
@@ -56,8 +57,12 @@ draftGPT/
   web drafter, tools) depends on it, never on `lcu`, so it can't pull in tokio or TLS.
 - **Recording format** (`lcu_model::recording`).
   - A header line: `{format_version, client_version, started_at, label}`.
-  - Then one `RawEvent` per line, with `t` in milliseconds from the start of the recording.
   - A `<name>.help.json` from the same session sits next to it.
+  - Then one `RawEvent` per line, with `t` in milliseconds from the start of the recording,
+    for the core resources only: the champ select session (under `lol-champ-select` and
+    `lol-lobby-team-builder`), the subset champion list (champions offered in pick-one-of-few
+    modes, not in the session), team-builder matchmaking (`dodgeData`: why champ select
+    ended early) and the gameflow phase.
   - A `<name>.wire.jsonl` holds every raw client frame received while recording.
   - A `<name>.sweep.json` holds the client state at the start (GETs of the spec plugins'
     endpoints that take no parameters, minus exclusions).

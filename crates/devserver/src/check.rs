@@ -3,8 +3,14 @@
 //! is lenient, so besides hard failures this also flags enum values we don't
 //! know yet (they parse as `Unknown`).
 
-use lcu::types::{ActionType, ChampSelectSession, GameflowPhase, Position, TimerPhase};
-use lcu::{EventKind, GAMEFLOW_PHASE_URI, RawEvent, is_session_uri};
+use lcu::types::{
+    ActionType, ChampSelectSession, DodgeState, GameflowPhase, Matchmaking, Position,
+    SubsetChampionList, TimerPhase,
+};
+use lcu::{
+    EventKind, GAMEFLOW_PHASE_URI, MATCHMAKING_URI, RawEvent, SUBSET_CHAMPION_LIST_URI,
+    is_session_uri,
+};
 use serde_json::Value;
 
 /// `None` if the event is fine (or not one we type), otherwise a description.
@@ -15,9 +21,33 @@ pub fn check(ev: &RawEvent) -> Option<String> {
     let problems = match ev.uri.as_str() {
         uri if is_session_uri(uri) => check_session(&ev.data),
         GAMEFLOW_PHASE_URI => check_phase(&ev.data),
+        SUBSET_CHAMPION_LIST_URI => check_subset(&ev.data),
+        MATCHMAKING_URI => check_matchmaking(&ev.data),
         _ => return None,
     };
     (!problems.is_empty()).then(|| problems.join("; "))
+}
+
+fn check_subset(data: &Value) -> Vec<String> {
+    match lcu::types::parse::<SubsetChampionList>(data) {
+        Ok(_) => Vec::new(),
+        Err(e) => vec![format!("subset champion list: {e}")],
+    }
+}
+
+fn check_matchmaking(data: &Value) -> Vec<String> {
+    // Outside a queue the resource can be empty, which the client sends as null.
+    if data.is_null() {
+        return Vec::new();
+    }
+    match lcu::types::parse::<Matchmaking>(data) {
+        Ok(m) if m.dodge_data.state == DodgeState::Unknown => vec![format!(
+            "unknown value at dodgeData.state: {}",
+            data.pointer("/dodgeData/state").unwrap_or(&Value::Null)
+        )],
+        Ok(_) => Vec::new(),
+        Err(e) => vec![format!("matchmaking: {e}")],
+    }
 }
 
 fn check_phase(data: &Value) -> Vec<String> {
@@ -118,6 +148,24 @@ mod tests {
     fn gameflow_phase() {
         assert_eq!(check(&ev(GAMEFLOW_PHASE_URI, json!("Lobby"))), None);
         assert!(check(&ev(GAMEFLOW_PHASE_URI, json!("Brand New"))).is_some());
+    }
+
+    #[test]
+    fn subset_list_and_matchmaking() {
+        assert_eq!(
+            check(&ev(SUBSET_CHAMPION_LIST_URI, json!([57, 45, 53]))),
+            None
+        );
+        assert!(check(&ev(SUBSET_CHAMPION_LIST_URI, json!({"x": 1}))).is_some());
+        let dodged = json!({"dodgeData": {"dodgerId": 9, "state": "PartyDodged"}});
+        assert_eq!(check(&ev(MATCHMAKING_URI, dodged)), None);
+        assert_eq!(check(&ev(MATCHMAKING_URI, json!(null))), None);
+        let msg = check(&ev(
+            MATCHMAKING_URI,
+            json!({"dodgeData": {"state": "StrangerDodged"}}),
+        ))
+        .unwrap();
+        assert!(msg.contains("dodgeData.state: \"StrangerDodged\""), "{msg}");
     }
 
     #[test]
