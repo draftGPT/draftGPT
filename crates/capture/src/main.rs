@@ -79,7 +79,7 @@ async fn record(out: &Path, wire: bool, mode: Mode) {
         Mode::Manual { label } => Some(label),
         Mode::Auto => None,
     };
-    let mut extras = RecordingExtras::new(out);
+    let mut extras = RecordingExtras::new();
     let ctrl_c = tokio::signal::ctrl_c();
     tokio::pin!(ctrl_c);
     tracing::info!("writing recordings to {}", out.display());

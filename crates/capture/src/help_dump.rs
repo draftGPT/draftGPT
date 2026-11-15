@@ -1,23 +1,25 @@
-//! Saves the client's own schema (`/help`) next to a recording, so every
-//! recording comes with the schema of the exact client build that produced it.
+//! Saves the client's own schema (`/help`), one file per client build
+//! (`client-<version>.help.json` next to the recordings), so every recording
+//! has the schema of the exact build that produced it: its header names the
+//! version.
 //!
 //! `POST /Help` returns an index of every function, type and event. Each item
 //! takes two more requests: `format=Full` (types and fields) and
 //! `format=Console` (URL and HTTP method, which `Full` leaves out). That's
 //! about 10000 for the whole schema, so by default only champ select and
 //! gameflow items are fetched. `Scope::Full`
-//! fetches everything. Dumps are cached per client version, so only the first
-//! recording after a patch pays for the requests.
+//! fetches everything. Only the first recording after a patch pays for the
+//! requests; later ones find the file already there.
 
 use std::path::{Path, PathBuf};
 
 use lcu::LcuHttp;
+use lcu::recording::{help_path_for, help_path_for_version};
 use lcu::transport::TransportError;
 use lcu::transport::http::HelpFormat;
 use serde_json::{Map, Value, json};
 
 use crate::fsutil;
-use crate::recorder::slug;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Scope {
@@ -44,12 +46,6 @@ pub struct DumpStats {
     pub items: usize,
     /// Requests that failed (stored with their error).
     pub failed: usize,
-}
-
-/// Where per-client-version dumps are cached inside a captures directory.
-/// Hidden, so it doesn't show up among recordings.
-fn cache_dir(captures: &Path) -> PathBuf {
-    captures.join(".help-cache")
 }
 
 const RELEVANT_PARTS: &[&str] = &["champselect", "champ-select", "gameflow"];
@@ -121,26 +117,50 @@ pub async fn dump(
     Ok(stats)
 }
 
-/// Writes the relevant-scope dump for a recording, from the per-version cache
-/// in `captures` when possible. Dumps with failed items aren't cached, so the
-/// next recording retries them.
+/// What [`dump_for_recording`] did.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum HelpOutcome {
+    /// This client version's schema was already saved.
+    AlreadySaved(PathBuf),
+    /// Fetched and saved as this client version's schema.
+    Saved(PathBuf),
+    /// Saved next to the recording only: the client version was unknown, or
+    /// some items failed (so the next recording tries the version file again).
+    SavedForRecording { path: PathBuf, failed: usize },
+}
+
+/// Makes sure the relevant-scope schema for the recording at `recording`
+/// exists: `client-<version>.help.json` in the recording's directory, fetched
+/// only if it isn't there yet.
 pub async fn dump_for_recording(
     http: &LcuHttp,
-    dest: &Path,
-    captures: &Path,
-) -> Result<(), HelpDumpError> {
+    recording: &Path,
+) -> Result<HelpOutcome, HelpDumpError> {
+    let fallback = help_path_for(recording);
     let Ok(version) = http.client_version().await else {
-        return dump(http, dest, Scope::Relevant, None).await.map(drop);
+        let stats = dump(http, &fallback, Scope::Relevant, None).await?;
+        return Ok(HelpOutcome::SavedForRecording {
+            path: fallback,
+            failed: stats.failed,
+        });
     };
-    let cached = cache_dir(captures).join(format!("{}.help.json", slug(&version)));
-    if !tokio::fs::try_exists(&cached).await.unwrap_or(false) {
-        let stats = dump(http, dest, Scope::Relevant, Some(&version)).await?;
-        if stats.failed == 0 {
-            copy_atomic(dest, &cached).await?;
-        }
-        return Ok(());
+    let dir = recording.parent().unwrap_or(Path::new(""));
+    let path = help_path_for_version(dir, &version);
+    if tokio::fs::try_exists(&path).await.unwrap_or(false) {
+        return Ok(HelpOutcome::AlreadySaved(path));
     }
-    copy_atomic(&cached, dest).await
+    let stats = dump(http, &fallback, Scope::Relevant, Some(&version)).await?;
+    if stats.failed > 0 {
+        return Ok(HelpOutcome::SavedForRecording {
+            path: fallback,
+            failed: stats.failed,
+        });
+    }
+    // Complete: promote it to the shared file (rename is atomic on one volume).
+    tokio::fs::rename(&fallback, &path)
+        .await
+        .map_err(io_err(&path))?;
+    Ok(HelpOutcome::Saved(path))
 }
 
 fn io_err(path: &Path) -> impl FnOnce(std::io::Error) -> HelpDumpError + '_ {
@@ -154,11 +174,6 @@ async fn write_atomic(path: &Path, bytes: &[u8]) -> Result<(), HelpDumpError> {
     fsutil::write_atomic(path, bytes)
         .await
         .map_err(io_err(path))
-}
-
-async fn copy_atomic(from: &Path, to: &Path) -> Result<(), HelpDumpError> {
-    let bytes = tokio::fs::read(from).await.map_err(io_err(from))?;
-    write_atomic(to, &bytes).await
 }
 
 #[cfg(test)]
@@ -181,10 +196,5 @@ mod tests {
         assert_eq!(t, vec!["A", "B"]);
         assert_eq!(index_names(&idx, "events"), vec!["E1"]);
         assert!(index_names(&idx, "functions").is_empty());
-    }
-
-    #[test]
-    fn cache_is_hidden_inside_captures() {
-        assert_eq!(cache_dir(Path::new("c")), Path::new("c/.help-cache"));
     }
 }
