@@ -71,7 +71,8 @@ impl LcuHttp {
         if resp.status() == reqwest::StatusCode::NOT_FOUND {
             return Ok(None);
         }
-        Ok(Some(resp.error_for_status()?.json().await?))
+        let body = resp.error_for_status()?.bytes().await?;
+        decode_body(&body).map(Some)
     }
 
     /// Client build version, e.g. `16.21.829.8620`.
@@ -115,5 +116,44 @@ impl LcuHttp {
             .await?
             .error_for_status()?;
         Ok(resp.json().await?)
+    }
+}
+
+/// A successful GET's body as JSON. Some endpoints answer 200 or 204 with an
+/// empty body when they have nothing (seen live on 16.22:
+/// `/lol-ranked/v1/current-lp-change-notification`,
+/// `/lol-gameflow/v1/spectate/delayed-launch`); that's `null`, not an error.
+/// A body that isn't JSON is an error naming only its size, never its content.
+fn decode_body(body: &[u8]) -> Result<Value, TransportError> {
+    if body.iter().all(u8::is_ascii_whitespace) {
+        return Ok(Value::Null);
+    }
+    serde_json::from_slice(body).map_err(|e| {
+        TransportError::Unexpected(format!("body of {} bytes isn't JSON: {e}", body.len()))
+    })
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use serde_json::json;
+
+    #[test]
+    fn empty_body_is_null() {
+        assert_eq!(decode_body(b"").unwrap(), Value::Null);
+        assert_eq!(decode_body(b" \r\n").unwrap(), Value::Null);
+    }
+
+    #[test]
+    fn json_body_parses() {
+        assert_eq!(decode_body(br#"{"a":1}"#).unwrap(), json!({"a": 1}));
+        assert_eq!(decode_body(b"null").unwrap(), Value::Null);
+    }
+
+    #[test]
+    fn non_json_body_errors_without_echoing_it() {
+        let err = decode_body(b"secret-ish text").unwrap_err().to_string();
+        assert!(err.contains("15 bytes"), "{err}");
+        assert!(!err.contains("secret"), "{err}");
     }
 }
