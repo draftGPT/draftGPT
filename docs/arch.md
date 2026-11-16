@@ -29,6 +29,7 @@ draftGPT/
 │   │   ├── logging         console + <out>/<binary>.log
 │   │   └── fsutil          atomic writes
 │   ├── devserver/          axum dev server, 127.0.0.1 + same-origin only
+│   │   ├── AGENTS.md       capture sessions: running, fixing, recordings → fixtures
 │   │   ├── (main)          --replay FILE --speed N|instant: Replay instead of Live
 │   │   ├── api             status · ws events · capture start/stop/auto ·
 │   │   │                   captures list/download
