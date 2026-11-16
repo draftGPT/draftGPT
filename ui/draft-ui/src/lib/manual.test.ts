@@ -28,7 +28,7 @@ describe("manual draft", () => {
     expect([...taken(d)]).toEqual([103]);
   });
 
-  it("keeps bans dense: setting a later spot fills the gap, clearing the last drops it", () => {
+  it("fills gaps before a later ban with empty bans and drops empty bans at the end", () => {
     let d = setBan(newManualDraft(), "ally", 2, 1);
     expect(d.bans.ally.map((b) => b.champion)).toEqual([null, null, 1]);
     d = setBan(d, "ally", 2, null);

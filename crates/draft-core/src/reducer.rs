@@ -16,6 +16,10 @@
 //! - In planning every ban action is "in progress"; that isn't a turn.
 //! - Clients before about 2020 don't send `isInProgress`; there the current
 //!   turn is the first group of actions with unfinished bans or picks.
+//! - The client doesn't refresh `timer` on every session update: the same
+//!   `adjustedTimeLeftInPhase` comes with later updates, measured at the same
+//!   `internalNowInEpochMs`. The tracker counts time from when it first saw
+//!   that measurement.
 //! - Champ select ends without a delete of the main session URI: the
 //!   team-builder copy is deleted, then the gameflow phase leaves
 //!   `ChampSelect`. Either ends the draft. Old recordings only have the main
@@ -77,6 +81,10 @@ pub fn from_session(s: &ChampSelectSession) -> DraftState {
 pub struct Tracker {
     session: Option<ChampSelectSession>,
     offered: SubsetChampionList,
+    /// The timer measurement in the session (`internalNowInEpochMs`) and the
+    /// event time it first arrived at, and the latest session event's time.
+    timer_seen: Option<(i64, u64)>,
+    last_t: u64,
 }
 
 impl Tracker {
@@ -91,8 +99,13 @@ impl Tracker {
         let gone = ev.kind == EventKind::Delete || ev.data.is_null();
         match ev.uri.as_str() {
             SESSION_URI | TEAM_BUILDER_SESSION_URI if gone => self.end(),
-            SESSION_URI => match types::parse(&ev.data) {
+            SESSION_URI => match types::parse::<ChampSelectSession>(&ev.data) {
                 Ok(s) => {
+                    let measured = s.timer.internal_now_in_epoch_ms;
+                    if self.timer_seen.is_none_or(|(m, _)| m != measured) {
+                        self.timer_seen = Some((measured, ev.t));
+                    }
+                    self.last_t = ev.t;
                     self.session = Some(s);
                     true
                 }
@@ -116,6 +129,7 @@ impl Tracker {
 
     fn end(&mut self) -> bool {
         self.offered.clear();
+        self.timer_seen = None;
         self.session.take().is_some()
     }
 
@@ -123,6 +137,10 @@ impl Tracker {
     pub fn state(&self) -> Option<DraftState> {
         let mut d = from_session(self.session.as_ref()?);
         d.offered.clone_from(&self.offered);
+        if let (Some(left), Some((_, seen))) = (d.timer.remaining_ms.as_mut(), self.timer_seen) {
+            let since = i64::try_from(self.last_t.saturating_sub(seen)).unwrap_or(i64::MAX);
+            *left = left.saturating_sub(since).max(0);
+        }
         Some(d)
     }
 }
@@ -429,5 +447,28 @@ mod tests {
         }));
         let t = from_session(&s).turn.unwrap();
         assert_eq!((t.kind, t.cells), (TurnKind::Ban, vec![5]));
+    }
+
+    #[test]
+    fn a_repeated_timer_measurement_counts_down_from_when_it_was_first_seen() {
+        let session = |t: u64, measured: i64, left: i64| RawEvent {
+            t,
+            uri: SESSION_URI.into(),
+            kind: EventKind::Update,
+            data: json!({"timer": {"phase": "BAN_PICK", "internalNowInEpochMs": measured,
+                                   "adjustedTimeLeftInPhase": left}}),
+        };
+        let left = |tr: &Tracker| tr.state().unwrap().timer.remaining_ms;
+        let mut tr = Tracker::new();
+        tr.apply(&session(1_000, 500, 34_000));
+        assert_eq!(left(&tr), Some(34_000));
+        // Same measurement four seconds later: four seconds less left.
+        tr.apply(&session(5_000, 500, 34_000));
+        assert_eq!(left(&tr), Some(30_000));
+        // A new measurement is taken as is.
+        tr.apply(&session(7_000, 6_400, 28_000));
+        assert_eq!(left(&tr), Some(28_000));
+        tr.apply(&session(99_000, 6_400, 28_000));
+        assert_eq!(left(&tr), Some(0));
     }
 }

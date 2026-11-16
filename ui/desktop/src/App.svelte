@@ -17,6 +17,7 @@
 
   source
     ?.start((u) => {
+      if (update && u.seq <= update.seq) return;
       update = u;
       receivedAt = Date.now();
     })

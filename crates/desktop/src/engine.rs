@@ -2,6 +2,7 @@
 //! page. The same loop serves the live client and replays.
 
 use std::sync::Mutex;
+use std::time::Instant;
 
 use draft_core::{DraftState, Recommendations, Recommender, StatsRecommender, Tracker};
 use futures::StreamExt;
@@ -12,6 +13,9 @@ use serde::Serialize;
 #[derive(Debug, Clone, Default, PartialEq, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Update {
+    /// Increases with every update; the page ignores one older than it has.
+    pub seq: u64,
+    /// The draft, its timer counted down to when this update was sent.
     pub draft: Option<DraftState>,
     pub recs: Option<Recommendations>,
     /// Connection state in words.
@@ -23,32 +27,74 @@ pub struct Update {
 }
 
 /// The latest update, shared by the engine, the commands and the dock.
-#[derive(Debug, Default)]
+#[derive(Debug)]
 pub struct Shared {
-    latest: Mutex<Update>,
+    inner: Mutex<Inner>,
+}
+
+#[derive(Debug)]
+struct Inner {
+    update: Update,
+    /// When `update.draft` last changed: its timer is as of then.
+    drafted_at: Instant,
+}
+
+impl Inner {
+    /// The update as of now: the timer has kept running since the draft came.
+    fn current(&self) -> Update {
+        let mut u = self.update.clone();
+        let since = i64::try_from(self.drafted_at.elapsed().as_millis()).unwrap_or(i64::MAX);
+        if let Some(left) = u.draft.as_mut().and_then(|d| d.timer.remaining_ms.as_mut()) {
+            *left = left.saturating_sub(since).max(0);
+        }
+        u
+    }
 }
 
 impl Shared {
     pub fn new(floating: bool, status: &str) -> Self {
         Self {
-            latest: Mutex::new(Update {
-                status: status.to_string(),
-                floating,
-                can_dock: cfg!(windows),
-                ..Update::default()
+            inner: Mutex::new(Inner {
+                update: Update {
+                    status: status.to_string(),
+                    floating,
+                    can_dock: cfg!(windows),
+                    ..Update::default()
+                },
+                drafted_at: Instant::now(),
             }),
         }
     }
 
+    /// The latest update, timer counted down to now.
     pub fn latest(&self) -> Update {
-        lock(&self.latest).clone()
+        lock(&self.inner).current()
     }
 
-    /// Changes the latest update and returns the new one.
+    /// The draft as the engine last set it (timer as received).
+    pub fn draft(&self) -> Option<DraftState> {
+        lock(&self.inner).update.draft.clone()
+    }
+
+    pub fn has_draft(&self) -> bool {
+        lock(&self.inner).update.draft.is_some()
+    }
+
+    pub fn floating(&self) -> bool {
+        lock(&self.inner).update.floating
+    }
+
+    /// Changes the latest update and returns it as of now, with the next
+    /// sequence number.
     pub fn change(&self, f: impl FnOnce(&mut Update)) -> Update {
-        let mut u = lock(&self.latest);
-        f(&mut u);
-        u.clone()
+        let mut inner = lock(&self.inner);
+        let before = inner.update.draft.clone();
+        f(&mut inner.update);
+        if inner.update.draft != before {
+            inner.drafted_at = Instant::now();
+        }
+        inner.update.seq += 1;
+        inner.current()
     }
 }
 
@@ -101,7 +147,7 @@ impl Engine {
                     return None;
                 }
                 let draft = self.tracker.state();
-                if draft == shared.latest().draft {
+                if draft == shared.draft() {
                     return None;
                 }
                 let recs = draft.as_ref().map(|d| self.recommender.recommend(d));
@@ -191,5 +237,22 @@ mod tests {
         let u = engine.handle(&gone, &shared).unwrap();
         assert_eq!((u.draft, u.status.as_str()), (None, "League client closed"));
         assert!(!u.floating);
+    }
+
+    #[test]
+    fn the_timer_keeps_running_for_resent_updates_and_seq_increases() {
+        let shared = Shared::new(true, "x");
+        let mut d = DraftState::default();
+        d.timer.remaining_ms = Some(30_000);
+        let first = shared.change(|u| u.draft = Some(d.clone()));
+        std::thread::sleep(std::time::Duration::from_millis(60));
+        // Re-sent without a new draft (e.g. the float toggle): time has passed.
+        let again = shared.change(|u| u.floating = false);
+        let left = again.draft.unwrap().timer.remaining_ms.unwrap();
+        assert!(left <= 29_940, "{left}");
+        assert!(again.seq > first.seq);
+        // The same draft set again doesn't restart the clock.
+        let same = shared.change(|u| u.draft = Some(d.clone()));
+        assert!(same.draft.unwrap().timer.remaining_ms.unwrap() <= 29_940);
     }
 }

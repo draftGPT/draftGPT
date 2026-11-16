@@ -39,6 +39,31 @@ expression: states
       picking: false
   enemy: []
   bans:
+    ally: []
+    enemy: []
+  turn:
+    kind: ban
+    cells:
+      - 0
+    yours: true
+  timer:
+    remainingMs: 22813
+    totalMs: 30841
+  bench: []
+  offered: []
+  rerollsRemaining: ~
+- phase: banPick
+  queueId: ~
+  spectating: false
+  ally:
+    - cellId: 0
+      isLocal: true
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+  enemy: []
+  bans:
     ally:
       - champion: 103
         cellId: 0
@@ -69,6 +94,33 @@ expression: states
     ally:
       - champion: 103
         cellId: 0
+    enemy: []
+  turn:
+    kind: ban
+    cells:
+      - 0
+    yours: true
+  timer:
+    remainingMs: 21916
+    totalMs: 30841
+  bench: []
+  offered: []
+  rerollsRemaining: ~
+- phase: banPick
+  queueId: ~
+  spectating: false
+  ally:
+    - cellId: 0
+      isLocal: true
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+  enemy: []
+  bans:
+    ally:
+      - champion: 103
+        cellId: 0
       - champion: 202
         cellId: 0
     enemy: []
@@ -79,6 +131,35 @@ expression: states
     yours: true
   timer:
     remainingMs: 27906
+    totalMs: 30841
+  bench: []
+  offered: []
+  rerollsRemaining: ~
+- phase: banPick
+  queueId: ~
+  spectating: false
+  ally:
+    - cellId: 0
+      isLocal: true
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+  enemy: []
+  bans:
+    ally:
+      - champion: 103
+        cellId: 0
+      - champion: 202
+        cellId: 0
+    enemy: []
+  turn:
+    kind: ban
+    cells:
+      - 0
+    yours: true
+  timer:
+    remainingMs: 23905
     totalMs: 30841
   bench: []
   offered: []

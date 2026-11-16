@@ -51,8 +51,11 @@
       const empty = draft[s.side].find((x) => x.champion == null);
       return empty ? { ...s, cellId: empty.cellId } : null;
     }
-    const filled = draft.bans[s.side].filter((b) => b.champion != null).length;
-    return filled < MAX_BANS ? { ...s, index: Math.min(filled, MAX_BANS - 1) } : null;
+    const bans = draft.bans[s.side];
+    for (let i = 0; i < MAX_BANS; i++) {
+      if (bans[i]?.champion == null) return { ...s, index: i };
+    }
+    return null;
   }
 
   function onRecPick(champion: number, kind: "pick" | "ban") {

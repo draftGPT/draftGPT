@@ -7,19 +7,21 @@
     bans: Ban[];
     champions: Champions;
     side: "ally" | "enemy";
+    /** Accessible name, e.g. "Your bans" or "Blue side bans". */
+    label: string;
     /** Empty ban spots to show; manual input fills them. */
     slots?: number;
     selectedIndex?: number | null;
     onBanClick?: (index: number) => void;
   };
-  let { bans, champions, side, slots = 0, selectedIndex = null, onBanClick }: Props = $props();
+  let { bans, champions, side, label, slots = 0, selectedIndex = null, onBanClick }: Props = $props();
 
   const spots = $derived(
     Array.from({ length: Math.max(slots, bans.length) }, (_, i) => bans[i] ?? null),
   );
 </script>
 
-<div class="bans {side}" aria-label="{side === 'ally' ? 'Your' : 'Enemy'} bans">
+<div class="bans {side}" role="group" aria-label={label}>
   {#each spots as ban, i (i)}
     {#if onBanClick}
       <button

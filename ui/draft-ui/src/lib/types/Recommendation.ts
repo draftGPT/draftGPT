@@ -3,6 +3,7 @@ import type { Reason } from "./Reason";
 
 export type Recommendation = { champion: number, 
 /**
- * Estimated win rate, 0..1.
+ * Picks: estimated win rate, 0..1. Bans: a ranking value (win rate plus
+ * threat and ban rate), only meaningful for ordering.
  */
 score: number, reasons: Array<Reason>, };

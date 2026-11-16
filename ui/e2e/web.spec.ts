@@ -78,3 +78,26 @@ test("reset clears the draft", async ({ page }) => {
   await page.getByRole("button", { name: "Reset" }).click();
   await expect(page.getByRole("region", { name: "Your team" })).not.toContainText("Ahri");
 });
+
+test("filling bans out of order never overwrites one already set", async ({ page }) => {
+  const bans = page.getByLabel("Your bans");
+  await bans.locator('[data-ban="2"]').click();
+  for (const name of ["Ahri", "Zed", "Lux"]) await pickChampion(page, name);
+  // Ahri went to spot 3, then the picker filled the first empty spots.
+  await expect(bans.locator('[data-ban="2"]')).toHaveAttribute("title", "Ahri");
+  await expect(bans.locator('[data-ban="0"]')).toHaveAttribute("title", "Zed");
+  await expect(bans.locator('[data-ban="1"]')).toHaveAttribute("title", "Lux");
+});
+
+test("a broken cached stats file is dropped and fetched again", async ({ page, request }) => {
+  const index = (await (await request.get(`${WEB}/stats/index.json`)).json()) as { latest: string; hash: string };
+  await page.evaluate(
+    ([key]) => localStorage.setItem(key!, "<!doctype html><title>not stats</title>"),
+    [`draftgpt.stats.${index.latest}.${index.hash}`],
+  );
+  await page.reload();
+  await expect(page.getByRole("region", { name: "Suggested picks" }).locator("[data-champion]").first()).toBeVisible();
+  await expect(page.getByRole("alert")).toHaveCount(0);
+  const cached = await page.evaluate((k) => localStorage.getItem(k), `draftgpt.stats.${index.latest}.${index.hash}`);
+  expect(cached?.startsWith("{")).toBe(true);
+});
