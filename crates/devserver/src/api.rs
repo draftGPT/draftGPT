@@ -139,7 +139,7 @@ async fn start(State(state): State<Arc<AppState>>, body: Option<Json<StartBody>>
         .unwrap_or_else(|| "manual".into());
     match state.start(&label) {
         Ok(info) => Json(info).into_response(),
-        Err(e @ CaptureError::AlreadyRecording(_)) => {
+        Err(e @ (CaptureError::AlreadyRecording(_) | CaptureError::Disabled(_))) => {
             api_error(StatusCode::CONFLICT, e.to_string())
         }
         Err(e) => api_error(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()),

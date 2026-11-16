@@ -56,9 +56,12 @@ function renderStatus(s) {
   $("rec-dot").className = r ? "dot rec" : "dot";
   $("rec").textContent = r
     ? `recording ${r.name} · ${r.events} events · ${r.wire_frames} wire frames${r.by_auto ? " (auto)" : ""}`
-    : "not recording";
-  $("start").disabled = !!r;
-  $("stop").disabled = !r;
+    : s.recording_disabled ? `not recording (${s.recording_disabled})` : "not recording";
+  const off = !!s.recording_disabled;
+  $("start").disabled = off || !!r;
+  $("stop").disabled = off || !r;
+  $("auto").disabled = off;
+  $("label").disabled = off;
   if (wasRecording && !r) loadFiles();
   wasRecording = !!r;
 }

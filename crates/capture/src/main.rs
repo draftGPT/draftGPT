@@ -38,7 +38,7 @@ enum Cmd {
         file: Option<PathBuf>,
     },
     /// Convert an RCVolus/lol-pick-ban-ui recording (.json) into a redacted
-    /// recording (.jsonl), then exit. Needs no client.
+    /// recording (.jsonl), then exit. Needs no client; never overwrites OUTPUT.
     ConvertRcvolus { input: PathBuf, output: PathBuf },
 }
 
@@ -137,7 +137,13 @@ fn convert_rcvolus(input: &Path, output: &Path) -> Result<(), BoxError> {
         std::fs::read_to_string(input).map_err(|e| format!("reading {}: {e}", input.display()))?;
     let (header, events) =
         rcvolus::convert(&text).map_err(|e| format!("{}: {e}", input.display()))?;
-    std::fs::write(output, rcvolus::to_jsonl(&header, &events))
+    // Never replace an existing file (such as a fixture) by accident.
+    let mut file = std::fs::OpenOptions::new()
+        .write(true)
+        .create_new(true)
+        .open(output)
+        .map_err(|e| format!("creating {}: {e}", output.display()))?;
+    std::io::Write::write_all(&mut file, rcvolus::to_jsonl(&header, &events).as_bytes())
         .map_err(|e| format!("writing {}: {e}", output.display()))?;
     println!("{} events → {}", events.len(), output.display());
     Ok(())

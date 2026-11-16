@@ -23,9 +23,13 @@ struct Harness {
 }
 
 async fn start(auto: bool) -> Harness {
+    serve(|dir| AppState::new(dir, auto, None)).await
+}
+
+async fn serve(make: impl FnOnce(&std::path::Path) -> Arc<AppState>) -> Harness {
     lcu::transport::tls::install_crypto_provider();
     let dir = tempfile::tempdir().unwrap();
-    let state: Arc<AppState> = AppState::new(dir.path(), auto, None);
+    let state = make(dir.path());
     let (tx, source) = ChannelSource::new(64);
     tokio::spawn(devserver::run_source(
         state.clone(),
@@ -333,4 +337,28 @@ async fn websocket_sends_redacted_state_then_live_events() {
     };
     let problem = live["problem"].as_str().unwrap();
     assert!(problem.contains("timer.phase"), "{problem}");
+}
+
+#[tokio::test]
+async fn replay_state_refuses_every_kind_of_recording() {
+    let h = serve(|dir| AppState::replay(dir)).await;
+    h.send(connected()).await;
+    let res = h
+        .post("/api/capture/start", Some(json!({"label": "x"})))
+        .await;
+    assert_eq!(res.status(), reqwest::StatusCode::CONFLICT);
+    let res = h
+        .http
+        .put(format!("{}/api/capture/auto", h.base))
+        .json(&json!({"on": true}))
+        .send()
+        .await
+        .unwrap();
+    assert_eq!(res.status(), reqwest::StatusCode::OK);
+    h.event(lcu::GAMEFLOW_PHASE_URI, json!("ChampSelect")).await;
+    let s = h.wait_status(|s| s["phase"] == "ChampSelect").await;
+    assert_eq!(s["auto"], json!(false));
+    assert!(s["recording"].is_null());
+    assert_eq!(s["recording_disabled"], json!("replaying a recording"));
+    assert_eq!(std::fs::read_dir(h._dir.path()).unwrap().count(), 0);
 }

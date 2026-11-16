@@ -3,10 +3,11 @@
 //! Theirs is one JSON object: `dataPoints`, the champ select session polled
 //! about once per second (`{isChampSelectActive, session, time}`, where
 //! `session` is the client's 404 error body outside champ select), and
-//! `summoners`, account details of the local player. We keep only the session:
-//! consecutive identical polls collapse into one event, and the first poll
-//! becomes the snapshot. `summoners` is dropped, everything else is redacted
-//! like a live recording.
+//! `summoners`, account details of the local player. We keep only the session.
+//! The recording starts at the first poll inside champ select, which becomes
+//! the snapshot (like a live recording, which never snapshots a missing
+//! session); consecutive identical polls collapse into one event. `summoners`
+//! is dropped, everything else is redacted like a live recording.
 
 use serde::Deserialize;
 use serde_json::Value;
@@ -25,6 +26,8 @@ pub enum ConvertError {
     Format(#[from] serde_json::Error),
     #[error("recording has no data points")]
     Empty,
+    #[error("recording never reaches champ select (no session in any data point)")]
+    NoSession,
     #[error("data point {index}: bad time `{time}`: {source}")]
     Time {
         index: usize,
@@ -57,12 +60,20 @@ impl DataPoint {
 /// Converts the text of an RCVolus recording into a header and redacted events.
 pub fn convert(json: &str) -> Result<(Header, Vec<RawEvent>), ConvertError> {
     let rec: Recording = serde_json::from_str(json)?;
-    let first = rec.data_points.first().ok_or(ConvertError::Empty)?;
-    let start = parse_time(0, &first.time)?;
+    if rec.data_points.is_empty() {
+        return Err(ConvertError::Empty);
+    }
+    let first = rec
+        .data_points
+        .iter()
+        .position(|dp| dp.session().is_some())
+        .ok_or(ConvertError::NoSession)?;
+    let start = parse_time(first, &rec.data_points[first].time)?;
     let mut redactor = Redactor::new();
     let mut events = Vec::new();
     let mut prev: Option<Option<&Value>> = None;
-    for (index, dp) in rec.data_points.iter().enumerate() {
+    let mut last_t = 0;
+    for (index, dp) in rec.data_points.iter().enumerate().skip(first) {
         let session = dp.session();
         let kind = match (prev, session) {
             (None, _) => EventKind::Snapshot,
@@ -74,12 +85,13 @@ pub fn convert(json: &str) -> Result<(Header, Vec<RawEvent>), ConvertError> {
         };
         prev = Some(session);
         let at = parse_time(index, &dp.time)?;
-        // Polls are in order; clamp in case a clock went backwards.
-        let t = u64::try_from(at.duration_since(start).as_millis()).unwrap_or(0);
+        // Polls are in order; never let a clock that went backwards reorder them.
+        let since_start = u64::try_from(at.duration_since(start).as_millis()).unwrap_or(0);
+        last_t = last_t.max(since_start);
         let mut data = session.cloned().unwrap_or(Value::Null);
         redactor.redact(&mut data);
         events.push(RawEvent {
-            t,
+            t: last_t,
             uri: SESSION_URI.to_string(),
             kind,
             data,
@@ -148,7 +160,7 @@ mod tests {
     }
 
     #[test]
-    fn polls_become_create_update_delete_with_duplicates_collapsed() {
+    fn starts_at_first_session_and_collapses_duplicate_polls() {
         let json = recording(&[
             (Value::Null, "2019-10-30T19:20:14.000Z"),
             (Value::Null, "2019-10-30T19:20:15.000Z"),
@@ -156,24 +168,40 @@ mod tests {
             (session(0), "2019-10-30T19:20:17.000Z"),
             (session(157), "2019-10-30T19:20:18.500Z"),
             (Value::Null, "2019-10-30T19:20:20.000Z"),
+            (Value::Null, "2019-10-30T19:20:21.000Z"),
+            (session(1), "2019-10-30T19:20:22.000Z"),
         ]);
         let (header, events) = convert(&json).unwrap();
         assert_eq!(header.label, LABEL);
         assert_eq!(header.client_version, None);
-        assert_eq!(header.started_at, "2019-10-30T19:20:14Z");
+        assert_eq!(header.started_at, "2019-10-30T19:20:16Z");
         let got: Vec<(u64, EventKind)> = events.iter().map(|e| (e.t, e.kind)).collect();
         assert_eq!(
             got,
             [
                 (0, EventKind::Snapshot),
-                (2_000, EventKind::Create),
-                (4_500, EventKind::Update),
-                (6_000, EventKind::Delete),
+                (2_500, EventKind::Update),
+                (4_000, EventKind::Delete),
+                (6_000, EventKind::Create),
             ]
         );
-        assert!(events[0].data.is_null() && events[3].data.is_null());
+        assert!(!events[0].data.is_null());
+        assert!(events[2].data.is_null());
         assert!(events.iter().all(|e| e.uri == SESSION_URI));
-        assert_eq!(events[2].data["actions"][0][0]["championId"], json!(157));
+        assert_eq!(events[1].data["actions"][0][0]["championId"], json!(157));
+    }
+
+    #[test]
+    fn times_never_go_backwards() {
+        let json = recording(&[
+            (session(0), "2019-10-30T19:20:10.000Z"),
+            (session(1), "2019-10-30T19:20:15.000Z"),
+            (session(2), "2019-10-30T19:20:12.000Z"),
+            (session(3), "2019-10-30T19:20:09.000Z"),
+        ]);
+        let (_, events) = convert(&json).unwrap();
+        let ts: Vec<u64> = events.iter().map(|e| e.t).collect();
+        assert_eq!(ts, [0, 5_000, 5_000, 5_000]);
     }
 
     #[test]
@@ -206,7 +234,9 @@ mod tests {
             convert(r#"{"dataPoints": []}"#),
             Err(ConvertError::Empty)
         ));
-        let bad_time = r#"{"dataPoints": [{"session": {}, "time": "yesterday"}]}"#;
+        let never = recording(&[(Value::Null, "2019-10-30T19:20:14.000Z")]);
+        assert!(matches!(convert(&never), Err(ConvertError::NoSession)));
+        let bad_time = r#"{"dataPoints": [{"session": {"actions": []}, "time": "yesterday"}]}"#;
         assert!(matches!(
             convert(bad_time),
             Err(ConvertError::Time { index: 0, .. })

@@ -32,6 +32,8 @@ pub struct Controller {
     latest: BTreeMap<String, RawEvent>,
     preroll: VecDeque<WireFrame>,
     active: Option<Active>,
+    /// Why recording is off, if it is (e.g. replaying a recording).
+    no_recording: Option<String>,
 }
 
 struct Active {
@@ -45,6 +47,8 @@ pub enum CaptureError {
     AlreadyRecording(String),
     #[error("recording file: {0}")]
     Io(#[from] io::Error),
+    #[error("recording is off: {0}")]
+    Disabled(String),
 }
 
 #[derive(Debug, Clone, Default, Serialize)]
@@ -66,6 +70,9 @@ pub struct Status {
     pub phase: GameflowPhase,
     pub auto: bool,
     pub recording: Option<RecordingStatus>,
+    /// Why recording is off, if it is; the page disables its controls.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub recording_disabled: Option<String>,
 }
 
 #[derive(Debug, Clone, Serialize)]
@@ -109,6 +116,17 @@ impl Controller {
             latest: BTreeMap::new(),
             preroll: VecDeque::with_capacity(WIRE_PREROLL),
             active: None,
+            no_recording: None,
+        }
+    }
+
+    /// A controller that never records, neither by hand nor automatically
+    /// (for sources that aren't a live client, such as a replay, whose
+    /// recordings would only copy the source and pass for live captures).
+    pub fn without_recording(dir: impl Into<PathBuf>, reason: impl Into<String>) -> Self {
+        Self {
+            no_recording: Some(reason.into()),
+            ..Self::new(dir, false)
         }
     }
 
@@ -126,6 +144,7 @@ impl Controller {
                 by_auto: a.by_auto,
                 wire_frames: a.recorder.wire_frames(),
             }),
+            recording_disabled: self.no_recording.clone(),
         }
     }
 
@@ -135,6 +154,13 @@ impl Controller {
     }
 
     pub fn set_auto(&mut self, enabled: bool) -> Vec<Notice> {
+        if let Some(reason) = &self.no_recording {
+            return if enabled {
+                vec![Notice::Error(format!("recording is off: {reason}"))]
+            } else {
+                Vec::new()
+            };
+        }
         self.auto_enabled = enabled;
         // Turning auto on while already in champ select starts right away.
         self.apply_auto()
@@ -216,6 +242,9 @@ impl Controller {
 
     /// Starts a manual recording. Auto mode never stops manual recordings.
     pub fn start(&mut self, label: &str) -> Result<RecordingInfo, CaptureError> {
+        if let Some(reason) = &self.no_recording {
+            return Err(CaptureError::Disabled(reason.clone()));
+        }
         if let Some(a) = &self.active {
             return Err(CaptureError::AlreadyRecording(
                 a.recorder.info().name.clone(),
@@ -524,5 +553,30 @@ mod tests {
         assert_eq!(c.latest().count(), 1);
         c.handle(&f.event(SESSION_URI, EventKind::Delete, json!(null)));
         assert_eq!(c.latest().count(), 0);
+    }
+
+    #[test]
+    fn without_recording_never_records() {
+        let dir = tempfile::tempdir().unwrap();
+        let mut c = Controller::without_recording(dir.path(), "replaying a recording");
+        let mut f = Feed::new();
+        c.handle(&connected());
+        assert!(matches!(c.start("x"), Err(CaptureError::Disabled(_))));
+        let notices = c.set_auto(true);
+        assert!(
+            matches!(notices.as_slice(), [Notice::Error(_)]),
+            "{notices:?}"
+        );
+        assert!(c.set_auto(false).is_empty());
+        // Champ select starts, which would trigger auto mode.
+        assert!(c.handle(&f.phase("ChampSelect")).is_empty());
+        c.handle(&f.session(1));
+        let st = c.status();
+        assert!(!st.auto && st.recording.is_none());
+        assert_eq!(
+            st.recording_disabled.as_deref(),
+            Some("replaying a recording")
+        );
+        assert_eq!(std::fs::read_dir(dir.path()).unwrap().count(), 0);
     }
 }
