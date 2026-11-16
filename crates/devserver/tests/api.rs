@@ -19,7 +19,7 @@ struct Harness {
     tx: mpsc::Sender<SourceEvent>,
     http: reqwest::Client,
     clock: AtomicU64,
-    _dir: tempfile::TempDir,
+    dir: tempfile::TempDir,
 }
 
 async fn start(auto: bool) -> Harness {
@@ -47,7 +47,7 @@ async fn serve(make: impl FnOnce(&std::path::Path) -> Arc<AppState>) -> Harness 
         tx,
         http: reqwest::Client::new(),
         clock: AtomicU64::new(1_000_000),
-        _dir: dir,
+        dir,
     }
 }
 
@@ -360,5 +360,5 @@ async fn replay_state_refuses_every_kind_of_recording() {
     assert_eq!(s["auto"], json!(false));
     assert!(s["recording"].is_null());
     assert_eq!(s["recording_disabled"], json!("replaying a recording"));
-    assert_eq!(std::fs::read_dir(h._dir.path()).unwrap().count(), 0);
+    assert_eq!(std::fs::read_dir(h.dir.path()).unwrap().count(), 0);
 }

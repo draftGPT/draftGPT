@@ -90,12 +90,13 @@ fn every_fixture_parses_is_redacted_and_typed() {
             EventKind::Snapshot,
             "{name}: starts with state"
         );
-        // Live never snapshots a missing resource, so neither may a fixture.
+        // Live never snapshots a session it got a 404 for, so neither may a
+        // fixture. (Other resources can be snapshotted as null: an empty 200.)
         assert!(
-            events
-                .iter()
-                .all(|e| e.kind != EventKind::Snapshot || !e.data.is_null()),
-            "{name}: null snapshot"
+            events.iter().all(|e| e.kind != EventKind::Snapshot
+                || !is_session_uri(&e.uri)
+                || !e.data.is_null()),
+            "{name}: null session snapshot"
         );
         assert!(
             events.windows(2).all(|w| w[0].t <= w[1].t),

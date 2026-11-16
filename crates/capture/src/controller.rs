@@ -154,12 +154,9 @@ impl Controller {
     }
 
     pub fn set_auto(&mut self, enabled: bool) -> Vec<Notice> {
-        if let Some(reason) = &self.no_recording {
-            return if enabled {
-                vec![Notice::Error(format!("recording is off: {reason}"))]
-            } else {
-                Vec::new()
-            };
+        // Auto stays off; the status says why (`recording_disabled`).
+        if self.no_recording.is_some() {
+            return Vec::new();
         }
         self.auto_enabled = enabled;
         // Turning auto on while already in champ select starts right away.
@@ -562,11 +559,7 @@ mod tests {
         let mut f = Feed::new();
         c.handle(&connected());
         assert!(matches!(c.start("x"), Err(CaptureError::Disabled(_))));
-        let notices = c.set_auto(true);
-        assert!(
-            matches!(notices.as_slice(), [Notice::Error(_)]),
-            "{notices:?}"
-        );
+        assert!(c.set_auto(true).is_empty());
         assert!(c.set_auto(false).is_empty());
         // Champ select starts, which would trigger auto mode.
         assert!(c.handle(&f.phase("ChampSelect")).is_empty());

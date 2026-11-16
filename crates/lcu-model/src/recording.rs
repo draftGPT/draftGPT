@@ -62,6 +62,8 @@ pub enum RecordingError {
     Io(#[from] std::io::Error),
     #[error("recording is empty (no header line)")]
     Empty,
+    #[error("recording format version {0} is newer than this build reads ({FORMAT_VERSION})")]
+    UnsupportedVersion(u32),
     #[error("line {line}: {source}")]
     Json {
         line: usize,
@@ -102,6 +104,14 @@ impl<R: BufRead, T: DeserializeOwned> Iterator for JsonLines<R, T> {
                 Ok(t) => t,
                 Err(e) => return Some(Err(e.into())),
             };
+            // A byte order mark (some Windows editors add one) isn't JSON.
+            let text = if self.line == 1 {
+                text.strip_prefix('\u{feff}')
+                    .map(str::to_owned)
+                    .unwrap_or(text)
+            } else {
+                text
+            };
             if text.trim().is_empty() {
                 continue;
             }
@@ -119,7 +129,10 @@ pub type Events<R> = JsonLines<R, RawEvent>;
 /// Reads a recording from any buffered reader: the header, then the events.
 pub fn read<R: BufRead>(reader: R) -> Result<(Header, Events<R>), RecordingError> {
     let mut lines = JsonLines::<R, Header>::new(reader);
-    let header = lines.next().ok_or(RecordingError::Empty)??;
+    let header: Header = lines.next().ok_or(RecordingError::Empty)??;
+    if header.format_version > FORMAT_VERSION {
+        return Err(RecordingError::UnsupportedVersion(header.format_version));
+    }
     let events = JsonLines {
         lines: lines.lines,
         line: lines.line,
@@ -223,6 +236,24 @@ mod tests {
     #[test]
     fn empty_is_an_error() {
         assert!(matches!(read("".as_bytes()), Err(RecordingError::Empty)));
+    }
+
+    #[test]
+    fn newer_format_versions_are_refused() {
+        let text = r#"{"format_version":99,"client_version":null,"started_at":"x","label":"l"}"#;
+        assert!(matches!(
+            read(text.as_bytes()),
+            Err(RecordingError::UnsupportedVersion(99))
+        ));
+    }
+
+    #[test]
+    fn a_byte_order_mark_is_ignored() {
+        let text = "\u{feff}{\"format_version\":1,\"client_version\":null,\"started_at\":\"x\",\"label\":\"l\"}\n\
+                    {\"t\":0,\"uri\":\"/x\",\"kind\":\"Snapshot\",\"data\":1}\n";
+        let (h, events) = read(text.as_bytes()).unwrap();
+        assert_eq!(h.label, "l");
+        assert_eq!(events.count(), 1);
     }
 
     #[test]
