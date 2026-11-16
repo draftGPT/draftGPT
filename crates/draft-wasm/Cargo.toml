@@ -6,8 +6,9 @@ license.workspace = true
 publish.workspace = true
 
 # draft-core for the browser: the web drafter calls the same recommender the
-# desktop app runs natively. Built by `npm run wasm` in ui/web (cargo build
-# --target wasm32-unknown-unknown + wasm-bindgen --target web).
+# desktop app runs natively. Built by `npm run wasm -w @draftgpt/web` in ui/
+# (ui/web/scripts/wasm.mjs: cargo build --target wasm32-unknown-unknown, then
+# wasm-bindgen --target web).
 
 [lib]
 crate-type = ["cdylib", "rlib"]
