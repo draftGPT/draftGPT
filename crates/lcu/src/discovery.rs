@@ -95,13 +95,16 @@ where
 }
 
 /// Install directories to look for a lockfile in, most specific first:
-/// `LEAGUE_DIR`, then the default Windows install path.
+/// `LEAGUE_DIR`, then the default Windows and macOS install paths.
 pub fn candidate_dirs() -> Vec<PathBuf> {
     let mut dirs = Vec::new();
     if let Some(dir) = std::env::var_os("LEAGUE_DIR") {
         dirs.push(PathBuf::from(dir));
     }
     dirs.push(PathBuf::from(r"C:\Riot Games\League of Legends"));
+    dirs.push(PathBuf::from(
+        "/Applications/League of Legends.app/Contents/LoL",
+    ));
     dirs
 }
 
