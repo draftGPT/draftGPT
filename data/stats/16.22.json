@@ -1,0 +1,13024 @@
+{
+ "patch": "16.22",
+ "mock": true,
+ "champions": [
+  {
+   "id": 266,
+   "banRate": 0.0524,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.4879,
+     "pickRate": 0.0051
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.5282,
+     "pickRate": 0.0583
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 14,
+     "delta": 0.0274
+    },
+    {
+     "champion": 24,
+     "delta": 0.0289
+    },
+    {
+     "champion": 38,
+     "delta": 0.025
+    },
+    {
+     "champion": 83,
+     "delta": -0.0013
+    },
+    {
+     "champion": 92,
+     "delta": 0.0232
+    },
+    {
+     "champion": 120,
+     "delta": -0.0445
+    },
+    {
+     "champion": 126,
+     "delta": 0.0021
+    },
+    {
+     "champion": 805,
+     "delta": -0.0068
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 42,
+     "delta": -0.0035
+    },
+    {
+     "champion": 51,
+     "delta": 0.0336
+    },
+    {
+     "champion": 150,
+     "delta": 0.0193
+    },
+    {
+     "champion": 350,
+     "delta": 0.0309
+    },
+    {
+     "champion": 429,
+     "delta": 0.0198
+    },
+    {
+     "champion": 777,
+     "delta": 0.0147
+    }
+   ]
+  },
+  {
+   "id": 103,
+   "banRate": 0.009,
+   "positions": [
+    {
+     "position": "middle",
+     "winRate": 0.4681,
+     "pickRate": 0.1186
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.4844,
+     "pickRate": 0.0345
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 10,
+     "delta": 0.0336
+    },
+    {
+     "champion": 17,
+     "delta": 0.0035
+    },
+    {
+     "champion": 64,
+     "delta": 0.0143
+    },
+    {
+     "champion": 85,
+     "delta": 0.0097
+    },
+    {
+     "champion": 147,
+     "delta": -0.0381
+    },
+    {
+     "champion": 161,
+     "delta": -0.0208
+    },
+    {
+     "champion": 799,
+     "delta": 0.0161
+    },
+    {
+     "champion": 893,
+     "delta": 0.0191
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 29,
+     "delta": 0.0332
+    },
+    {
+     "champion": 77,
+     "delta": 0.0347
+    },
+    {
+     "champion": 117,
+     "delta": -0.0065
+    },
+    {
+     "champion": 142,
+     "delta": 0.0016
+    },
+    {
+     "champion": 223,
+     "delta": 0.0027
+    },
+    {
+     "champion": 233,
+     "delta": 0.0024
+    }
+   ]
+  },
+  {
+   "id": 84,
+   "banRate": 0.002,
+   "positions": [
+    {
+     "position": "middle",
+     "winRate": 0.4817,
+     "pickRate": 0.0695
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.4838,
+     "pickRate": 0.0525
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 54,
+     "delta": -0.0321
+    },
+    {
+     "champion": 59,
+     "delta": 0.0201
+    },
+    {
+     "champion": 64,
+     "delta": 0.028
+    },
+    {
+     "champion": 72,
+     "delta": -0.0052
+    },
+    {
+     "champion": 105,
+     "delta": 0.0292
+    },
+    {
+     "champion": 115,
+     "delta": 0.0327
+    },
+    {
+     "champion": 517,
+     "delta": 0.043
+    },
+    {
+     "champion": 897,
+     "delta": -0.0212
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 15,
+     "delta": 0.0141
+    },
+    {
+     "champion": 38,
+     "delta": 0.0025
+    },
+    {
+     "champion": 79,
+     "delta": 0.0263
+    },
+    {
+     "champion": 120,
+     "delta": 0.0329
+    },
+    {
+     "champion": 122,
+     "delta": 0.0338
+    },
+    {
+     "champion": 517,
+     "delta": 0.0064
+    }
+   ]
+  },
+  {
+   "id": 166,
+   "banRate": 0.0603,
+   "positions": [
+    {
+     "position": "bottom",
+     "winRate": 0.5237,
+     "pickRate": 0.1014
+    },
+    {
+     "position": "middle",
+     "winRate": 0.4874,
+     "pickRate": 0.0066
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 15,
+     "delta": -0.0071
+    },
+    {
+     "champion": 30,
+     "delta": 0.0168
+    },
+    {
+     "champion": 34,
+     "delta": -0.0263
+    },
+    {
+     "champion": 63,
+     "delta": 0.0424
+    },
+    {
+     "champion": 69,
+     "delta": -0.0264
+    },
+    {
+     "champion": 85,
+     "delta": -0.0204
+    },
+    {
+     "champion": 161,
+     "delta": -0.0012
+    },
+    {
+     "champion": 901,
+     "delta": -0.0396
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 60,
+     "delta": 0.0292
+    },
+    {
+     "champion": 72,
+     "delta": -0.001
+    },
+    {
+     "champion": 81,
+     "delta": 0.033
+    },
+    {
+     "champion": 84,
+     "delta": 0.005
+    },
+    {
+     "champion": 221,
+     "delta": 0.0033
+    },
+    {
+     "champion": 246,
+     "delta": 0.0162
+    }
+   ]
+  },
+  {
+   "id": 12,
+   "banRate": 0.0767,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.5026,
+     "pickRate": 0.0813
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.5197,
+     "pickRate": 0.0269
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 14,
+     "delta": 0.0024
+    },
+    {
+     "champion": 54,
+     "delta": -0.004
+    },
+    {
+     "champion": 58,
+     "delta": 0.0206
+    },
+    {
+     "champion": 92,
+     "delta": 0.0176
+    },
+    {
+     "champion": 102,
+     "delta": -0.0339
+    },
+    {
+     "champion": 234,
+     "delta": -0.0054
+    },
+    {
+     "champion": 799,
+     "delta": 0.0402
+    },
+    {
+     "champion": 887,
+     "delta": -0.0406
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 10,
+     "delta": 0.0045
+    },
+    {
+     "champion": 27,
+     "delta": -0.0038
+    },
+    {
+     "champion": 41,
+     "delta": 0.0326
+    },
+    {
+     "champion": 268,
+     "delta": -0.0012
+    },
+    {
+     "champion": 804,
+     "delta": 0.021
+    },
+    {
+     "champion": 888,
+     "delta": 0.023
+    }
+   ]
+  },
+  {
+   "id": 799,
+   "banRate": 0.0293,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.5148,
+     "pickRate": 0.117
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.5098,
+     "pickRate": 0.0592
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 2,
+     "delta": 0.0405
+    },
+    {
+     "champion": 35,
+     "delta": -0.0307
+    },
+    {
+     "champion": 53,
+     "delta": 0.0324
+    },
+    {
+     "champion": 120,
+     "delta": -0.0397
+    },
+    {
+     "champion": 201,
+     "delta": 0.0111
+    },
+    {
+     "champion": 266,
+     "delta": -0.0315
+    },
+    {
+     "champion": 412,
+     "delta": 0.0065
+    },
+    {
+     "champion": 805,
+     "delta": -0.0319
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 13,
+     "delta": 0.0338
+    },
+    {
+     "champion": 33,
+     "delta": -0.0043
+    },
+    {
+     "champion": 42,
+     "delta": -0.0011
+    },
+    {
+     "champion": 163,
+     "delta": 0.0085
+    },
+    {
+     "champion": 432,
+     "delta": 0.0088
+    },
+    {
+     "champion": 950,
+     "delta": -0.0036
+    }
+   ]
+  },
+  {
+   "id": 32,
+   "banRate": 0.0434,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.5199,
+     "pickRate": 0.1015
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.5196,
+     "pickRate": 0.0141
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 6,
+     "delta": -0.0298
+    },
+    {
+     "champion": 7,
+     "delta": -0.0059
+    },
+    {
+     "champion": 35,
+     "delta": 0.0174
+    },
+    {
+     "champion": 64,
+     "delta": -0.0369
+    },
+    {
+     "champion": 111,
+     "delta": -0.0117
+    },
+    {
+     "champion": 122,
+     "delta": -0.0051
+    },
+    {
+     "champion": 154,
+     "delta": 0.0053
+    },
+    {
+     "champion": 245,
+     "delta": 0.0147
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 9,
+     "delta": 0.0095
+    },
+    {
+     "champion": 40,
+     "delta": 0.0044
+    },
+    {
+     "champion": 50,
+     "delta": -0.006
+    },
+    {
+     "champion": 246,
+     "delta": -0.0047
+    },
+    {
+     "champion": 360,
+     "delta": -0.0038
+    },
+    {
+     "champion": 902,
+     "delta": 0.0325
+    }
+   ]
+  },
+  {
+   "id": 34,
+   "banRate": 0.0567,
+   "positions": [
+    {
+     "position": "middle",
+     "winRate": 0.4697,
+     "pickRate": 0.0223
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 10,
+     "delta": 0.0258
+    },
+    {
+     "champion": 42,
+     "delta": 0.0041
+    },
+    {
+     "champion": 85,
+     "delta": 0.0327
+    },
+    {
+     "champion": 105,
+     "delta": -0.039
+    },
+    {
+     "champion": 161,
+     "delta": 0.0402
+    },
+    {
+     "champion": 517,
+     "delta": 0.0276
+    },
+    {
+     "champion": 893,
+     "delta": 0.0129
+    },
+    {
+     "champion": 902,
+     "delta": 0.0384
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 17,
+     "delta": 0.0156
+    },
+    {
+     "champion": 39,
+     "delta": 0.0326
+    },
+    {
+     "champion": 51,
+     "delta": 0.0062
+    },
+    {
+     "champion": 75,
+     "delta": 0.0278
+    },
+    {
+     "champion": 143,
+     "delta": 0.0106
+    },
+    {
+     "champion": 161,
+     "delta": 0.0097
+    }
+   ]
+  },
+  {
+   "id": 1,
+   "banRate": 0.0029,
+   "positions": [
+    {
+     "position": "middle",
+     "winRate": 0.5075,
+     "pickRate": 0.1078
+    },
+    {
+     "position": "utility",
+     "winRate": 0.5018,
+     "pickRate": 0.052
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 9,
+     "delta": 0.0269
+    },
+    {
+     "champion": 34,
+     "delta": 0.017
+    },
+    {
+     "champion": 40,
+     "delta": 0.0024
+    },
+    {
+     "champion": 85,
+     "delta": 0.0287
+    },
+    {
+     "champion": 90,
+     "delta": 0.0018
+    },
+    {
+     "champion": 96,
+     "delta": -0.0396
+    },
+    {
+     "champion": 112,
+     "delta": -0.0364
+    },
+    {
+     "champion": 711,
+     "delta": 0.0343
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 12,
+     "delta": 0.0321
+    },
+    {
+     "champion": 17,
+     "delta": 0.0119
+    },
+    {
+     "champion": 51,
+     "delta": 0.0232
+    },
+    {
+     "champion": 92,
+     "delta": 0.0115
+    },
+    {
+     "champion": 120,
+     "delta": 0.0226
+    },
+    {
+     "champion": 246,
+     "delta": 0.0071
+    }
+   ]
+  },
+  {
+   "id": 523,
+   "banRate": 0.0728,
+   "positions": [
+    {
+     "position": "bottom",
+     "winRate": 0.4958,
+     "pickRate": 0.0442
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 21,
+     "delta": 0.0341
+    },
+    {
+     "champion": 51,
+     "delta": 0.0428
+    },
+    {
+     "champion": 81,
+     "delta": -0.0222
+    },
+    {
+     "champion": 96,
+     "delta": 0.0135
+    },
+    {
+     "champion": 133,
+     "delta": -0.0076
+    },
+    {
+     "champion": 236,
+     "delta": -0.0392
+    },
+    {
+     "champion": 498,
+     "delta": -0.0414
+    },
+    {
+     "champion": 804,
+     "delta": -0.0232
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 50,
+     "delta": 0.0091
+    },
+    {
+     "champion": 51,
+     "delta": 0.0272
+    },
+    {
+     "champion": 59,
+     "delta": 0.0123
+    },
+    {
+     "champion": 89,
+     "delta": 0.0301
+    },
+    {
+     "champion": 145,
+     "delta": 0.004
+    },
+    {
+     "champion": 223,
+     "delta": -0.0061
+    }
+   ]
+  },
+  {
+   "id": 22,
+   "banRate": 0.0469,
+   "positions": [
+    {
+     "position": "bottom",
+     "winRate": 0.4742,
+     "pickRate": 0.0924
+    },
+    {
+     "position": "utility",
+     "winRate": 0.5045,
+     "pickRate": 0.0027
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 21,
+     "delta": -0.0292
+    },
+    {
+     "champion": 40,
+     "delta": -0.0299
+    },
+    {
+     "champion": 63,
+     "delta": -0.0054
+    },
+    {
+     "champion": 145,
+     "delta": 0.0422
+    },
+    {
+     "champion": 236,
+     "delta": 0.0344
+    },
+    {
+     "champion": 350,
+     "delta": 0.0423
+    },
+    {
+     "champion": 901,
+     "delta": -0.0051
+    },
+    {
+     "champion": 902,
+     "delta": 0.0336
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 12,
+     "delta": -0.0079
+    },
+    {
+     "champion": 25,
+     "delta": 0.0339
+    },
+    {
+     "champion": 32,
+     "delta": -0.008
+    },
+    {
+     "champion": 99,
+     "delta": 0.0064
+    },
+    {
+     "champion": 115,
+     "delta": 0.0235
+    },
+    {
+     "champion": 895,
+     "delta": 0.0063
+    }
+   ]
+  },
+  {
+   "id": 136,
+   "banRate": 0.0107,
+   "positions": [
+    {
+     "position": "middle",
+     "winRate": 0.4988,
+     "pickRate": 0.0647
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 18,
+     "delta": 0.0261
+    },
+    {
+     "champion": 30,
+     "delta": 0.0128
+    },
+    {
+     "champion": 105,
+     "delta": -0.0441
+    },
+    {
+     "champion": 121,
+     "delta": -0.0445
+    },
+    {
+     "champion": 142,
+     "delta": 0.0241
+    },
+    {
+     "champion": 145,
+     "delta": 0.0185
+    },
+    {
+     "champion": 161,
+     "delta": -0.0213
+    },
+    {
+     "champion": 238,
+     "delta": -0.0337
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 2,
+     "delta": 0.0117
+    },
+    {
+     "champion": 25,
+     "delta": -0.0075
+    },
+    {
+     "champion": 63,
+     "delta": 0.0231
+    },
+    {
+     "champion": 134,
+     "delta": 0.0189
+    },
+    {
+     "champion": 145,
+     "delta": 0.0129
+    },
+    {
+     "champion": 888,
+     "delta": 0.0204
+    }
+   ]
+  },
+  {
+   "id": 893,
+   "banRate": 0.0262,
+   "positions": [
+    {
+     "position": "middle",
+     "winRate": 0.4778,
+     "pickRate": 0.0833
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.5142,
+     "pickRate": 0.0275
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 30,
+     "delta": 0.0299
+    },
+    {
+     "champion": 56,
+     "delta": 0.0249
+    },
+    {
+     "champion": 79,
+     "delta": -0.0157
+    },
+    {
+     "champion": 131,
+     "delta": 0.017
+    },
+    {
+     "champion": 166,
+     "delta": -0.0371
+    },
+    {
+     "champion": 268,
+     "delta": 0.0403
+    },
+    {
+     "champion": 350,
+     "delta": 0.0323
+    },
+    {
+     "champion": 526,
+     "delta": -0.0171
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 10,
+     "delta": -0.0026
+    },
+    {
+     "champion": 53,
+     "delta": 0.0043
+    },
+    {
+     "champion": 64,
+     "delta": 0.0194
+    },
+    {
+     "champion": 68,
+     "delta": 0.025
+    },
+    {
+     "champion": 127,
+     "delta": 0.0129
+    },
+    {
+     "champion": 236,
+     "delta": 0.0037
+    }
+   ]
+  },
+  {
+   "id": 268,
+   "banRate": 0.1198,
+   "positions": [
+    {
+     "position": "middle",
+     "winRate": 0.5287,
+     "pickRate": 0.0755
+    },
+    {
+     "position": "bottom",
+     "winRate": 0.5066,
+     "pickRate": 0.051
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 4,
+     "delta": -0.0293
+    },
+    {
+     "champion": 25,
+     "delta": 0.0303
+    },
+    {
+     "champion": 34,
+     "delta": -0.0204
+    },
+    {
+     "champion": 69,
+     "delta": -0.0204
+    },
+    {
+     "champion": 103,
+     "delta": -0.026
+    },
+    {
+     "champion": 145,
+     "delta": 0.0246
+    },
+    {
+     "champion": 245,
+     "delta": 0.0226
+    },
+    {
+     "champion": 429,
+     "delta": -0.0211
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 59,
+     "delta": 0.0194
+    },
+    {
+     "champion": 90,
+     "delta": 0.0222
+    },
+    {
+     "champion": 111,
+     "delta": 0.0256
+    },
+    {
+     "champion": 235,
+     "delta": 0.0007
+    },
+    {
+     "champion": 267,
+     "delta": 0.0055
+    },
+    {
+     "champion": 876,
+     "delta": -0.0064
+    }
+   ]
+  },
+  {
+   "id": 432,
+   "banRate": 0.1141,
+   "positions": [
+    {
+     "position": "utility",
+     "winRate": 0.4701,
+     "pickRate": 0.0246
+    },
+    {
+     "position": "middle",
+     "winRate": 0.4863,
+     "pickRate": 0.029
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 4,
+     "delta": -0.0431
+    },
+    {
+     "champion": 42,
+     "delta": 0.0436
+    },
+    {
+     "champion": 85,
+     "delta": 0.023
+    },
+    {
+     "champion": 127,
+     "delta": 0.0254
+    },
+    {
+     "champion": 134,
+     "delta": -0.0382
+    },
+    {
+     "champion": 268,
+     "delta": 0.0352
+    },
+    {
+     "champion": 412,
+     "delta": -0.037
+    },
+    {
+     "champion": 497,
+     "delta": 0.0113
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 21,
+     "delta": 0.0156
+    },
+    {
+     "champion": 82,
+     "delta": 0.0186
+    },
+    {
+     "champion": 96,
+     "delta": -0.0073
+    },
+    {
+     "champion": 103,
+     "delta": -0.0041
+    },
+    {
+     "champion": 202,
+     "delta": 0.0128
+    },
+    {
+     "champion": 902,
+     "delta": 0.0055
+    }
+   ]
+  },
+  {
+   "id": 200,
+   "banRate": 0.1072,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.5326,
+     "pickRate": 0.0968
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.4855,
+     "pickRate": 0.0343
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 11,
+     "delta": 0.0025
+    },
+    {
+     "champion": 28,
+     "delta": -0.0321
+    },
+    {
+     "champion": 60,
+     "delta": -0.0144
+    },
+    {
+     "champion": 103,
+     "delta": 0.0036
+    },
+    {
+     "champion": 122,
+     "delta": -0.0389
+    },
+    {
+     "champion": 150,
+     "delta": -0.0062
+    },
+    {
+     "champion": 526,
+     "delta": 0.0399
+    },
+    {
+     "champion": 950,
+     "delta": -0.0335
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 43,
+     "delta": 0.0117
+    },
+    {
+     "champion": 45,
+     "delta": 0.0219
+    },
+    {
+     "champion": 107,
+     "delta": -0.006
+    },
+    {
+     "champion": 136,
+     "delta": 0.026
+    },
+    {
+     "champion": 163,
+     "delta": -0.0081
+    },
+    {
+     "champion": 360,
+     "delta": -0.0083
+    }
+   ]
+  },
+  {
+   "id": 53,
+   "banRate": 0.097,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.4625,
+     "pickRate": 0.0609
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.4659,
+     "pickRate": 0.0032
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 23,
+     "delta": -0.0263
+    },
+    {
+     "champion": 24,
+     "delta": -0.0145
+    },
+    {
+     "champion": 27,
+     "delta": -0.0349
+    },
+    {
+     "champion": 80,
+     "delta": -0.0326
+    },
+    {
+     "champion": 82,
+     "delta": -0.0122
+    },
+    {
+     "champion": 111,
+     "delta": 0.0388
+    },
+    {
+     "champion": 120,
+     "delta": 0.0212
+    },
+    {
+     "champion": 526,
+     "delta": 0.0183
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 42,
+     "delta": 0.0063
+    },
+    {
+     "champion": 117,
+     "delta": 0.0048
+    },
+    {
+     "champion": 127,
+     "delta": 0.0247
+    },
+    {
+     "champion": 133,
+     "delta": 0.0105
+    },
+    {
+     "champion": 240,
+     "delta": 0.006
+    },
+    {
+     "champion": 360,
+     "delta": 0.0191
+    }
+   ]
+  },
+  {
+   "id": 63,
+   "banRate": 0.1122,
+   "positions": [
+    {
+     "position": "middle",
+     "winRate": 0.4623,
+     "pickRate": 0.0357
+    },
+    {
+     "position": "utility",
+     "winRate": 0.466,
+     "pickRate": 0.0415
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 42,
+     "delta": 0.0294
+    },
+    {
+     "champion": 55,
+     "delta": -0.001
+    },
+    {
+     "champion": 147,
+     "delta": -0.0074
+    },
+    {
+     "champion": 202,
+     "delta": 0.0211
+    },
+    {
+     "champion": 235,
+     "delta": -0.0044
+    },
+    {
+     "champion": 432,
+     "delta": -0.0052
+    },
+    {
+     "champion": 805,
+     "delta": -0.0014
+    },
+    {
+     "champion": 902,
+     "delta": -0.0021
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 44,
+     "delta": 0.011
+    },
+    {
+     "champion": 53,
+     "delta": -0.008
+    },
+    {
+     "champion": 111,
+     "delta": 0.0332
+    },
+    {
+     "champion": 154,
+     "delta": 0.0021
+    },
+    {
+     "champion": 201,
+     "delta": 0.0177
+    },
+    {
+     "champion": 497,
+     "delta": 0.0276
+    }
+   ]
+  },
+  {
+   "id": 201,
+   "banRate": 0.1226,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.5291,
+     "pickRate": 0.0465
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.4584,
+     "pickRate": 0.0373
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 36,
+     "delta": 0.0168
+    },
+    {
+     "champion": 76,
+     "delta": 0.0063
+    },
+    {
+     "champion": 98,
+     "delta": 0.0437
+    },
+    {
+     "champion": 105,
+     "delta": 0.0089
+    },
+    {
+     "champion": 114,
+     "delta": -0.0065
+    },
+    {
+     "champion": 131,
+     "delta": 0.036
+    },
+    {
+     "champion": 164,
+     "delta": 0.0065
+    },
+    {
+     "champion": 777,
+     "delta": 0.0364
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 6,
+     "delta": 0.0009
+    },
+    {
+     "champion": 134,
+     "delta": 0.0151
+    },
+    {
+     "champion": 166,
+     "delta": 0.0132
+    },
+    {
+     "champion": 223,
+     "delta": 0.0155
+    },
+    {
+     "champion": 240,
+     "delta": 0.0242
+    },
+    {
+     "champion": 360,
+     "delta": -0.0058
+    }
+   ]
+  },
+  {
+   "id": 233,
+   "banRate": 0.0685,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.4686,
+     "pickRate": 0.0787
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.4859,
+     "pickRate": 0.011
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 3,
+     "delta": -0.0426
+    },
+    {
+     "champion": 19,
+     "delta": -0.0316
+    },
+    {
+     "champion": 59,
+     "delta": -0.0195
+    },
+    {
+     "champion": 84,
+     "delta": -0.0096
+    },
+    {
+     "champion": 122,
+     "delta": 0.0295
+    },
+    {
+     "champion": 254,
+     "delta": 0.0181
+    },
+    {
+     "champion": 421,
+     "delta": -0.0367
+    },
+    {
+     "champion": 805,
+     "delta": -0.0084
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 12,
+     "delta": -0.0017
+    },
+    {
+     "champion": 16,
+     "delta": 0.0028
+    },
+    {
+     "champion": 54,
+     "delta": 0.0006
+    },
+    {
+     "champion": 68,
+     "delta": 0.0214
+    },
+    {
+     "champion": 72,
+     "delta": 0.03
+    },
+    {
+     "champion": 142,
+     "delta": 0.0002
+    }
+   ]
+  },
+  {
+   "id": 51,
+   "banRate": 0.0001,
+   "positions": [
+    {
+     "position": "bottom",
+     "winRate": 0.4941,
+     "pickRate": 0.0157
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 22,
+     "delta": 0.0206
+    },
+    {
+     "champion": 133,
+     "delta": 0.0153
+    },
+    {
+     "champion": 203,
+     "delta": 0.0346
+    },
+    {
+     "champion": 221,
+     "delta": 0.0332
+    },
+    {
+     "champion": 236,
+     "delta": -0.001
+    },
+    {
+     "champion": 360,
+     "delta": 0.0392
+    },
+    {
+     "champion": 523,
+     "delta": -0.0308
+    },
+    {
+     "champion": 901,
+     "delta": -0.0359
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 24,
+     "delta": 0.0006
+    },
+    {
+     "champion": 57,
+     "delta": -0.0089
+    },
+    {
+     "champion": 62,
+     "delta": 0.0246
+    },
+    {
+     "champion": 103,
+     "delta": -0.0062
+    },
+    {
+     "champion": 122,
+     "delta": 0.0313
+    },
+    {
+     "champion": 200,
+     "delta": 0.0102
+    }
+   ]
+  },
+  {
+   "id": 164,
+   "banRate": 0.0114,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.5139,
+     "pickRate": 0.0996
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.505,
+     "pickRate": 0.0424
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 64,
+     "delta": -0.0384
+    },
+    {
+     "champion": 84,
+     "delta": -0.0007
+    },
+    {
+     "champion": 105,
+     "delta": 0.0401
+    },
+    {
+     "champion": 114,
+     "delta": 0.041
+    },
+    {
+     "champion": 121,
+     "delta": 0.0448
+    },
+    {
+     "champion": 122,
+     "delta": -0.0394
+    },
+    {
+     "champion": 131,
+     "delta": 0.0002
+    },
+    {
+     "champion": 245,
+     "delta": -0.0167
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 64,
+     "delta": -0.0096
+    },
+    {
+     "champion": 86,
+     "delta": 0.0171
+    },
+    {
+     "champion": 91,
+     "delta": -0.0027
+    },
+    {
+     "champion": 114,
+     "delta": 0.0289
+    },
+    {
+     "champion": 147,
+     "delta": -0.0075
+    },
+    {
+     "champion": 238,
+     "delta": 0.0122
+    }
+   ]
+  },
+  {
+   "id": 69,
+   "banRate": 0.0168,
+   "positions": [
+    {
+     "position": "middle",
+     "winRate": 0.5128,
+     "pickRate": 0.0577
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 74,
+     "delta": -0.01
+    },
+    {
+     "champion": 101,
+     "delta": 0.0342
+    },
+    {
+     "champion": 107,
+     "delta": -0.0269
+    },
+    {
+     "champion": 136,
+     "delta": -0.0424
+    },
+    {
+     "champion": 145,
+     "delta": 0.0039
+    },
+    {
+     "champion": 238,
+     "delta": -0.0356
+    },
+    {
+     "champion": 427,
+     "delta": 0.0374
+    },
+    {
+     "champion": 432,
+     "delta": -0.0159
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 3,
+     "delta": 0.0292
+    },
+    {
+     "champion": 23,
+     "delta": 0.0177
+    },
+    {
+     "champion": 24,
+     "delta": 0.0275
+    },
+    {
+     "champion": 107,
+     "delta": 0.0006
+    },
+    {
+     "champion": 420,
+     "delta": -0.0026
+    },
+    {
+     "champion": 526,
+     "delta": 0.0083
+    }
+   ]
+  },
+  {
+   "id": 31,
+   "banRate": 0.0294,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.5037,
+     "pickRate": 0.1187
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.4533,
+     "pickRate": 0.0277
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 8,
+     "delta": -0.0254
+    },
+    {
+     "champion": 20,
+     "delta": 0.0223
+    },
+    {
+     "champion": 36,
+     "delta": 0.0159
+    },
+    {
+     "champion": 44,
+     "delta": 0.0018
+    },
+    {
+     "champion": 60,
+     "delta": 0.0241
+    },
+    {
+     "champion": 91,
+     "delta": -0.0184
+    },
+    {
+     "champion": 92,
+     "delta": 0.0035
+    },
+    {
+     "champion": 897,
+     "delta": 0.0245
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 10,
+     "delta": 0.0251
+    },
+    {
+     "champion": 34,
+     "delta": 0.0191
+    },
+    {
+     "champion": 245,
+     "delta": 0.0317
+    },
+    {
+     "champion": 432,
+     "delta": -0.0092
+    },
+    {
+     "champion": 516,
+     "delta": 0.0348
+    },
+    {
+     "champion": 804,
+     "delta": 0.0294
+    }
+   ]
+  },
+  {
+   "id": 42,
+   "banRate": 0.0024,
+   "positions": [
+    {
+     "position": "bottom",
+     "winRate": 0.4825,
+     "pickRate": 0.0644
+    },
+    {
+     "position": "middle",
+     "winRate": 0.4782,
+     "pickRate": 0.0568
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 17,
+     "delta": -0.039
+    },
+    {
+     "champion": 43,
+     "delta": -0.0249
+    },
+    {
+     "champion": 61,
+     "delta": -0.037
+    },
+    {
+     "champion": 238,
+     "delta": -0.0064
+    },
+    {
+     "champion": 523,
+     "delta": 0.014
+    },
+    {
+     "champion": 555,
+     "delta": -0.028
+    },
+    {
+     "champion": 805,
+     "delta": -0.0106
+    },
+    {
+     "champion": 910,
+     "delta": -0.0066
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 26,
+     "delta": -0.0099
+    },
+    {
+     "champion": 57,
+     "delta": 0.0006
+    },
+    {
+     "champion": 60,
+     "delta": 0.005
+    },
+    {
+     "champion": 91,
+     "delta": 0.0008
+    },
+    {
+     "champion": 200,
+     "delta": 0.0343
+    },
+    {
+     "champion": 887,
+     "delta": 0.0324
+    }
+   ]
+  },
+  {
+   "id": 122,
+   "banRate": 0.0021,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.5113,
+     "pickRate": 0.0098
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.455,
+     "pickRate": 0.02
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 6,
+     "delta": -0.0081
+    },
+    {
+     "champion": 28,
+     "delta": -0.0023
+    },
+    {
+     "champion": 31,
+     "delta": 0.0157
+    },
+    {
+     "champion": 35,
+     "delta": 0.0289
+    },
+    {
+     "champion": 76,
+     "delta": -0.0173
+    },
+    {
+     "champion": 79,
+     "delta": 0.0425
+    },
+    {
+     "champion": 86,
+     "delta": 0.0387
+    },
+    {
+     "champion": 420,
+     "delta": 0.0214
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 84,
+     "delta": -0.0081
+    },
+    {
+     "champion": 96,
+     "delta": 0.0035
+    },
+    {
+     "champion": 103,
+     "delta": 0.0074
+    },
+    {
+     "champion": 110,
+     "delta": 0.0192
+    },
+    {
+     "champion": 518,
+     "delta": 0.0306
+    },
+    {
+     "champion": 904,
+     "delta": 0.0267
+    }
+   ]
+  },
+  {
+   "id": 131,
+   "banRate": 0.0105,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.526,
+     "pickRate": 0.0385
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.5011,
+     "pickRate": 0.0242
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 23,
+     "delta": 0.0067
+    },
+    {
+     "champion": 64,
+     "delta": -0.0284
+    },
+    {
+     "champion": 92,
+     "delta": -0.0421
+    },
+    {
+     "champion": 107,
+     "delta": 0.0319
+    },
+    {
+     "champion": 420,
+     "delta": 0.041
+    },
+    {
+     "champion": 421,
+     "delta": 0.036
+    },
+    {
+     "champion": 805,
+     "delta": 0.0189
+    },
+    {
+     "champion": 895,
+     "delta": -0.0042
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 2,
+     "delta": -0.0004
+    },
+    {
+     "champion": 75,
+     "delta": -0.0052
+    },
+    {
+     "champion": 86,
+     "delta": 0.0122
+    },
+    {
+     "champion": 96,
+     "delta": 0.028
+    },
+    {
+     "champion": 805,
+     "delta": 0.006
+    },
+    {
+     "champion": 895,
+     "delta": 0.0138
+    }
+   ]
+  },
+  {
+   "id": 36,
+   "banRate": 0.0674,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.4941,
+     "pickRate": 0.0609
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.5049,
+     "pickRate": 0.0217
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 6,
+     "delta": 0.0257
+    },
+    {
+     "champion": 11,
+     "delta": -0.0222
+    },
+    {
+     "champion": 14,
+     "delta": -0.0183
+    },
+    {
+     "champion": 19,
+     "delta": -0.0032
+    },
+    {
+     "champion": 59,
+     "delta": 0.0021
+    },
+    {
+     "champion": 78,
+     "delta": -0.0181
+    },
+    {
+     "champion": 412,
+     "delta": 0.0164
+    },
+    {
+     "champion": 904,
+     "delta": -0.0427
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 35,
+     "delta": 0.0178
+    },
+    {
+     "champion": 54,
+     "delta": 0.0166
+    },
+    {
+     "champion": 74,
+     "delta": 0.0116
+    },
+    {
+     "champion": 106,
+     "delta": 0.0216
+    },
+    {
+     "champion": 360,
+     "delta": -0.0031
+    },
+    {
+     "champion": 875,
+     "delta": -0.0062
+    }
+   ]
+  },
+  {
+   "id": 119,
+   "banRate": 0.1149,
+   "positions": [
+    {
+     "position": "bottom",
+     "winRate": 0.4805,
+     "pickRate": 0.019
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 10,
+     "delta": -0.0139
+    },
+    {
+     "champion": 15,
+     "delta": 0.0418
+    },
+    {
+     "champion": 22,
+     "delta": -0.0273
+    },
+    {
+     "champion": 42,
+     "delta": -0.0213
+    },
+    {
+     "champion": 221,
+     "delta": 0.0164
+    },
+    {
+     "champion": 222,
+     "delta": -0.0329
+    },
+    {
+     "champion": 235,
+     "delta": 0.0156
+    },
+    {
+     "champion": 236,
+     "delta": 0.0399
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 36,
+     "delta": -0.0098
+    },
+    {
+     "champion": 45,
+     "delta": 0.0283
+    },
+    {
+     "champion": 48,
+     "delta": 0.005
+    },
+    {
+     "champion": 113,
+     "delta": 0.0222
+    },
+    {
+     "champion": 221,
+     "delta": 0.005
+    },
+    {
+     "champion": 777,
+     "delta": -0.0047
+    }
+   ]
+  },
+  {
+   "id": 245,
+   "banRate": 0.0942,
+   "positions": [
+    {
+     "position": "middle",
+     "winRate": 0.487,
+     "pickRate": 0.0673
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.5171,
+     "pickRate": 0.0188
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 13,
+     "delta": -0.0338
+    },
+    {
+     "champion": 27,
+     "delta": 0.0008
+    },
+    {
+     "champion": 28,
+     "delta": -0.0445
+    },
+    {
+     "champion": 96,
+     "delta": 0.0447
+    },
+    {
+     "champion": 107,
+     "delta": -0.0246
+    },
+    {
+     "champion": 115,
+     "delta": 0.0033
+    },
+    {
+     "champion": 200,
+     "delta": 0.0332
+    },
+    {
+     "champion": 266,
+     "delta": -0.0163
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 12,
+     "delta": -0.0073
+    },
+    {
+     "champion": 37,
+     "delta": 0.005
+    },
+    {
+     "champion": 111,
+     "delta": 0.0075
+    },
+    {
+     "champion": 136,
+     "delta": -0.0052
+    },
+    {
+     "champion": 161,
+     "delta": 0.0201
+    },
+    {
+     "champion": 498,
+     "delta": -0.0011
+    }
+   ]
+  },
+  {
+   "id": 60,
+   "banRate": 0.1153,
+   "positions": [
+    {
+     "position": "middle",
+     "winRate": 0.5076,
+     "pickRate": 0.0324
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.476,
+     "pickRate": 0.0541
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 5,
+     "delta": -0.0292
+    },
+    {
+     "champion": 35,
+     "delta": 0.0211
+    },
+    {
+     "champion": 50,
+     "delta": -0.0102
+    },
+    {
+     "champion": 75,
+     "delta": -0.0175
+    },
+    {
+     "champion": 102,
+     "delta": 0.0039
+    },
+    {
+     "champion": 120,
+     "delta": -0.0446
+    },
+    {
+     "champion": 150,
+     "delta": 0.0078
+    },
+    {
+     "champion": 267,
+     "delta": -0.0359
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 15,
+     "delta": 0.0284
+    },
+    {
+     "champion": 28,
+     "delta": 0.0312
+    },
+    {
+     "champion": 36,
+     "delta": 0.0264
+    },
+    {
+     "champion": 122,
+     "delta": 0.0122
+    },
+    {
+     "champion": 221,
+     "delta": -0.004
+    },
+    {
+     "champion": 421,
+     "delta": 0.028
+    }
+   ]
+  },
+  {
+   "id": 28,
+   "banRate": 0.0098,
+   "positions": [
+    {
+     "position": "middle",
+     "winRate": 0.4895,
+     "pickRate": 0.1136
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.5271,
+     "pickRate": 0.0436
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 18,
+     "delta": 0.0094
+    },
+    {
+     "champion": 29,
+     "delta": 0.0044
+    },
+    {
+     "champion": 76,
+     "delta": 0.0121
+    },
+    {
+     "champion": 91,
+     "delta": -0.0001
+    },
+    {
+     "champion": 115,
+     "delta": -0.0148
+    },
+    {
+     "champion": 145,
+     "delta": 0.0223
+    },
+    {
+     "champion": 233,
+     "delta": 0.0116
+    },
+    {
+     "champion": 517,
+     "delta": 0.0154
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 22,
+     "delta": -0.0052
+    },
+    {
+     "champion": 25,
+     "delta": 0.0097
+    },
+    {
+     "champion": 35,
+     "delta": 0.0051
+    },
+    {
+     "champion": 60,
+     "delta": 0.0227
+    },
+    {
+     "champion": 117,
+     "delta": 0.0096
+    },
+    {
+     "champion": 238,
+     "delta": 0.0272
+    }
+   ]
+  },
+  {
+   "id": 81,
+   "banRate": 0.0522,
+   "positions": [
+    {
+     "position": "bottom",
+     "winRate": 0.4924,
+     "pickRate": 0.107
+    },
+    {
+     "position": "middle",
+     "winRate": 0.492,
+     "pickRate": 0.046
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 28,
+     "delta": -0.015
+    },
+    {
+     "champion": 42,
+     "delta": 0.0196
+    },
+    {
+     "champion": 50,
+     "delta": -0.0248
+    },
+    {
+     "champion": 74,
+     "delta": -0.013
+    },
+    {
+     "champion": 104,
+     "delta": 0.0169
+    },
+    {
+     "champion": 221,
+     "delta": 0.0423
+    },
+    {
+     "champion": 360,
+     "delta": 0.0393
+    },
+    {
+     "champion": 805,
+     "delta": -0.0136
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 18,
+     "delta": -0.0002
+    },
+    {
+     "champion": 39,
+     "delta": 0.0142
+    },
+    {
+     "champion": 58,
+     "delta": 0.0094
+    },
+    {
+     "champion": 59,
+     "delta": 0.0332
+    },
+    {
+     "champion": 74,
+     "delta": -0.0012
+    },
+    {
+     "champion": 113,
+     "delta": 0.0134
+    }
+   ]
+  },
+  {
+   "id": 9,
+   "banRate": 0.0,
+   "positions": [
+    {
+     "position": "middle",
+     "winRate": 0.5374,
+     "pickRate": 0.1157
+    },
+    {
+     "position": "utility",
+     "winRate": 0.517,
+     "pickRate": 0.0164
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 10,
+     "delta": -0.0138
+    },
+    {
+     "champion": 22,
+     "delta": 0.0037
+    },
+    {
+     "champion": 30,
+     "delta": 0.0425
+    },
+    {
+     "champion": 37,
+     "delta": -0.0394
+    },
+    {
+     "champion": 42,
+     "delta": 0.0411
+    },
+    {
+     "champion": 85,
+     "delta": 0.0377
+    },
+    {
+     "champion": 238,
+     "delta": 0.0442
+    },
+    {
+     "champion": 902,
+     "delta": 0.0372
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 3,
+     "delta": -0.0084
+    },
+    {
+     "champion": 17,
+     "delta": -0.0052
+    },
+    {
+     "champion": 18,
+     "delta": 0.018
+    },
+    {
+     "champion": 30,
+     "delta": -0.0084
+    },
+    {
+     "champion": 81,
+     "delta": 0.0208
+    },
+    {
+     "champion": 875,
+     "delta": 0.0031
+    }
+   ]
+  },
+  {
+   "id": 114,
+   "banRate": 0.0682,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.4689,
+     "pickRate": 0.0334
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.5144,
+     "pickRate": 0.0408
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 33,
+     "delta": 0.0075
+    },
+    {
+     "champion": 60,
+     "delta": -0.0321
+    },
+    {
+     "champion": 121,
+     "delta": 0.0332
+    },
+    {
+     "champion": 126,
+     "delta": 0.0275
+    },
+    {
+     "champion": 164,
+     "delta": -0.0311
+    },
+    {
+     "champion": 201,
+     "delta": -0.0302
+    },
+    {
+     "champion": 238,
+     "delta": -0.0042
+    },
+    {
+     "champion": 246,
+     "delta": -0.0096
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 8,
+     "delta": 0.0226
+    },
+    {
+     "champion": 80,
+     "delta": 0.0159
+    },
+    {
+     "champion": 99,
+     "delta": -0.003
+    },
+    {
+     "champion": 104,
+     "delta": 0.0127
+    },
+    {
+     "champion": 115,
+     "delta": 0.0012
+    },
+    {
+     "champion": 950,
+     "delta": 0.009
+    }
+   ]
+  },
+  {
+   "id": 105,
+   "banRate": 0.0077,
+   "positions": [
+    {
+     "position": "middle",
+     "winRate": 0.5037,
+     "pickRate": 0.0711
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.4824,
+     "pickRate": 0.0326
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 6,
+     "delta": 0.034
+    },
+    {
+     "champion": 59,
+     "delta": -0.0045
+    },
+    {
+     "champion": 60,
+     "delta": -0.0142
+    },
+    {
+     "champion": 64,
+     "delta": -0.0187
+    },
+    {
+     "champion": 67,
+     "delta": 0.042
+    },
+    {
+     "champion": 77,
+     "delta": 0.0387
+    },
+    {
+     "champion": 96,
+     "delta": -0.0034
+    },
+    {
+     "champion": 238,
+     "delta": -0.0054
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 3,
+     "delta": 0.0194
+    },
+    {
+     "champion": 29,
+     "delta": -0.0021
+    },
+    {
+     "champion": 84,
+     "delta": -0.0086
+    },
+    {
+     "champion": 96,
+     "delta": 0.0278
+    },
+    {
+     "champion": 113,
+     "delta": 0.0118
+    },
+    {
+     "champion": 157,
+     "delta": 0.0012
+    }
+   ]
+  },
+  {
+   "id": 3,
+   "banRate": 0.0989,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.4774,
+     "pickRate": 0.0275
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.4646,
+     "pickRate": 0.0263
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 23,
+     "delta": 0.0302
+    },
+    {
+     "champion": 77,
+     "delta": 0.0361
+    },
+    {
+     "champion": 150,
+     "delta": -0.016
+    },
+    {
+     "champion": 246,
+     "delta": -0.0436
+    },
+    {
+     "champion": 266,
+     "delta": 0.0276
+    },
+    {
+     "champion": 805,
+     "delta": -0.0141
+    },
+    {
+     "champion": 895,
+     "delta": 0.017
+    },
+    {
+     "champion": 950,
+     "delta": -0.0149
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 26,
+     "delta": 0.0006
+    },
+    {
+     "champion": 53,
+     "delta": 0.0293
+    },
+    {
+     "champion": 76,
+     "delta": 0.0199
+    },
+    {
+     "champion": 104,
+     "delta": 0.0222
+    },
+    {
+     "champion": 800,
+     "delta": -0.0012
+    },
+    {
+     "champion": 875,
+     "delta": -0.0003
+    }
+   ]
+  },
+  {
+   "id": 41,
+   "banRate": 0.1033,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.5135,
+     "pickRate": 0.0777
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.472,
+     "pickRate": 0.0543
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 20,
+     "delta": 0.0113
+    },
+    {
+     "champion": 35,
+     "delta": 0.0408
+    },
+    {
+     "champion": 38,
+     "delta": -0.0307
+    },
+    {
+     "champion": 78,
+     "delta": -0.0351
+    },
+    {
+     "champion": 80,
+     "delta": 0.0342
+    },
+    {
+     "champion": 107,
+     "delta": 0.0328
+    },
+    {
+     "champion": 120,
+     "delta": 0.0294
+    },
+    {
+     "champion": 164,
+     "delta": 0.0447
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 37,
+     "delta": 0.0175
+    },
+    {
+     "champion": 60,
+     "delta": 0.0349
+    },
+    {
+     "champion": 74,
+     "delta": 0.0237
+    },
+    {
+     "champion": 79,
+     "delta": -0.0047
+    },
+    {
+     "champion": 102,
+     "delta": 0.0299
+    },
+    {
+     "champion": 777,
+     "delta": 0.0192
+    }
+   ]
+  },
+  {
+   "id": 86,
+   "banRate": 0.0301,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.5115,
+     "pickRate": 0.022
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.4842,
+     "pickRate": 0.0476
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 6,
+     "delta": -0.0367
+    },
+    {
+     "champion": 14,
+     "delta": 0.0146
+    },
+    {
+     "champion": 44,
+     "delta": 0.0372
+    },
+    {
+     "champion": 62,
+     "delta": -0.0416
+    },
+    {
+     "champion": 72,
+     "delta": -0.0364
+    },
+    {
+     "champion": 121,
+     "delta": -0.0394
+    },
+    {
+     "champion": 233,
+     "delta": -0.0271
+    },
+    {
+     "champion": 516,
+     "delta": 0.0277
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 64,
+     "delta": 0.0167
+    },
+    {
+     "champion": 117,
+     "delta": 0.0029
+    },
+    {
+     "champion": 131,
+     "delta": -0.0096
+    },
+    {
+     "champion": 875,
+     "delta": -0.0037
+    },
+    {
+     "champion": 887,
+     "delta": 0.0099
+    },
+    {
+     "champion": 897,
+     "delta": 0.0137
+    }
+   ]
+  },
+  {
+   "id": 150,
+   "banRate": 0.1013,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.4712,
+     "pickRate": 0.0924
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.4953,
+     "pickRate": 0.0158
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 3,
+     "delta": -0.021
+    },
+    {
+     "champion": 27,
+     "delta": 0.0396
+    },
+    {
+     "champion": 32,
+     "delta": 0.0253
+    },
+    {
+     "champion": 41,
+     "delta": 0.0174
+    },
+    {
+     "champion": 59,
+     "delta": -0.004
+    },
+    {
+     "champion": 107,
+     "delta": -0.0323
+    },
+    {
+     "champion": 245,
+     "delta": 0.0155
+    },
+    {
+     "champion": 805,
+     "delta": -0.0375
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 37,
+     "delta": 0.0003
+    },
+    {
+     "champion": 102,
+     "delta": 0.0271
+    },
+    {
+     "champion": 120,
+     "delta": 0.0274
+    },
+    {
+     "champion": 143,
+     "delta": 0.0191
+    },
+    {
+     "champion": 163,
+     "delta": -0.0031
+    },
+    {
+     "champion": 910,
+     "delta": 0.0047
+    }
+   ]
+  },
+  {
+   "id": 79,
+   "banRate": 0.1001,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.5058,
+     "pickRate": 0.0934
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.5252,
+     "pickRate": 0.0558
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 3,
+     "delta": 0.0253
+    },
+    {
+     "champion": 14,
+     "delta": -0.0306
+    },
+    {
+     "champion": 38,
+     "delta": 0.0045
+    },
+    {
+     "champion": 41,
+     "delta": -0.0045
+    },
+    {
+     "champion": 72,
+     "delta": -0.0194
+    },
+    {
+     "champion": 76,
+     "delta": -0.0276
+    },
+    {
+     "champion": 86,
+     "delta": 0.0197
+    },
+    {
+     "champion": 516,
+     "delta": 0.0245
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 69,
+     "delta": 0.0272
+    },
+    {
+     "champion": 77,
+     "delta": -0.0087
+    },
+    {
+     "champion": 85,
+     "delta": 0.0156
+    },
+    {
+     "champion": 200,
+     "delta": 0.026
+    },
+    {
+     "champion": 516,
+     "delta": 0.026
+    },
+    {
+     "champion": 555,
+     "delta": -0.0014
+    }
+   ]
+  },
+  {
+   "id": 104,
+   "banRate": 0.0462,
+   "positions": [
+    {
+     "position": "bottom",
+     "winRate": 0.4715,
+     "pickRate": 0.0619
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 10,
+     "delta": 0.0282
+    },
+    {
+     "champion": 17,
+     "delta": -0.0275
+    },
+    {
+     "champion": 22,
+     "delta": 0.0072
+    },
+    {
+     "champion": 67,
+     "delta": 0.0205
+    },
+    {
+     "champion": 81,
+     "delta": -0.028
+    },
+    {
+     "champion": 166,
+     "delta": -0.037
+    },
+    {
+     "champion": 222,
+     "delta": 0.0038
+    },
+    {
+     "champion": 236,
+     "delta": 0.0421
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 30,
+     "delta": 0.0172
+    },
+    {
+     "champion": 44,
+     "delta": 0.0281
+    },
+    {
+     "champion": 62,
+     "delta": 0.0218
+    },
+    {
+     "champion": 72,
+     "delta": -0.0047
+    },
+    {
+     "champion": 133,
+     "delta": -0.0029
+    },
+    {
+     "champion": 203,
+     "delta": 0.0321
+    }
+   ]
+  },
+  {
+   "id": 887,
+   "banRate": 0.0467,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.4892,
+     "pickRate": 0.1041
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.4805,
+     "pickRate": 0.0266
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 3,
+     "delta": -0.0406
+    },
+    {
+     "champion": 19,
+     "delta": -0.0309
+    },
+    {
+     "champion": 59,
+     "delta": -0.0311
+    },
+    {
+     "champion": 91,
+     "delta": -0.0356
+    },
+    {
+     "champion": 131,
+     "delta": -0.0404
+    },
+    {
+     "champion": 233,
+     "delta": -0.0034
+    },
+    {
+     "champion": 421,
+     "delta": -0.0083
+    },
+    {
+     "champion": 895,
+     "delta": 0.0025
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 28,
+     "delta": 0.0179
+    },
+    {
+     "champion": 55,
+     "delta": 0.0075
+    },
+    {
+     "champion": 77,
+     "delta": 0.0004
+    },
+    {
+     "champion": 92,
+     "delta": 0.0316
+    },
+    {
+     "champion": 233,
+     "delta": 0.0297
+    },
+    {
+     "champion": 875,
+     "delta": 0.0043
+    }
+   ]
+  },
+  {
+   "id": 120,
+   "banRate": 0.0068,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.4774,
+     "pickRate": 0.0499
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.5305,
+     "pickRate": 0.0191
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 20,
+     "delta": -0.0432
+    },
+    {
+     "champion": 23,
+     "delta": 0.005
+    },
+    {
+     "champion": 62,
+     "delta": -0.041
+    },
+    {
+     "champion": 84,
+     "delta": 0.0075
+    },
+    {
+     "champion": 89,
+     "delta": -0.0429
+    },
+    {
+     "champion": 92,
+     "delta": 0.0286
+    },
+    {
+     "champion": 412,
+     "delta": 0.0356
+    },
+    {
+     "champion": 421,
+     "delta": -0.0128
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 14,
+     "delta": 0.0006
+    },
+    {
+     "champion": 17,
+     "delta": 0.0318
+    },
+    {
+     "champion": 26,
+     "delta": -0.0075
+    },
+    {
+     "champion": 92,
+     "delta": -0.0034
+    },
+    {
+     "champion": 143,
+     "delta": 0.0034
+    },
+    {
+     "champion": 498,
+     "delta": 0.0102
+    }
+   ]
+  },
+  {
+   "id": 74,
+   "banRate": 0.1205,
+   "positions": [
+    {
+     "position": "middle",
+     "winRate": 0.4652,
+     "pickRate": 0.0283
+    },
+    {
+     "position": "utility",
+     "winRate": 0.5261,
+     "pickRate": 0.0377
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 38,
+     "delta": -0.0084
+    },
+    {
+     "champion": 42,
+     "delta": -0.0342
+    },
+    {
+     "champion": 76,
+     "delta": -0.0307
+    },
+    {
+     "champion": 90,
+     "delta": 0.0033
+    },
+    {
+     "champion": 96,
+     "delta": 0.0158
+    },
+    {
+     "champion": 112,
+     "delta": 0.036
+    },
+    {
+     "champion": 268,
+     "delta": -0.0204
+    },
+    {
+     "champion": 518,
+     "delta": 0.0382
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 19,
+     "delta": 0.034
+    },
+    {
+     "champion": 37,
+     "delta": 0.0152
+    },
+    {
+     "champion": 76,
+     "delta": 0.0265
+    },
+    {
+     "champion": 81,
+     "delta": 0.0021
+    },
+    {
+     "champion": 498,
+     "delta": 0.001
+    },
+    {
+     "champion": 950,
+     "delta": -0.0011
+    }
+   ]
+  },
+  {
+   "id": 910,
+   "banRate": 0.0319,
+   "positions": [
+    {
+     "position": "middle",
+     "winRate": 0.5151,
+     "pickRate": 0.0362
+    },
+    {
+     "position": "utility",
+     "winRate": 0.4542,
+     "pickRate": 0.0529
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 38,
+     "delta": 0.0082
+    },
+    {
+     "champion": 60,
+     "delta": 0.001
+    },
+    {
+     "champion": 91,
+     "delta": 0.0345
+    },
+    {
+     "champion": 121,
+     "delta": 0.0304
+    },
+    {
+     "champion": 134,
+     "delta": -0.0073
+    },
+    {
+     "champion": 147,
+     "delta": 0.0367
+    },
+    {
+     "champion": 268,
+     "delta": -0.0435
+    },
+    {
+     "champion": 950,
+     "delta": 0.0375
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 11,
+     "delta": -0.008
+    },
+    {
+     "champion": 21,
+     "delta": 0.0161
+    },
+    {
+     "champion": 63,
+     "delta": 0.0241
+    },
+    {
+     "champion": 81,
+     "delta": 0.0304
+    },
+    {
+     "champion": 107,
+     "delta": 0.0006
+    },
+    {
+     "champion": 412,
+     "delta": 0.0059
+    }
+   ]
+  },
+  {
+   "id": 420,
+   "banRate": 0.0082,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.4985,
+     "pickRate": 0.0499
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.47,
+     "pickRate": 0.0152
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 8,
+     "delta": 0.0239
+    },
+    {
+     "champion": 24,
+     "delta": -0.0308
+    },
+    {
+     "champion": 41,
+     "delta": 0.0186
+    },
+    {
+     "champion": 44,
+     "delta": 0.0436
+    },
+    {
+     "champion": 72,
+     "delta": -0.0363
+    },
+    {
+     "champion": 164,
+     "delta": -0.0352
+    },
+    {
+     "champion": 200,
+     "delta": -0.03
+    },
+    {
+     "champion": 245,
+     "delta": -0.0198
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 19,
+     "delta": 0.0048
+    },
+    {
+     "champion": 38,
+     "delta": 0.0147
+    },
+    {
+     "champion": 61,
+     "delta": 0.0105
+    },
+    {
+     "champion": 82,
+     "delta": 0.0309
+    },
+    {
+     "champion": 107,
+     "delta": 0.0304
+    },
+    {
+     "champion": 166,
+     "delta": 0.0261
+    }
+   ]
+  },
+  {
+   "id": 39,
+   "banRate": 0.021,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.5321,
+     "pickRate": 0.0971
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.4723,
+     "pickRate": 0.0061
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 31,
+     "delta": -0.0323
+    },
+    {
+     "champion": 41,
+     "delta": 0.0441
+    },
+    {
+     "champion": 76,
+     "delta": 0.028
+    },
+    {
+     "champion": 121,
+     "delta": -0.0036
+    },
+    {
+     "champion": 240,
+     "delta": 0.0064
+    },
+    {
+     "champion": 266,
+     "delta": -0.0327
+    },
+    {
+     "champion": 421,
+     "delta": -0.0427
+    },
+    {
+     "champion": 805,
+     "delta": -0.018
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 34,
+     "delta": 0.0187
+    },
+    {
+     "champion": 103,
+     "delta": 0.0343
+    },
+    {
+     "champion": 141,
+     "delta": 0.0221
+    },
+    {
+     "champion": 222,
+     "delta": 0.0111
+    },
+    {
+     "champion": 497,
+     "delta": 0.0055
+    },
+    {
+     "champion": 800,
+     "delta": 0.0007
+    }
+   ]
+  },
+  {
+   "id": 427,
+   "banRate": 0.016,
+   "positions": [
+    {
+     "position": "utility",
+     "winRate": 0.4648,
+     "pickRate": 0.0653
+    },
+    {
+     "position": "middle",
+     "winRate": 0.4987,
+     "pickRate": 0.0526
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 40,
+     "delta": -0.0101
+    },
+    {
+     "champion": 81,
+     "delta": -0.0111
+    },
+    {
+     "champion": 110,
+     "delta": -0.0444
+    },
+    {
+     "champion": 112,
+     "delta": 0.0202
+    },
+    {
+     "champion": 518,
+     "delta": -0.0089
+    },
+    {
+     "champion": 711,
+     "delta": -0.0031
+    },
+    {
+     "champion": 893,
+     "delta": 0.0149
+    },
+    {
+     "champion": 910,
+     "delta": 0.0422
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 3,
+     "delta": 0.0217
+    },
+    {
+     "champion": 85,
+     "delta": 0.008
+    },
+    {
+     "champion": 114,
+     "delta": 0.0254
+    },
+    {
+     "champion": 115,
+     "delta": 0.0323
+    },
+    {
+     "champion": 202,
+     "delta": -0.0008
+    },
+    {
+     "champion": 777,
+     "delta": 0.0217
+    }
+   ]
+  },
+  {
+   "id": 40,
+   "banRate": 0.1138,
+   "positions": [
+    {
+     "position": "utility",
+     "winRate": 0.4709,
+     "pickRate": 0.0158
+    },
+    {
+     "position": "middle",
+     "winRate": 0.5309,
+     "pickRate": 0.0132
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 22,
+     "delta": 0.0202
+    },
+    {
+     "champion": 50,
+     "delta": 0.0368
+    },
+    {
+     "champion": 60,
+     "delta": -0.0006
+    },
+    {
+     "champion": 90,
+     "delta": -0.0305
+    },
+    {
+     "champion": 105,
+     "delta": 0.0036
+    },
+    {
+     "champion": 134,
+     "delta": 0.02
+    },
+    {
+     "champion": 360,
+     "delta": 0.0126
+    },
+    {
+     "champion": 901,
+     "delta": 0.0115
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 5,
+     "delta": 0.0265
+    },
+    {
+     "champion": 11,
+     "delta": 0.0126
+    },
+    {
+     "champion": 83,
+     "delta": 0.0131
+    },
+    {
+     "champion": 145,
+     "delta": -0.0064
+    },
+    {
+     "champion": 267,
+     "delta": 0.0151
+    },
+    {
+     "champion": 526,
+     "delta": 0.0134
+    }
+   ]
+  },
+  {
+   "id": 59,
+   "banRate": 0.0989,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.4685,
+     "pickRate": 0.0809
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.4917,
+     "pickRate": 0.0527
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 28,
+     "delta": 0.034
+    },
+    {
+     "champion": 44,
+     "delta": -0.0131
+    },
+    {
+     "champion": 62,
+     "delta": 0.0304
+    },
+    {
+     "champion": 72,
+     "delta": -0.036
+    },
+    {
+     "champion": 102,
+     "delta": 0.0305
+    },
+    {
+     "champion": 805,
+     "delta": -0.0088
+    },
+    {
+     "champion": 876,
+     "delta": -0.0436
+    },
+    {
+     "champion": 904,
+     "delta": -0.0337
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 69,
+     "delta": 0.0012
+    },
+    {
+     "champion": 102,
+     "delta": 0.0201
+    },
+    {
+     "champion": 233,
+     "delta": 0.0065
+    },
+    {
+     "champion": 236,
+     "delta": 0.0014
+    },
+    {
+     "champion": 711,
+     "delta": 0.0215
+    },
+    {
+     "champion": 800,
+     "delta": -0.003
+    }
+   ]
+  },
+  {
+   "id": 24,
+   "banRate": 0.0787,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.5279,
+     "pickRate": 0.0539
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.4873,
+     "pickRate": 0.0316
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 8,
+     "delta": 0.0333
+    },
+    {
+     "champion": 78,
+     "delta": -0.0092
+    },
+    {
+     "champion": 89,
+     "delta": 0.042
+    },
+    {
+     "champion": 107,
+     "delta": 0.0296
+    },
+    {
+     "champion": 120,
+     "delta": 0.0062
+    },
+    {
+     "champion": 201,
+     "delta": -0.0292
+    },
+    {
+     "champion": 245,
+     "delta": -0.0289
+    },
+    {
+     "champion": 254,
+     "delta": 0.0185
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 4,
+     "delta": 0.0013
+    },
+    {
+     "champion": 20,
+     "delta": -0.0007
+    },
+    {
+     "champion": 63,
+     "delta": 0.0152
+    },
+    {
+     "champion": 429,
+     "delta": 0.0162
+    },
+    {
+     "champion": 555,
+     "delta": 0.0007
+    },
+    {
+     "champion": 888,
+     "delta": 0.0084
+    }
+   ]
+  },
+  {
+   "id": 126,
+   "banRate": 0.0729,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.4742,
+     "pickRate": 0.041
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.4633,
+     "pickRate": 0.0106
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 2,
+     "delta": 0.005
+    },
+    {
+     "champion": 8,
+     "delta": 0.0265
+    },
+    {
+     "champion": 58,
+     "delta": 0.0386
+    },
+    {
+     "champion": 84,
+     "delta": 0.0337
+    },
+    {
+     "champion": 154,
+     "delta": -0.0235
+    },
+    {
+     "champion": 201,
+     "delta": -0.0351
+    },
+    {
+     "champion": 234,
+     "delta": -0.0263
+    },
+    {
+     "champion": 517,
+     "delta": -0.0326
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 17,
+     "delta": -0.0066
+    },
+    {
+     "champion": 115,
+     "delta": 0.0312
+    },
+    {
+     "champion": 122,
+     "delta": -0.0093
+    },
+    {
+     "champion": 201,
+     "delta": 0.0304
+    },
+    {
+     "champion": 202,
+     "delta": 0.0074
+    },
+    {
+     "champion": 804,
+     "delta": 0.0115
+    }
+   ]
+  },
+  {
+   "id": 202,
+   "banRate": 0.0084,
+   "positions": [
+    {
+     "position": "bottom",
+     "winRate": 0.5077,
+     "pickRate": 0.1124
+    },
+    {
+     "position": "middle",
+     "winRate": 0.5244,
+     "pickRate": 0.0412
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 10,
+     "delta": -0.0215
+    },
+    {
+     "champion": 29,
+     "delta": 0.0372
+    },
+    {
+     "champion": 34,
+     "delta": -0.0194
+    },
+    {
+     "champion": 50,
+     "delta": -0.0151
+    },
+    {
+     "champion": 61,
+     "delta": 0.0217
+    },
+    {
+     "champion": 67,
+     "delta": -0.0123
+    },
+    {
+     "champion": 91,
+     "delta": 0.0013
+    },
+    {
+     "champion": 268,
+     "delta": -0.0209
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 18,
+     "delta": -0.0009
+    },
+    {
+     "champion": 23,
+     "delta": 0.0097
+    },
+    {
+     "champion": 68,
+     "delta": 0.0112
+    },
+    {
+     "champion": 69,
+     "delta": 0.0137
+    },
+    {
+     "champion": 126,
+     "delta": 0.0004
+    },
+    {
+     "champion": 555,
+     "delta": 0.0232
+    }
+   ]
+  },
+  {
+   "id": 222,
+   "banRate": 0.0014,
+   "positions": [
+    {
+     "position": "bottom",
+     "winRate": 0.5148,
+     "pickRate": 0.1195
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 10,
+     "delta": -0.0077
+    },
+    {
+     "champion": 18,
+     "delta": 0.0296
+    },
+    {
+     "champion": 110,
+     "delta": 0.0154
+    },
+    {
+     "champion": 133,
+     "delta": 0.033
+    },
+    {
+     "champion": 145,
+     "delta": 0.022
+    },
+    {
+     "champion": 221,
+     "delta": 0.015
+    },
+    {
+     "champion": 268,
+     "delta": -0.0016
+    },
+    {
+     "champion": 901,
+     "delta": -0.0198
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 44,
+     "delta": 0.0251
+    },
+    {
+     "champion": 80,
+     "delta": 0.014
+    },
+    {
+     "champion": 113,
+     "delta": 0.0127
+    },
+    {
+     "champion": 147,
+     "delta": 0.0252
+    },
+    {
+     "champion": 799,
+     "delta": -0.0067
+    },
+    {
+     "champion": 897,
+     "delta": 0.0219
+    }
+   ]
+  },
+  {
+   "id": 897,
+   "banRate": 0.0504,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.4725,
+     "pickRate": 0.0377
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.4749,
+     "pickRate": 0.041
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 39,
+     "delta": 0.0038
+    },
+    {
+     "champion": 53,
+     "delta": 0.031
+    },
+    {
+     "champion": 55,
+     "delta": -0.0025
+    },
+    {
+     "champion": 91,
+     "delta": -0.0381
+    },
+    {
+     "champion": 150,
+     "delta": 0.0281
+    },
+    {
+     "champion": 777,
+     "delta": -0.0087
+    },
+    {
+     "champion": 887,
+     "delta": 0.0039
+    },
+    {
+     "champion": 904,
+     "delta": 0.0202
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 32,
+     "delta": 0.0079
+    },
+    {
+     "champion": 41,
+     "delta": 0.0101
+    },
+    {
+     "champion": 96,
+     "delta": 0.0138
+    },
+    {
+     "champion": 105,
+     "delta": 0.0308
+    },
+    {
+     "champion": 134,
+     "delta": 0.0224
+    },
+    {
+     "champion": 799,
+     "delta": 0.0046
+    }
+   ]
+  },
+  {
+   "id": 145,
+   "banRate": 0.071,
+   "positions": [
+    {
+     "position": "bottom",
+     "winRate": 0.5167,
+     "pickRate": 0.098
+    },
+    {
+     "position": "middle",
+     "winRate": 0.4885,
+     "pickRate": 0.0533
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 1,
+     "delta": -0.0284
+    },
+    {
+     "champion": 22,
+     "delta": 0.0366
+    },
+    {
+     "champion": 60,
+     "delta": -0.0306
+    },
+    {
+     "champion": 84,
+     "delta": 0.0359
+    },
+    {
+     "champion": 119,
+     "delta": -0.0157
+    },
+    {
+     "champion": 121,
+     "delta": 0.0364
+    },
+    {
+     "champion": 202,
+     "delta": -0.0085
+    },
+    {
+     "champion": 235,
+     "delta": 0.0014
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 37,
+     "delta": 0.0009
+    },
+    {
+     "champion": 58,
+     "delta": -0.0094
+    },
+    {
+     "champion": 147,
+     "delta": 0.0047
+    },
+    {
+     "champion": 267,
+     "delta": 0.0058
+    },
+    {
+     "champion": 421,
+     "delta": -0.0044
+    },
+    {
+     "champion": 518,
+     "delta": 0.02
+    }
+   ]
+  },
+  {
+   "id": 429,
+   "banRate": 0.0784,
+   "positions": [
+    {
+     "position": "bottom",
+     "winRate": 0.5167,
+     "pickRate": 0.029
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 4,
+     "delta": 0.0224
+    },
+    {
+     "champion": 10,
+     "delta": -0.0151
+    },
+    {
+     "champion": 51,
+     "delta": -0.0179
+    },
+    {
+     "champion": 67,
+     "delta": 0.0252
+    },
+    {
+     "champion": 81,
+     "delta": 0.0381
+    },
+    {
+     "champion": 145,
+     "delta": -0.0063
+    },
+    {
+     "champion": 202,
+     "delta": -0.0344
+    },
+    {
+     "champion": 804,
+     "delta": 0.0101
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 3,
+     "delta": 0.0006
+    },
+    {
+     "champion": 15,
+     "delta": 0.0045
+    },
+    {
+     "champion": 31,
+     "delta": 0.0052
+    },
+    {
+     "champion": 32,
+     "delta": -0.0051
+    },
+    {
+     "champion": 67,
+     "delta": 0.0323
+    },
+    {
+     "champion": 799,
+     "delta": 0.0009
+    }
+   ]
+  },
+  {
+   "id": 43,
+   "banRate": 0.0665,
+   "positions": [
+    {
+     "position": "middle",
+     "winRate": 0.5026,
+     "pickRate": 0.0945
+    },
+    {
+     "position": "utility",
+     "winRate": 0.5025,
+     "pickRate": 0.0194
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 4,
+     "delta": -0.0309
+    },
+    {
+     "champion": 121,
+     "delta": 0.012
+    },
+    {
+     "champion": 133,
+     "delta": 0.0359
+    },
+    {
+     "champion": 163,
+     "delta": 0.0037
+    },
+    {
+     "champion": 245,
+     "delta": 0.0216
+    },
+    {
+     "champion": 350,
+     "delta": -0.015
+    },
+    {
+     "champion": 893,
+     "delta": -0.0316
+    },
+    {
+     "champion": 910,
+     "delta": 0.0003
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 30,
+     "delta": 0.0031
+    },
+    {
+     "champion": 34,
+     "delta": 0.0335
+    },
+    {
+     "champion": 82,
+     "delta": 0.0043
+    },
+    {
+     "champion": 83,
+     "delta": -0.0055
+    },
+    {
+     "champion": 127,
+     "delta": 0.0238
+    },
+    {
+     "champion": 150,
+     "delta": 0.0341
+    }
+   ]
+  },
+  {
+   "id": 30,
+   "banRate": 0.1237,
+   "positions": [
+    {
+     "position": "middle",
+     "winRate": 0.478,
+     "pickRate": 0.0711
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 4,
+     "delta": 0.0321
+    },
+    {
+     "champion": 18,
+     "delta": -0.0023
+    },
+    {
+     "champion": 29,
+     "delta": 0.0174
+    },
+    {
+     "champion": 38,
+     "delta": -0.0201
+    },
+    {
+     "champion": 50,
+     "delta": -0.0102
+    },
+    {
+     "champion": 267,
+     "delta": -0.0284
+    },
+    {
+     "champion": 350,
+     "delta": 0.009
+    },
+    {
+     "champion": 360,
+     "delta": 0.0373
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 15,
+     "delta": 0.0167
+    },
+    {
+     "champion": 26,
+     "delta": 0.0243
+    },
+    {
+     "champion": 28,
+     "delta": 0.0254
+    },
+    {
+     "champion": 85,
+     "delta": 0.0337
+    },
+    {
+     "champion": 222,
+     "delta": 0.0092
+    },
+    {
+     "champion": 432,
+     "delta": 0.0022
+    }
+   ]
+  },
+  {
+   "id": 38,
+   "banRate": 0.015,
+   "positions": [
+    {
+     "position": "middle",
+     "winRate": 0.4914,
+     "pickRate": 0.0415
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.5309,
+     "pickRate": 0.0383
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 4,
+     "delta": -0.0335
+    },
+    {
+     "champion": 8,
+     "delta": -0.0253
+    },
+    {
+     "champion": 26,
+     "delta": -0.0204
+    },
+    {
+     "champion": 37,
+     "delta": 0.0226
+    },
+    {
+     "champion": 42,
+     "delta": 0.0211
+    },
+    {
+     "champion": 246,
+     "delta": 0.0222
+    },
+    {
+     "champion": 875,
+     "delta": -0.0287
+    },
+    {
+     "champion": 876,
+     "delta": -0.0002
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 4,
+     "delta": 0.0212
+    },
+    {
+     "champion": 10,
+     "delta": -0.0026
+    },
+    {
+     "champion": 36,
+     "delta": 0.0236
+    },
+    {
+     "champion": 113,
+     "delta": 0.025
+    },
+    {
+     "champion": 121,
+     "delta": 0.0222
+    },
+    {
+     "champion": 200,
+     "delta": -0.0084
+    }
+   ]
+  },
+  {
+   "id": 55,
+   "banRate": 0.0911,
+   "positions": [
+    {
+     "position": "middle",
+     "winRate": 0.4893,
+     "pickRate": 0.0956
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.5135,
+     "pickRate": 0.0306
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 9,
+     "delta": -0.0247
+    },
+    {
+     "champion": 24,
+     "delta": -0.0284
+    },
+    {
+     "champion": 29,
+     "delta": 0.0105
+    },
+    {
+     "champion": 31,
+     "delta": 0.0241
+    },
+    {
+     "champion": 60,
+     "delta": 0.016
+    },
+    {
+     "champion": 136,
+     "delta": 0.0338
+    },
+    {
+     "champion": 143,
+     "delta": 0.0422
+    },
+    {
+     "champion": 904,
+     "delta": 0.0182
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 37,
+     "delta": -0.0018
+    },
+    {
+     "champion": 62,
+     "delta": 0.0344
+    },
+    {
+     "champion": 77,
+     "delta": 0.0083
+    },
+    {
+     "champion": 78,
+     "delta": 0.0164
+    },
+    {
+     "champion": 150,
+     "delta": 0.0164
+    },
+    {
+     "champion": 268,
+     "delta": 0.0016
+    }
+   ]
+  },
+  {
+   "id": 10,
+   "banRate": 0.0512,
+   "positions": [
+    {
+     "position": "bottom",
+     "winRate": 0.4766,
+     "pickRate": 0.0166
+    },
+    {
+     "position": "middle",
+     "winRate": 0.4648,
+     "pickRate": 0.0574
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 15,
+     "delta": 0.034
+    },
+    {
+     "champion": 43,
+     "delta": 0.0054
+    },
+    {
+     "champion": 55,
+     "delta": 0.0359
+    },
+    {
+     "champion": 63,
+     "delta": -0.0309
+    },
+    {
+     "champion": 101,
+     "delta": -0.0396
+    },
+    {
+     "champion": 103,
+     "delta": 0.0043
+    },
+    {
+     "champion": 238,
+     "delta": -0.0366
+    },
+    {
+     "champion": 427,
+     "delta": -0.0272
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 23,
+     "delta": 0.0268
+    },
+    {
+     "champion": 41,
+     "delta": -0.0026
+    },
+    {
+     "champion": 54,
+     "delta": 0.0182
+    },
+    {
+     "champion": 115,
+     "delta": -0.0034
+    },
+    {
+     "champion": 888,
+     "delta": 0.0217
+    },
+    {
+     "champion": 895,
+     "delta": 0.0025
+    }
+   ]
+  },
+  {
+   "id": 141,
+   "banRate": 0.0082,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.4641,
+     "pickRate": 0.0066
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.4876,
+     "pickRate": 0.0312
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 3,
+     "delta": 0.0167
+    },
+    {
+     "champion": 11,
+     "delta": -0.0136
+    },
+    {
+     "champion": 57,
+     "delta": -0.0101
+    },
+    {
+     "champion": 89,
+     "delta": -0.022
+    },
+    {
+     "champion": 91,
+     "delta": -0.0132
+    },
+    {
+     "champion": 254,
+     "delta": -0.0172
+    },
+    {
+     "champion": 516,
+     "delta": 0.0449
+    },
+    {
+     "champion": 893,
+     "delta": 0.0108
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 35,
+     "delta": 0.0155
+    },
+    {
+     "champion": 107,
+     "delta": 0.0232
+    },
+    {
+     "champion": 161,
+     "delta": 0.0154
+    },
+    {
+     "champion": 166,
+     "delta": 0.0113
+    },
+    {
+     "champion": 432,
+     "delta": 0.0021
+    },
+    {
+     "champion": 518,
+     "delta": 0.0245
+    }
+   ]
+  },
+  {
+   "id": 85,
+   "banRate": 0.0177,
+   "positions": [
+    {
+     "position": "middle",
+     "winRate": 0.4985,
+     "pickRate": 0.0953
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 26,
+     "delta": -0.0004
+    },
+    {
+     "champion": 69,
+     "delta": 0.0298
+    },
+    {
+     "champion": 91,
+     "delta": -0.0431
+    },
+    {
+     "champion": 110,
+     "delta": 0.0204
+    },
+    {
+     "champion": 142,
+     "delta": -0.029
+    },
+    {
+     "champion": 432,
+     "delta": -0.014
+    },
+    {
+     "champion": 555,
+     "delta": -0.0303
+    },
+    {
+     "champion": 910,
+     "delta": 0.039
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 13,
+     "delta": 0.0159
+    },
+    {
+     "champion": 17,
+     "delta": 0.0112
+    },
+    {
+     "champion": 24,
+     "delta": 0.0022
+    },
+    {
+     "champion": 45,
+     "delta": -0.0005
+    },
+    {
+     "champion": 266,
+     "delta": 0.0074
+    },
+    {
+     "champion": 893,
+     "delta": 0.0174
+    }
+   ]
+  },
+  {
+   "id": 121,
+   "banRate": 0.0711,
+   "positions": [
+    {
+     "position": "middle",
+     "winRate": 0.4823,
+     "pickRate": 0.0924
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.4808,
+     "pickRate": 0.0274
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 4,
+     "delta": -0.0076
+    },
+    {
+     "champion": 10,
+     "delta": -0.0228
+    },
+    {
+     "champion": 33,
+     "delta": -0.033
+    },
+    {
+     "champion": 69,
+     "delta": -0.0069
+    },
+    {
+     "champion": 106,
+     "delta": -0.0273
+    },
+    {
+     "champion": 120,
+     "delta": 0.001
+    },
+    {
+     "champion": 238,
+     "delta": -0.0104
+    },
+    {
+     "champion": 711,
+     "delta": 0.0332
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 12,
+     "delta": 0.0272
+    },
+    {
+     "champion": 35,
+     "delta": -0.0084
+    },
+    {
+     "champion": 107,
+     "delta": -0.0055
+    },
+    {
+     "champion": 120,
+     "delta": 0.0199
+    },
+    {
+     "champion": 876,
+     "delta": 0.0335
+    },
+    {
+     "champion": 887,
+     "delta": 0.0059
+    }
+   ]
+  },
+  {
+   "id": 203,
+   "banRate": 0.0921,
+   "positions": [
+    {
+     "position": "bottom",
+     "winRate": 0.5338,
+     "pickRate": 0.0518
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 4,
+     "delta": -0.0082
+    },
+    {
+     "champion": 10,
+     "delta": 0.0316
+    },
+    {
+     "champion": 22,
+     "delta": 0.0085
+    },
+    {
+     "champion": 29,
+     "delta": -0.0084
+    },
+    {
+     "champion": 67,
+     "delta": 0.0118
+    },
+    {
+     "champion": 81,
+     "delta": 0.0364
+    },
+    {
+     "champion": 166,
+     "delta": 0.0338
+    },
+    {
+     "champion": 804,
+     "delta": -0.0105
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 31,
+     "delta": 0.0081
+    },
+    {
+     "champion": 39,
+     "delta": 0.0252
+    },
+    {
+     "champion": 43,
+     "delta": -0.006
+    },
+    {
+     "champion": 86,
+     "delta": -0.0059
+    },
+    {
+     "champion": 115,
+     "delta": 0.02
+    },
+    {
+     "champion": 800,
+     "delta": 0.0239
+    }
+   ]
+  },
+  {
+   "id": 240,
+   "banRate": 0.042,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.4973,
+     "pickRate": 0.0805
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.517,
+     "pickRate": 0.0527
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 39,
+     "delta": 0.0131
+    },
+    {
+     "champion": 54,
+     "delta": 0.0363
+    },
+    {
+     "champion": 75,
+     "delta": -0.0092
+    },
+    {
+     "champion": 102,
+     "delta": 0.0358
+    },
+    {
+     "champion": 141,
+     "delta": 0.0445
+    },
+    {
+     "champion": 238,
+     "delta": 0.035
+    },
+    {
+     "champion": 254,
+     "delta": 0.0446
+    },
+    {
+     "champion": 799,
+     "delta": 0.0216
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 19,
+     "delta": 0.008
+    },
+    {
+     "champion": 28,
+     "delta": 0.0082
+    },
+    {
+     "champion": 32,
+     "delta": 0.0342
+    },
+    {
+     "champion": 80,
+     "delta": 0.0144
+    },
+    {
+     "champion": 161,
+     "delta": 0.0054
+    },
+    {
+     "champion": 200,
+     "delta": -0.005
+    }
+   ]
+  },
+  {
+   "id": 96,
+   "banRate": 0.0936,
+   "positions": [
+    {
+     "position": "bottom",
+     "winRate": 0.5111,
+     "pickRate": 0.0404
+    },
+    {
+     "position": "middle",
+     "winRate": 0.4988,
+     "pickRate": 0.0403
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 42,
+     "delta": -0.0263
+    },
+    {
+     "champion": 350,
+     "delta": -0.0088
+    },
+    {
+     "champion": 429,
+     "delta": -0.0072
+    },
+    {
+     "champion": 517,
+     "delta": 0.0304
+    },
+    {
+     "champion": 711,
+     "delta": 0.0355
+    },
+    {
+     "champion": 800,
+     "delta": -0.0004
+    },
+    {
+     "champion": 804,
+     "delta": 0.0074
+    },
+    {
+     "champion": 950,
+     "delta": 0.0008
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 43,
+     "delta": 0.0004
+    },
+    {
+     "champion": 45,
+     "delta": 0.0215
+    },
+    {
+     "champion": 54,
+     "delta": 0.0344
+    },
+    {
+     "champion": 91,
+     "delta": -0.0049
+    },
+    {
+     "champion": 203,
+     "delta": -0.0024
+    },
+    {
+     "champion": 238,
+     "delta": 0.026
+    }
+   ]
+  },
+  {
+   "id": 7,
+   "banRate": 0.0388,
+   "positions": [
+    {
+     "position": "middle",
+     "winRate": 0.526,
+     "pickRate": 0.0153
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.4758,
+     "pickRate": 0.036
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 20,
+     "delta": -0.0325
+    },
+    {
+     "champion": 21,
+     "delta": -0.0407
+    },
+    {
+     "champion": 37,
+     "delta": -0.006
+    },
+    {
+     "champion": 76,
+     "delta": -0.0375
+    },
+    {
+     "champion": 122,
+     "delta": -0.0187
+    },
+    {
+     "champion": 234,
+     "delta": -0.0299
+    },
+    {
+     "champion": 236,
+     "delta": 0.0316
+    },
+    {
+     "champion": 360,
+     "delta": 0.0216
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 17,
+     "delta": 0.0298
+    },
+    {
+     "champion": 81,
+     "delta": 0.0311
+    },
+    {
+     "champion": 82,
+     "delta": -0.0065
+    },
+    {
+     "champion": 104,
+     "delta": 0.0035
+    },
+    {
+     "champion": 268,
+     "delta": 0.0082
+    },
+    {
+     "champion": 711,
+     "delta": 0.0251
+    }
+   ]
+  },
+  {
+   "id": 64,
+   "banRate": 0.0236,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.5019,
+     "pickRate": 0.018
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.5028,
+     "pickRate": 0.0213
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 3,
+     "delta": 0.0069
+    },
+    {
+     "champion": 8,
+     "delta": 0.0414
+    },
+    {
+     "champion": 11,
+     "delta": 0.0
+    },
+    {
+     "champion": 28,
+     "delta": 0.0185
+    },
+    {
+     "champion": 32,
+     "delta": 0.0213
+    },
+    {
+     "champion": 41,
+     "delta": 0.0238
+    },
+    {
+     "champion": 122,
+     "delta": 0.0318
+    },
+    {
+     "champion": 897,
+     "delta": -0.0027
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 10,
+     "delta": 0.0317
+    },
+    {
+     "champion": 74,
+     "delta": 0.012
+    },
+    {
+     "champion": 96,
+     "delta": 0.0282
+    },
+    {
+     "champion": 115,
+     "delta": 0.0094
+    },
+    {
+     "champion": 122,
+     "delta": 0.0131
+    },
+    {
+     "champion": 777,
+     "delta": 0.0171
+    }
+   ]
+  },
+  {
+   "id": 89,
+   "banRate": 0.1031,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.4749,
+     "pickRate": 0.0892
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.4574,
+     "pickRate": 0.0499
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 11,
+     "delta": 0.0117
+    },
+    {
+     "champion": 55,
+     "delta": -0.0167
+    },
+    {
+     "champion": 84,
+     "delta": 0.03
+    },
+    {
+     "champion": 92,
+     "delta": -0.0221
+    },
+    {
+     "champion": 105,
+     "delta": 0.0017
+    },
+    {
+     "champion": 126,
+     "delta": 0.0249
+    },
+    {
+     "champion": 517,
+     "delta": 0.0019
+    },
+    {
+     "champion": 799,
+     "delta": 0.0104
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 11,
+     "delta": 0.021
+    },
+    {
+     "champion": 53,
+     "delta": -0.0015
+    },
+    {
+     "champion": 72,
+     "delta": 0.029
+    },
+    {
+     "champion": 201,
+     "delta": 0.0346
+    },
+    {
+     "champion": 240,
+     "delta": -0.0052
+    },
+    {
+     "champion": 360,
+     "delta": 0.0053
+    }
+   ]
+  },
+  {
+   "id": 876,
+   "banRate": 0.0171,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.5302,
+     "pickRate": 0.0339
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.4975,
+     "pickRate": 0.0317
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 68,
+     "delta": -0.0031
+    },
+    {
+     "champion": 79,
+     "delta": -0.0271
+    },
+    {
+     "champion": 84,
+     "delta": 0.0375
+    },
+    {
+     "champion": 120,
+     "delta": 0.0443
+    },
+    {
+     "champion": 164,
+     "delta": -0.0141
+    },
+    {
+     "champion": 223,
+     "delta": -0.042
+    },
+    {
+     "champion": 245,
+     "delta": -0.0318
+    },
+    {
+     "champion": 517,
+     "delta": -0.0078
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 3,
+     "delta": 0.0146
+    },
+    {
+     "champion": 48,
+     "delta": 0.0111
+    },
+    {
+     "champion": 51,
+     "delta": 0.0101
+    },
+    {
+     "champion": 77,
+     "delta": 0.006
+    },
+    {
+     "champion": 131,
+     "delta": -0.0074
+    },
+    {
+     "champion": 805,
+     "delta": 0.0281
+    }
+   ]
+  },
+  {
+   "id": 127,
+   "banRate": 0.0185,
+   "positions": [
+    {
+     "position": "middle",
+     "winRate": 0.501,
+     "pickRate": 0.0257
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 74,
+     "delta": -0.0252
+    },
+    {
+     "champion": 101,
+     "delta": 0.04
+    },
+    {
+     "champion": 105,
+     "delta": 0.0242
+    },
+    {
+     "champion": 117,
+     "delta": -0.0392
+    },
+    {
+     "champion": 121,
+     "delta": 0.0306
+    },
+    {
+     "champion": 236,
+     "delta": -0.0021
+    },
+    {
+     "champion": 245,
+     "delta": -0.005
+    },
+    {
+     "champion": 268,
+     "delta": -0.0354
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 37,
+     "delta": 0.01
+    },
+    {
+     "champion": 63,
+     "delta": -0.0091
+    },
+    {
+     "champion": 75,
+     "delta": 0.0179
+    },
+    {
+     "champion": 78,
+     "delta": 0.0146
+    },
+    {
+     "champion": 86,
+     "delta": 0.0346
+    },
+    {
+     "champion": 420,
+     "delta": 0.0146
+    }
+   ]
+  },
+  {
+   "id": 805,
+   "banRate": 0.0663,
+   "positions": [
+    {
+     "position": "middle",
+     "winRate": 0.5001,
+     "pickRate": 0.0421
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.4792,
+     "pickRate": 0.0135
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 13,
+     "delta": 0.0189
+    },
+    {
+     "champion": 42,
+     "delta": 0.0017
+    },
+    {
+     "champion": 63,
+     "delta": -0.0173
+    },
+    {
+     "champion": 82,
+     "delta": -0.0137
+    },
+    {
+     "champion": 157,
+     "delta": 0.0311
+    },
+    {
+     "champion": 245,
+     "delta": -0.0352
+    },
+    {
+     "champion": 711,
+     "delta": 0.0425
+    },
+    {
+     "champion": 893,
+     "delta": 0.0416
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 48,
+     "delta": -0.0071
+    },
+    {
+     "champion": 83,
+     "delta": 0.0203
+    },
+    {
+     "champion": 101,
+     "delta": 0.0321
+    },
+    {
+     "champion": 122,
+     "delta": 0.0349
+    },
+    {
+     "champion": 888,
+     "delta": 0.0037
+    },
+    {
+     "champion": 893,
+     "delta": -0.0008
+    }
+   ]
+  },
+  {
+   "id": 236,
+   "banRate": 0.0477,
+   "positions": [
+    {
+     "position": "bottom",
+     "winRate": 0.492,
+     "pickRate": 0.0433
+    },
+    {
+     "position": "middle",
+     "winRate": 0.4993,
+     "pickRate": 0.0162
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 10,
+     "delta": 0.0399
+    },
+    {
+     "champion": 25,
+     "delta": 0.0018
+    },
+    {
+     "champion": 51,
+     "delta": -0.0107
+    },
+    {
+     "champion": 103,
+     "delta": -0.0281
+    },
+    {
+     "champion": 115,
+     "delta": 0.0022
+    },
+    {
+     "champion": 163,
+     "delta": 0.0276
+    },
+    {
+     "champion": 498,
+     "delta": 0.0283
+    },
+    {
+     "champion": 893,
+     "delta": -0.0121
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 20,
+     "delta": 0.03
+    },
+    {
+     "champion": 31,
+     "delta": -0.0072
+    },
+    {
+     "champion": 51,
+     "delta": -0.0083
+    },
+    {
+     "champion": 84,
+     "delta": 0.0084
+    },
+    {
+     "champion": 245,
+     "delta": 0.0021
+    },
+    {
+     "champion": 420,
+     "delta": 0.0031
+    }
+   ]
+  },
+  {
+   "id": 117,
+   "banRate": 0.1218,
+   "positions": [
+    {
+     "position": "utility",
+     "winRate": 0.509,
+     "pickRate": 0.12
+    },
+    {
+     "position": "middle",
+     "winRate": 0.4803,
+     "pickRate": 0.0059
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 30,
+     "delta": -0.0395
+    },
+    {
+     "champion": 40,
+     "delta": -0.0222
+    },
+    {
+     "champion": 127,
+     "delta": 0.0395
+    },
+    {
+     "champion": 166,
+     "delta": -0.0337
+    },
+    {
+     "champion": 350,
+     "delta": -0.0328
+    },
+    {
+     "champion": 412,
+     "delta": 0.0398
+    },
+    {
+     "champion": 427,
+     "delta": -0.0213
+    },
+    {
+     "champion": 517,
+     "delta": 0.014
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 8,
+     "delta": 0.0039
+    },
+    {
+     "champion": 40,
+     "delta": 0.0227
+    },
+    {
+     "champion": 61,
+     "delta": 0.0248
+    },
+    {
+     "champion": 420,
+     "delta": 0.0119
+    },
+    {
+     "champion": 429,
+     "delta": 0.0051
+    },
+    {
+     "champion": 517,
+     "delta": 0.0051
+    }
+   ]
+  },
+  {
+   "id": 99,
+   "banRate": 0.0326,
+   "positions": [
+    {
+     "position": "middle",
+     "winRate": 0.4734,
+     "pickRate": 0.0917
+    },
+    {
+     "position": "utility",
+     "winRate": 0.5179,
+     "pickRate": 0.0062
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 1,
+     "delta": -0.0098
+    },
+    {
+     "champion": 28,
+     "delta": -0.0076
+    },
+    {
+     "champion": 67,
+     "delta": -0.0012
+    },
+    {
+     "champion": 90,
+     "delta": 0.0435
+    },
+    {
+     "champion": 105,
+     "delta": -0.0214
+    },
+    {
+     "champion": 110,
+     "delta": -0.01
+    },
+    {
+     "champion": 246,
+     "delta": -0.0148
+    },
+    {
+     "champion": 950,
+     "delta": 0.0303
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 33,
+     "delta": 0.0342
+    },
+    {
+     "champion": 50,
+     "delta": 0.0198
+    },
+    {
+     "champion": 63,
+     "delta": 0.0079
+    },
+    {
+     "champion": 429,
+     "delta": -0.0093
+    },
+    {
+     "champion": 517,
+     "delta": -0.008
+    },
+    {
+     "champion": 904,
+     "delta": 0.03
+    }
+   ]
+  },
+  {
+   "id": 54,
+   "banRate": 0.1081,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.5377,
+     "pickRate": 0.0208
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.5238,
+     "pickRate": 0.0045
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 6,
+     "delta": 0.0405
+    },
+    {
+     "champion": 33,
+     "delta": 0.0027
+    },
+    {
+     "champion": 79,
+     "delta": 0.035
+    },
+    {
+     "champion": 238,
+     "delta": 0.0181
+    },
+    {
+     "champion": 254,
+     "delta": -0.0207
+    },
+    {
+     "champion": 420,
+     "delta": 0.0407
+    },
+    {
+     "champion": 517,
+     "delta": -0.0281
+    },
+    {
+     "champion": 805,
+     "delta": -0.024
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 7,
+     "delta": 0.0191
+    },
+    {
+     "champion": 62,
+     "delta": 0.0342
+    },
+    {
+     "champion": 161,
+     "delta": -0.0049
+    },
+    {
+     "champion": 221,
+     "delta": 0.0194
+    },
+    {
+     "champion": 240,
+     "delta": 0.016
+    },
+    {
+     "champion": 800,
+     "delta": -0.0035
+    }
+   ]
+  },
+  {
+   "id": 90,
+   "banRate": 0.0455,
+   "positions": [
+    {
+     "position": "middle",
+     "winRate": 0.4807,
+     "pickRate": 0.0275
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 26,
+     "delta": 0.0105
+    },
+    {
+     "champion": 60,
+     "delta": 0.0192
+    },
+    {
+     "champion": 127,
+     "delta": 0.0091
+    },
+    {
+     "champion": 133,
+     "delta": -0.043
+    },
+    {
+     "champion": 166,
+     "delta": -0.0214
+    },
+    {
+     "champion": 245,
+     "delta": -0.031
+    },
+    {
+     "champion": 267,
+     "delta": 0.0339
+    },
+    {
+     "champion": 950,
+     "delta": -0.0287
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 7,
+     "delta": -0.006
+    },
+    {
+     "champion": 14,
+     "delta": 0.0161
+    },
+    {
+     "champion": 27,
+     "delta": 0.0146
+    },
+    {
+     "champion": 115,
+     "delta": 0.0063
+    },
+    {
+     "champion": 134,
+     "delta": 0.0092
+    },
+    {
+     "champion": 164,
+     "delta": -0.004
+    }
+   ]
+  },
+  {
+   "id": 57,
+   "banRate": 0.1155,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.5094,
+     "pickRate": 0.0941
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.494,
+     "pickRate": 0.0031
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 12,
+     "delta": 0.0262
+    },
+    {
+     "champion": 55,
+     "delta": -0.0234
+    },
+    {
+     "champion": 72,
+     "delta": -0.0222
+    },
+    {
+     "champion": 77,
+     "delta": 0.039
+    },
+    {
+     "champion": 82,
+     "delta": -0.0316
+    },
+    {
+     "champion": 154,
+     "delta": 0.0315
+    },
+    {
+     "champion": 420,
+     "delta": -0.0356
+    },
+    {
+     "champion": 893,
+     "delta": -0.0205
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 22,
+     "delta": 0.0023
+    },
+    {
+     "champion": 92,
+     "delta": 0.001
+    },
+    {
+     "champion": 115,
+     "delta": 0.0303
+    },
+    {
+     "champion": 127,
+     "delta": 0.023
+    },
+    {
+     "champion": 897,
+     "delta": 0.0097
+    },
+    {
+     "champion": 910,
+     "delta": -0.0037
+    }
+   ]
+  },
+  {
+   "id": 11,
+   "banRate": 0.0897,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.5037,
+     "pickRate": 0.0375
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.4816,
+     "pickRate": 0.0367
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 33,
+     "delta": -0.0041
+    },
+    {
+     "champion": 39,
+     "delta": 0.0172
+    },
+    {
+     "champion": 53,
+     "delta": -0.0072
+    },
+    {
+     "champion": 103,
+     "delta": -0.0334
+    },
+    {
+     "champion": 223,
+     "delta": -0.0435
+    },
+    {
+     "champion": 234,
+     "delta": 0.0194
+    },
+    {
+     "champion": 420,
+     "delta": 0.0195
+    },
+    {
+     "champion": 805,
+     "delta": -0.0056
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 14,
+     "delta": 0.0169
+    },
+    {
+     "champion": 48,
+     "delta": 0.019
+    },
+    {
+     "champion": 74,
+     "delta": 0.0005
+    },
+    {
+     "champion": 102,
+     "delta": -0.0015
+    },
+    {
+     "champion": 202,
+     "delta": -0.0037
+    },
+    {
+     "champion": 498,
+     "delta": 0.0138
+    }
+   ]
+  },
+  {
+   "id": 800,
+   "banRate": 0.0117,
+   "positions": [
+    {
+     "position": "middle",
+     "winRate": 0.4852,
+     "pickRate": 0.099
+    },
+    {
+     "position": "utility",
+     "winRate": 0.53,
+     "pickRate": 0.0492
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 8,
+     "delta": -0.041
+    },
+    {
+     "champion": 17,
+     "delta": -0.0404
+    },
+    {
+     "champion": 18,
+     "delta": 0.0066
+    },
+    {
+     "champion": 29,
+     "delta": 0.0262
+    },
+    {
+     "champion": 45,
+     "delta": -0.0066
+    },
+    {
+     "champion": 69,
+     "delta": -0.0421
+    },
+    {
+     "champion": 246,
+     "delta": -0.0231
+    },
+    {
+     "champion": 893,
+     "delta": -0.035
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 69,
+     "delta": 0.0285
+    },
+    {
+     "champion": 81,
+     "delta": -0.0074
+    },
+    {
+     "champion": 106,
+     "delta": 0.0298
+    },
+    {
+     "champion": 202,
+     "delta": 0.0282
+    },
+    {
+     "champion": 350,
+     "delta": 0.021
+    },
+    {
+     "champion": 498,
+     "delta": 0.0233
+    }
+   ]
+  },
+  {
+   "id": 902,
+   "banRate": 0.012,
+   "positions": [
+    {
+     "position": "utility",
+     "winRate": 0.5024,
+     "pickRate": 0.1041
+    },
+    {
+     "position": "middle",
+     "winRate": 0.5219,
+     "pickRate": 0.0382
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 91,
+     "delta": -0.0437
+    },
+    {
+     "champion": 107,
+     "delta": -0.0256
+    },
+    {
+     "champion": 136,
+     "delta": -0.0093
+    },
+    {
+     "champion": 202,
+     "delta": 0.0351
+    },
+    {
+     "champion": 235,
+     "delta": -0.0084
+    },
+    {
+     "champion": 555,
+     "delta": -0.0373
+    },
+    {
+     "champion": 893,
+     "delta": -0.0236
+    },
+    {
+     "champion": 901,
+     "delta": 0.0405
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 12,
+     "delta": 0.022
+    },
+    {
+     "champion": 40,
+     "delta": -0.007
+    },
+    {
+     "champion": 113,
+     "delta": 0.0007
+    },
+    {
+     "champion": 127,
+     "delta": 0.0217
+    },
+    {
+     "champion": 516,
+     "delta": 0.002
+    },
+    {
+     "champion": 950,
+     "delta": 0.0076
+    }
+   ]
+  },
+  {
+   "id": 21,
+   "banRate": 0.1228,
+   "positions": [
+    {
+     "position": "bottom",
+     "winRate": 0.4623,
+     "pickRate": 0.0505
+    },
+    {
+     "position": "middle",
+     "winRate": 0.499,
+     "pickRate": 0.0061
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 1,
+     "delta": 0.0296
+    },
+    {
+     "champion": 10,
+     "delta": -0.0118
+    },
+    {
+     "champion": 35,
+     "delta": -0.0161
+    },
+    {
+     "champion": 117,
+     "delta": 0.0149
+    },
+    {
+     "champion": 221,
+     "delta": -0.007
+    },
+    {
+     "champion": 222,
+     "delta": -0.0158
+    },
+    {
+     "champion": 236,
+     "delta": -0.0238
+    },
+    {
+     "champion": 350,
+     "delta": -0.0362
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 40,
+     "delta": 0.027
+    },
+    {
+     "champion": 43,
+     "delta": 0.0265
+    },
+    {
+     "champion": 44,
+     "delta": -0.0061
+    },
+    {
+     "champion": 55,
+     "delta": -0.001
+    },
+    {
+     "champion": 121,
+     "delta": 0.0232
+    },
+    {
+     "champion": 711,
+     "delta": 0.0081
+    }
+   ]
+  },
+  {
+   "id": 82,
+   "banRate": 0.0483,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.4963,
+     "pickRate": 0.0687
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.5173,
+     "pickRate": 0.0198
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 32,
+     "delta": 0.0114
+    },
+    {
+     "champion": 36,
+     "delta": 0.013
+    },
+    {
+     "champion": 54,
+     "delta": -0.0214
+    },
+    {
+     "champion": 60,
+     "delta": -0.011
+    },
+    {
+     "champion": 131,
+     "delta": -0.01
+    },
+    {
+     "champion": 150,
+     "delta": 0.0313
+    },
+    {
+     "champion": 254,
+     "delta": 0.0225
+    },
+    {
+     "champion": 895,
+     "delta": 0.0134
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 2,
+     "delta": 0.0131
+    },
+    {
+     "champion": 67,
+     "delta": 0.0249
+    },
+    {
+     "champion": 78,
+     "delta": 0.0342
+    },
+    {
+     "champion": 96,
+     "delta": 0.003
+    },
+    {
+     "champion": 101,
+     "delta": 0.0201
+    },
+    {
+     "champion": 134,
+     "delta": -0.0011
+    }
+   ]
+  },
+  {
+   "id": 25,
+   "banRate": 0.0039,
+   "positions": [
+    {
+     "position": "utility",
+     "winRate": 0.5314,
+     "pickRate": 0.02
+    },
+    {
+     "position": "middle",
+     "winRate": 0.4713,
+     "pickRate": 0.0095
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 42,
+     "delta": -0.0249
+    },
+    {
+     "champion": 44,
+     "delta": 0.0069
+    },
+    {
+     "champion": 60,
+     "delta": -0.0176
+    },
+    {
+     "champion": 112,
+     "delta": -0.0143
+    },
+    {
+     "champion": 147,
+     "delta": -0.0335
+    },
+    {
+     "champion": 267,
+     "delta": 0.0365
+    },
+    {
+     "champion": 497,
+     "delta": -0.021
+    },
+    {
+     "champion": 902,
+     "delta": -0.0007
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 18,
+     "delta": 0.016
+    },
+    {
+     "champion": 45,
+     "delta": 0.0207
+    },
+    {
+     "champion": 62,
+     "delta": -0.0088
+    },
+    {
+     "champion": 79,
+     "delta": 0.0068
+    },
+    {
+     "champion": 99,
+     "delta": 0.0223
+    },
+    {
+     "champion": 517,
+     "delta": -0.0027
+    }
+   ]
+  },
+  {
+   "id": 950,
+   "banRate": 0.1042,
+   "positions": [
+    {
+     "position": "middle",
+     "winRate": 0.5224,
+     "pickRate": 0.0409
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.4909,
+     "pickRate": 0.036
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 13,
+     "delta": -0.0221
+    },
+    {
+     "champion": 42,
+     "delta": -0.0158
+    },
+    {
+     "champion": 63,
+     "delta": -0.036
+    },
+    {
+     "champion": 77,
+     "delta": 0.0368
+    },
+    {
+     "champion": 99,
+     "delta": 0.0445
+    },
+    {
+     "champion": 201,
+     "delta": -0.0286
+    },
+    {
+     "champion": 238,
+     "delta": 0.0036
+    },
+    {
+     "champion": 897,
+     "delta": -0.0313
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 68,
+     "delta": 0.0266
+    },
+    {
+     "champion": 110,
+     "delta": 0.0057
+    },
+    {
+     "champion": 223,
+     "delta": 0.0095
+    },
+    {
+     "champion": 236,
+     "delta": -0.0059
+    },
+    {
+     "champion": 350,
+     "delta": 0.0057
+    },
+    {
+     "champion": 887,
+     "delta": -0.0078
+    }
+   ]
+  },
+  {
+   "id": 267,
+   "banRate": 0.1105,
+   "positions": [
+    {
+     "position": "utility",
+     "winRate": 0.5367,
+     "pickRate": 0.0868
+    },
+    {
+     "position": "middle",
+     "winRate": 0.5155,
+     "pickRate": 0.0143
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 13,
+     "delta": 0.0361
+    },
+    {
+     "champion": 17,
+     "delta": -0.0198
+    },
+    {
+     "champion": 76,
+     "delta": 0.0059
+    },
+    {
+     "champion": 85,
+     "delta": 0.0263
+    },
+    {
+     "champion": 350,
+     "delta": -0.0381
+    },
+    {
+     "champion": 412,
+     "delta": -0.0264
+    },
+    {
+     "champion": 427,
+     "delta": -0.0446
+    },
+    {
+     "champion": 497,
+     "delta": 0.0343
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 42,
+     "delta": 0.0226
+    },
+    {
+     "champion": 112,
+     "delta": 0.0223
+    },
+    {
+     "champion": 134,
+     "delta": 0.0231
+    },
+    {
+     "champion": 221,
+     "delta": -0.0061
+    },
+    {
+     "champion": 800,
+     "delta": 0.0011
+    },
+    {
+     "champion": 804,
+     "delta": -0.0046
+    }
+   ]
+  },
+  {
+   "id": 75,
+   "banRate": 0.0213,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.5173,
+     "pickRate": 0.0705
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.505,
+     "pickRate": 0.0208
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 2,
+     "delta": 0.0334
+    },
+    {
+     "champion": 11,
+     "delta": 0.0149
+    },
+    {
+     "champion": 27,
+     "delta": -0.0222
+    },
+    {
+     "champion": 31,
+     "delta": 0.0343
+    },
+    {
+     "champion": 41,
+     "delta": 0.0127
+    },
+    {
+     "champion": 64,
+     "delta": 0.0129
+    },
+    {
+     "champion": 200,
+     "delta": 0.0009
+    },
+    {
+     "champion": 421,
+     "delta": -0.0252
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 39,
+     "delta": -0.0089
+    },
+    {
+     "champion": 61,
+     "delta": 0.0174
+    },
+    {
+     "champion": 62,
+     "delta": 0.0306
+    },
+    {
+     "champion": 72,
+     "delta": 0.0232
+    },
+    {
+     "champion": 105,
+     "delta": 0.0322
+    },
+    {
+     "champion": 115,
+     "delta": -0.0064
+    }
+   ]
+  },
+  {
+   "id": 111,
+   "banRate": 0.0312,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.498,
+     "pickRate": 0.0205
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.4739,
+     "pickRate": 0.0448
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 20,
+     "delta": -0.0297
+    },
+    {
+     "champion": 56,
+     "delta": 0.0432
+    },
+    {
+     "champion": 80,
+     "delta": -0.0153
+    },
+    {
+     "champion": 91,
+     "delta": -0.0417
+    },
+    {
+     "champion": 114,
+     "delta": -0.0362
+    },
+    {
+     "champion": 245,
+     "delta": 0.0275
+    },
+    {
+     "champion": 254,
+     "delta": -0.0194
+    },
+    {
+     "champion": 799,
+     "delta": -0.0325
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 61,
+     "delta": 0.0011
+    },
+    {
+     "champion": 83,
+     "delta": -0.0025
+    },
+    {
+     "champion": 145,
+     "delta": 0.0107
+    },
+    {
+     "champion": 147,
+     "delta": 0.0285
+    },
+    {
+     "champion": 161,
+     "delta": 0.0238
+    },
+    {
+     "champion": 412,
+     "delta": 0.0313
+    }
+   ]
+  },
+  {
+   "id": 518,
+   "banRate": 0.0006,
+   "positions": [
+    {
+     "position": "middle",
+     "winRate": 0.5137,
+     "pickRate": 0.0357
+    },
+    {
+     "position": "utility",
+     "winRate": 0.5077,
+     "pickRate": 0.0221
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 17,
+     "delta": 0.0206
+    },
+    {
+     "champion": 60,
+     "delta": 0.0047
+    },
+    {
+     "champion": 96,
+     "delta": 0.0214
+    },
+    {
+     "champion": 112,
+     "delta": -0.0041
+    },
+    {
+     "champion": 117,
+     "delta": 0.0372
+    },
+    {
+     "champion": 127,
+     "delta": -0.0102
+    },
+    {
+     "champion": 235,
+     "delta": -0.0127
+    },
+    {
+     "champion": 517,
+     "delta": 0.0168
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 18,
+     "delta": 0.0104
+    },
+    {
+     "champion": 62,
+     "delta": 0.0061
+    },
+    {
+     "champion": 96,
+     "delta": -0.0034
+    },
+    {
+     "champion": 131,
+     "delta": 0.0182
+    },
+    {
+     "champion": 150,
+     "delta": 0.029
+    },
+    {
+     "champion": 523,
+     "delta": -0.0089
+    }
+   ]
+  },
+  {
+   "id": 76,
+   "banRate": 0.0574,
+   "positions": [
+    {
+     "position": "middle",
+     "winRate": 0.5291,
+     "pickRate": 0.1098
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.468,
+     "pickRate": 0.0549
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 8,
+     "delta": -0.0201
+    },
+    {
+     "champion": 54,
+     "delta": -0.023
+    },
+    {
+     "champion": 67,
+     "delta": 0.0434
+    },
+    {
+     "champion": 110,
+     "delta": -0.0046
+    },
+    {
+     "champion": 150,
+     "delta": -0.0276
+    },
+    {
+     "champion": 154,
+     "delta": 0.0427
+    },
+    {
+     "champion": 432,
+     "delta": 0.0332
+    },
+    {
+     "champion": 526,
+     "delta": -0.0369
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 11,
+     "delta": 0.0264
+    },
+    {
+     "champion": 16,
+     "delta": 0.0329
+    },
+    {
+     "champion": 36,
+     "delta": -0.0021
+    },
+    {
+     "champion": 55,
+     "delta": 0.0032
+    },
+    {
+     "champion": 161,
+     "delta": 0.0018
+    },
+    {
+     "champion": 777,
+     "delta": 0.0158
+    }
+   ]
+  },
+  {
+   "id": 895,
+   "banRate": 0.0698,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.4977,
+     "pickRate": 0.0896
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.5224,
+     "pickRate": 0.0498
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 5,
+     "delta": -0.0422
+    },
+    {
+     "champion": 48,
+     "delta": 0.0415
+    },
+    {
+     "champion": 62,
+     "delta": 0.0087
+    },
+    {
+     "champion": 82,
+     "delta": -0.0181
+    },
+    {
+     "champion": 86,
+     "delta": 0.0178
+    },
+    {
+     "champion": 91,
+     "delta": -0.0338
+    },
+    {
+     "champion": 223,
+     "delta": -0.0305
+    },
+    {
+     "champion": 420,
+     "delta": 0.0078
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 3,
+     "delta": -0.0075
+    },
+    {
+     "champion": 6,
+     "delta": 0.0021
+    },
+    {
+     "champion": 12,
+     "delta": 0.0217
+    },
+    {
+     "champion": 60,
+     "delta": 0.0113
+    },
+    {
+     "champion": 82,
+     "delta": 0.0346
+    },
+    {
+     "champion": 950,
+     "delta": -0.0037
+    }
+   ]
+  },
+  {
+   "id": 56,
+   "banRate": 0.0494,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.5315,
+     "pickRate": 0.0287
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.528,
+     "pickRate": 0.0198
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 84,
+     "delta": 0.021
+    },
+    {
+     "champion": 89,
+     "delta": -0.0026
+    },
+    {
+     "champion": 111,
+     "delta": -0.0025
+    },
+    {
+     "champion": 200,
+     "delta": 0.045
+    },
+    {
+     "champion": 223,
+     "delta": -0.0374
+    },
+    {
+     "champion": 246,
+     "delta": -0.0199
+    },
+    {
+     "champion": 517,
+     "delta": -0.0269
+    },
+    {
+     "champion": 887,
+     "delta": 0.0232
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 20,
+     "delta": 0.0163
+    },
+    {
+     "champion": 61,
+     "delta": 0.0021
+    },
+    {
+     "champion": 83,
+     "delta": -0.0069
+    },
+    {
+     "champion": 163,
+     "delta": 0.0052
+    },
+    {
+     "champion": 164,
+     "delta": 0.0089
+    },
+    {
+     "champion": 166,
+     "delta": -0.0068
+    }
+   ]
+  },
+  {
+   "id": 20,
+   "banRate": 0.103,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.494,
+     "pickRate": 0.0448
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.5201,
+     "pickRate": 0.0574
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 33,
+     "delta": 0.0192
+    },
+    {
+     "champion": 76,
+     "delta": -0.0156
+    },
+    {
+     "champion": 80,
+     "delta": 0.0054
+    },
+    {
+     "champion": 86,
+     "delta": -0.0074
+    },
+    {
+     "champion": 92,
+     "delta": -0.0167
+    },
+    {
+     "champion": 98,
+     "delta": -0.0037
+    },
+    {
+     "champion": 154,
+     "delta": -0.0316
+    },
+    {
+     "champion": 904,
+     "delta": -0.0309
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 13,
+     "delta": 0.0112
+    },
+    {
+     "champion": 14,
+     "delta": 0.0264
+    },
+    {
+     "champion": 25,
+     "delta": 0.0044
+    },
+    {
+     "champion": 41,
+     "delta": 0.0261
+    },
+    {
+     "champion": 45,
+     "delta": 0.0248
+    },
+    {
+     "champion": 113,
+     "delta": 0.0033
+    }
+   ]
+  },
+  {
+   "id": 2,
+   "banRate": 0.022,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.4739,
+     "pickRate": 0.0071
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.5196,
+     "pickRate": 0.0321
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 7,
+     "delta": -0.0076
+    },
+    {
+     "champion": 12,
+     "delta": 0.0428
+    },
+    {
+     "champion": 41,
+     "delta": 0.0378
+    },
+    {
+     "champion": 53,
+     "delta": -0.0325
+    },
+    {
+     "champion": 68,
+     "delta": 0.0051
+    },
+    {
+     "champion": 113,
+     "delta": 0.0193
+    },
+    {
+     "champion": 875,
+     "delta": 0.0062
+    },
+    {
+     "champion": 904,
+     "delta": -0.0172
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 10,
+     "delta": 0.0074
+    },
+    {
+     "champion": 22,
+     "delta": -0.0057
+    },
+    {
+     "champion": 27,
+     "delta": -0.0096
+    },
+    {
+     "champion": 35,
+     "delta": 0.0176
+    },
+    {
+     "champion": 82,
+     "delta": 0.0117
+    },
+    {
+     "champion": 112,
+     "delta": 0.016
+    }
+   ]
+  },
+  {
+   "id": 61,
+   "banRate": 0.0298,
+   "positions": [
+    {
+     "position": "middle",
+     "winRate": 0.4818,
+     "pickRate": 0.0488
+    },
+    {
+     "position": "utility",
+     "winRate": 0.4574,
+     "pickRate": 0.0144
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 9,
+     "delta": -0.0176
+    },
+    {
+     "champion": 10,
+     "delta": 0.0227
+    },
+    {
+     "champion": 16,
+     "delta": 0.0407
+    },
+    {
+     "champion": 35,
+     "delta": 0.0291
+    },
+    {
+     "champion": 44,
+     "delta": 0.0331
+    },
+    {
+     "champion": 143,
+     "delta": 0.0114
+    },
+    {
+     "champion": 236,
+     "delta": -0.0053
+    },
+    {
+     "champion": 497,
+     "delta": -0.0166
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 17,
+     "delta": -0.009
+    },
+    {
+     "champion": 83,
+     "delta": 0.0034
+    },
+    {
+     "champion": 120,
+     "delta": 0.0333
+    },
+    {
+     "champion": 127,
+     "delta": 0.034
+    },
+    {
+     "champion": 235,
+     "delta": -0.0041
+    },
+    {
+     "champion": 350,
+     "delta": -0.004
+    }
+   ]
+  },
+  {
+   "id": 516,
+   "banRate": 0.0186,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.533,
+     "pickRate": 0.0798
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.4663,
+     "pickRate": 0.0293
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 11,
+     "delta": -0.0033
+    },
+    {
+     "champion": 36,
+     "delta": -0.0197
+    },
+    {
+     "champion": 57,
+     "delta": -0.0301
+    },
+    {
+     "champion": 75,
+     "delta": 0.0136
+    },
+    {
+     "champion": 82,
+     "delta": 0.0198
+    },
+    {
+     "champion": 89,
+     "delta": -0.0076
+    },
+    {
+     "champion": 121,
+     "delta": 0.0388
+    },
+    {
+     "champion": 154,
+     "delta": 0.0226
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 16,
+     "delta": 0.0331
+    },
+    {
+     "champion": 54,
+     "delta": 0.0323
+    },
+    {
+     "champion": 55,
+     "delta": 0.0191
+    },
+    {
+     "champion": 79,
+     "delta": 0.0142
+    },
+    {
+     "champion": 112,
+     "delta": 0.0059
+    },
+    {
+     "champion": 134,
+     "delta": 0.002
+    }
+   ]
+  },
+  {
+   "id": 80,
+   "banRate": 0.0038,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.5033,
+     "pickRate": 0.0295
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.497,
+     "pickRate": 0.0329
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 12,
+     "delta": 0.0266
+    },
+    {
+     "champion": 14,
+     "delta": 0.0213
+    },
+    {
+     "champion": 24,
+     "delta": 0.0081
+    },
+    {
+     "champion": 33,
+     "delta": -0.0317
+    },
+    {
+     "champion": 48,
+     "delta": -0.0443
+    },
+    {
+     "champion": 78,
+     "delta": 0.0049
+    },
+    {
+     "champion": 102,
+     "delta": 0.0407
+    },
+    {
+     "champion": 105,
+     "delta": 0.0183
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 111,
+     "delta": 0.0101
+    },
+    {
+     "champion": 114,
+     "delta": 0.0185
+    },
+    {
+     "champion": 134,
+     "delta": 0.025
+    },
+    {
+     "champion": 203,
+     "delta": 0.0033
+    },
+    {
+     "champion": 805,
+     "delta": 0.0179
+    },
+    {
+     "champion": 910,
+     "delta": 0.0269
+    }
+   ]
+  },
+  {
+   "id": 78,
+   "banRate": 0.1112,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.4867,
+     "pickRate": 0.041
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.5253,
+     "pickRate": 0.0322
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 58,
+     "delta": -0.0311
+    },
+    {
+     "champion": 62,
+     "delta": -0.0065
+    },
+    {
+     "champion": 76,
+     "delta": 0.0213
+    },
+    {
+     "champion": 80,
+     "delta": 0.0377
+    },
+    {
+     "champion": 102,
+     "delta": -0.012
+    },
+    {
+     "champion": 254,
+     "delta": 0.0305
+    },
+    {
+     "champion": 412,
+     "delta": 0.0299
+    },
+    {
+     "champion": 887,
+     "delta": 0.0343
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 7,
+     "delta": 0.0333
+    },
+    {
+     "champion": 24,
+     "delta": 0.0184
+    },
+    {
+     "champion": 92,
+     "delta": 0.0208
+    },
+    {
+     "champion": 110,
+     "delta": -0.0046
+    },
+    {
+     "champion": 421,
+     "delta": 0.0301
+    },
+    {
+     "champion": 711,
+     "delta": 0.0139
+    }
+   ]
+  },
+  {
+   "id": 555,
+   "banRate": 0.0555,
+   "positions": [
+    {
+     "position": "utility",
+     "winRate": 0.505,
+     "pickRate": 0.0983
+    },
+    {
+     "position": "middle",
+     "winRate": 0.458,
+     "pickRate": 0.0414
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 10,
+     "delta": 0.0046
+    },
+    {
+     "champion": 29,
+     "delta": -0.0416
+    },
+    {
+     "champion": 40,
+     "delta": 0.027
+    },
+    {
+     "champion": 42,
+     "delta": -0.0301
+    },
+    {
+     "champion": 101,
+     "delta": -0.0235
+    },
+    {
+     "champion": 145,
+     "delta": 0.0075
+    },
+    {
+     "champion": 238,
+     "delta": 0.0128
+    },
+    {
+     "champion": 267,
+     "delta": 0.0089
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 20,
+     "delta": 0.0138
+    },
+    {
+     "champion": 21,
+     "delta": 0.016
+    },
+    {
+     "champion": 29,
+     "delta": 0.0123
+    },
+    {
+     "champion": 154,
+     "delta": 0.0133
+    },
+    {
+     "champion": 421,
+     "delta": 0.0216
+    },
+    {
+     "champion": 711,
+     "delta": 0.0087
+    }
+   ]
+  },
+  {
+   "id": 246,
+   "banRate": 0.0308,
+   "positions": [
+    {
+     "position": "middle",
+     "winRate": 0.5008,
+     "pickRate": 0.0294
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.4648,
+     "pickRate": 0.0122
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 36,
+     "delta": 0.039
+    },
+    {
+     "champion": 98,
+     "delta": -0.0185
+    },
+    {
+     "champion": 126,
+     "delta": -0.0005
+    },
+    {
+     "champion": 131,
+     "delta": 0.0406
+    },
+    {
+     "champion": 134,
+     "delta": -0.0335
+    },
+    {
+     "champion": 202,
+     "delta": -0.0378
+    },
+    {
+     "champion": 267,
+     "delta": -0.0228
+    },
+    {
+     "champion": 777,
+     "delta": 0.0012
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 2,
+     "delta": -0.0023
+    },
+    {
+     "champion": 26,
+     "delta": 0.0101
+    },
+    {
+     "champion": 45,
+     "delta": 0.0234
+    },
+    {
+     "champion": 62,
+     "delta": 0.0112
+    },
+    {
+     "champion": 223,
+     "delta": 0.0012
+    },
+    {
+     "champion": 516,
+     "delta": 0.0044
+    }
+   ]
+  },
+  {
+   "id": 133,
+   "banRate": 0.0847,
+   "positions": [
+    {
+     "position": "bottom",
+     "winRate": 0.5316,
+     "pickRate": 0.0762
+    },
+    {
+     "position": "middle",
+     "winRate": 0.4593,
+     "pickRate": 0.0373
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 26,
+     "delta": -0.0413
+    },
+    {
+     "champion": 37,
+     "delta": 0.0255
+    },
+    {
+     "champion": 38,
+     "delta": -0.0037
+    },
+    {
+     "champion": 74,
+     "delta": 0.0062
+    },
+    {
+     "champion": 107,
+     "delta": 0.0107
+    },
+    {
+     "champion": 110,
+     "delta": 0.0094
+    },
+    {
+     "champion": 222,
+     "delta": 0.0394
+    },
+    {
+     "champion": 711,
+     "delta": 0.0385
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 26,
+     "delta": 0.0254
+    },
+    {
+     "champion": 40,
+     "delta": 0.0337
+    },
+    {
+     "champion": 45,
+     "delta": 0.0053
+    },
+    {
+     "champion": 58,
+     "delta": 0.028
+    },
+    {
+     "champion": 222,
+     "delta": 0.0258
+    },
+    {
+     "champion": 799,
+     "delta": 0.0256
+    }
+   ]
+  },
+  {
+   "id": 497,
+   "banRate": 0.0231,
+   "positions": [
+    {
+     "position": "utility",
+     "winRate": 0.5274,
+     "pickRate": 0.0266
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 1,
+     "delta": -0.0047
+    },
+    {
+     "champion": 22,
+     "delta": -0.005
+    },
+    {
+     "champion": 99,
+     "delta": 0.0253
+    },
+    {
+     "champion": 163,
+     "delta": 0.0288
+    },
+    {
+     "champion": 267,
+     "delta": 0.0263
+    },
+    {
+     "champion": 432,
+     "delta": 0.0119
+    },
+    {
+     "champion": 555,
+     "delta": 0.0279
+    },
+    {
+     "champion": 910,
+     "delta": -0.0077
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 15,
+     "delta": 0.0044
+    },
+    {
+     "champion": 29,
+     "delta": 0.0014
+    },
+    {
+     "champion": 31,
+     "delta": 0.016
+    },
+    {
+     "champion": 81,
+     "delta": 0.0277
+    },
+    {
+     "champion": 150,
+     "delta": 0.0223
+    },
+    {
+     "champion": 164,
+     "delta": 0.0058
+    }
+   ]
+  },
+  {
+   "id": 33,
+   "banRate": 0.008,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.5295,
+     "pickRate": 0.0776
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.5228,
+     "pickRate": 0.0279
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 24,
+     "delta": 0.0098
+    },
+    {
+     "champion": 56,
+     "delta": -0.031
+    },
+    {
+     "champion": 64,
+     "delta": -0.0183
+    },
+    {
+     "champion": 105,
+     "delta": 0.0263
+    },
+    {
+     "champion": 150,
+     "delta": 0.0225
+    },
+    {
+     "champion": 233,
+     "delta": -0.0267
+    },
+    {
+     "champion": 234,
+     "delta": -0.0346
+    },
+    {
+     "champion": 875,
+     "delta": -0.0266
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 39,
+     "delta": 0.003
+    },
+    {
+     "champion": 64,
+     "delta": -0.0049
+    },
+    {
+     "champion": 106,
+     "delta": 0.0062
+    },
+    {
+     "champion": 134,
+     "delta": 0.0031
+    },
+    {
+     "champion": 254,
+     "delta": 0.0233
+    },
+    {
+     "champion": 518,
+     "delta": 0.0183
+    }
+   ]
+  },
+  {
+   "id": 421,
+   "banRate": 0.1018,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.4823,
+     "pickRate": 0.0469
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.4683,
+     "pickRate": 0.037
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 14,
+     "delta": -0.0424
+    },
+    {
+     "champion": 36,
+     "delta": 0.0362
+    },
+    {
+     "champion": 60,
+     "delta": 0.0323
+    },
+    {
+     "champion": 62,
+     "delta": -0.0261
+    },
+    {
+     "champion": 105,
+     "delta": -0.0351
+    },
+    {
+     "champion": 234,
+     "delta": 0.0071
+    },
+    {
+     "champion": 238,
+     "delta": -0.0219
+    },
+    {
+     "champion": 887,
+     "delta": -0.0338
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 50,
+     "delta": -0.0059
+    },
+    {
+     "champion": 63,
+     "delta": 0.0124
+    },
+    {
+     "champion": 121,
+     "delta": -0.001
+    },
+    {
+     "champion": 164,
+     "delta": -0.0007
+    },
+    {
+     "champion": 254,
+     "delta": 0.0287
+    },
+    {
+     "champion": 799,
+     "delta": 0.0073
+    }
+   ]
+  },
+  {
+   "id": 526,
+   "banRate": 0.0,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.5014,
+     "pickRate": 0.1146
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.5304,
+     "pickRate": 0.021
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 11,
+     "delta": 0.031
+    },
+    {
+     "champion": 20,
+     "delta": -0.0345
+    },
+    {
+     "champion": 31,
+     "delta": 0.0123
+    },
+    {
+     "champion": 57,
+     "delta": -0.0316
+    },
+    {
+     "champion": 75,
+     "delta": 0.0289
+    },
+    {
+     "champion": 80,
+     "delta": -0.0279
+    },
+    {
+     "champion": 82,
+     "delta": 0.0349
+    },
+    {
+     "champion": 777,
+     "delta": -0.0322
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 16,
+     "delta": 0.0281
+    },
+    {
+     "champion": 24,
+     "delta": 0.0209
+    },
+    {
+     "champion": 57,
+     "delta": 0.0198
+    },
+    {
+     "champion": 106,
+     "delta": 0.0037
+    },
+    {
+     "champion": 110,
+     "delta": 0.0058
+    },
+    {
+     "champion": 161,
+     "delta": 0.0251
+    }
+   ]
+  },
+  {
+   "id": 888,
+   "banRate": 0.0159,
+   "positions": [
+    {
+     "position": "utility",
+     "winRate": 0.4651,
+     "pickRate": 0.006
+    },
+    {
+     "position": "middle",
+     "winRate": 0.4799,
+     "pickRate": 0.0506
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 21,
+     "delta": 0.0443
+    },
+    {
+     "champion": 103,
+     "delta": -0.0014
+    },
+    {
+     "champion": 110,
+     "delta": -0.0309
+    },
+    {
+     "champion": 112,
+     "delta": 0.0364
+    },
+    {
+     "champion": 267,
+     "delta": 0.03
+    },
+    {
+     "champion": 800,
+     "delta": 0.0355
+    },
+    {
+     "champion": 805,
+     "delta": 0.0215
+    },
+    {
+     "champion": 902,
+     "delta": -0.0266
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 22,
+     "delta": 0.0203
+    },
+    {
+     "champion": 32,
+     "delta": 0.0326
+    },
+    {
+     "champion": 33,
+     "delta": 0.0045
+    },
+    {
+     "champion": 67,
+     "delta": 0.0081
+    },
+    {
+     "champion": 777,
+     "delta": 0.0328
+    },
+    {
+     "champion": 887,
+     "delta": 0.0131
+    }
+   ]
+  },
+  {
+   "id": 58,
+   "banRate": 0.099,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.4851,
+     "pickRate": 0.0581
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.5287,
+     "pickRate": 0.029
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 8,
+     "delta": 0.0336
+    },
+    {
+     "champion": 28,
+     "delta": -0.0204
+    },
+    {
+     "champion": 105,
+     "delta": 0.0148
+    },
+    {
+     "champion": 111,
+     "delta": 0.0179
+    },
+    {
+     "champion": 114,
+     "delta": -0.0226
+    },
+    {
+     "champion": 266,
+     "delta": 0.0074
+    },
+    {
+     "champion": 875,
+     "delta": -0.0175
+    },
+    {
+     "champion": 876,
+     "delta": 0.0396
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 63,
+     "delta": -0.0007
+    },
+    {
+     "champion": 69,
+     "delta": 0.033
+    },
+    {
+     "champion": 111,
+     "delta": 0.0177
+    },
+    {
+     "champion": 166,
+     "delta": 0.0183
+    },
+    {
+     "champion": 711,
+     "delta": 0.0141
+    },
+    {
+     "champion": 799,
+     "delta": 0.0092
+    }
+   ]
+  },
+  {
+   "id": 107,
+   "banRate": 0.0083,
+   "positions": [
+    {
+     "position": "middle",
+     "winRate": 0.5298,
+     "pickRate": 0.0957
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.4769,
+     "pickRate": 0.0037
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 11,
+     "delta": -0.0134
+    },
+    {
+     "champion": 20,
+     "delta": 0.007
+    },
+    {
+     "champion": 79,
+     "delta": 0.0392
+    },
+    {
+     "champion": 81,
+     "delta": 0.0133
+    },
+    {
+     "champion": 92,
+     "delta": 0.0067
+    },
+    {
+     "champion": 202,
+     "delta": 0.0173
+    },
+    {
+     "champion": 238,
+     "delta": 0.0364
+    },
+    {
+     "champion": 254,
+     "delta": 0.0403
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 21,
+     "delta": 0.0015
+    },
+    {
+     "champion": 59,
+     "delta": 0.0079
+    },
+    {
+     "champion": 72,
+     "delta": 0.0074
+    },
+    {
+     "champion": 74,
+     "delta": 0.0333
+    },
+    {
+     "champion": 78,
+     "delta": 0.0337
+    },
+    {
+     "champion": 893,
+     "delta": 0.0227
+    }
+   ]
+  },
+  {
+   "id": 92,
+   "banRate": 0.0264,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.5355,
+     "pickRate": 0.1066
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.4929,
+     "pickRate": 0.019
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 11,
+     "delta": -0.0029
+    },
+    {
+     "champion": 14,
+     "delta": 0.019
+    },
+    {
+     "champion": 27,
+     "delta": -0.0413
+    },
+    {
+     "champion": 114,
+     "delta": -0.0102
+    },
+    {
+     "champion": 126,
+     "delta": 0.0445
+    },
+    {
+     "champion": 421,
+     "delta": 0.0432
+    },
+    {
+     "champion": 799,
+     "delta": 0.0227
+    },
+    {
+     "champion": 805,
+     "delta": -0.0407
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 11,
+     "delta": 0.0082
+    },
+    {
+     "champion": 41,
+     "delta": -0.0022
+    },
+    {
+     "champion": 58,
+     "delta": 0.0265
+    },
+    {
+     "champion": 412,
+     "delta": 0.0328
+    },
+    {
+     "champion": 804,
+     "delta": 0.0193
+    },
+    {
+     "champion": 876,
+     "delta": 0.0337
+    }
+   ]
+  },
+  {
+   "id": 68,
+   "banRate": 0.0146,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.5207,
+     "pickRate": 0.0508
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.4727,
+     "pickRate": 0.0205
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 11,
+     "delta": -0.0033
+    },
+    {
+     "champion": 20,
+     "delta": -0.0318
+    },
+    {
+     "champion": 58,
+     "delta": -0.0219
+    },
+    {
+     "champion": 77,
+     "delta": 0.0368
+    },
+    {
+     "champion": 107,
+     "delta": 0.0322
+    },
+    {
+     "champion": 141,
+     "delta": -0.0362
+    },
+    {
+     "champion": 238,
+     "delta": 0.0161
+    },
+    {
+     "champion": 876,
+     "delta": 0.0394
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 38,
+     "delta": 0.0073
+    },
+    {
+     "champion": 91,
+     "delta": 0.0076
+    },
+    {
+     "champion": 141,
+     "delta": 0.0173
+    },
+    {
+     "champion": 161,
+     "delta": 0.0343
+    },
+    {
+     "champion": 266,
+     "delta": -0.0021
+    },
+    {
+     "champion": 498,
+     "delta": 0.0129
+    }
+   ]
+  },
+  {
+   "id": 13,
+   "banRate": 0.011,
+   "positions": [
+    {
+     "position": "middle",
+     "winRate": 0.4814,
+     "pickRate": 0.0706
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 4,
+     "delta": -0.0101
+    },
+    {
+     "champion": 7,
+     "delta": -0.0017
+    },
+    {
+     "champion": 9,
+     "delta": 0.012
+    },
+    {
+     "champion": 10,
+     "delta": 0.0093
+    },
+    {
+     "champion": 25,
+     "delta": -0.0388
+    },
+    {
+     "champion": 28,
+     "delta": -0.0
+    },
+    {
+     "champion": 61,
+     "delta": -0.016
+    },
+    {
+     "champion": 101,
+     "delta": 0.0411
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 9,
+     "delta": 0.0159
+    },
+    {
+     "champion": 35,
+     "delta": 0.0002
+    },
+    {
+     "champion": 77,
+     "delta": 0.0231
+    },
+    {
+     "champion": 112,
+     "delta": -0.0
+    },
+    {
+     "champion": 246,
+     "delta": -0.0029
+    },
+    {
+     "champion": 421,
+     "delta": 0.0215
+    }
+   ]
+  },
+  {
+   "id": 360,
+   "banRate": 0.0411,
+   "positions": [
+    {
+     "position": "bottom",
+     "winRate": 0.493,
+     "pickRate": 0.0362
+    },
+    {
+     "position": "middle",
+     "winRate": 0.515,
+     "pickRate": 0.0262
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 21,
+     "delta": -0.0076
+    },
+    {
+     "champion": 22,
+     "delta": 0.0321
+    },
+    {
+     "champion": 105,
+     "delta": -0.0186
+    },
+    {
+     "champion": 147,
+     "delta": 0.0159
+    },
+    {
+     "champion": 711,
+     "delta": -0.0347
+    },
+    {
+     "champion": 888,
+     "delta": -0.0239
+    },
+    {
+     "champion": 902,
+     "delta": 0.01
+    },
+    {
+     "champion": 950,
+     "delta": -0.0448
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 16,
+     "delta": 0.0334
+    },
+    {
+     "champion": 76,
+     "delta": 0.0131
+    },
+    {
+     "champion": 110,
+     "delta": 0.0293
+    },
+    {
+     "champion": 126,
+     "delta": 0.0172
+    },
+    {
+     "champion": 238,
+     "delta": 0.0272
+    },
+    {
+     "champion": 893,
+     "delta": 0.029
+    }
+   ]
+  },
+  {
+   "id": 113,
+   "banRate": 0.1123,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.4739,
+     "pickRate": 0.0085
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.5227,
+     "pickRate": 0.0097
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 2,
+     "delta": -0.0133
+    },
+    {
+     "champion": 3,
+     "delta": 0.0131
+    },
+    {
+     "champion": 39,
+     "delta": 0.0268
+    },
+    {
+     "champion": 57,
+     "delta": 0.0038
+    },
+    {
+     "champion": 62,
+     "delta": -0.0088
+    },
+    {
+     "champion": 201,
+     "delta": -0.0132
+    },
+    {
+     "champion": 245,
+     "delta": -0.0035
+    },
+    {
+     "champion": 876,
+     "delta": 0.0437
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 13,
+     "delta": 0.0342
+    },
+    {
+     "champion": 36,
+     "delta": -0.0085
+    },
+    {
+     "champion": 81,
+     "delta": -0.0042
+    },
+    {
+     "champion": 82,
+     "delta": 0.0076
+    },
+    {
+     "champion": 516,
+     "delta": -0.0066
+    },
+    {
+     "champion": 711,
+     "delta": 0.0274
+    }
+   ]
+  },
+  {
+   "id": 235,
+   "banRate": 0.0057,
+   "positions": [
+    {
+     "position": "utility",
+     "winRate": 0.4771,
+     "pickRate": 0.0942
+    },
+    {
+     "position": "bottom",
+     "winRate": 0.4701,
+     "pickRate": 0.0116
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 10,
+     "delta": -0.0028
+    },
+    {
+     "champion": 42,
+     "delta": -0.0331
+    },
+    {
+     "champion": 96,
+     "delta": -0.0438
+    },
+    {
+     "champion": 163,
+     "delta": -0.0292
+    },
+    {
+     "champion": 221,
+     "delta": 0.0354
+    },
+    {
+     "champion": 267,
+     "delta": 0.0057
+    },
+    {
+     "champion": 800,
+     "delta": -0.0153
+    },
+    {
+     "champion": 910,
+     "delta": -0.0433
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 12,
+     "delta": 0.0134
+    },
+    {
+     "champion": 41,
+     "delta": -0.0059
+    },
+    {
+     "champion": 58,
+     "delta": 0.0323
+    },
+    {
+     "champion": 84,
+     "delta": 0.012
+    },
+    {
+     "champion": 131,
+     "delta": 0.03
+    },
+    {
+     "champion": 254,
+     "delta": 0.0049
+    }
+   ]
+  },
+  {
+   "id": 147,
+   "banRate": 0.0024,
+   "positions": [
+    {
+     "position": "utility",
+     "winRate": 0.5199,
+     "pickRate": 0.0898
+    },
+    {
+     "position": "middle",
+     "winRate": 0.4674,
+     "pickRate": 0.0532
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 9,
+     "delta": 0.023
+    },
+    {
+     "champion": 25,
+     "delta": 0.0418
+    },
+    {
+     "champion": 26,
+     "delta": -0.0401
+    },
+    {
+     "champion": 28,
+     "delta": 0.0253
+    },
+    {
+     "champion": 37,
+     "delta": -0.0375
+    },
+    {
+     "champion": 133,
+     "delta": 0.0427
+    },
+    {
+     "champion": 245,
+     "delta": -0.0143
+    },
+    {
+     "champion": 267,
+     "delta": -0.0144
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 29,
+     "delta": 0.0294
+    },
+    {
+     "champion": 57,
+     "delta": 0.0153
+    },
+    {
+     "champion": 89,
+     "delta": 0.0211
+    },
+    {
+     "champion": 104,
+     "delta": 0.0173
+    },
+    {
+     "champion": 107,
+     "delta": 0.0138
+    },
+    {
+     "champion": 240,
+     "delta": 0.0135
+    }
+   ]
+  },
+  {
+   "id": 875,
+   "banRate": 0.0433,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.4647,
+     "pickRate": 0.081
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.48,
+     "pickRate": 0.0092
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 31,
+     "delta": 0.0324
+    },
+    {
+     "champion": 32,
+     "delta": 0.0111
+    },
+    {
+     "champion": 38,
+     "delta": -0.0128
+    },
+    {
+     "champion": 62,
+     "delta": 0.0078
+    },
+    {
+     "champion": 77,
+     "delta": 0.0369
+    },
+    {
+     "champion": 421,
+     "delta": -0.0088
+    },
+    {
+     "champion": 799,
+     "delta": -0.0184
+    },
+    {
+     "champion": 897,
+     "delta": 0.0096
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 38,
+     "delta": 0.0124
+    },
+    {
+     "champion": 39,
+     "delta": 0.014
+    },
+    {
+     "champion": 56,
+     "delta": -0.0049
+    },
+    {
+     "champion": 120,
+     "delta": 0.0108
+    },
+    {
+     "champion": 164,
+     "delta": 0.0329
+    },
+    {
+     "champion": 235,
+     "delta": 0.0339
+    }
+   ]
+  },
+  {
+   "id": 35,
+   "banRate": 0.0777,
+   "positions": [
+    {
+     "position": "middle",
+     "winRate": 0.5008,
+     "pickRate": 0.1157
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.503,
+     "pickRate": 0.0398
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 13,
+     "delta": 0.0088
+    },
+    {
+     "champion": 42,
+     "delta": 0.0015
+    },
+    {
+     "champion": 54,
+     "delta": 0.0008
+    },
+    {
+     "champion": 62,
+     "delta": 0.0381
+    },
+    {
+     "champion": 99,
+     "delta": -0.003
+    },
+    {
+     "champion": 103,
+     "delta": -0.0206
+    },
+    {
+     "champion": 126,
+     "delta": -0.0083
+    },
+    {
+     "champion": 141,
+     "delta": 0.0398
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 2,
+     "delta": -0.0057
+    },
+    {
+     "champion": 30,
+     "delta": 0.0228
+    },
+    {
+     "champion": 43,
+     "delta": 0.0178
+    },
+    {
+     "champion": 69,
+     "delta": -0.0064
+    },
+    {
+     "champion": 103,
+     "delta": 0.0059
+    },
+    {
+     "champion": 516,
+     "delta": 0.0165
+    }
+   ]
+  },
+  {
+   "id": 98,
+   "banRate": 0.0488,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.5399,
+     "pickRate": 0.0381
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.4571,
+     "pickRate": 0.0079
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 5,
+     "delta": 0.0231
+    },
+    {
+     "champion": 33,
+     "delta": 0.0332
+    },
+    {
+     "champion": 68,
+     "delta": -0.0269
+    },
+    {
+     "champion": 84,
+     "delta": -0.0232
+    },
+    {
+     "champion": 105,
+     "delta": 0.0243
+    },
+    {
+     "champion": 111,
+     "delta": -0.0215
+    },
+    {
+     "champion": 234,
+     "delta": 0.0324
+    },
+    {
+     "champion": 240,
+     "delta": 0.0094
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 19,
+     "delta": 0.0162
+    },
+    {
+     "champion": 37,
+     "delta": 0.0108
+    },
+    {
+     "champion": 43,
+     "delta": -0.0004
+    },
+    {
+     "champion": 51,
+     "delta": 0.0277
+    },
+    {
+     "champion": 163,
+     "delta": 0.028
+    },
+    {
+     "champion": 517,
+     "delta": -0.0072
+    }
+   ]
+  },
+  {
+   "id": 102,
+   "banRate": 0.0189,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.4601,
+     "pickRate": 0.0757
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.4837,
+     "pickRate": 0.0184
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 2,
+     "delta": 0.0114
+    },
+    {
+     "champion": 31,
+     "delta": -0.0405
+    },
+    {
+     "champion": 44,
+     "delta": -0.0022
+    },
+    {
+     "champion": 68,
+     "delta": 0.0283
+    },
+    {
+     "champion": 122,
+     "delta": 0.0206
+    },
+    {
+     "champion": 131,
+     "delta": -0.0184
+    },
+    {
+     "champion": 234,
+     "delta": -0.0063
+    },
+    {
+     "champion": 805,
+     "delta": -0.0122
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 7,
+     "delta": 0.0185
+    },
+    {
+     "champion": 82,
+     "delta": 0.0094
+    },
+    {
+     "champion": 91,
+     "delta": 0.0142
+    },
+    {
+     "champion": 92,
+     "delta": 0.0056
+    },
+    {
+     "champion": 104,
+     "delta": 0.0249
+    },
+    {
+     "champion": 360,
+     "delta": 0.0084
+    }
+   ]
+  },
+  {
+   "id": 27,
+   "banRate": 0.0843,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.5232,
+     "pickRate": 0.0757
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.4845,
+     "pickRate": 0.0411
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 41,
+     "delta": 0.0191
+    },
+    {
+     "champion": 62,
+     "delta": -0.0446
+    },
+    {
+     "champion": 79,
+     "delta": 0.0128
+    },
+    {
+     "champion": 98,
+     "delta": -0.0031
+    },
+    {
+     "champion": 141,
+     "delta": -0.0239
+    },
+    {
+     "champion": 240,
+     "delta": 0.0325
+    },
+    {
+     "champion": 875,
+     "delta": -0.0262
+    },
+    {
+     "champion": 876,
+     "delta": 0.0369
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 15,
+     "delta": 0.0223
+    },
+    {
+     "champion": 20,
+     "delta": 0.0348
+    },
+    {
+     "champion": 39,
+     "delta": -0.0076
+    },
+    {
+     "champion": 82,
+     "delta": 0.0015
+    },
+    {
+     "champion": 92,
+     "delta": 0.0206
+    },
+    {
+     "champion": 98,
+     "delta": 0.0193
+    }
+   ]
+  },
+  {
+   "id": 14,
+   "banRate": 0.0004,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.5075,
+     "pickRate": 0.0587
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.503,
+     "pickRate": 0.0037
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 24,
+     "delta": -0.0125
+    },
+    {
+     "champion": 57,
+     "delta": -0.0024
+    },
+    {
+     "champion": 76,
+     "delta": 0.0385
+    },
+    {
+     "champion": 80,
+     "delta": -0.0376
+    },
+    {
+     "champion": 103,
+     "delta": -0.0206
+    },
+    {
+     "champion": 106,
+     "delta": -0.0258
+    },
+    {
+     "champion": 904,
+     "delta": -0.0339
+    },
+    {
+     "champion": 950,
+     "delta": -0.0363
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 50,
+     "delta": -0.0013
+    },
+    {
+     "champion": 74,
+     "delta": 0.0309
+    },
+    {
+     "champion": 117,
+     "delta": 0.0146
+    },
+    {
+     "champion": 142,
+     "delta": 0.0056
+    },
+    {
+     "champion": 360,
+     "delta": 0.0046
+    },
+    {
+     "champion": 904,
+     "delta": 0.0056
+    }
+   ]
+  },
+  {
+   "id": 15,
+   "banRate": 0.0162,
+   "positions": [
+    {
+     "position": "bottom",
+     "winRate": 0.4767,
+     "pickRate": 0.0328
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 4,
+     "delta": 0.0362
+    },
+    {
+     "champion": 110,
+     "delta": 0.0349
+    },
+    {
+     "champion": 166,
+     "delta": 0.0176
+    },
+    {
+     "champion": 202,
+     "delta": 0.0407
+    },
+    {
+     "champion": 221,
+     "delta": 0.0179
+    },
+    {
+     "champion": 268,
+     "delta": -0.0431
+    },
+    {
+     "champion": 429,
+     "delta": 0.0013
+    },
+    {
+     "champion": 804,
+     "delta": -0.0334
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 1,
+     "delta": 0.0238
+    },
+    {
+     "champion": 55,
+     "delta": -0.009
+    },
+    {
+     "champion": 111,
+     "delta": 0.0305
+    },
+    {
+     "champion": 150,
+     "delta": 0.0004
+    },
+    {
+     "champion": 432,
+     "delta": 0.0245
+    },
+    {
+     "champion": 888,
+     "delta": -0.0011
+    }
+   ]
+  },
+  {
+   "id": 72,
+   "banRate": 0.0295,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.4815,
+     "pickRate": 0.0664
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.478,
+     "pickRate": 0.0375
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 5,
+     "delta": 0.0319
+    },
+    {
+     "champion": 14,
+     "delta": -0.0216
+    },
+    {
+     "champion": 57,
+     "delta": -0.0009
+    },
+    {
+     "champion": 68,
+     "delta": -0.0187
+    },
+    {
+     "champion": 75,
+     "delta": 0.0446
+    },
+    {
+     "champion": 113,
+     "delta": 0.0163
+    },
+    {
+     "champion": 157,
+     "delta": -0.0196
+    },
+    {
+     "champion": 421,
+     "delta": -0.0032
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 14,
+     "delta": 0.0131
+    },
+    {
+     "champion": 17,
+     "delta": 0.0063
+    },
+    {
+     "champion": 39,
+     "delta": 0.0086
+    },
+    {
+     "champion": 51,
+     "delta": 0.0343
+    },
+    {
+     "champion": 89,
+     "delta": 0.014
+    },
+    {
+     "champion": 518,
+     "delta": -0.0033
+    }
+   ]
+  },
+  {
+   "id": 901,
+   "banRate": 0.0603,
+   "positions": [
+    {
+     "position": "bottom",
+     "winRate": 0.4676,
+     "pickRate": 0.1133
+    },
+    {
+     "position": "middle",
+     "winRate": 0.5269,
+     "pickRate": 0.0166
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 13,
+     "delta": 0.0388
+    },
+    {
+     "champion": 35,
+     "delta": 0.0092
+    },
+    {
+     "champion": 37,
+     "delta": 0.0298
+    },
+    {
+     "champion": 76,
+     "delta": 0.0339
+    },
+    {
+     "champion": 84,
+     "delta": -0.0121
+    },
+    {
+     "champion": 110,
+     "delta": 0.026
+    },
+    {
+     "champion": 133,
+     "delta": -0.0183
+    },
+    {
+     "champion": 142,
+     "delta": 0.0195
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 8,
+     "delta": 0.0229
+    },
+    {
+     "champion": 11,
+     "delta": 0.0262
+    },
+    {
+     "champion": 53,
+     "delta": 0.0241
+    },
+    {
+     "champion": 127,
+     "delta": 0.0336
+    },
+    {
+     "champion": 517,
+     "delta": 0.0149
+    },
+    {
+     "champion": 555,
+     "delta": -0.0044
+    }
+   ]
+  },
+  {
+   "id": 37,
+   "banRate": 0.0058,
+   "positions": [
+    {
+     "position": "utility",
+     "winRate": 0.4974,
+     "pickRate": 0.0789
+    },
+    {
+     "position": "middle",
+     "winRate": 0.5089,
+     "pickRate": 0.0106
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 60,
+     "delta": 0.0445
+    },
+    {
+     "champion": 110,
+     "delta": 0.0088
+    },
+    {
+     "champion": 134,
+     "delta": 0.0102
+    },
+    {
+     "champion": 166,
+     "delta": -0.0335
+    },
+    {
+     "champion": 360,
+     "delta": -0.0011
+    },
+    {
+     "champion": 711,
+     "delta": 0.0337
+    },
+    {
+     "champion": 888,
+     "delta": 0.0037
+    },
+    {
+     "champion": 902,
+     "delta": -0.0258
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 21,
+     "delta": 0.0113
+    },
+    {
+     "champion": 24,
+     "delta": 0.0136
+    },
+    {
+     "champion": 30,
+     "delta": -0.0032
+    },
+    {
+     "champion": 89,
+     "delta": 0.0065
+    },
+    {
+     "champion": 517,
+     "delta": -0.0073
+    },
+    {
+     "champion": 555,
+     "delta": 0.0119
+    }
+   ]
+  },
+  {
+   "id": 16,
+   "banRate": 0.0079,
+   "positions": [
+    {
+     "position": "utility",
+     "winRate": 0.4884,
+     "pickRate": 0.1074
+    },
+    {
+     "position": "middle",
+     "winRate": 0.5272,
+     "pickRate": 0.0224
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 17,
+     "delta": 0.0054
+    },
+    {
+     "champion": 42,
+     "delta": 0.0403
+    },
+    {
+     "champion": 61,
+     "delta": -0.0226
+    },
+    {
+     "champion": 69,
+     "delta": 0.0248
+    },
+    {
+     "champion": 90,
+     "delta": 0.0032
+    },
+    {
+     "champion": 238,
+     "delta": 0.0438
+    },
+    {
+     "champion": 902,
+     "delta": -0.0234
+    },
+    {
+     "champion": 950,
+     "delta": -0.0302
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 3,
+     "delta": 0.0061
+    },
+    {
+     "champion": 44,
+     "delta": 0.0096
+    },
+    {
+     "champion": 68,
+     "delta": 0.0092
+    },
+    {
+     "champion": 81,
+     "delta": 0.0278
+    },
+    {
+     "champion": 163,
+     "delta": -0.0057
+    },
+    {
+     "champion": 526,
+     "delta": 0.0289
+    }
+   ]
+  },
+  {
+   "id": 50,
+   "banRate": 0.0863,
+   "positions": [
+    {
+     "position": "middle",
+     "winRate": 0.4906,
+     "pickRate": 0.0882
+    },
+    {
+     "position": "utility",
+     "winRate": 0.5257,
+     "pickRate": 0.0537
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 9,
+     "delta": 0.0033
+    },
+    {
+     "champion": 25,
+     "delta": 0.0384
+    },
+    {
+     "champion": 42,
+     "delta": -0.0248
+    },
+    {
+     "champion": 63,
+     "delta": -0.0307
+    },
+    {
+     "champion": 117,
+     "delta": -0.0422
+    },
+    {
+     "champion": 166,
+     "delta": 0.0118
+    },
+    {
+     "champion": 412,
+     "delta": 0.0411
+    },
+    {
+     "champion": 555,
+     "delta": 0.0137
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 84,
+     "delta": -0.0078
+    },
+    {
+     "champion": 91,
+     "delta": 0.0084
+    },
+    {
+     "champion": 114,
+     "delta": 0.0135
+    },
+    {
+     "champion": 133,
+     "delta": 0.0276
+    },
+    {
+     "champion": 246,
+     "delta": -0.0031
+    },
+    {
+     "champion": 412,
+     "delta": 0.0127
+    }
+   ]
+  },
+  {
+   "id": 517,
+   "banRate": 0.0426,
+   "positions": [
+    {
+     "position": "middle",
+     "winRate": 0.5118,
+     "pickRate": 0.044
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.4548,
+     "pickRate": 0.0541
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 14,
+     "delta": -0.031
+    },
+    {
+     "champion": 17,
+     "delta": 0.0356
+    },
+    {
+     "champion": 27,
+     "delta": 0.0162
+    },
+    {
+     "champion": 86,
+     "delta": 0.0036
+    },
+    {
+     "champion": 432,
+     "delta": -0.0005
+    },
+    {
+     "champion": 876,
+     "delta": -0.0382
+    },
+    {
+     "champion": 887,
+     "delta": -0.0433
+    },
+    {
+     "champion": 895,
+     "delta": -0.0353
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 15,
+     "delta": 0.0109
+    },
+    {
+     "champion": 25,
+     "delta": 0.011
+    },
+    {
+     "champion": 86,
+     "delta": 0.0284
+    },
+    {
+     "champion": 119,
+     "delta": 0.0338
+    },
+    {
+     "champion": 427,
+     "delta": -0.0017
+    },
+    {
+     "champion": 805,
+     "delta": 0.0273
+    }
+   ]
+  },
+  {
+   "id": 134,
+   "banRate": 0.0243,
+   "positions": [
+    {
+     "position": "middle",
+     "winRate": 0.523,
+     "pickRate": 0.0943
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 10,
+     "delta": 0.0301
+    },
+    {
+     "champion": 13,
+     "delta": 0.0145
+    },
+    {
+     "champion": 29,
+     "delta": 0.0007
+    },
+    {
+     "champion": 45,
+     "delta": -0.0349
+    },
+    {
+     "champion": 60,
+     "delta": -0.0223
+    },
+    {
+     "champion": 85,
+     "delta": -0.0311
+    },
+    {
+     "champion": 105,
+     "delta": -0.0447
+    },
+    {
+     "champion": 115,
+     "delta": 0.0165
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 1,
+     "delta": 0.0155
+    },
+    {
+     "champion": 42,
+     "delta": -0.0011
+    },
+    {
+     "champion": 78,
+     "delta": 0.0133
+    },
+    {
+     "champion": 222,
+     "delta": 0.0114
+    },
+    {
+     "champion": 254,
+     "delta": 0.0036
+    },
+    {
+     "champion": 904,
+     "delta": 0.0049
+    }
+   ]
+  },
+  {
+   "id": 223,
+   "banRate": 0.0785,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.5032,
+     "pickRate": 0.0119
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.456,
+     "pickRate": 0.0105
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 2,
+     "delta": 0.0427
+    },
+    {
+     "champion": 12,
+     "delta": 0.027
+    },
+    {
+     "champion": 58,
+     "delta": -0.0277
+    },
+    {
+     "champion": 68,
+     "delta": 0.0157
+    },
+    {
+     "champion": 266,
+     "delta": -0.0286
+    },
+    {
+     "champion": 412,
+     "delta": 0.0284
+    },
+    {
+     "champion": 420,
+     "delta": -0.0058
+    },
+    {
+     "champion": 517,
+     "delta": 0.0012
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 32,
+     "delta": -0.0089
+    },
+    {
+     "champion": 43,
+     "delta": 0.027
+    },
+    {
+     "champion": 74,
+     "delta": 0.0059
+    },
+    {
+     "champion": 83,
+     "delta": -0.0054
+    },
+    {
+     "champion": 412,
+     "delta": -0.001
+    },
+    {
+     "champion": 805,
+     "delta": -0.0099
+    }
+   ]
+  },
+  {
+   "id": 163,
+   "banRate": 0.0555,
+   "positions": [
+    {
+     "position": "middle",
+     "winRate": 0.5234,
+     "pickRate": 0.0192
+    },
+    {
+     "position": "utility",
+     "winRate": 0.4614,
+     "pickRate": 0.0272
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 4,
+     "delta": 0.0213
+    },
+    {
+     "champion": 16,
+     "delta": 0.0399
+    },
+    {
+     "champion": 26,
+     "delta": -0.0361
+    },
+    {
+     "champion": 29,
+     "delta": 0.0101
+    },
+    {
+     "champion": 35,
+     "delta": 0.0376
+    },
+    {
+     "champion": 74,
+     "delta": 0.0343
+    },
+    {
+     "champion": 117,
+     "delta": 0.0031
+    },
+    {
+     "champion": 202,
+     "delta": 0.0242
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 29,
+     "delta": -0.0072
+    },
+    {
+     "champion": 53,
+     "delta": 0.0329
+    },
+    {
+     "champion": 98,
+     "delta": 0.008
+    },
+    {
+     "champion": 104,
+     "delta": 0.0007
+    },
+    {
+     "champion": 120,
+     "delta": 0.027
+    },
+    {
+     "champion": 420,
+     "delta": 0.0144
+    }
+   ]
+  },
+  {
+   "id": 91,
+   "banRate": 0.0145,
+   "positions": [
+    {
+     "position": "middle",
+     "winRate": 0.5333,
+     "pickRate": 0.0164
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.518,
+     "pickRate": 0.0035
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 7,
+     "delta": 0.0331
+    },
+    {
+     "champion": 41,
+     "delta": -0.0236
+    },
+    {
+     "champion": 67,
+     "delta": 0.014
+    },
+    {
+     "champion": 105,
+     "delta": -0.0066
+    },
+    {
+     "champion": 121,
+     "delta": 0.0255
+    },
+    {
+     "champion": 143,
+     "delta": 0.0417
+    },
+    {
+     "champion": 350,
+     "delta": -0.0392
+    },
+    {
+     "champion": 518,
+     "delta": 0.0095
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 33,
+     "delta": 0.0224
+    },
+    {
+     "champion": 89,
+     "delta": 0.0303
+    },
+    {
+     "champion": 90,
+     "delta": 0.0177
+    },
+    {
+     "champion": 133,
+     "delta": -0.0018
+    },
+    {
+     "champion": 141,
+     "delta": 0.0058
+    },
+    {
+     "champion": 221,
+     "delta": 0.0311
+    }
+   ]
+  },
+  {
+   "id": 44,
+   "banRate": 0.0007,
+   "positions": [
+    {
+     "position": "utility",
+     "winRate": 0.5339,
+     "pickRate": 0.0252
+    },
+    {
+     "position": "top",
+     "winRate": 0.4594,
+     "pickRate": 0.0534
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 3,
+     "delta": -0.0267
+    },
+    {
+     "champion": 20,
+     "delta": 0.0388
+    },
+    {
+     "champion": 39,
+     "delta": -0.0046
+    },
+    {
+     "champion": 54,
+     "delta": 0.0301
+    },
+    {
+     "champion": 56,
+     "delta": -0.0038
+    },
+    {
+     "champion": 161,
+     "delta": -0.0308
+    },
+    {
+     "champion": 412,
+     "delta": 0.0127
+    },
+    {
+     "champion": 897,
+     "delta": -0.0027
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 12,
+     "delta": 0.0062
+    },
+    {
+     "champion": 25,
+     "delta": -0.0017
+    },
+    {
+     "champion": 35,
+     "delta": 0.0162
+    },
+    {
+     "champion": 42,
+     "delta": 0.0248
+    },
+    {
+     "champion": 90,
+     "delta": 0.0085
+    },
+    {
+     "champion": 134,
+     "delta": 0.0063
+    }
+   ]
+  },
+  {
+   "id": 17,
+   "banRate": 0.0314,
+   "positions": [
+    {
+     "position": "bottom",
+     "winRate": 0.4623,
+     "pickRate": 0.0096
+    },
+    {
+     "position": "middle",
+     "winRate": 0.4998,
+     "pickRate": 0.0403
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 15,
+     "delta": 0.0249
+    },
+    {
+     "champion": 21,
+     "delta": -0.0394
+    },
+    {
+     "champion": 42,
+     "delta": -0.0159
+    },
+    {
+     "champion": 235,
+     "delta": -0.0226
+    },
+    {
+     "champion": 498,
+     "delta": 0.0208
+    },
+    {
+     "champion": 711,
+     "delta": 0.0106
+    },
+    {
+     "champion": 800,
+     "delta": -0.0056
+    },
+    {
+     "champion": 901,
+     "delta": 0.0171
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 90,
+     "delta": 0.0184
+    },
+    {
+     "champion": 98,
+     "delta": 0.0166
+    },
+    {
+     "champion": 126,
+     "delta": -0.0049
+    },
+    {
+     "champion": 234,
+     "delta": -0.009
+    },
+    {
+     "champion": 350,
+     "delta": -0.0003
+    },
+    {
+     "champion": 421,
+     "delta": 0.0106
+    }
+   ]
+  },
+  {
+   "id": 412,
+   "banRate": 0.0817,
+   "positions": [
+    {
+     "position": "utility",
+     "winRate": 0.5087,
+     "pickRate": 0.105
+    },
+    {
+     "position": "top",
+     "winRate": 0.515,
+     "pickRate": 0.0075
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 33,
+     "delta": 0.0132
+    },
+    {
+     "champion": 56,
+     "delta": -0.0192
+    },
+    {
+     "champion": 113,
+     "delta": -0.0386
+    },
+    {
+     "champion": 114,
+     "delta": 0.0057
+    },
+    {
+     "champion": 122,
+     "delta": 0.022
+    },
+    {
+     "champion": 157,
+     "delta": 0.0436
+    },
+    {
+     "champion": 888,
+     "delta": -0.0149
+    },
+    {
+     "champion": 904,
+     "delta": 0.0203
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 37,
+     "delta": 0.0243
+    },
+    {
+     "champion": 45,
+     "delta": 0.0103
+    },
+    {
+     "champion": 102,
+     "delta": 0.0204
+    },
+    {
+     "champion": 147,
+     "delta": 0.0267
+    },
+    {
+     "champion": 233,
+     "delta": -0.0026
+    },
+    {
+     "champion": 901,
+     "delta": -0.0057
+    }
+   ]
+  },
+  {
+   "id": 18,
+   "banRate": 0.0576,
+   "positions": [
+    {
+     "position": "bottom",
+     "winRate": 0.5244,
+     "pickRate": 0.007
+    },
+    {
+     "position": "middle",
+     "winRate": 0.5217,
+     "pickRate": 0.0503
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 9,
+     "delta": -0.0305
+    },
+    {
+     "champion": 21,
+     "delta": 0.0438
+    },
+    {
+     "champion": 34,
+     "delta": 0.0106
+    },
+    {
+     "champion": 45,
+     "delta": 0.0114
+    },
+    {
+     "champion": 147,
+     "delta": -0.0132
+    },
+    {
+     "champion": 161,
+     "delta": -0.0054
+    },
+    {
+     "champion": 245,
+     "delta": 0.0391
+    },
+    {
+     "champion": 910,
+     "delta": 0.0057
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 4,
+     "delta": 0.0255
+    },
+    {
+     "champion": 19,
+     "delta": 0.0044
+    },
+    {
+     "champion": 56,
+     "delta": 0.0279
+    },
+    {
+     "champion": 111,
+     "delta": 0.0254
+    },
+    {
+     "champion": 221,
+     "delta": -0.0054
+    },
+    {
+     "champion": 876,
+     "delta": 0.0162
+    }
+   ]
+  },
+  {
+   "id": 48,
+   "banRate": 0.0951,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.4682,
+     "pickRate": 0.0836
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.4971,
+     "pickRate": 0.0085
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 8,
+     "delta": -0.0214
+    },
+    {
+     "champion": 14,
+     "delta": 0.0425
+    },
+    {
+     "champion": 20,
+     "delta": 0.0178
+    },
+    {
+     "champion": 23,
+     "delta": -0.0002
+    },
+    {
+     "champion": 41,
+     "delta": -0.0222
+    },
+    {
+     "champion": 72,
+     "delta": 0.0282
+    },
+    {
+     "champion": 201,
+     "delta": -0.03
+    },
+    {
+     "champion": 875,
+     "delta": 0.0159
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 3,
+     "delta": 0.0037
+    },
+    {
+     "champion": 18,
+     "delta": 0.019
+    },
+    {
+     "champion": 22,
+     "delta": -0.0062
+    },
+    {
+     "champion": 23,
+     "delta": 0.0308
+    },
+    {
+     "champion": 233,
+     "delta": 0.014
+    },
+    {
+     "champion": 523,
+     "delta": 0.0013
+    }
+   ]
+  },
+  {
+   "id": 23,
+   "banRate": 0.02,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.5017,
+     "pickRate": 0.0432
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.524,
+     "pickRate": 0.0458
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 19,
+     "delta": 0.0191
+    },
+    {
+     "champion": 36,
+     "delta": -0.0086
+    },
+    {
+     "champion": 58,
+     "delta": -0.026
+    },
+    {
+     "champion": 62,
+     "delta": 0.0113
+    },
+    {
+     "champion": 64,
+     "delta": -0.0305
+    },
+    {
+     "champion": 75,
+     "delta": -0.0398
+    },
+    {
+     "champion": 86,
+     "delta": 0.01
+    },
+    {
+     "champion": 154,
+     "delta": 0.0167
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 142,
+     "delta": 0.0121
+    },
+    {
+     "champion": 166,
+     "delta": 0.0071
+    },
+    {
+     "champion": 497,
+     "delta": -0.0077
+    },
+    {
+     "champion": 516,
+     "delta": 0.0308
+    },
+    {
+     "champion": 526,
+     "delta": 0.024
+    },
+    {
+     "champion": 800,
+     "delta": -0.0096
+    }
+   ]
+  },
+  {
+   "id": 4,
+   "banRate": 0.0882,
+   "positions": [
+    {
+     "position": "middle",
+     "winRate": 0.5219,
+     "pickRate": 0.0978
+    },
+    {
+     "position": "bottom",
+     "winRate": 0.5006,
+     "pickRate": 0.019
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 74,
+     "delta": 0.0314
+    },
+    {
+     "champion": 76,
+     "delta": -0.0086
+    },
+    {
+     "champion": 84,
+     "delta": 0.0195
+    },
+    {
+     "champion": 133,
+     "delta": -0.0053
+    },
+    {
+     "champion": 145,
+     "delta": -0.0132
+    },
+    {
+     "champion": 163,
+     "delta": -0.0279
+    },
+    {
+     "champion": 429,
+     "delta": -0.0218
+    },
+    {
+     "champion": 888,
+     "delta": -0.0207
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 51,
+     "delta": 0.0119
+    },
+    {
+     "champion": 62,
+     "delta": 0.0091
+    },
+    {
+     "champion": 78,
+     "delta": 0.0075
+    },
+    {
+     "champion": 80,
+     "delta": 0.0233
+    },
+    {
+     "champion": 99,
+     "delta": 0.0006
+    },
+    {
+     "champion": 136,
+     "delta": -0.0093
+    }
+   ]
+  },
+  {
+   "id": 29,
+   "banRate": 0.0018,
+   "positions": [
+    {
+     "position": "bottom",
+     "winRate": 0.5098,
+     "pickRate": 0.075
+    },
+    {
+     "position": "middle",
+     "winRate": 0.5274,
+     "pickRate": 0.039
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 8,
+     "delta": -0.0281
+    },
+    {
+     "champion": 16,
+     "delta": -0.0081
+    },
+    {
+     "champion": 21,
+     "delta": -0.0026
+    },
+    {
+     "champion": 25,
+     "delta": -0.0183
+    },
+    {
+     "champion": 43,
+     "delta": 0.0189
+    },
+    {
+     "champion": 112,
+     "delta": -0.028
+    },
+    {
+     "champion": 268,
+     "delta": -0.0234
+    },
+    {
+     "champion": 427,
+     "delta": -0.0361
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 7,
+     "delta": 0.0314
+    },
+    {
+     "champion": 26,
+     "delta": 0.0137
+    },
+    {
+     "champion": 39,
+     "delta": 0.0116
+    },
+    {
+     "champion": 54,
+     "delta": 0.0291
+    },
+    {
+     "champion": 91,
+     "delta": -0.0046
+    },
+    {
+     "champion": 876,
+     "delta": 0.0125
+    }
+   ]
+  },
+  {
+   "id": 77,
+   "banRate": 0.0065,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.4745,
+     "pickRate": 0.1187
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.4695,
+     "pickRate": 0.0158
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 31,
+     "delta": -0.0069
+    },
+    {
+     "champion": 33,
+     "delta": 0.0223
+    },
+    {
+     "champion": 39,
+     "delta": -0.0021
+    },
+    {
+     "champion": 82,
+     "delta": -0.0038
+    },
+    {
+     "champion": 238,
+     "delta": 0.0256
+    },
+    {
+     "champion": 254,
+     "delta": 0.0424
+    },
+    {
+     "champion": 266,
+     "delta": -0.0347
+    },
+    {
+     "champion": 526,
+     "delta": -0.0086
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 50,
+     "delta": 0.0161
+    },
+    {
+     "champion": 91,
+     "delta": -0.0024
+    },
+    {
+     "champion": 145,
+     "delta": 0.0222
+    },
+    {
+     "champion": 429,
+     "delta": 0.005
+    },
+    {
+     "champion": 804,
+     "delta": 0.0007
+    },
+    {
+     "champion": 893,
+     "delta": 0.0062
+    }
+   ]
+  },
+  {
+   "id": 6,
+   "banRate": 0.0928,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.5356,
+     "pickRate": 0.063
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.4978,
+     "pickRate": 0.0299
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 78,
+     "delta": -0.0166
+    },
+    {
+     "champion": 80,
+     "delta": 0.0095
+    },
+    {
+     "champion": 106,
+     "delta": 0.0025
+    },
+    {
+     "champion": 114,
+     "delta": 0.0279
+    },
+    {
+     "champion": 154,
+     "delta": 0.0164
+    },
+    {
+     "champion": 420,
+     "delta": -0.0358
+    },
+    {
+     "champion": 516,
+     "delta": 0.0351
+    },
+    {
+     "champion": 887,
+     "delta": -0.0197
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 10,
+     "delta": 0.0314
+    },
+    {
+     "champion": 41,
+     "delta": 0.0127
+    },
+    {
+     "champion": 57,
+     "delta": 0.0349
+    },
+    {
+     "champion": 143,
+     "delta": 0.0228
+    },
+    {
+     "champion": 800,
+     "delta": 0.0341
+    },
+    {
+     "champion": 897,
+     "delta": 0.0083
+    }
+   ]
+  },
+  {
+   "id": 110,
+   "banRate": 0.1022,
+   "positions": [
+    {
+     "position": "bottom",
+     "winRate": 0.5344,
+     "pickRate": 0.0672
+    },
+    {
+     "position": "middle",
+     "winRate": 0.5294,
+     "pickRate": 0.0321
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 60,
+     "delta": 0.0246
+    },
+    {
+     "champion": 81,
+     "delta": 0.0241
+    },
+    {
+     "champion": 117,
+     "delta": 0.0025
+    },
+    {
+     "champion": 133,
+     "delta": 0.0192
+    },
+    {
+     "champion": 143,
+     "delta": -0.0279
+    },
+    {
+     "champion": 202,
+     "delta": -0.0102
+    },
+    {
+     "champion": 518,
+     "delta": 0.0234
+    },
+    {
+     "champion": 902,
+     "delta": 0.0269
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 14,
+     "delta": 0.0154
+    },
+    {
+     "champion": 30,
+     "delta": -0.0055
+    },
+    {
+     "champion": 79,
+     "delta": -0.01
+    },
+    {
+     "champion": 89,
+     "delta": -0.0017
+    },
+    {
+     "champion": 107,
+     "delta": -0.0023
+    },
+    {
+     "champion": 777,
+     "delta": 0.0333
+    }
+   ]
+  },
+  {
+   "id": 67,
+   "banRate": 0.1166,
+   "positions": [
+    {
+     "position": "bottom",
+     "winRate": 0.5143,
+     "pickRate": 0.0977
+    },
+    {
+     "position": "middle",
+     "winRate": 0.4731,
+     "pickRate": 0.0486
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 74,
+     "delta": 0.026
+    },
+    {
+     "champion": 96,
+     "delta": -0.0186
+    },
+    {
+     "champion": 101,
+     "delta": -0.0203
+    },
+    {
+     "champion": 107,
+     "delta": 0.0216
+    },
+    {
+     "champion": 147,
+     "delta": 0.0099
+    },
+    {
+     "champion": 166,
+     "delta": -0.04
+    },
+    {
+     "champion": 429,
+     "delta": 0.0333
+    },
+    {
+     "champion": 498,
+     "delta": 0.0263
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 3,
+     "delta": -0.0032
+    },
+    {
+     "champion": 62,
+     "delta": 0.002
+    },
+    {
+     "champion": 92,
+     "delta": 0.0195
+    },
+    {
+     "champion": 164,
+     "delta": 0.0349
+    },
+    {
+     "champion": 555,
+     "delta": 0.0018
+    },
+    {
+     "champion": 875,
+     "delta": -0.0001
+    }
+   ]
+  },
+  {
+   "id": 45,
+   "banRate": 0.0066,
+   "positions": [
+    {
+     "position": "middle",
+     "winRate": 0.4617,
+     "pickRate": 0.1155
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 13,
+     "delta": -0.0384
+    },
+    {
+     "champion": 37,
+     "delta": -0.0236
+    },
+    {
+     "champion": 103,
+     "delta": 0.0372
+    },
+    {
+     "champion": 107,
+     "delta": 0.0434
+    },
+    {
+     "champion": 115,
+     "delta": -0.0273
+    },
+    {
+     "champion": 163,
+     "delta": 0.0288
+    },
+    {
+     "champion": 202,
+     "delta": -0.0222
+    },
+    {
+     "champion": 888,
+     "delta": -0.0435
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 83,
+     "delta": -0.0014
+    },
+    {
+     "champion": 115,
+     "delta": -0.0096
+    },
+    {
+     "champion": 122,
+     "delta": 0.0115
+    },
+    {
+     "champion": 142,
+     "delta": -0.0031
+    },
+    {
+     "champion": 164,
+     "delta": 0.0186
+    },
+    {
+     "champion": 777,
+     "delta": 0.0158
+    }
+   ]
+  },
+  {
+   "id": 161,
+   "banRate": 0.057,
+   "positions": [
+    {
+     "position": "middle",
+     "winRate": 0.5235,
+     "pickRate": 0.1151
+    },
+    {
+     "position": "utility",
+     "winRate": 0.4907,
+     "pickRate": 0.0485
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 16,
+     "delta": 0.0268
+    },
+    {
+     "champion": 22,
+     "delta": -0.0316
+    },
+    {
+     "champion": 67,
+     "delta": 0.0267
+    },
+    {
+     "champion": 96,
+     "delta": -0.0241
+    },
+    {
+     "champion": 115,
+     "delta": 0.0035
+    },
+    {
+     "champion": 202,
+     "delta": 0.0173
+    },
+    {
+     "champion": 267,
+     "delta": -0.019
+    },
+    {
+     "champion": 268,
+     "delta": -0.024
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 10,
+     "delta": 0.0012
+    },
+    {
+     "champion": 53,
+     "delta": 0.0311
+    },
+    {
+     "champion": 106,
+     "delta": 0.013
+    },
+    {
+     "champion": 142,
+     "delta": 0.0226
+    },
+    {
+     "champion": 432,
+     "delta": 0.0304
+    },
+    {
+     "champion": 895,
+     "delta": 0.0214
+    }
+   ]
+  },
+  {
+   "id": 711,
+   "banRate": 0.0381,
+   "positions": [
+    {
+     "position": "middle",
+     "winRate": 0.4889,
+     "pickRate": 0.0245
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 16,
+     "delta": 0.0083
+    },
+    {
+     "champion": 74,
+     "delta": 0.0003
+    },
+    {
+     "champion": 99,
+     "delta": 0.0322
+    },
+    {
+     "champion": 133,
+     "delta": -0.0384
+    },
+    {
+     "champion": 143,
+     "delta": -0.0016
+    },
+    {
+     "champion": 202,
+     "delta": 0.0175
+    },
+    {
+     "champion": 888,
+     "delta": -0.0222
+    },
+    {
+     "champion": 901,
+     "delta": -0.0262
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 5,
+     "delta": 0.0302
+    },
+    {
+     "champion": 6,
+     "delta": 0.0349
+    },
+    {
+     "champion": 51,
+     "delta": 0.0039
+    },
+    {
+     "champion": 102,
+     "delta": 0.0322
+    },
+    {
+     "champion": 497,
+     "delta": 0.0021
+    },
+    {
+     "champion": 876,
+     "delta": 0.0129
+    }
+   ]
+  },
+  {
+   "id": 254,
+   "banRate": 0.0037,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.538,
+     "pickRate": 0.0997
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.5022,
+     "pickRate": 0.0291
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 39,
+     "delta": -0.0272
+    },
+    {
+     "champion": 54,
+     "delta": 0.0397
+    },
+    {
+     "champion": 57,
+     "delta": 0.0436
+    },
+    {
+     "champion": 59,
+     "delta": -0.024
+    },
+    {
+     "champion": 75,
+     "delta": -0.0353
+    },
+    {
+     "champion": 113,
+     "delta": 0.0077
+    },
+    {
+     "champion": 154,
+     "delta": -0.0117
+    },
+    {
+     "champion": 526,
+     "delta": 0.0239
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 31,
+     "delta": 0.0264
+    },
+    {
+     "champion": 75,
+     "delta": 0.0185
+    },
+    {
+     "champion": 143,
+     "delta": 0.0335
+    },
+    {
+     "champion": 235,
+     "delta": 0.013
+    },
+    {
+     "champion": 523,
+     "delta": 0.0257
+    },
+    {
+     "champion": 895,
+     "delta": -0.0092
+    }
+   ]
+  },
+  {
+   "id": 234,
+   "banRate": 0.0039,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.4804,
+     "pickRate": 0.0691
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.4794,
+     "pickRate": 0.0532
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 20,
+     "delta": 0.0203
+    },
+    {
+     "champion": 27,
+     "delta": 0.0225
+    },
+    {
+     "champion": 44,
+     "delta": 0.0028
+    },
+    {
+     "champion": 78,
+     "delta": 0.0284
+    },
+    {
+     "champion": 121,
+     "delta": 0.0441
+    },
+    {
+     "champion": 131,
+     "delta": 0.0408
+    },
+    {
+     "champion": 150,
+     "delta": -0.0417
+    },
+    {
+     "champion": 233,
+     "delta": -0.044
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 39,
+     "delta": 0.0141
+    },
+    {
+     "champion": 45,
+     "delta": 0.0245
+    },
+    {
+     "champion": 56,
+     "delta": 0.0304
+    },
+    {
+     "champion": 98,
+     "delta": 0.0298
+    },
+    {
+     "champion": 110,
+     "delta": 0.0342
+    },
+    {
+     "champion": 268,
+     "delta": 0.0032
+    }
+   ]
+  },
+  {
+   "id": 112,
+   "banRate": 0.088,
+   "positions": [
+    {
+     "position": "middle",
+     "winRate": 0.4742,
+     "pickRate": 0.0372
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 1,
+     "delta": 0.0189
+    },
+    {
+     "champion": 4,
+     "delta": 0.0371
+    },
+    {
+     "champion": 30,
+     "delta": 0.0033
+    },
+    {
+     "champion": 74,
+     "delta": -0.036
+    },
+    {
+     "champion": 96,
+     "delta": 0.0154
+    },
+    {
+     "champion": 136,
+     "delta": -0.0104
+    },
+    {
+     "champion": 360,
+     "delta": 0.0042
+    },
+    {
+     "champion": 800,
+     "delta": -0.0364
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 14,
+     "delta": 0.0195
+    },
+    {
+     "champion": 62,
+     "delta": 0.0112
+    },
+    {
+     "champion": 80,
+     "delta": -0.0007
+    },
+    {
+     "champion": 89,
+     "delta": 0.0078
+    },
+    {
+     "champion": 101,
+     "delta": -0.0021
+    },
+    {
+     "champion": 777,
+     "delta": 0.0154
+    }
+   ]
+  },
+  {
+   "id": 8,
+   "banRate": 0.0023,
+   "positions": [
+    {
+     "position": "middle",
+     "winRate": 0.5258,
+     "pickRate": 0.0924
+    },
+    {
+     "position": "top",
+     "winRate": 0.5223,
+     "pickRate": 0.0549
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 96,
+     "delta": -0.015
+    },
+    {
+     "champion": 131,
+     "delta": -0.0449
+    },
+    {
+     "champion": 134,
+     "delta": -0.0028
+    },
+    {
+     "champion": 164,
+     "delta": -0.0366
+    },
+    {
+     "champion": 254,
+     "delta": -0.0396
+    },
+    {
+     "champion": 268,
+     "delta": 0.0074
+    },
+    {
+     "champion": 711,
+     "delta": 0.0081
+    },
+    {
+     "champion": 799,
+     "delta": -0.0167
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 15,
+     "delta": 0.032
+    },
+    {
+     "champion": 38,
+     "delta": 0.0002
+    },
+    {
+     "champion": 91,
+     "delta": -0.0022
+    },
+    {
+     "champion": 234,
+     "delta": -0.0092
+    },
+    {
+     "champion": 240,
+     "delta": 0.0256
+    },
+    {
+     "champion": 427,
+     "delta": -0.0009
+    }
+   ]
+  },
+  {
+   "id": 106,
+   "banRate": 0.0426,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.5033,
+     "pickRate": 0.0621
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.5205,
+     "pickRate": 0.048
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 5,
+     "delta": -0.023
+    },
+    {
+     "champion": 32,
+     "delta": -0.0035
+    },
+    {
+     "champion": 68,
+     "delta": 0.0311
+    },
+    {
+     "champion": 77,
+     "delta": -0.0333
+    },
+    {
+     "champion": 79,
+     "delta": 0.0019
+    },
+    {
+     "champion": 266,
+     "delta": 0.018
+    },
+    {
+     "champion": 412,
+     "delta": -0.0401
+    },
+    {
+     "champion": 950,
+     "delta": 0.0321
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 8,
+     "delta": 0.0009
+    },
+    {
+     "champion": 34,
+     "delta": 0.0259
+    },
+    {
+     "champion": 238,
+     "delta": 0.0305
+    },
+    {
+     "champion": 266,
+     "delta": 0.0331
+    },
+    {
+     "champion": 412,
+     "delta": 0.0082
+    },
+    {
+     "champion": 887,
+     "delta": 0.0151
+    }
+   ]
+  },
+  {
+   "id": 19,
+   "banRate": 0.0018,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.5366,
+     "pickRate": 0.0893
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.529,
+     "pickRate": 0.0384
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 2,
+     "delta": 0.0263
+    },
+    {
+     "champion": 23,
+     "delta": 0.0345
+    },
+    {
+     "champion": 27,
+     "delta": 0.005
+    },
+    {
+     "champion": 77,
+     "delta": 0.0366
+    },
+    {
+     "champion": 79,
+     "delta": -0.017
+    },
+    {
+     "champion": 80,
+     "delta": 0.0445
+    },
+    {
+     "champion": 893,
+     "delta": -0.0273
+    },
+    {
+     "champion": 897,
+     "delta": 0.035
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 2,
+     "delta": -0.0038
+    },
+    {
+     "champion": 13,
+     "delta": 0.0333
+    },
+    {
+     "champion": 44,
+     "delta": 0.0135
+    },
+    {
+     "champion": 55,
+     "delta": -0.0011
+    },
+    {
+     "champion": 164,
+     "delta": 0.0292
+    },
+    {
+     "champion": 245,
+     "delta": 0.0262
+    }
+   ]
+  },
+  {
+   "id": 62,
+   "banRate": 0.0403,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.4757,
+     "pickRate": 0.0874
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.4574,
+     "pickRate": 0.0476
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 6,
+     "delta": 0.0241
+    },
+    {
+     "champion": 68,
+     "delta": 0.024
+    },
+    {
+     "champion": 75,
+     "delta": -0.0015
+    },
+    {
+     "champion": 223,
+     "delta": -0.005
+    },
+    {
+     "champion": 233,
+     "delta": -0.0014
+    },
+    {
+     "champion": 805,
+     "delta": -0.0195
+    },
+    {
+     "champion": 887,
+     "delta": 0.0259
+    },
+    {
+     "champion": 950,
+     "delta": -0.0075
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 10,
+     "delta": 0.0059
+    },
+    {
+     "champion": 25,
+     "delta": 0.0168
+    },
+    {
+     "champion": 45,
+     "delta": 0.0321
+    },
+    {
+     "champion": 54,
+     "delta": 0.004
+    },
+    {
+     "champion": 68,
+     "delta": 0.0156
+    },
+    {
+     "champion": 136,
+     "delta": 0.0228
+    }
+   ]
+  },
+  {
+   "id": 498,
+   "banRate": 0.1109,
+   "positions": [
+    {
+     "position": "bottom",
+     "winRate": 0.4766,
+     "pickRate": 0.096
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 4,
+     "delta": 0.0255
+    },
+    {
+     "champion": 15,
+     "delta": -0.0401
+    },
+    {
+     "champion": 18,
+     "delta": 0.003
+    },
+    {
+     "champion": 67,
+     "delta": -0.0221
+    },
+    {
+     "champion": 96,
+     "delta": -0.0192
+    },
+    {
+     "champion": 110,
+     "delta": 0.0084
+    },
+    {
+     "champion": 202,
+     "delta": -0.0069
+    },
+    {
+     "champion": 268,
+     "delta": -0.0241
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 4,
+     "delta": 0.0002
+    },
+    {
+     "champion": 12,
+     "delta": 0.0074
+    },
+    {
+     "champion": 78,
+     "delta": -0.0035
+    },
+    {
+     "champion": 91,
+     "delta": 0.0151
+    },
+    {
+     "champion": 150,
+     "delta": 0.0105
+    },
+    {
+     "champion": 254,
+     "delta": 0.0098
+    }
+   ]
+  },
+  {
+   "id": 101,
+   "banRate": 0.0705,
+   "positions": [
+    {
+     "position": "middle",
+     "winRate": 0.4777,
+     "pickRate": 0.0344
+    },
+    {
+     "position": "utility",
+     "winRate": 0.5146,
+     "pickRate": 0.0127
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 4,
+     "delta": 0.0083
+    },
+    {
+     "champion": 43,
+     "delta": -0.0411
+    },
+    {
+     "champion": 60,
+     "delta": 0.0301
+    },
+    {
+     "champion": 145,
+     "delta": -0.0408
+    },
+    {
+     "champion": 245,
+     "delta": 0.0153
+    },
+    {
+     "champion": 412,
+     "delta": -0.0303
+    },
+    {
+     "champion": 518,
+     "delta": 0.0028
+    },
+    {
+     "champion": 901,
+     "delta": -0.0424
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 27,
+     "delta": 0.0216
+    },
+    {
+     "champion": 84,
+     "delta": -0.007
+    },
+    {
+     "champion": 112,
+     "delta": 0.0123
+    },
+    {
+     "champion": 166,
+     "delta": -0.0011
+    },
+    {
+     "champion": 233,
+     "delta": 0.0296
+    },
+    {
+     "champion": 887,
+     "delta": 0.0265
+    }
+   ]
+  },
+  {
+   "id": 5,
+   "banRate": 0.0517,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.5379,
+     "pickRate": 0.0714
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.464,
+     "pickRate": 0.003
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 3,
+     "delta": 0.033
+    },
+    {
+     "champion": 6,
+     "delta": -0.0021
+    },
+    {
+     "champion": 27,
+     "delta": -0.0317
+    },
+    {
+     "champion": 105,
+     "delta": 0.0384
+    },
+    {
+     "champion": 777,
+     "delta": -0.037
+    },
+    {
+     "champion": 799,
+     "delta": -0.0137
+    },
+    {
+     "champion": 893,
+     "delta": -0.0025
+    },
+    {
+     "champion": 904,
+     "delta": 0.0302
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 16,
+     "delta": 0.0337
+    },
+    {
+     "champion": 32,
+     "delta": -0.005
+    },
+    {
+     "champion": 34,
+     "delta": -0.0077
+    },
+    {
+     "champion": 56,
+     "delta": 0.0176
+    },
+    {
+     "champion": 526,
+     "delta": -0.0077
+    },
+    {
+     "champion": 902,
+     "delta": 0.0053
+    }
+   ]
+  },
+  {
+   "id": 157,
+   "banRate": 0.011,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.5008,
+     "pickRate": 0.0912
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.4962,
+     "pickRate": 0.0146
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 8,
+     "delta": 0.0447
+    },
+    {
+     "champion": 24,
+     "delta": -0.0338
+    },
+    {
+     "champion": 54,
+     "delta": -0.0228
+    },
+    {
+     "champion": 78,
+     "delta": 0.0161
+    },
+    {
+     "champion": 254,
+     "delta": -0.0143
+    },
+    {
+     "champion": 517,
+     "delta": -0.0268
+    },
+    {
+     "champion": 876,
+     "delta": 0.0195
+    },
+    {
+     "champion": 897,
+     "delta": 0.0437
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 20,
+     "delta": 0.0175
+    },
+    {
+     "champion": 31,
+     "delta": 0.0
+    },
+    {
+     "champion": 50,
+     "delta": 0.0316
+    },
+    {
+     "champion": 51,
+     "delta": 0.0176
+    },
+    {
+     "champion": 74,
+     "delta": 0.0172
+    },
+    {
+     "champion": 117,
+     "delta": -0.0024
+    }
+   ]
+  },
+  {
+   "id": 777,
+   "banRate": 0.1139,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.539,
+     "pickRate": 0.0607
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.5138,
+     "pickRate": 0.0329
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 23,
+     "delta": -0.0107
+    },
+    {
+     "champion": 33,
+     "delta": 0.002
+    },
+    {
+     "champion": 55,
+     "delta": 0.032
+    },
+    {
+     "champion": 98,
+     "delta": -0.001
+    },
+    {
+     "champion": 103,
+     "delta": 0.0309
+    },
+    {
+     "champion": 164,
+     "delta": -0.0442
+    },
+    {
+     "champion": 421,
+     "delta": -0.0178
+    },
+    {
+     "champion": 805,
+     "delta": 0.0325
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 77,
+     "delta": 0.0062
+    },
+    {
+     "champion": 117,
+     "delta": -0.0027
+    },
+    {
+     "champion": 119,
+     "delta": 0.0238
+    },
+    {
+     "champion": 203,
+     "delta": 0.0198
+    },
+    {
+     "champion": 526,
+     "delta": 0.0276
+    },
+    {
+     "champion": 804,
+     "delta": -0.0022
+    }
+   ]
+  },
+  {
+   "id": 83,
+   "banRate": 0.0046,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.5105,
+     "pickRate": 0.1106
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.4581,
+     "pickRate": 0.0202
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 11,
+     "delta": 0.044
+    },
+    {
+     "champion": 27,
+     "delta": -0.0035
+    },
+    {
+     "champion": 41,
+     "delta": -0.0324
+    },
+    {
+     "champion": 68,
+     "delta": -0.0111
+    },
+    {
+     "champion": 84,
+     "delta": -0.0034
+    },
+    {
+     "champion": 89,
+     "delta": 0.0314
+    },
+    {
+     "champion": 223,
+     "delta": -0.0429
+    },
+    {
+     "champion": 897,
+     "delta": 0.0009
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 25,
+     "delta": 0.0139
+    },
+    {
+     "champion": 79,
+     "delta": 0.0084
+    },
+    {
+     "champion": 98,
+     "delta": 0.002
+    },
+    {
+     "champion": 427,
+     "delta": 0.0216
+    },
+    {
+     "champion": 432,
+     "delta": -0.0034
+    },
+    {
+     "champion": 497,
+     "delta": -0.0058
+    }
+   ]
+  },
+  {
+   "id": 804,
+   "banRate": 0.0037,
+   "positions": [
+    {
+     "position": "bottom",
+     "winRate": 0.5178,
+     "pickRate": 0.0869
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 10,
+     "delta": 0.0295
+    },
+    {
+     "champion": 29,
+     "delta": -0.0442
+    },
+    {
+     "champion": 110,
+     "delta": 0.0226
+    },
+    {
+     "champion": 166,
+     "delta": -0.0015
+    },
+    {
+     "champion": 221,
+     "delta": 0.003
+    },
+    {
+     "champion": 236,
+     "delta": -0.0268
+    },
+    {
+     "champion": 268,
+     "delta": -0.0043
+    },
+    {
+     "champion": 901,
+     "delta": -0.0293
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 85,
+     "delta": 0.0164
+    },
+    {
+     "champion": 102,
+     "delta": 0.005
+    },
+    {
+     "champion": 143,
+     "delta": 0.0039
+    },
+    {
+     "champion": 200,
+     "delta": 0.0311
+    },
+    {
+     "champion": 412,
+     "delta": 0.0119
+    },
+    {
+     "champion": 888,
+     "delta": 0.0271
+    }
+   ]
+  },
+  {
+   "id": 350,
+   "banRate": 0.0058,
+   "positions": [
+    {
+     "position": "utility",
+     "winRate": 0.5169,
+     "pickRate": 0.0671
+    },
+    {
+     "position": "middle",
+     "winRate": 0.5174,
+     "pickRate": 0.0578
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 1,
+     "delta": 0.0347
+    },
+    {
+     "champion": 29,
+     "delta": -0.0059
+    },
+    {
+     "champion": 30,
+     "delta": -0.0048
+    },
+    {
+     "champion": 50,
+     "delta": -0.0013
+    },
+    {
+     "champion": 81,
+     "delta": 0.0178
+    },
+    {
+     "champion": 127,
+     "delta": 0.0421
+    },
+    {
+     "champion": 360,
+     "delta": -0.0449
+    },
+    {
+     "champion": 711,
+     "delta": -0.02
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 35,
+     "delta": -0.0011
+    },
+    {
+     "champion": 72,
+     "delta": 0.0204
+    },
+    {
+     "champion": 91,
+     "delta": 0.0321
+    },
+    {
+     "champion": 154,
+     "delta": -0.0073
+    },
+    {
+     "champion": 412,
+     "delta": 0.0083
+    },
+    {
+     "champion": 902,
+     "delta": 0.0038
+    }
+   ]
+  },
+  {
+   "id": 904,
+   "banRate": 0.0985,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.4987,
+     "pickRate": 0.117
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.4713,
+     "pickRate": 0.0093
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 5,
+     "delta": -0.0188
+    },
+    {
+     "champion": 8,
+     "delta": 0.0035
+    },
+    {
+     "champion": 11,
+     "delta": 0.0253
+    },
+    {
+     "champion": 35,
+     "delta": -0.016
+    },
+    {
+     "champion": 60,
+     "delta": -0.0323
+    },
+    {
+     "champion": 234,
+     "delta": 0.0002
+    },
+    {
+     "champion": 238,
+     "delta": -0.0138
+    },
+    {
+     "champion": 266,
+     "delta": -0.0337
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 28,
+     "delta": -0.0019
+    },
+    {
+     "champion": 76,
+     "delta": 0.0156
+    },
+    {
+     "champion": 83,
+     "delta": -0.0004
+    },
+    {
+     "champion": 86,
+     "delta": -0.0047
+    },
+    {
+     "champion": 98,
+     "delta": 0.0069
+    },
+    {
+     "champion": 875,
+     "delta": 0.0262
+    }
+   ]
+  },
+  {
+   "id": 154,
+   "banRate": 0.116,
+   "positions": [
+    {
+     "position": "top",
+     "winRate": 0.4611,
+     "pickRate": 0.0712
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.4678,
+     "pickRate": 0.0368
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 23,
+     "delta": -0.0164
+    },
+    {
+     "champion": 24,
+     "delta": -0.0287
+    },
+    {
+     "champion": 62,
+     "delta": 0.0407
+    },
+    {
+     "champion": 122,
+     "delta": -0.0121
+    },
+    {
+     "champion": 238,
+     "delta": 0.021
+    },
+    {
+     "champion": 245,
+     "delta": 0.0441
+    },
+    {
+     "champion": 420,
+     "delta": -0.0413
+    },
+    {
+     "champion": 950,
+     "delta": -0.0405
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 24,
+     "delta": 0.0028
+    },
+    {
+     "champion": 30,
+     "delta": 0.0298
+    },
+    {
+     "champion": 37,
+     "delta": 0.0151
+    },
+    {
+     "champion": 48,
+     "delta": 0.0051
+    },
+    {
+     "champion": 62,
+     "delta": 0.006
+    },
+    {
+     "champion": 143,
+     "delta": 0.0258
+    }
+   ]
+  },
+  {
+   "id": 238,
+   "banRate": 0.0476,
+   "positions": [
+    {
+     "position": "middle",
+     "winRate": 0.5061,
+     "pickRate": 0.0197
+    },
+    {
+     "position": "jungle",
+     "winRate": 0.5006,
+     "pickRate": 0.047
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 5,
+     "delta": -0.004
+    },
+    {
+     "champion": 60,
+     "delta": -0.0142
+    },
+    {
+     "champion": 61,
+     "delta": 0.0201
+    },
+    {
+     "champion": 69,
+     "delta": -0.0346
+    },
+    {
+     "champion": 115,
+     "delta": 0.0228
+    },
+    {
+     "champion": 117,
+     "delta": 0.0269
+    },
+    {
+     "champion": 150,
+     "delta": 0.0289
+    },
+    {
+     "champion": 233,
+     "delta": -0.0153
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 6,
+     "delta": 0.0013
+    },
+    {
+     "champion": 27,
+     "delta": -0.0005
+    },
+    {
+     "champion": 30,
+     "delta": -0.009
+    },
+    {
+     "champion": 60,
+     "delta": 0.0266
+    },
+    {
+     "champion": 62,
+     "delta": 0.0236
+    },
+    {
+     "champion": 201,
+     "delta": 0.0077
+    }
+   ]
+  },
+  {
+   "id": 221,
+   "banRate": 0.0013,
+   "positions": [
+    {
+     "position": "bottom",
+     "winRate": 0.5072,
+     "pickRate": 0.1105
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 15,
+     "delta": 0.0393
+    },
+    {
+     "champion": 21,
+     "delta": 0.0128
+    },
+    {
+     "champion": 96,
+     "delta": 0.0347
+    },
+    {
+     "champion": 133,
+     "delta": -0.0093
+    },
+    {
+     "champion": 203,
+     "delta": -0.0033
+    },
+    {
+     "champion": 222,
+     "delta": -0.0369
+    },
+    {
+     "champion": 498,
+     "delta": 0.0285
+    },
+    {
+     "champion": 901,
+     "delta": -0.0079
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 80,
+     "delta": 0.026
+    },
+    {
+     "champion": 86,
+     "delta": 0.0292
+    },
+    {
+     "champion": 106,
+     "delta": 0.005
+    },
+    {
+     "champion": 145,
+     "delta": 0.0233
+    },
+    {
+     "champion": 223,
+     "delta": 0.0309
+    },
+    {
+     "champion": 902,
+     "delta": 0.0248
+    }
+   ]
+  },
+  {
+   "id": 115,
+   "banRate": 0.0006,
+   "positions": [
+    {
+     "position": "middle",
+     "winRate": 0.4746,
+     "pickRate": 0.0482
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 1,
+     "delta": 0.0026
+    },
+    {
+     "champion": 8,
+     "delta": 0.0268
+    },
+    {
+     "champion": 40,
+     "delta": 0.0113
+    },
+    {
+     "champion": 61,
+     "delta": -0.0304
+    },
+    {
+     "champion": 81,
+     "delta": -0.0183
+    },
+    {
+     "champion": 117,
+     "delta": -0.0159
+    },
+    {
+     "champion": 236,
+     "delta": 0.0266
+    },
+    {
+     "champion": 246,
+     "delta": 0.0133
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 17,
+     "delta": 0.0042
+    },
+    {
+     "champion": 60,
+     "delta": -0.0075
+    },
+    {
+     "champion": 117,
+     "delta": -0.0042
+    },
+    {
+     "champion": 122,
+     "delta": 0.024
+    },
+    {
+     "champion": 234,
+     "delta": -0.0077
+    },
+    {
+     "champion": 432,
+     "delta": 0.0154
+    }
+   ]
+  },
+  {
+   "id": 26,
+   "banRate": 0.0132,
+   "positions": [
+    {
+     "position": "utility",
+     "winRate": 0.4796,
+     "pickRate": 0.0282
+    },
+    {
+     "position": "middle",
+     "winRate": 0.461,
+     "pickRate": 0.0236
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 4,
+     "delta": -0.0337
+    },
+    {
+     "champion": 17,
+     "delta": 0.0197
+    },
+    {
+     "champion": 103,
+     "delta": -0.0368
+    },
+    {
+     "champion": 142,
+     "delta": -0.0237
+    },
+    {
+     "champion": 163,
+     "delta": 0.0087
+    },
+    {
+     "champion": 236,
+     "delta": 0.0285
+    },
+    {
+     "champion": 432,
+     "delta": 0.0415
+    },
+    {
+     "champion": 902,
+     "delta": 0.0046
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 22,
+     "delta": 0.0068
+    },
+    {
+     "champion": 31,
+     "delta": 0.0067
+    },
+    {
+     "champion": 63,
+     "delta": -0.0037
+    },
+    {
+     "champion": 246,
+     "delta": 0.0131
+    },
+    {
+     "champion": 526,
+     "delta": 0.004
+    },
+    {
+     "champion": 799,
+     "delta": -0.0024
+    }
+   ]
+  },
+  {
+   "id": 142,
+   "banRate": 0.0283,
+   "positions": [
+    {
+     "position": "middle",
+     "winRate": 0.5343,
+     "pickRate": 0.0859
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 9,
+     "delta": -0.0151
+    },
+    {
+     "champion": 21,
+     "delta": 0.0091
+    },
+    {
+     "champion": 45,
+     "delta": 0.024
+    },
+    {
+     "champion": 90,
+     "delta": -0.0122
+    },
+    {
+     "champion": 143,
+     "delta": -0.029
+    },
+    {
+     "champion": 350,
+     "delta": 0.0274
+    },
+    {
+     "champion": 888,
+     "delta": -0.0437
+    },
+    {
+     "champion": 902,
+     "delta": 0.01
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 20,
+     "delta": 0.0305
+    },
+    {
+     "champion": 26,
+     "delta": 0.0125
+    },
+    {
+     "champion": 40,
+     "delta": 0.0157
+    },
+    {
+     "champion": 41,
+     "delta": -0.0072
+    },
+    {
+     "champion": 91,
+     "delta": 0.0281
+    },
+    {
+     "champion": 421,
+     "delta": 0.0301
+    }
+   ]
+  },
+  {
+   "id": 143,
+   "banRate": 0.0613,
+   "positions": [
+    {
+     "position": "middle",
+     "winRate": 0.4845,
+     "pickRate": 0.0679
+    },
+    {
+     "position": "utility",
+     "winRate": 0.497,
+     "pickRate": 0.0455
+    }
+   ],
+   "matchups": [
+    {
+     "champion": 18,
+     "delta": 0.0355
+    },
+    {
+     "champion": 44,
+     "delta": 0.016
+    },
+    {
+     "champion": 76,
+     "delta": 0.0097
+    },
+    {
+     "champion": 90,
+     "delta": -0.0215
+    },
+    {
+     "champion": 107,
+     "delta": 0.0173
+    },
+    {
+     "champion": 497,
+     "delta": 0.0187
+    },
+    {
+     "champion": 518,
+     "delta": -0.0081
+    },
+    {
+     "champion": 711,
+     "delta": -0.004
+    }
+   ],
+   "synergies": [
+    {
+     "champion": 33,
+     "delta": 0.0026
+    },
+    {
+     "champion": 61,
+     "delta": 0.0055
+    },
+    {
+     "champion": 86,
+     "delta": 0.0104
+    },
+    {
+     "champion": 106,
+     "delta": 0.0153
+    },
+    {
+     "champion": 805,
+     "delta": -0.0079
+    },
+    {
+     "champion": 950,
+     "delta": -0.0099
+    }
+   ]
+  }
+ ]
+}

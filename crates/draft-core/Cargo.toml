@@ -16,6 +16,13 @@ workspace = true
 lcu-model.workspace = true
 serde.workspace = true
 serde_json.workspace = true
+ts-rs = { version = "12.0.1", optional = true }
+
+[features]
+# Generates the TypeScript types for the UIs (ui/draft-ui/src/lib/types/):
+# `cargo test -p draft-core --features ts export_bindings`.
+ts = ["dep:ts-rs"]
 
 [dev-dependencies]
 insta = { version = "1.49.0", features = ["yaml"] }
+

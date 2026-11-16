@@ -5,13 +5,14 @@
 //! Only what a viewer may see: no names or account IDs (the session types
 //! don't even model them), and no enemy hovers (the client never sends them).
 
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 
 /// Champion IDs as the client uses them (`103` = Ahri). Names and icons come
 /// from champion data, not from here.
 pub type ChampionId = i64;
 
-#[derive(Debug, Clone, Default, PartialEq, Serialize)]
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[cfg_attr(feature = "ts", derive(ts_rs::TS), ts(export))]
 #[serde(rename_all = "camelCase")]
 pub struct DraftState {
     pub phase: Phase,
@@ -34,7 +35,8 @@ pub struct DraftState {
     pub rerolls_remaining: Option<i64>,
 }
 
-#[derive(Debug, Clone, Copy, Default, PartialEq, Eq, Serialize)]
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[cfg_attr(feature = "ts", derive(ts_rs::TS), ts(export))]
 #[serde(rename_all = "camelCase")]
 pub enum Phase {
     /// Hovering and declaring intent before any ban or pick.
@@ -47,7 +49,8 @@ pub enum Phase {
     Unknown,
 }
 
-#[derive(Debug, Clone, Default, PartialEq, Serialize)]
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[cfg_attr(feature = "ts", derive(ts_rs::TS), ts(export))]
 #[serde(rename_all = "camelCase")]
 pub struct Slot {
     /// The client's cell ID; turns and bans refer to it.
@@ -63,7 +66,8 @@ pub struct Slot {
     pub picking: bool,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[cfg_attr(feature = "ts", derive(ts_rs::TS), ts(export))]
 #[serde(rename_all = "camelCase")]
 pub enum Position {
     Top,
@@ -73,14 +77,16 @@ pub enum Position {
     Utility,
 }
 
-#[derive(Debug, Clone, Default, PartialEq, Serialize)]
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[cfg_attr(feature = "ts", derive(ts_rs::TS), ts(export))]
 #[serde(rename_all = "camelCase")]
 pub struct Bans {
     pub ally: Vec<Ban>,
     pub enemy: Vec<Ban>,
 }
 
-#[derive(Debug, Clone, PartialEq, Serialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[cfg_attr(feature = "ts", derive(ts_rs::TS), ts(export))]
 #[serde(rename_all = "camelCase")]
 pub struct Ban {
     /// `None` for a ban the timer ran out on.
@@ -89,7 +95,8 @@ pub struct Ban {
     pub cell_id: Option<i64>,
 }
 
-#[derive(Debug, Clone, PartialEq, Serialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[cfg_attr(feature = "ts", derive(ts_rs::TS), ts(export))]
 #[serde(rename_all = "camelCase")]
 pub struct Turn {
     pub kind: TurnKind,
@@ -100,7 +107,8 @@ pub struct Turn {
     pub yours: bool,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[cfg_attr(feature = "ts", derive(ts_rs::TS), ts(export))]
 #[serde(rename_all = "camelCase")]
 pub enum TurnKind {
     Ban,
@@ -109,7 +117,8 @@ pub enum TurnKind {
 
 /// When the current phase ends, as an absolute time, so a UI can count down
 /// without new events: remaining = `ends_at_ms - now`.
-#[derive(Debug, Clone, Default, PartialEq, Serialize)]
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[cfg_attr(feature = "ts", derive(ts_rs::TS), ts(export))]
 #[serde(rename_all = "camelCase")]
 pub struct Timer {
     /// Unix time in milliseconds on the client's clock; `None` if infinite or
