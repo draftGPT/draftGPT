@@ -63,7 +63,7 @@ until asked.
 - `lcu-model` (raw events, types, recording format, resource constants) has no I/O and must
   stay buildable for `wasm32`; its only dependencies are serde, serde_json and thiserror.
   `draft-core` and anything else that only needs the data depend on `lcu-model`, never on
-  `lcu`. Check with `cargo check -p lcu-model --target wasm32-unknown-unknown`.
+  `lcu`. Check with `cargo check -p lcu-model -p draft-core --target wasm32-unknown-unknown`.
 - `lcu` builds reqwest without a bundled crypto provider (keeps aws-lc out of the Windows
   build). Binaries call `lcu::transport::tls::install_crypto_provider()` first thing, or any
   reqwest client in the process panics.
@@ -108,6 +108,7 @@ until asked.
 cargo test --workspace                          # all tests (no League client needed)
 cargo clippy --workspace --all-targets -- -D warnings
 cargo fmt --all
+INSTA_UPDATE=always cargo test -p draft-core    # accept changed DraftState snapshots (read the diff first)
 cargo run -p devserver -- --port 8790 --out captures      # dev page at http://127.0.0.1:8790
 cargo run -p devserver -- --replay fixtures/x.jsonl --speed 4   # replay instead of the client
 cargo run -p capture -- --out captures [auto | record --label x | help-dump --file f.json]

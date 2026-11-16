@@ -1,0 +1,579 @@
+---
+source: crates/draft-core/tests/fixtures.rs
+expression: states
+---
+- phase: finalization
+  queueId: 2400
+  spectating: false
+  ally:
+    - cellId: 0
+      isLocal: false
+      position: ~
+      champion: 107
+      hover: ~
+      picking: false
+    - cellId: 1
+      isLocal: false
+      position: ~
+      champion: 15
+      hover: ~
+      picking: false
+    - cellId: 2
+      isLocal: true
+      position: ~
+      champion: 74
+      hover: ~
+      picking: false
+    - cellId: 3
+      isLocal: false
+      position: ~
+      champion: 9
+      hover: ~
+      picking: false
+    - cellId: 4
+      isLocal: false
+      position: ~
+      champion: 5
+      hover: ~
+      picking: false
+  enemy:
+    - cellId: 5
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 6
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 7
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 8
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 9
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+  bans:
+    ally: []
+    enemy: []
+  turn: ~
+  timer:
+    endsAtMs: 1794767823759
+    totalMs: 30000
+  bench:
+    - 68
+    - 55
+    - 246
+    - 4
+    - 63
+    - 131
+    - 266
+  offered: []
+  rerollsRemaining: 0
+- phase: finalization
+  queueId: 2400
+  spectating: false
+  ally:
+    - cellId: 0
+      isLocal: false
+      position: ~
+      champion: 107
+      hover: ~
+      picking: false
+    - cellId: 1
+      isLocal: false
+      position: ~
+      champion: 15
+      hover: ~
+      picking: false
+    - cellId: 2
+      isLocal: true
+      position: ~
+      champion: 74
+      hover: ~
+      picking: false
+    - cellId: 3
+      isLocal: false
+      position: ~
+      champion: 9
+      hover: ~
+      picking: false
+    - cellId: 4
+      isLocal: false
+      position: ~
+      champion: 4
+      hover: ~
+      picking: false
+  enemy:
+    - cellId: 5
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 6
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 7
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 8
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 9
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+  bans:
+    ally: []
+    enemy: []
+  turn: ~
+  timer:
+    endsAtMs: 1794767823771
+    totalMs: 30000
+  bench:
+    - 68
+    - 55
+    - 246
+    - 5
+    - 63
+    - 131
+    - 266
+  offered: []
+  rerollsRemaining: 0
+- phase: finalization
+  queueId: 2400
+  spectating: false
+  ally:
+    - cellId: 0
+      isLocal: false
+      position: ~
+      champion: 107
+      hover: ~
+      picking: false
+    - cellId: 1
+      isLocal: false
+      position: ~
+      champion: 15
+      hover: ~
+      picking: false
+    - cellId: 2
+      isLocal: true
+      position: ~
+      champion: 63
+      hover: ~
+      picking: false
+    - cellId: 3
+      isLocal: false
+      position: ~
+      champion: 9
+      hover: ~
+      picking: false
+    - cellId: 4
+      isLocal: false
+      position: ~
+      champion: 4
+      hover: ~
+      picking: false
+  enemy:
+    - cellId: 5
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 6
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 7
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 8
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 9
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+  bans:
+    ally: []
+    enemy: []
+  turn: ~
+  timer:
+    endsAtMs: 1794767823761
+    totalMs: 30000
+  bench:
+    - 68
+    - 55
+    - 246
+    - 5
+    - 74
+    - 131
+    - 266
+  offered: []
+  rerollsRemaining: 0
+- phase: finalization
+  queueId: 2400
+  spectating: false
+  ally:
+    - cellId: 0
+      isLocal: false
+      position: ~
+      champion: 107
+      hover: ~
+      picking: false
+    - cellId: 1
+      isLocal: false
+      position: ~
+      champion: 131
+      hover: ~
+      picking: false
+    - cellId: 2
+      isLocal: true
+      position: ~
+      champion: 63
+      hover: ~
+      picking: false
+    - cellId: 3
+      isLocal: false
+      position: ~
+      champion: 9
+      hover: ~
+      picking: false
+    - cellId: 4
+      isLocal: false
+      position: ~
+      champion: 4
+      hover: ~
+      picking: false
+  enemy:
+    - cellId: 5
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 6
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 7
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 8
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 9
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+  bans:
+    ally: []
+    enemy: []
+  turn: ~
+  timer:
+    endsAtMs: 1794767823774
+    totalMs: 30000
+  bench:
+    - 68
+    - 55
+    - 246
+    - 5
+    - 74
+    - 15
+    - 266
+  offered: []
+  rerollsRemaining: 0
+- phase: finalization
+  queueId: 2400
+  spectating: false
+  ally:
+    - cellId: 0
+      isLocal: false
+      position: ~
+      champion: 246
+      hover: ~
+      picking: false
+    - cellId: 1
+      isLocal: false
+      position: ~
+      champion: 131
+      hover: ~
+      picking: false
+    - cellId: 2
+      isLocal: true
+      position: ~
+      champion: 63
+      hover: ~
+      picking: false
+    - cellId: 3
+      isLocal: false
+      position: ~
+      champion: 9
+      hover: ~
+      picking: false
+    - cellId: 4
+      isLocal: false
+      position: ~
+      champion: 4
+      hover: ~
+      picking: false
+  enemy:
+    - cellId: 5
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 6
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 7
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 8
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 9
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+  bans:
+    ally: []
+    enemy: []
+  turn: ~
+  timer:
+    endsAtMs: 1794767823800
+    totalMs: 30000
+  bench:
+    - 68
+    - 55
+    - 107
+    - 5
+    - 74
+    - 15
+    - 266
+  offered: []
+  rerollsRemaining: 0
+- phase: finalization
+  queueId: 2400
+  spectating: false
+  ally:
+    - cellId: 0
+      isLocal: false
+      position: ~
+      champion: 246
+      hover: ~
+      picking: false
+    - cellId: 1
+      isLocal: false
+      position: ~
+      champion: 131
+      hover: ~
+      picking: false
+    - cellId: 2
+      isLocal: true
+      position: ~
+      champion: 63
+      hover: ~
+      picking: false
+    - cellId: 3
+      isLocal: false
+      position: ~
+      champion: 9
+      hover: ~
+      picking: false
+    - cellId: 4
+      isLocal: false
+      position: ~
+      champion: 107
+      hover: ~
+      picking: false
+  enemy:
+    - cellId: 5
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 6
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 7
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 8
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 9
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+  bans:
+    ally: []
+    enemy: []
+  turn: ~
+  timer:
+    endsAtMs: 1794767823805
+    totalMs: 30000
+  bench:
+    - 68
+    - 55
+    - 4
+    - 5
+    - 74
+    - 15
+    - 266
+  offered: []
+  rerollsRemaining: 0
+- phase: gameStarting
+  queueId: 2400
+  spectating: false
+  ally:
+    - cellId: 0
+      isLocal: false
+      position: ~
+      champion: 246
+      hover: ~
+      picking: false
+    - cellId: 1
+      isLocal: false
+      position: ~
+      champion: 131
+      hover: ~
+      picking: false
+    - cellId: 2
+      isLocal: true
+      position: ~
+      champion: 63
+      hover: ~
+      picking: false
+    - cellId: 3
+      isLocal: false
+      position: ~
+      champion: 9
+      hover: ~
+      picking: false
+    - cellId: 4
+      isLocal: false
+      position: ~
+      champion: 107
+      hover: ~
+      picking: false
+  enemy:
+    - cellId: 5
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 6
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 7
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 8
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 9
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+  bans:
+    ally: []
+    enemy: []
+  turn: ~
+  timer:
+    endsAtMs: 1794767823777
+    totalMs: 0
+  bench:
+    - 68
+    - 55
+    - 4
+    - 5
+    - 74
+    - 15
+    - 266
+  offered: []
+  rerollsRemaining: 0
+- ~

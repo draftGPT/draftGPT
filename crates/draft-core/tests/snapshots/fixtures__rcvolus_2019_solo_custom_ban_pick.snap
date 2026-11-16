@@ -1,0 +1,229 @@
+---
+source: crates/draft-core/tests/fixtures.rs
+expression: states
+---
+- phase: banPick
+  queueId: ~
+  spectating: false
+  ally:
+    - cellId: 0
+      isLocal: true
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+  enemy: []
+  bans:
+    ally: []
+    enemy: []
+  turn:
+    kind: ban
+    cells:
+      - 0
+    yours: true
+  timer:
+    endsAtMs: 1572164146683
+    totalMs: 30841
+  bench: []
+  offered: []
+  rerollsRemaining: ~
+- phase: banPick
+  queueId: ~
+  spectating: false
+  ally:
+    - cellId: 0
+      isLocal: true
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+  enemy: []
+  bans:
+    ally:
+      - champion: 103
+        cellId: 0
+    enemy: []
+  turn:
+    kind: ban
+    cells:
+      - 0
+    yours: true
+  timer:
+    endsAtMs: 1572164152167
+    totalMs: 30841
+  bench: []
+  offered: []
+  rerollsRemaining: ~
+- phase: banPick
+  queueId: ~
+  spectating: false
+  ally:
+    - cellId: 0
+      isLocal: true
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+  enemy: []
+  bans:
+    ally:
+      - champion: 103
+        cellId: 0
+      - champion: 202
+        cellId: 0
+    enemy: []
+  turn:
+    kind: ban
+    cells:
+      - 0
+    yours: true
+  timer:
+    endsAtMs: 1572164160032
+    totalMs: 30841
+  bench: []
+  offered: []
+  rerollsRemaining: ~
+- phase: banPick
+  queueId: ~
+  spectating: false
+  ally:
+    - cellId: 0
+      isLocal: true
+      position: ~
+      champion: ~
+      hover: ~
+      picking: true
+  enemy: []
+  bans:
+    ally:
+      - champion: 103
+        cellId: 0
+      - champion: 202
+        cellId: 0
+      - champion: 25
+        cellId: 0
+    enemy: []
+  turn:
+    kind: pick
+    cells:
+      - 0
+    yours: true
+  timer:
+    endsAtMs: 1572164168095
+    totalMs: 30841
+  bench: []
+  offered: []
+  rerollsRemaining: ~
+- phase: banPick
+  queueId: ~
+  spectating: false
+  ally:
+    - cellId: 0
+      isLocal: true
+      position: ~
+      champion: 110
+      hover: ~
+      picking: true
+  enemy: []
+  bans:
+    ally:
+      - champion: 103
+        cellId: 0
+      - champion: 202
+        cellId: 0
+      - champion: 25
+        cellId: 0
+    enemy: []
+  turn:
+    kind: pick
+    cells:
+      - 0
+    yours: true
+  timer:
+    endsAtMs: 1572164168089
+    totalMs: 30841
+  bench: []
+  offered: []
+  rerollsRemaining: ~
+- phase: finalization
+  queueId: ~
+  spectating: false
+  ally:
+    - cellId: 0
+      isLocal: true
+      position: ~
+      champion: 110
+      hover: ~
+      picking: false
+  enemy: []
+  bans:
+    ally:
+      - champion: 103
+        cellId: 0
+      - champion: 202
+        cellId: 0
+      - champion: 25
+        cellId: 0
+    enemy: []
+  turn: ~
+  timer:
+    endsAtMs: 1572164210362
+    totalMs: 62935
+  bench: []
+  offered: []
+  rerollsRemaining: ~
+- phase: finalization
+  queueId: ~
+  spectating: false
+  ally:
+    - cellId: 0
+      isLocal: true
+      position: ~
+      champion: 110
+      hover: ~
+      picking: false
+  enemy: []
+  bans:
+    ally:
+      - champion: 103
+        cellId: 0
+      - champion: 202
+        cellId: 0
+      - champion: 25
+        cellId: 0
+    enemy: []
+  turn: ~
+  timer:
+    endsAtMs: 1572164210359
+    totalMs: 62935
+  bench: []
+  offered: []
+  rerollsRemaining: ~
+- phase: finalization
+  queueId: ~
+  spectating: false
+  ally:
+    - cellId: 0
+      isLocal: true
+      position: ~
+      champion: 110
+      hover: ~
+      picking: false
+  enemy: []
+  bans:
+    ally:
+      - champion: 103
+        cellId: 0
+      - champion: 202
+        cellId: 0
+      - champion: 25
+        cellId: 0
+    enemy: []
+  turn: ~
+  timer:
+    endsAtMs: 1572164210361
+    totalMs: 62935
+  bench: []
+  offered: []
+  rerollsRemaining: ~
+- ~
