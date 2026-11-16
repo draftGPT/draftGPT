@@ -1,0 +1,21 @@
+{
+  "name": "@draftgpt/desktop",
+  "private": true,
+  "type": "module",
+  "description": "The desktop side panel's page, shown by the Tauri app (crates/desktop). Live drafts arrive as events from Rust.",
+  "scripts": {
+    "demo": "node scripts/demo.mjs",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "svelte-check --tsconfig ./tsconfig.json --fail-on-warnings",
+    "tauri": "tauri"
+  },
+  "dependencies": {
+    "@draftgpt/draft-ui": "*",
+    "@tauri-apps/api": "2.12.5"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "2.12.5"
+  }
+}

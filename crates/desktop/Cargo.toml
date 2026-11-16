@@ -1,0 +1,49 @@
+[package]
+name = "desktop"
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+
+# The desktop side panel: Tauri window showing ui/desktop, fed by the live
+# client (lcu) or a replayed recording through draft-core. Docks next to the
+# League client window on Windows.
+
+[[bin]]
+name = "draftgpt"
+path = "src/main.rs"
+
+# Not the workspace lints: the Windows docking code calls the Win32 API, which
+# is unsafe. Only `dock::windows` allows it.
+[lints.rust]
+unsafe_code = "deny"
+
+[features]
+# Serve the built ui/desktop/dist from inside the app. Without it the window
+# loads the Vite dev server (http://localhost:1420) for hot reload:
+# `npm run dev -w @draftgpt/desktop` in ui/, then
+# `cargo run -p desktop --no-default-features -- --replay fixtures/x.jsonl`.
+default = ["custom-protocol"]
+custom-protocol = ["tauri/custom-protocol"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+capture.workspace = true
+clap.workspace = true
+draft-core.workspace = true
+futures.workspace = true
+lcu.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+tauri = { version = "2", features = [] }
+tokio = { workspace = true, features = ["sync", "time"] }
+tracing.workspace = true
+
+[target.'cfg(windows)'.dependencies]
+windows = { version = "0.62", features = [
+    "Win32_Foundation",
+    "Win32_Graphics_Gdi",
+    "Win32_UI_WindowsAndMessaging",
+] }

@@ -38,11 +38,23 @@ draftGPT/
 │   │   └── static/         dev page, plain HTML/JS via include_str!
 │   ├── draft-core/         pure Rust, no I/O, native + wasm32; depends on lcu-model
 │   │   ├── state           DraftState: picks, bans, hovers, positions, turn, timer
-│   │   └── reducer         ChampSelectSession → DraftState; Tracker over raw events
-│   └── desktop/            Tauri side panel, live only
-│       └── dock            follows client window; floats if fullscreen or toggled
+│   │   ├── reducer         ChampSelectSession → DraftState; Tracker over raw events
+│   │   ├── recommend       Recommender trait; StatsRecommender over data/stats/<patch>.json
+│   │   └── (feature ts)    TypeScript types → ui/draft-ui/src/lib/types (ts-rs)
+│   ├── draft-wasm/         draft-core for the browser (wasm-bindgen): Engine(stats).recommend
+│   └── desktop/            Tauri side panel (binary draftgpt): Live or --replay → draft-core
+│       ├── engine          source events → Tracker → recommendations → `draft-update` events
+│       └── dock            follows the client window (Windows); floats if fullscreen or toggled
+├── ui/                     npm workspace, Svelte 5 + Vite
+│   ├── draft-ui/           shared components (props only: DraftState + Recommendations in),
+│   │                       champion list, manual-draft helpers, generated types
+│   ├── desktop/            the panel's page: live updates from Rust; ?demo= in a browser
+│   ├── web/                web drafter: manual picks, draft-core in wasm, stats fetched + cached
+│   └── e2e/                Playwright tests of both apps
+├── data/                   champions.json (Data Dragon) + stats/<patch>.json (MOCK for now)
 ├── tools/
-│   └── lcu_spec.py         full LCU spec → docs/lcu-spec subset + capture/sweep-paths.txt
+│   ├── lcu_spec.py         full LCU spec → docs/lcu-spec subset + capture/sweep-paths.txt
+│   └── mock_stats.py       data/champions.json + mock data/stats from Data Dragon
 ├── fixtures/               *.jsonl recordings named by situation (README lists them)
 └── docs/
     ├── arch.md             this file
@@ -76,6 +88,14 @@ draftGPT/
     client launch gets one, since it's mostly account state; later recordings get one only
     in a Clash queue, holding just the large Clash endpoints the full sweep skips elsewhere.
   - Wire and sweep files stay local and are never committed.
+
+- **One set of UI components.** `ui/draft-ui` renders a `DraftState` and
+  `Recommendations` from props. The desktop panel feeds it live updates from Rust; the web
+  drafter builds the `DraftState` from clicks. The TypeScript types are generated from the
+  Rust structs (`npm run types` in `ui/`), so a changed field is a type error in Svelte.
+- **Stats are static files per patch** (`data/stats/<patch>.json` plus `index.json`): the
+  web drafter fetches and caches them, the desktop app bundles one (`--stats` overrides).
+  They are mock data from `tools/mock_stats.py` until the analysis pipeline exists.
 
 ## Data flow
 
