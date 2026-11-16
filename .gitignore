@@ -11,3 +11,6 @@ docs/lcu-spec/full/
 
 # Tauri build output (schemas generated from the config).
 crates/desktop/gen/
+
+# Synthetic recordings (tools/synth_fixture.py): made up, regenerate instead of committing.
+fixtures/synthetic/
