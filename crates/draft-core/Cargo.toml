@@ -1,0 +1,21 @@
+[package]
+name = "draft-core"
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+
+# The draft as every frontend sees it: champ select session → DraftState. No
+# I/O; builds for wasm32 (the web drafter uses it later). Depends on lcu-model,
+# never on lcu.
+
+[lints]
+workspace = true
+
+[dependencies]
+lcu-model.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+
+[dev-dependencies]
+insta = { version = "1.49.0", features = ["yaml"] }

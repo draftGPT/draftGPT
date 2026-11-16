@@ -38,7 +38,7 @@ draftGPT/
 │   │   └── static/         dev page, plain HTML/JS via include_str!
 │   ├── draft-core/         pure Rust, no I/O, native + wasm32; depends on lcu-model
 │   │   ├── state           DraftState: picks, bans, hovers, positions, turn, timer
-│   │   └── reducer         ChampSelectSession → DraftState
+│   │   └── reducer         ChampSelectSession → DraftState; Tracker over raw events
 │   └── desktop/            Tauri side panel, live only
 │       └── dock            follows client window; floats if fullscreen or toggled
 ├── tools/
