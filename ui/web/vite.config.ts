@@ -6,6 +6,6 @@ import { defineConfig } from "vite";
 export default defineConfig({
   plugins: [svelte()],
   publicDir: "../../data",
-  server: { port: 5174, strictPort: true, fs: { allow: ["../.."] } },
+  server: { port: 5174, strictPort: true, fs: { allow: ["..", "../../data"] } },
   preview: { port: 4174, strictPort: true },
 });

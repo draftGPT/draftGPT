@@ -3,8 +3,11 @@
 // written by `npm run demo`).
 import type { DraftState, Recommendations } from "@draftgpt/draft-ui";
 
-/** What the Rust side emits as `draft-update` (crates/desktop/src/state.rs). */
+/** What the Rust side emits as `draft-update` (`Update` in crates/desktop/src/engine.rs). */
 export type Update = {
+  /** Increases with every update; older ones arriving late are ignored. */
+  seq: number;
+  /** The timer is counted down to when this update was sent. */
   draft: DraftState | null;
   recs: Recommendations | null;
   /** Connection state in words: "League client connected", "Replaying …". */
@@ -49,10 +52,10 @@ export function demoSource(name: string, speed: number): Source {
       if (!res.ok) throw new Error(`demo ${name}: HTTP ${res.status}`);
       const steps = (await res.json()) as DemoStep[];
       const status = `Demo: ${name}`;
-      onUpdate({ draft: null, recs: null, status, floating: true, canDock: false });
+      onUpdate({ seq: 0, draft: null, recs: null, status, floating: true, canDock: false });
       const t0 = steps[0]?.t ?? 0;
-      for (const s of steps) {
-        const u = { draft: s.draft, recs: s.recs, status, floating: true, canDock: false };
+      for (const [i, s] of steps.entries()) {
+        const u = { seq: i + 1, draft: s.draft, recs: s.recs, status, floating: true, canDock: false };
         setTimeout(() => onUpdate(u), (s.t - t0) / speed);
       }
     },

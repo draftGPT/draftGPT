@@ -226,7 +226,7 @@ expression: states
       - 0
     yours: true
   timer:
-    remainingMs: 34000
+    remainingMs: 29982
     totalMs: 34000
   bench: []
   offered: []

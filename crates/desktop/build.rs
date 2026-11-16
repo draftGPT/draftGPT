@@ -6,6 +6,12 @@ fn main() {
     // built yet, so put a placeholder page there that says how to build it.
     let dist = Path::new(env!("CARGO_MANIFEST_DIR")).join("../../ui/desktop/dist");
     if !dist.join("index.html").exists() {
+        // A release build must ship the real page.
+        assert!(
+            std::env::var("PROFILE").as_deref() != Ok("release"),
+            "ui/desktop/dist is missing: run `npm install` and `npm run build -w @draftgpt/desktop` in ui/ first"
+        );
+        println!("cargo:warning=ui/desktop/dist is missing; the panel shows a placeholder page");
         std::fs::create_dir_all(&dist).expect("create ui/desktop/dist");
         std::fs::write(
             dist.join("index.html"),

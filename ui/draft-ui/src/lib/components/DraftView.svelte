@@ -63,6 +63,7 @@
         bans={draft.bans.ally}
         {champions}
         side="ally"
+        label={draft.spectating ? "Blue side bans" : "Your bans"}
         slots={banSlots}
         selectedIndex={selBan("ally")}
         onBanClick={onBanClick ? (i) => onBanClick("ally", i) : undefined}
@@ -71,6 +72,7 @@
         bans={draft.bans.enemy}
         {champions}
         side="enemy"
+        label={draft.spectating ? "Red side bans" : "Enemy bans"}
         slots={banSlots}
         selectedIndex={selBan("enemy")}
         onBanClick={onBanClick ? (i) => onBanClick("enemy", i) : undefined}
@@ -102,6 +104,7 @@
           title="Suggested bans"
           items={recs.bans}
           {champions}
+          showScore={false}
           onPick={onRecPick ? (c) => onRecPick(c, "ban") : undefined}
         />
       {/if}

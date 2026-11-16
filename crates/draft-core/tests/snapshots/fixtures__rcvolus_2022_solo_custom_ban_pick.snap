@@ -39,6 +39,81 @@ expression: states
       picking: false
   enemy: []
   bans:
+    ally: []
+    enemy: []
+  turn:
+    kind: ban
+    cells:
+      - 0
+    yours: true
+  timer:
+    remainingMs: 31805
+    totalMs: 37833
+  bench: []
+  offered: []
+  rerollsRemaining: ~
+- phase: banPick
+  queueId: ~
+  spectating: false
+  ally:
+    - cellId: 0
+      isLocal: true
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+  enemy: []
+  bans:
+    ally: []
+    enemy: []
+  turn:
+    kind: ban
+    cells:
+      - 0
+    yours: true
+  timer:
+    remainingMs: 30804
+    totalMs: 37833
+  bench: []
+  offered: []
+  rerollsRemaining: ~
+- phase: banPick
+  queueId: ~
+  spectating: false
+  ally:
+    - cellId: 0
+      isLocal: true
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+  enemy: []
+  bans:
+    ally: []
+    enemy: []
+  turn:
+    kind: ban
+    cells:
+      - 0
+    yours: true
+  timer:
+    remainingMs: 28802
+    totalMs: 37833
+  bench: []
+  offered: []
+  rerollsRemaining: ~
+- phase: banPick
+  queueId: ~
+  spectating: false
+  ally:
+    - cellId: 0
+      isLocal: true
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+  enemy: []
+  bans:
     ally:
       - champion: 28
         cellId: 0
@@ -69,6 +144,33 @@ expression: states
     ally:
       - champion: 28
         cellId: 0
+    enemy: []
+  turn:
+    kind: ban
+    cells:
+      - 0
+    yours: true
+  timer:
+    remainingMs: 13921
+    totalMs: 37833
+  bench: []
+  offered: []
+  rerollsRemaining: ~
+- phase: banPick
+  queueId: ~
+  spectating: false
+  ally:
+    - cellId: 0
+      isLocal: true
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+  enemy: []
+  bans:
+    ally:
+      - champion: 28
+        cellId: 0
       - champion: 42
         cellId: 0
     enemy: []
@@ -79,6 +181,35 @@ expression: states
     yours: true
   timer:
     remainingMs: 34914
+    totalMs: 37833
+  bench: []
+  offered: []
+  rerollsRemaining: ~
+- phase: banPick
+  queueId: ~
+  spectating: false
+  ally:
+    - cellId: 0
+      isLocal: true
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+  enemy: []
+  bans:
+    ally:
+      - champion: 28
+        cellId: 0
+      - champion: 42
+        cellId: 0
+    enemy: []
+  turn:
+    kind: ban
+    cells:
+      - 0
+    yours: true
+  timer:
+    remainingMs: 29911
     totalMs: 37833
   bench: []
   offered: []

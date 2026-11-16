@@ -1,10 +1,16 @@
 //! Keeping the panel next to the League client window.
 //!
-//! Docked: the panel sits against the client's right edge (left edge if
-//! there's no room), as tall as the client, and stays on top. It floats (left
-//! where the user puts it) when floating is toggled on, when the client is
-//! fullscreen or minimized, or when there's no client window. Only Windows
-//! can find the client window; elsewhere the panel always floats.
+//! Docked: while a champ select is on, the panel sits against the client's
+//! right edge (left edge if there's no room), as tall as the client, and stays
+//! on top. Otherwise it's an ordinary window left where the user puts it: when
+//! floating is toggled on, outside champ select (so it never sits over the
+//! game), when the client is fullscreen or minimized, or when there's no
+//! client window. Only Windows can find the client window; elsewhere the panel
+//! always floats.
+//!
+//! The client window is `LeagueClientUx`'s: class `RCLIENT`, title
+//! `League of Legends`. The game's window (`RiotWindowClass`) is never looked
+//! up: champ select only.
 
 use std::sync::Arc;
 use std::time::Duration;
@@ -49,7 +55,7 @@ pub fn spawn(app: AppHandle, shared: Arc<Shared>) {
             let Some(window) = app.get_webview_window("panel") else {
                 return;
             };
-            let target = if shared.latest().floating {
+            let target = if shared.floating() || !shared.has_draft() {
                 None
             } else {
                 find_client().filter(|c| !c.fullscreen)
@@ -60,17 +66,26 @@ pub fn spawn(app: AppHandle, shared: Arc<Shared>) {
                 was_docked = docked;
             }
             let Some(client) = target else { continue };
-            let width = window
-                .outer_size()
-                .map_or(380, |s| i32::try_from(s.width).unwrap_or(380));
+            // Positions and the client rectangle are outer (frame included);
+            // set_size takes the inner size, so take the frame off.
+            let (Ok(outer), Ok(inner)) = (window.outer_size(), window.inner_size()) else {
+                continue;
+            };
+            let frame_w = outer.width.saturating_sub(inner.width);
+            let frame_h = outer.height.saturating_sub(inner.height);
+            let width = i32::try_from(outer.width).unwrap_or(380);
             let (x, y, w, h) = docked_rect(&client, width);
             let pos = PhysicalPosition::new(x, y);
             if window.outer_position().ok() != Some(pos) {
                 let _ = window.set_position(pos);
             }
-            let size = PhysicalSize::new(w.unsigned_abs(), h.unsigned_abs());
-            if window.outer_size().ok() != Some(size) {
-                let _ = window.set_size(size);
+            let want = PhysicalSize::new(w.unsigned_abs(), h.unsigned_abs());
+            if outer != want {
+                let inner_want = PhysicalSize::new(
+                    want.width.saturating_sub(frame_w),
+                    want.height.saturating_sub(frame_h),
+                );
+                let _ = window.set_size(inner_want);
             }
         }
     });
@@ -98,11 +113,11 @@ mod windows {
 
     use super::ClientWindow;
 
-    /// The League client's main window (class `RiotWindowClass`, title
-    /// `League of Legends`), unless it's hidden or minimized.
+    /// The League client's window (class `RCLIENT`, title `League of
+    /// Legends`), unless it's hidden or minimized. Never the game window.
     pub fn find_client() -> Option<ClientWindow> {
         // SAFETY: FindWindowW takes two valid, NUL-terminated wide strings.
-        let hwnd = unsafe { FindWindowW(w!("RiotWindowClass"), w!("League of Legends")) }.ok()?;
+        let hwnd = unsafe { FindWindowW(w!("RCLIENT"), w!("League of Legends")) }.ok()?;
         // SAFETY: plain queries on a window handle we just got; a stale
         // handle only makes them fail.
         unsafe {

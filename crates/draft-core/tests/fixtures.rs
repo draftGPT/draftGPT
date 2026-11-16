@@ -148,7 +148,7 @@ fn spectated_tournament_draft_ends_with_ten_bans_and_ten_picks() {
             .chain(&last.enemy)
             .all(|s| s.champion.is_some())
     );
-    // Turns alternate and are never "yours" for a spectator.
+    // Both kinds of turn occur, and none is "yours" for a spectator.
     assert!(d.iter().filter_map(|s| s.turn.as_ref()).all(|t| !t.yours));
     let kinds: Vec<TurnKind> = d
         .iter()

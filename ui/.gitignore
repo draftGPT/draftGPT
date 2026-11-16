@@ -3,4 +3,4 @@ dist/
 web/src/wasm/
 test-results/
 playwright-report/
-desktop/public/demo/
+desktop/demo/

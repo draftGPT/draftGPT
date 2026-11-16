@@ -10,10 +10,12 @@
     champions: Champions;
     /** How many to show. */
     limit?: number;
+    /** Show the score as a win rate (picks); ban scores only rank. */
+    showScore?: boolean;
     /** Makes entries buttons (manual input: take the suggestion). */
     onPick?: (champion: number) => void;
   };
-  let { title, items, champions, limit = 5, onPick }: Props = $props();
+  let { title, items, champions, limit = 5, showScore = true, onPick }: Props = $props();
 </script>
 
 <section class="recs" aria-label={title}>
@@ -29,7 +31,7 @@
           <span class="body">
             <span class="head">
               <span class="name">{champions.name(rec.champion)}</span>
-              <span class="score">{percent(rec.score)}</span>
+              {#if showScore}<span class="score">{percent(rec.score)}</span>{/if}
             </span>
             <span class="reasons">
               {#each rec.reasons as r, i (i)}

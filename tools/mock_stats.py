@@ -13,6 +13,7 @@ Stdlib only. Run from the repo root.
 """
 
 import argparse
+import hashlib
 import json
 import random
 import urllib.request
@@ -96,9 +97,12 @@ def mock_stats(patch, champs):
 
 
 def write(path, value):
+    """Writes JSON and returns a short hash of the text (cache key for clients)."""
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(value, indent=1, ensure_ascii=False) + "\n")
+    text = json.dumps(value, indent=1, ensure_ascii=False) + "\n"
+    path.write_text(text)
     print(f"wrote {path.relative_to(ROOT)}")
+    return hashlib.sha256(text.encode()).hexdigest()[:12]
 
 
 def main():
@@ -109,8 +113,9 @@ def main():
     patch = ".".join(version.split(".")[:2])
     champs = champions(version)
     write(DATA / "champions.json", {"version": version, "champions": champs})
-    write(DATA / "stats" / f"{patch}.json", mock_stats(patch, champs))
-    write(DATA / "stats" / "index.json", {"latest": patch, "mock": True})
+    digest = write(DATA / "stats" / f"{patch}.json", mock_stats(patch, champs))
+    # `hash` changes whenever the file does, so clients refetch regenerated stats.
+    write(DATA / "stats" / "index.json", {"latest": patch, "hash": digest, "mock": True})
 
 
 if __name__ == "__main__":

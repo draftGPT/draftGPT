@@ -47,7 +47,8 @@ pub struct Recommendations {
 #[serde(rename_all = "camelCase")]
 pub struct Recommendation {
     pub champion: ChampionId,
-    /// Estimated win rate, 0..1.
+    /// Picks: estimated win rate, 0..1. Bans: a ranking value (win rate plus
+    /// threat and ban rate), only meaningful for ordering.
     pub score: f64,
     pub reasons: Vec<Reason>,
 }
@@ -172,10 +173,17 @@ impl StatsRecommender {
             .filter(|s| !s.is_local)
             .filter_map(|s| s.champion)
             .collect();
+        // ARAM and pick-one-of-few modes: only what you can actually take.
+        let choices: &[ChampionId] = if d.offered.is_empty() {
+            &d.bench
+        } else {
+            &d.offered
+        };
         let mut out: Vec<Recommendation> = self
             .champions
             .values()
             .filter(|c| !taken.contains(&c.id))
+            .filter(|c| choices.is_empty() || choices.contains(&c.id))
             .filter_map(|c| {
                 let base = match position {
                     Some(p) => c.in_position(p)?,
@@ -214,11 +222,12 @@ impl StatsRecommender {
 
     fn bans(&self, d: &DraftState, taken: &[ChampionId]) -> Vec<Recommendation> {
         // Your team's champions, hovered ones included: bans protect them.
+        // They're also never suggested: you don't ban your teammate's hover.
         let allies: Vec<ChampionId> = d.ally.iter().filter_map(|s| s.shown()).collect();
         let mut out: Vec<Recommendation> = self
             .champions
             .values()
-            .filter(|c| !taken.contains(&c.id))
+            .filter(|c| !taken.contains(&c.id) && !allies.contains(&c.id))
             .filter_map(|c| {
                 let best = c.main_position()?;
                 let mut threats: Vec<Reason> = allies
@@ -407,5 +416,29 @@ mod tests {
         assert_eq!(r.bans.len(), BANS);
         assert!(r.mock && r.patch == "16.22");
         assert!(r.picks.windows(2).all(|w| w[0].score >= w[1].score));
+    }
+
+    #[test]
+    fn teammates_hovers_are_never_suggested_as_bans() {
+        let rec = StatsRecommender::new(stats());
+        let mut d = draft();
+        let top_ban = rec.recommend(&d).bans[0].champion;
+        d.ally[1].champion = None;
+        d.ally[1].hover = Some(top_ban);
+        assert!(rec.recommend(&d).bans.iter().all(|b| b.champion != top_ban));
+    }
+
+    #[test]
+    fn aram_bench_and_offers_limit_the_picks() {
+        let rec = StatsRecommender::new(stats());
+        let mut d = draft();
+        d.ally[0].position = None;
+        d.bench = vec![2, 3];
+        let ids = |d: &DraftState| -> Vec<i64> {
+            rec.recommend(d).picks.iter().map(|p| p.champion).collect()
+        };
+        assert_eq!(ids(&d), vec![3, 2]);
+        d.offered = vec![1];
+        assert_eq!(ids(&d), vec![1], "the offer wins over the bench");
     }
 }
