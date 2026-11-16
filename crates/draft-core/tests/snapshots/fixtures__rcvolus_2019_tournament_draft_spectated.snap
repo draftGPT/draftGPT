@@ -76,7 +76,7 @@ expression: states
       - 0
     yours: false
   timer:
-    endsAtMs: 1572463242791
+    remainingMs: 27720
     totalMs: 30720
   bench: []
   offered: []
@@ -157,7 +157,7 @@ expression: states
       - 5
     yours: false
   timer:
-    endsAtMs: 1572463249298
+    remainingMs: 27853
     totalMs: 30720
   bench: []
   offered: []
@@ -240,7 +240,7 @@ expression: states
       - 0
     yours: false
   timer:
-    endsAtMs: 1572463253708
+    remainingMs: 27862
     totalMs: 30720
   bench: []
   offered: []
@@ -325,7 +325,7 @@ expression: states
       - 5
     yours: false
   timer:
-    endsAtMs: 1572463259707
+    remainingMs: 27875
     totalMs: 30720
   bench: []
   offered: []
@@ -412,7 +412,7 @@ expression: states
       - 0
     yours: false
   timer:
-    endsAtMs: 1572463281210
+    remainingMs: 27864
     totalMs: 30720
   bench: []
   offered: []
@@ -501,7 +501,7 @@ expression: states
       - 5
     yours: false
   timer:
-    endsAtMs: 1572463289763
+    remainingMs: 27875
     totalMs: 30720
   bench: []
   offered: []
@@ -592,7 +592,7 @@ expression: states
       - 0
     yours: false
   timer:
-    endsAtMs: 1572463301029
+    remainingMs: 27885
     totalMs: 30720
   bench: []
   offered: []
@@ -683,7 +683,7 @@ expression: states
       - 5
     yours: false
   timer:
-    endsAtMs: 1572463312484
+    remainingMs: 27947
     totalMs: 30720
   bench: []
   offered: []
@@ -774,7 +774,7 @@ expression: states
       - 5
     yours: false
   timer:
-    endsAtMs: 1572463312480
+    remainingMs: 24067
     totalMs: 30720
   bench: []
   offered: []
@@ -865,7 +865,7 @@ expression: states
       - 6
     yours: false
   timer:
-    endsAtMs: 1572463319548
+    remainingMs: 27902
     totalMs: 30720
   bench: []
   offered: []
@@ -956,7 +956,7 @@ expression: states
       - 6
     yours: false
   timer:
-    endsAtMs: 1572463319551
+    remainingMs: 21112
     totalMs: 30720
   bench: []
   offered: []
@@ -1047,7 +1047,7 @@ expression: states
       - 1
     yours: false
   timer:
-    endsAtMs: 1572463327109
+    remainingMs: 27928
     totalMs: 30720
   bench: []
   offered: []
@@ -1138,7 +1138,7 @@ expression: states
       - 1
     yours: false
   timer:
-    endsAtMs: 1572463327108
+    remainingMs: 23863
     totalMs: 30720
   bench: []
   offered: []
@@ -1229,7 +1229,7 @@ expression: states
       - 1
     yours: false
   timer:
-    endsAtMs: 1572463327106
+    remainingMs: 16693
     totalMs: 30720
   bench: []
   offered: []
@@ -1320,7 +1320,7 @@ expression: states
       - 2
     yours: false
   timer:
-    endsAtMs: 1572463339485
+    remainingMs: 27913
     totalMs: 30720
   bench: []
   offered: []
@@ -1411,7 +1411,7 @@ expression: states
       - 2
     yours: false
   timer:
-    endsAtMs: 1572463339488
+    remainingMs: 20926
     totalMs: 30720
   bench: []
   offered: []
@@ -1502,7 +1502,7 @@ expression: states
       - 7
     yours: false
   timer:
-    endsAtMs: 1572463346934
+    remainingMs: 27948
     totalMs: 30720
   bench: []
   offered: []
@@ -1593,7 +1593,7 @@ expression: states
       - 7
     yours: false
   timer:
-    endsAtMs: 1572463346939
+    remainingMs: 26284
     totalMs: 30720
   bench: []
   offered: []
@@ -1684,7 +1684,7 @@ expression: states
       - 5
     yours: false
   timer:
-    endsAtMs: 1572463350005
+    remainingMs: 27891
     totalMs: 30720
   bench: []
   offered: []
@@ -1777,7 +1777,7 @@ expression: states
       - 0
     yours: false
   timer:
-    endsAtMs: 1572463366699
+    remainingMs: 27872
     totalMs: 30720
   bench: []
   offered: []
@@ -1872,7 +1872,7 @@ expression: states
       - 5
     yours: false
   timer:
-    endsAtMs: 1572463381654
+    remainingMs: 27852
     totalMs: 30720
   bench: []
   offered: []
@@ -1969,7 +1969,7 @@ expression: states
       - 0
     yours: false
   timer:
-    endsAtMs: 1572463403682
+    remainingMs: 27874
     totalMs: 30720
   bench: []
   offered: []
@@ -2068,7 +2068,7 @@ expression: states
       - 8
     yours: false
   timer:
-    endsAtMs: 1572463412862
+    remainingMs: 27877
     totalMs: 30720
   bench: []
   offered: []
@@ -2167,7 +2167,7 @@ expression: states
       - 8
     yours: false
   timer:
-    endsAtMs: 1572463412861
+    remainingMs: 22420
     totalMs: 30720
   bench: []
   offered: []
@@ -2266,7 +2266,7 @@ expression: states
       - 3
     yours: false
   timer:
-    endsAtMs: 1572463419024
+    remainingMs: 27940
     totalMs: 30720
   bench: []
   offered: []
@@ -2365,7 +2365,7 @@ expression: states
       - 3
     yours: false
   timer:
-    endsAtMs: 1572463419024
+    remainingMs: 15993
     totalMs: 30720
   bench: []
   offered: []
@@ -2464,7 +2464,7 @@ expression: states
       - 4
     yours: false
   timer:
-    endsAtMs: 1572463432155
+    remainingMs: 27912
     totalMs: 30720
   bench: []
   offered: []
@@ -2563,7 +2563,7 @@ expression: states
       - 4
     yours: false
   timer:
-    endsAtMs: 1572463432153
+    remainingMs: 26449
     totalMs: 30720
   bench: []
   offered: []
@@ -2662,7 +2662,7 @@ expression: states
       - 9
     yours: false
   timer:
-    endsAtMs: 1572463434629
+    remainingMs: 27929
     totalMs: 30720
   bench: []
   offered: []
@@ -2761,7 +2761,7 @@ expression: states
       - 9
     yours: false
   timer:
-    endsAtMs: 1572463434628
+    remainingMs: 23217
     totalMs: 30720
   bench: []
   offered: []
@@ -2856,7 +2856,7 @@ expression: states
         cellId: 5
   turn: ~
   timer:
-    endsAtMs: 1572463473030
+    remainingMs: 59858
     totalMs: 62858
   bench: []
   offered: []
@@ -2951,7 +2951,7 @@ expression: states
         cellId: 5
   turn: ~
   timer:
-    endsAtMs: 1572463473029
+    remainingMs: 55459
     totalMs: 62858
   bench: []
   offered: []
@@ -3046,7 +3046,7 @@ expression: states
         cellId: 5
   turn: ~
   timer:
-    endsAtMs: 1572463473031
+    remainingMs: 53824
     totalMs: 62858
   bench: []
   offered: []
@@ -3141,7 +3141,7 @@ expression: states
         cellId: 5
   turn: ~
   timer:
-    endsAtMs: 1572463473030
+    remainingMs: 52059
     totalMs: 62858
   bench: []
   offered: []
@@ -3236,7 +3236,7 @@ expression: states
         cellId: 5
   turn: ~
   timer:
-    endsAtMs: 1572463473031
+    remainingMs: 49019
     totalMs: 62858
   bench: []
   offered: []
@@ -3331,7 +3331,7 @@ expression: states
         cellId: 5
   turn: ~
   timer:
-    endsAtMs: 1572463473026
+    remainingMs: 45908
     totalMs: 62858
   bench: []
   offered: []
@@ -3426,7 +3426,7 @@ expression: states
         cellId: 5
   turn: ~
   timer:
-    endsAtMs: 1572463473027
+    remainingMs: 44239
     totalMs: 62858
   bench: []
   offered: []
@@ -3521,7 +3521,7 @@ expression: states
         cellId: 5
   turn: ~
   timer:
-    endsAtMs: 1572463473031
+    remainingMs: 42092
     totalMs: 62858
   bench: []
   offered: []
@@ -3616,7 +3616,7 @@ expression: states
         cellId: 5
   turn: ~
   timer:
-    endsAtMs: 1572463473029
+    remainingMs: 40430
     totalMs: 62858
   bench: []
   offered: []
@@ -3711,7 +3711,7 @@ expression: states
         cellId: 5
   turn: ~
   timer:
-    endsAtMs: 1572463473029
+    remainingMs: 37615
     totalMs: 62858
   bench: []
   offered: []
@@ -3806,7 +3806,7 @@ expression: states
         cellId: 5
   turn: ~
   timer:
-    endsAtMs: 1572463473028
+    remainingMs: 36879
     totalMs: 62858
   bench: []
   offered: []
@@ -3901,7 +3901,7 @@ expression: states
         cellId: 5
   turn: ~
   timer:
-    endsAtMs: 1572463473033
+    remainingMs: 33723
     totalMs: 62858
   bench: []
   offered: []
@@ -3996,7 +3996,7 @@ expression: states
         cellId: 5
   turn: ~
   timer:
-    endsAtMs: 1572463473031
+    remainingMs: 31208
     totalMs: 62858
   bench: []
   offered: []
@@ -4091,7 +4091,7 @@ expression: states
         cellId: 5
   turn: ~
   timer:
-    endsAtMs: 1572463473028
+    remainingMs: 24960
     totalMs: 62858
   bench: []
   offered: []
@@ -4186,7 +4186,7 @@ expression: states
         cellId: 5
   turn: ~
   timer:
-    endsAtMs: 1572463473031
+    remainingMs: 20677
     totalMs: 62858
   bench: []
   offered: []
@@ -4281,7 +4281,7 @@ expression: states
         cellId: 5
   turn: ~
   timer:
-    endsAtMs: 1572463473031
+    remainingMs: 17901
     totalMs: 62858
   bench: []
   offered: []
@@ -4376,7 +4376,7 @@ expression: states
         cellId: 5
   turn: ~
   timer:
-    endsAtMs: 1572463473027
+    remainingMs: 4128
     totalMs: 62858
   bench: []
   offered: []

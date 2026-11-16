@@ -115,15 +115,15 @@ pub enum TurnKind {
     Pick,
 }
 
-/// When the current phase ends, as an absolute time, so a UI can count down
-/// without new events: remaining = `ends_at_ms - now`.
+/// Time left in the current phase when this state was produced. A UI counts
+/// down from when it received the state (`remaining_ms` from then), which also
+/// works for replays and when the client's clock differs from the PC's.
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[cfg_attr(feature = "ts", derive(ts_rs::TS), ts(export))]
 #[serde(rename_all = "camelCase")]
 pub struct Timer {
-    /// Unix time in milliseconds on the client's clock; `None` if infinite or
-    /// unknown.
-    pub ends_at_ms: Option<i64>,
+    /// `None` if the phase has no time limit.
+    pub remaining_ms: Option<i64>,
     pub total_ms: i64,
 }
 

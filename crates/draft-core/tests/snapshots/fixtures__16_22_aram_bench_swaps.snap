@@ -72,7 +72,7 @@ expression: states
     enemy: []
   turn: ~
   timer:
-    endsAtMs: 1794767823759
+    remainingMs: 30000
     totalMs: 30000
   bench:
     - 68
@@ -154,7 +154,7 @@ expression: states
     enemy: []
   turn: ~
   timer:
-    endsAtMs: 1794767823771
+    remainingMs: 26861
     totalMs: 30000
   bench:
     - 68
@@ -236,7 +236,7 @@ expression: states
     enemy: []
   turn: ~
   timer:
-    endsAtMs: 1794767823761
+    remainingMs: 25953
     totalMs: 30000
   bench:
     - 68
@@ -318,7 +318,7 @@ expression: states
     enemy: []
   turn: ~
   timer:
-    endsAtMs: 1794767823774
+    remainingMs: 20305
     totalMs: 30000
   bench:
     - 68
@@ -400,7 +400,7 @@ expression: states
     enemy: []
   turn: ~
   timer:
-    endsAtMs: 1794767823800
+    remainingMs: 19194
     totalMs: 30000
   bench:
     - 68
@@ -482,7 +482,7 @@ expression: states
     enemy: []
   turn: ~
   timer:
-    endsAtMs: 1794767823805
+    remainingMs: 9737
     totalMs: 30000
   bench:
     - 68
@@ -564,7 +564,7 @@ expression: states
     enemy: []
   turn: ~
   timer:
-    endsAtMs: 1794767823777
+    remainingMs: 0
     totalMs: 0
   bench:
     - 68

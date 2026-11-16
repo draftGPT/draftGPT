@@ -230,9 +230,8 @@ fn bans(s: &ChampSelectSession) -> Bans {
 
 fn timer(s: &ChampSelectSession) -> Timer {
     let t = &s.timer;
-    let known = !t.is_infinite && t.internal_now_in_epoch_ms > 0;
     Timer {
-        ends_at_ms: known.then(|| t.internal_now_in_epoch_ms + t.adjusted_time_left_in_phase),
+        remaining_ms: (!t.is_infinite).then_some(t.adjusted_time_left_in_phase.max(0)),
         total_ms: t.total_time_in_phase,
     }
 }
@@ -344,7 +343,7 @@ mod tests {
     }
 
     #[test]
-    fn timer_is_absolute_and_none_when_infinite() {
+    fn timer_is_time_left_and_none_when_infinite() {
         let s = session(json!({"timer": {
             "internalNowInEpochMs": 1_000_000, "adjustedTimeLeftInPhase": 25_000,
             "totalTimeInPhase": 30_000
@@ -352,12 +351,14 @@ mod tests {
         assert_eq!(
             from_session(&s).timer,
             Timer {
-                ends_at_ms: Some(1_025_000),
+                remaining_ms: Some(25_000),
                 total_ms: 30_000
             }
         );
-        let inf = session(json!({"timer": {"isInfinite": true, "internalNowInEpochMs": 1}}));
-        assert_eq!(from_session(&inf).timer.ends_at_ms, None);
+        let late = session(json!({"timer": {"adjustedTimeLeftInPhase": -300}}));
+        assert_eq!(from_session(&late).timer.remaining_ms, Some(0));
+        let inf = session(json!({"timer": {"isInfinite": true}}));
+        assert_eq!(from_session(&inf).timer.remaining_ms, None);
     }
 
     #[test]

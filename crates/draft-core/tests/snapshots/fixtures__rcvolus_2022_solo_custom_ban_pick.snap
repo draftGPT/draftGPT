@@ -22,7 +22,7 @@ expression: states
       - 0
     yours: true
   timer:
-    endsAtMs: 1643987575332
+    remainingMs: 34807
     totalMs: 37833
   bench: []
   offered: []
@@ -49,7 +49,7 @@ expression: states
       - 0
     yours: true
   timer:
-    endsAtMs: 1643987582129
+    remainingMs: 34932
     totalMs: 37833
   bench: []
   offered: []
@@ -78,7 +78,7 @@ expression: states
       - 0
     yours: true
   timer:
-    endsAtMs: 1643987603718
+    remainingMs: 34914
     totalMs: 37833
   bench: []
   offered: []
@@ -109,7 +109,7 @@ expression: states
       - 0
     yours: true
   timer:
-    endsAtMs: 1643987615212
+    remainingMs: 39946
     totalMs: 37833
   bench: []
   offered: []
@@ -140,7 +140,7 @@ expression: states
       - 0
     yours: true
   timer:
-    endsAtMs: 1643987615208
+    remainingMs: 34943
     totalMs: 37833
   bench: []
   offered: []
@@ -167,7 +167,7 @@ expression: states
     enemy: []
   turn: ~
   timer:
-    endsAtMs: 1643987612631
+    remainingMs: 29962
     totalMs: 32962
   bench: []
   offered: []
