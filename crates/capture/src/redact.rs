@@ -93,7 +93,7 @@ pub fn is_jwt(s: &str) -> bool {
     s.starts_with("eyJ") && s.split('.').count() == 3 && s.len() > 20
 }
 
-/// Chat IDs and long opaque tokens like puuids (78 characters). Short values
+/// Chat IDs and long opaque tokens like puuids (UUIDs in the LCU). Short values
 /// (`v1`, `session`, numeric champion IDs, enum names) don't qualify, nor do
 /// long field names without a digit (`disallowBanningTeammateHoveredChampions`);
 /// real IDs practically always contain one.
@@ -312,6 +312,10 @@ fn walk(value: &Value, path: &str, found: &mut Vec<String>) {
         Value::Object(map) => {
             for (k, v) in map {
                 let p = format!("{path}.{k}");
+                // A map keyed by player ID must have fake keys.
+                if is_id_like(k) && !k.starts_with("redacted-") {
+                    found.push(format!("{p} (key)"));
+                }
                 if is_sensitive_key(k) || is_opaque_id(k, v) {
                     check_leaves(v, &p, found);
                 } else {
@@ -496,6 +500,24 @@ mod tests {
         ] {
             assert!(is_fake(v.pointer(path).unwrap()), "{path}");
         }
+    }
+
+    #[test]
+    fn uuid_puuids_in_uris_and_keys_are_caught() {
+        let puuid = "8a7f4c2e-1b3d-4e5f-9a8b-7c6d5e4f3a2b";
+        let mut r = Redactor::new();
+        assert_eq!(
+            r.redact_uri(&format!("/lol-summoner/v2/summoners/puuid/{puuid}")),
+            "/lol-summoner/v2/summoners/puuid/redacted-1"
+        );
+        let leaked = json!({"players": {puuid: {"ready": true}}});
+        assert_eq!(
+            find_unredacted(&leaked),
+            vec![format!(".players.{puuid} (key)")]
+        );
+        let mut v = leaked.clone();
+        r.redact(&mut v);
+        assert_eq!(find_unredacted(&v), Vec::<String>::new());
     }
 
     #[test]
