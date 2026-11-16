@@ -40,9 +40,11 @@ disables its recording controls.
 
 ## When it doesn't work
 
-Everything is logged to `captures/devserver.log`. For more detail, start it with
-`RUST_LOG=debug` (cmd: `set RUST_LOG=debug`, PowerShell: `$env:RUST_LOG="debug"`). The
-client password never reaches the log; keep it that way if you add logging.
+Everything is logged to `captures/devserver.log`. Our crates log at `info` and above, so
+`RUST_LOG=debug` adds nothing yet; when you need more detail, add `tracing::debug!` lines
+where you're looking and run with `RUST_LOG=debug` (cmd: `set RUST_LOG=debug`, PowerShell:
+`$env:RUST_LOG="debug"`). The client password never reaches the log; keep it that way if
+you add logging.
 
 | Symptom | Cause and fix |
 |---|---|

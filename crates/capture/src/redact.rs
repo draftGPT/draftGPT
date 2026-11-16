@@ -81,9 +81,11 @@ pub fn is_sensitive_key(key: &str) -> bool {
         || SENSITIVE_EXACT_KEYS.contains(&lower.as_str())
 }
 
-/// Chat IDs look like `<puuid>@eu1.pvp.net` or `<room>@sec.pvp.net`.
+/// Chat IDs look like `<puuid>@eu1.pvp.net`, `<room>@sec.pvp.net` or
+/// `<id>@pvp.net`.
 pub fn is_chat_id(s: &str) -> bool {
-    s.contains('@') && s.contains(".pvp.net")
+    s.split_once('@')
+        .is_some_and(|(_, host)| host.contains("pvp.net"))
 }
 
 /// JSON Web Tokens: `eyJ` (base64 of `{"`) plus two more dot-separated parts.
@@ -92,9 +94,12 @@ pub fn is_jwt(s: &str) -> bool {
 }
 
 /// Chat IDs and long opaque tokens like puuids (78 characters). Short values
-/// (`v1`, `session`, numeric champion IDs, enum names) don't qualify.
+/// (`v1`, `session`, numeric champion IDs, enum names) don't qualify, nor do
+/// long field names without a digit (`disallowBanningTeammateHoveredChampions`);
+/// real IDs practically always contain one.
 fn is_id_like(s: &str) -> bool {
     let opaque = s.len() >= 30
+        && s.bytes().any(|b| b.is_ascii_digit())
         && s.chars()
             .all(|c| c.is_ascii_alphanumeric() || c == '-' || c == '_');
     is_chat_id(s) || opaque
@@ -465,7 +470,7 @@ mod tests {
 
     #[test]
     fn maps_keyed_by_puuid_get_fake_keys() {
-        let puuid = "a".repeat(78);
+        let puuid = "a1b2c3-".repeat(11) + "d";
         let mut v = json!({"players": {puuid.clone(): {"puuid": puuid.clone(), "ready": true}}});
         Redactor::new().redact(&mut v);
         let players = v["players"].as_object().unwrap();
@@ -491,6 +496,27 @@ mod tests {
         ] {
             assert!(is_fake(v.pointer(path).unwrap()), "{path}");
         }
+    }
+
+    #[test]
+    fn long_field_names_are_not_mistaken_for_ids() {
+        let mut v = json!({
+            "disallowBanningTeammateHoveredChampions": true,
+            "perPositionDisallowedSummonerSpells": {},
+            "8a7f4c2e-1b3d-4e5f-9a8b-7c6d5e4f3a2b": {"championId": 1}
+        });
+        Redactor::new().redact(&mut v);
+        assert_eq!(v["disallowBanningTeammateHoveredChampions"], json!(true));
+        assert!(v.get("perPositionDisallowedSummonerSpells").is_some());
+        assert!(v.get("8a7f4c2e-1b3d-4e5f-9a8b-7c6d5e4f3a2b").is_none());
+    }
+
+    #[test]
+    fn chat_ids_without_a_subdomain_are_redacted() {
+        let mut v = json!({"chatTarget": "abcdef1234@pvp.net", "note": "a@b.com"});
+        Redactor::new().redact(&mut v);
+        assert!(is_fake(&v["chatTarget"]), "{}", v["chatTarget"]);
+        assert_eq!(v["note"], json!("a@b.com"));
     }
 
     #[test]
@@ -577,7 +603,7 @@ mod tests {
     #[test]
     fn uri_id_segments() {
         let mut r = Redactor::new();
-        let puuid = "x".repeat(78);
+        let puuid = "x9y8z7_".repeat(11) + "w";
         assert_eq!(
             r.redact_uri(&format!("/lol-summoner/v2/summoners/puuid/{puuid}")),
             "/lol-summoner/v2/summoners/puuid/redacted-1"
