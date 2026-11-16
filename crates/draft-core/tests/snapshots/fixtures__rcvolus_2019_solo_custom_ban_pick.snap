@@ -22,7 +22,7 @@ expression: states
       - 0
     yours: true
   timer:
-    endsAtMs: 1572164146683
+    remainingMs: 27811
     totalMs: 30841
   bench: []
   offered: []
@@ -49,7 +49,7 @@ expression: states
       - 0
     yours: true
   timer:
-    endsAtMs: 1572164152167
+    remainingMs: 27916
     totalMs: 30841
   bench: []
   offered: []
@@ -78,7 +78,7 @@ expression: states
       - 0
     yours: true
   timer:
-    endsAtMs: 1572164160032
+    remainingMs: 27906
     totalMs: 30841
   bench: []
   offered: []
@@ -109,7 +109,7 @@ expression: states
       - 0
     yours: true
   timer:
-    endsAtMs: 1572164168095
+    remainingMs: 27884
     totalMs: 30841
   bench: []
   offered: []
@@ -140,7 +140,7 @@ expression: states
       - 0
     yours: true
   timer:
-    endsAtMs: 1572164168089
+    remainingMs: 19748
     totalMs: 30841
   bench: []
   offered: []
@@ -167,7 +167,7 @@ expression: states
     enemy: []
   turn: ~
   timer:
-    endsAtMs: 1572164210362
+    remainingMs: 59935
     totalMs: 62935
   bench: []
   offered: []
@@ -194,7 +194,7 @@ expression: states
     enemy: []
   turn: ~
   timer:
-    endsAtMs: 1572164210359
+    remainingMs: 55227
     totalMs: 62935
   bench: []
   offered: []
@@ -221,7 +221,34 @@ expression: states
     enemy: []
   turn: ~
   timer:
-    endsAtMs: 1572164210361
+    remainingMs: 52994
+    totalMs: 62935
+  bench: []
+  offered: []
+  rerollsRemaining: ~
+- phase: finalization
+  queueId: ~
+  spectating: false
+  ally:
+    - cellId: 0
+      isLocal: true
+      position: ~
+      champion: 110
+      hover: ~
+      picking: false
+  enemy: []
+  bans:
+    ally:
+      - champion: 103
+        cellId: 0
+      - champion: 202
+        cellId: 0
+      - champion: 25
+        cellId: 0
+    enemy: []
+  turn: ~
+  timer:
+    remainingMs: 51059
     totalMs: 62935
   bench: []
   offered: []
