@@ -39,8 +39,9 @@ gitignored; read it at the start of a task and update it as work progresses.
 `docs/arch.md` stays stable until the backend is designed, so don't edit it to record
 progress, only for real structural changes.
 
-Don't plan or scaffold the web drafter, scoring, the stats database or the analysis pipeline
-until asked.
+The web drafter and a mock recommender exist (branch `ui-base`); the stats in `data/stats/`
+are generated placeholders. Don't plan or scaffold real scoring, the stats database or the
+analysis pipeline until asked.
 
 ## Working on this repo
 
@@ -72,7 +73,11 @@ until asked.
 - Tests: every fixture must parse, golden `DraftState` snapshots (`insta`) from replays, and
   redaction tests (no PII-shaped fields in recorder output).
 - Window tracking for the desktop dock is Windows-only and goes behind `#[cfg(windows)]` with
-  a stub elsewhere.
+  a stub elsewhere. It's the only `unsafe` code (Win32 calls): `crates/desktop` sets
+  `unsafe_code = "deny"` instead of the workspace's `forbid`, and only `dock::windows` allows it.
+- UI: `ui/` is an npm workspace (Svelte 5, Vite). Shared components live in `ui/draft-ui` and
+  take data as props; app-specific input stays in `ui/desktop` and `ui/web`. Regenerate the TS
+  types after changing draft-core's public structs (`npm run types` in `ui/`).
 
 ## LCU facts the spec doesn't give you
 
@@ -115,6 +120,17 @@ cargo run -p capture -- --out captures [auto | record --label x | help-dump --fi
 cargo run -p capture -- convert-rcvolus in.json fixtures/rcvolus_x.jsonl   # old RCVolus files
 # both: --wire true|false (raw frame capture, default on); logs go to <out>/<binary>.log
 cargo build -p devserver --release              # on Windows: target/release/devserver.exe
+
+# Desktop panel (Tauri): build the page first, then run with a replay or live
+npm --prefix ui install && npm --prefix ui run build -w @draftgpt/desktop
+cargo run -p desktop -- --replay fixtures/16_22_draft_ban_and_pick_timeout_autolock.jsonl --speed 4
+cargo run -p desktop                            # live client (Windows/macOS)
+
+# UI checks (in ui/): types, unit tests, builds, browser tests
+npm run check && npm test && npm run demo -w @draftgpt/desktop && npm run build
+CHROMIUM_PATH=/usr/bin/chromium npm run e2e     # or `npx playwright install chromium` once
+npm run dev -w @draftgpt/web                    # web drafter at http://localhost:5174 (needs wasm-bindgen-cli 0.2.130)
+python3 tools/mock_stats.py                     # regenerate data/champions.json + mock stats
 ```
 
 `DRAFTGPT_LCU_INSECURE_TLS=1` skips LCU certificate checks; it's a last resort if a client
