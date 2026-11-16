@@ -34,12 +34,11 @@ fn load(name: &str) -> (Header, Vec<RawEvent>) {
     read_file(&path).unwrap_or_else(|e| panic!("{}: {e}", path.display()))
 }
 
-/// Sessions under `/lol-champ-select/v1/session`, typed, in order (skipping
-/// the null snapshot of a recording that starts outside champ select).
+/// Sessions under `/lol-champ-select/v1/session`, typed, in order.
 fn sessions(events: &[RawEvent]) -> Vec<ChampSelectSession> {
     events
         .iter()
-        .filter(|e| e.uri == SESSION_URI && e.kind != EventKind::Delete && !e.data.is_null())
+        .filter(|e| e.uri == SESSION_URI && e.kind != EventKind::Delete)
         .map(|e| types::parse(&e.data).unwrap())
         .collect()
 }
@@ -90,6 +89,13 @@ fn every_fixture_parses_is_redacted_and_typed() {
             events[0].kind,
             EventKind::Snapshot,
             "{name}: starts with state"
+        );
+        // Live never snapshots a missing resource, so neither may a fixture.
+        assert!(
+            events
+                .iter()
+                .all(|e| e.kind != EventKind::Snapshot || !e.data.is_null()),
+            "{name}: null snapshot"
         );
         assert!(
             events.windows(2).all(|w| w[0].t <= w[1].t),
@@ -260,6 +266,13 @@ fn rcvolus_solo_custom_ban_pick() {
         assert_eq!(last.timer.phase, TimerPhase::Finalization, "{name}");
         let pick = my_pick(last);
         assert!(pick.completed && pick.champion().is_some(), "{name}");
+        let ban = last
+            .actions
+            .iter()
+            .flatten()
+            .find(|a| a.kind == ActionType::Ban)
+            .expect("a ban action");
+        assert!(ban.completed && ban.champion().is_some(), "{name}");
     }
 }
 

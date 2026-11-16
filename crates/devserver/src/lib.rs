@@ -39,11 +39,23 @@ impl AppState {
         auto: bool,
         live: Option<LiveHandle>,
     ) -> Arc<Self> {
-        let dir = captures_dir.into();
+        Self::with_controller(Controller::new(captures_dir, auto), live)
+    }
+
+    /// For a replay: never records (a copy of the replayed file would pass for
+    /// a live capture), and the page disables its recording controls.
+    pub fn replay(captures_dir: impl Into<PathBuf>) -> Arc<Self> {
+        Self::with_controller(
+            Controller::without_recording(captures_dir, "replaying a recording"),
+            None,
+        )
+    }
+
+    fn with_controller(controller: Controller, live: Option<LiveHandle>) -> Arc<Self> {
         let (tx, _) = broadcast::channel(1024);
         Arc::new(Self {
             extras: Mutex::new(RecordingExtras::new()),
-            controller: Mutex::new(Controller::new(dir, auto)),
+            controller: Mutex::new(controller),
             feed: Mutex::new(PageFeed::default()),
             live,
             tx,

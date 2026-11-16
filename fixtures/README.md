@@ -28,9 +28,10 @@ dodging.
 
 `rcvolus_*` files are converted from the sample recordings in
 [RCVolus/lol-pick-ban-ui](https://github.com/RCVolus/lol-pick-ban-ui) (`recordings/`,
-MIT License, Copyright (c) 2020 Riot Community Volunteers) with
-`capture convert-rcvolus <in.json> <out.jsonl>`. They hold only `/lol-champ-select/v1/session`,
-polled about once per second (identical polls collapsed), so there are no gameflow or
+MIT License, Copyright (c) 2020 Riot Community Volunteers; full notice in
+[LICENSE-rcvolus](LICENSE-rcvolus)) with `capture convert-rcvolus <in.json> <out.jsonl>`.
+They hold only `/lol-champ-select/v1/session`, polled about once per second (identical polls
+collapsed, starting at the first poll inside champ select), so there are no gameflow or
 matchmaking events, `client_version` is unknown (label `rcvolus`), and newer fields are
 missing. They stay as compatibility tests for old session shapes.
 

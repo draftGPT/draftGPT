@@ -26,14 +26,17 @@ The League client runs on Windows and macOS. Build on that machine, not cross-co
 5. Open `http://127.0.0.1:8790`. The top line should say "League client connected" with the
    client version.
 6. Play. Auto mode records every champ select by itself. Press Start before queueing to
-   also get the lobby, Stop to end a manual recording.
+   also get the gameflow and matchmaking events before champ select (lobby data itself only
+   goes to the wire file), Stop to end a manual recording.
 7. Watch the page for red problem flags: values our types don't know yet. They don't stop
    anything; write down what you did at that moment.
 8. Stop with Ctrl+C. It finishes the open recording and waits briefly for the background
    dumps.
 
 To replay a recording instead (no client needed, any OS):
-`cargo run -p devserver -- --replay fixtures/16_22_draft_missed_ban.jsonl --speed 4`.
+`cargo run -p devserver -- --replay fixtures/16_22_draft_missed_ban.jsonl --speed 4`
+(`--speed` from 0.01 to 1000, or `instant`). Nothing is recorded during a replay; the page
+disables its recording controls.
 
 ## When it doesn't work
 
@@ -43,7 +46,7 @@ client password never reaches the log; keep it that way if you add logging.
 
 | Symptom | Cause and fix |
 |---|---|
-| "waiting for League client…" forever, log says *League client not running* | Discovery reads the `LeagueClientUx` process arguments, then a `lockfile` in the install directory. Built-in paths: `C:\Riot Games\League of Legends` and `/Applications/League of Legends.app/Contents/LoL`. Elsewhere, set `LEAGUE_DIR` to the folder that contains `lockfile` while the client runs. Code: `crates/lcu/src/discovery.rs`. |
+| Red dot, page says *League client: League client not running (no LeagueClientUx process and no lockfile found)* | Discovery reads the `LeagueClientUx` process arguments, then a `lockfile` in the install directory. Built-in paths: `C:\Riot Games\League of Legends` and `/Applications/League of Legends.app/Contents/LoL`. Elsewhere, set `LEAGUE_DIR` to the folder that contains `lockfile` while the client runs. Code: `crates/lcu/src/discovery.rs`. |
 | *malformed lockfile* | A lockfile left by a crashed client, or a new format. Restart the client. The format is `name:pid:port:password:protocol`. |
 | TLS or certificate errors in the log | The client's certificate no longer chains to Riot's root in `crates/lcu/certs/riotgames.pem`. To keep recording, set `DRAFTGPT_LCU_INSECURE_TLS=1` (skips the check; the connection is loopback-only). Save the log lines for a proper fix in `crates/lcu/src/transport/tls.rs`. |
 | *can't listen on 127.0.0.1:8790* | Port taken: `--port 8791`. |
@@ -77,7 +80,7 @@ When a code change is needed to get recording at all:
 | `<name>.jsonl` | The recording, redacted on write. Candidates for `fixtures/`. |
 | `<name>.wire.jsonl` | Every raw client frame. **Never commit.** Keep locally (or hand over privately) for debugging. |
 | `<name>.sweep.json` | Client state at the start. **Never commit.** Same as wire. |
-| `client-<version>.help.json` | The client's schema, one per client build. Commit if `docs/lcu-spec/help/` doesn't have that version yet. |
+| `client-<version>.help.json` | The client's schema, one per client build, with dashes for dots (`client-16-22-834-8910.help.json`). Commit if `docs/lcu-spec/help/` doesn't have that version yet. |
 | `<name>.help.json` | Only when the version was unknown. Normally not needed. |
 | `devserver.log` | Not committed. Keep it with the wire files if something went wrong. |
 

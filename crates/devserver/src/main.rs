@@ -16,7 +16,8 @@ struct Args {
     /// Directory for recordings and the log file.
     #[arg(long, default_value = "captures")]
     out: PathBuf,
-    /// Record every champ select automatically (always off with --replay).
+    /// Record every champ select automatically. With --replay nothing is
+    /// recorded, neither automatically nor by hand.
     #[arg(long, default_value_t = true, action = ArgAction::Set)]
     auto: bool,
     /// Also record every raw client frame to <name>.wire.jsonl (local only).
@@ -62,9 +63,10 @@ async fn main() {
             (stream, Some(live))
         }
     };
-    // Recording a replay would only copy it into the captures directory.
-    let auto = args.auto && args.replay.is_none();
-    let state = devserver::AppState::new(&args.out, auto, live);
+    let state = match live {
+        Some(live) => devserver::AppState::new(&args.out, args.auto, Some(live)),
+        None => devserver::AppState::replay(&args.out),
+    };
     let source_task = tokio::spawn({
         let state = state.clone();
         let replay = args.replay.clone();
