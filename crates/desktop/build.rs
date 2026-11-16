@@ -8,7 +8,10 @@ fn main() {
     // fails if it's missing. On a fresh clone (or a Rust-only CI) the UI isn't
     // built yet, so debug builds get a placeholder page that says how to build
     // it. A release build must ship the real page, so it fails instead.
-    let dist = Path::new(env!("CARGO_MANIFEST_DIR")).join("../../ui/desktop/dist");
+    // Read at run time: a compiled-in path goes stale when cargo reuses this
+    // build script for another checkout sharing the target directory.
+    let manifest = std::env::var("CARGO_MANIFEST_DIR").expect("cargo sets CARGO_MANIFEST_DIR");
+    let dist = Path::new(&manifest).join("../../ui/desktop/dist");
     let index = dist.join("index.html");
     let real = std::fs::read_to_string(&index).is_ok_and(|html| !html.contains(PLACEHOLDER_MARK));
     if !real {
