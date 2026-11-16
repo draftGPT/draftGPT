@@ -81,9 +81,10 @@ pub fn from_session(s: &ChampSelectSession) -> DraftState {
 pub struct Tracker {
     session: Option<ChampSelectSession>,
     offered: SubsetChampionList,
-    /// The timer measurement in the session (`internalNowInEpochMs`) and the
-    /// event time it first arrived at, and the latest session event's time.
-    timer_seen: Option<(i64, u64)>,
+    /// The timer measurement in the session (`internalNowInEpochMs`, time
+    /// left, phase) and the event time it first arrived at; `None` when the
+    /// client sends no measurement time. And the latest applied event's time.
+    timer_seen: Option<((i64, i64, TimerPhase), u64)>,
     last_t: u64,
 }
 
@@ -101,8 +102,16 @@ impl Tracker {
             SESSION_URI | TEAM_BUILDER_SESSION_URI if gone => self.end(),
             SESSION_URI => match types::parse::<ChampSelectSession>(&ev.data) {
                 Ok(s) => {
-                    let measured = s.timer.internal_now_in_epoch_ms;
-                    if self.timer_seen.is_none_or(|(m, _)| m != measured) {
+                    let t = &s.timer;
+                    let measured = (
+                        t.internal_now_in_epoch_ms,
+                        t.adjusted_time_left_in_phase,
+                        t.phase,
+                    );
+                    if t.internal_now_in_epoch_ms <= 0 {
+                        // No measurement time: take the time left as sent.
+                        self.timer_seen = None;
+                    } else if self.timer_seen.is_none_or(|(m, _)| m != measured) {
                         self.timer_seen = Some((measured, ev.t));
                     }
                     self.last_t = ev.t;
@@ -116,6 +125,7 @@ impl Tracker {
                 Ok(_) => self.end(),
             },
             SUBSET_CHAMPION_LIST_URI => {
+                self.last_t = self.last_t.max(ev.t);
                 self.offered = if gone {
                     Vec::new()
                 } else {
@@ -470,5 +480,19 @@ mod tests {
         assert_eq!(left(&tr), Some(28_000));
         tr.apply(&session(99_000, 6_400, 28_000));
         assert_eq!(left(&tr), Some(0));
+    }
+
+    #[test]
+    fn without_a_measurement_time_the_time_left_is_taken_as_sent() {
+        let session = |t: u64, phase: &str, left: i64| RawEvent {
+            t,
+            uri: SESSION_URI.into(),
+            kind: EventKind::Update,
+            data: json!({"timer": {"phase": phase, "adjustedTimeLeftInPhase": left}}),
+        };
+        let mut tr = Tracker::new();
+        tr.apply(&session(0, "BAN_PICK", 30_000));
+        tr.apply(&session(40_000, "FINALIZATION", 60_000));
+        assert_eq!(tr.state().unwrap().timer.remaining_ms, Some(60_000));
     }
 }
