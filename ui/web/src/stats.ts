@@ -28,11 +28,12 @@ export async function loadStats(
       removeCache(key);
     }
   }
-  const res = await fetch(`${root}stats/${encodeURIComponent(index.latest)}.json`);
+  // The hash in the URL and no-cache keep an HTTP cache from answering with
+  // an older file under the new hash. `validate` rejects anything that isn't
+  // stats (an HTML fallback page for a file that isn't deployed, say).
+  const version = index.hash ? `?h=${encodeURIComponent(index.hash)}` : "";
+  const res = await fetch(`${root}stats/${encodeURIComponent(index.latest)}.json${version}`, { cache: "no-cache" });
   if (!res.ok) throw new Error(`stats ${index.latest}: HTTP ${res.status}`);
-  if (!(res.headers.get("content-type") ?? "").includes("json")) {
-    throw new Error(`stats ${index.latest}: not JSON (the file may not be deployed)`);
-  }
   const text = await res.text();
   validate(text);
   writeCache(key, text);

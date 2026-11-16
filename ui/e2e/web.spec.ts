@@ -91,10 +91,11 @@ test("filling bans out of order never overwrites one already set", async ({ page
 
 test("a broken cached stats file is dropped and fetched again", async ({ page, request }) => {
   const index = (await (await request.get(`${WEB}/stats/index.json`)).json()) as { latest: string; hash: string };
-  await page.evaluate(
-    ([key]) => localStorage.setItem(key!, "<!doctype html><title>not stats</title>"),
-    [`draftgpt.stats.${index.latest}.${index.hash}`],
-  );
+  const key = `draftgpt.stats.${index.latest}.${index.hash}`;
+  // Let the first load finish caching, so it can't overwrite the broken entry.
+  await expect(page.getByRole("region", { name: "Suggested picks" }).locator("[data-champion]").first()).toBeVisible();
+  await page.evaluate((k) => localStorage.setItem(k, "<!doctype html><title>not stats</title>"), key);
+  expect(await page.evaluate((k) => localStorage.getItem(k), key)).toContain("not stats");
   await page.reload();
   await expect(page.getByRole("region", { name: "Suggested picks" }).locator("[data-champion]").first()).toBeVisible();
   await expect(page.getByRole("alert")).toHaveCount(0);
