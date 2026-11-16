@@ -8,3 +8,6 @@ captures/
 .*.tmp
 # Full LCU spec, downloaded by tools/lcu_spec.py.
 docs/lcu-spec/full/
+
+# Tauri build output (schemas generated from the config).
+crates/desktop/gen/

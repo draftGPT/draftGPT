@@ -6,6 +6,8 @@ members = [
     "crates/capture",
     "crates/devserver",
     "crates/draft-core",
+    "crates/draft-wasm",
+    "crates/desktop",
 ]
 
 [workspace.package]

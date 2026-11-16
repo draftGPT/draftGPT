@@ -1,0 +1,44 @@
+/* Colours and sizes shared by both UIs. Dark by default, like the client. */
+:root {
+  --bg: #0b0f17;
+  --panel: #121826;
+  --panel-2: #1a2233;
+  --line: #263047;
+  --text: #e6e9f0;
+  --muted: #8b95ab;
+  --ally: #3d8bff;
+  --enemy: #ff5266;
+  --gold: #d6b25e;
+  --good: #46c98b;
+  --bad: #ff7a6b;
+  --radius: 8px;
+  --font: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+  --bg: #f4f6fa;
+  --panel: #ffffff;
+  --panel-2: #eef1f6;
+  --line: #d6dbe6;
+  --text: #111827;
+  --muted: #5b6475;
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 14px/1.4 var(--font);
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
