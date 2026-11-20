@@ -1,7 +1,6 @@
 # draftGPT
 
 draftGPT is a read-only League of Legends champ select assistant: it follows the live draft from the League Client and suggests picks and bans.
-It never picks, bans or hovers for you, and does nothing outside champ select.
 
 There are two apps built on the same components:
 
@@ -10,31 +9,68 @@ There are two apps built on the same components:
 
 The stats in `data/stats/` are generated placeholders for now, so the suggestions are not real advice yet.
 
-## Requirements
+## Where it runs
 
-- Rust 1.85 or newer (edition 2024)
-- Node.js with npm
-- For the desktop panel: the [Tauri prerequisites](https://v2.tauri.app/start/prerequisites/) for your OS (on Linux, WebKitGTK 4.1)
-- For the web drafter: the wasm target and `wasm-bindgen-cli`, at the version in `Cargo.lock`:
+| | Windows | macOS | Linux |
+| --- | --- | --- | --- |
+| Desktop panel | yes, docks next to the client | yes, floating window | replays only (no League Client) |
+| Web drafter | yes | yes | yes |
+
+## Install
+
+Both apps need Rust (1.85 or newer, via rustup) and Node.js 22 or newer with npm.
+
+**Windows**
+
+1. Install [Visual Studio Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/) with the "Desktop development with C++" workload (Rust and Tauri need the MSVC compiler).
+2. Install Rust and Node.js, from [rustup.rs](https://rustup.rs) and [nodejs.org](https://nodejs.org), or with winget:
+
+```powershell
+winget install Rustlang.Rustup
+winget install OpenJS.NodeJS.LTS
+```
+
+The desktop panel also needs WebView2, which Windows 10 and 11 already include.
+
+**macOS**
+
+```sh
+xcode-select --install                                          # compiler, needed by Rust and Tauri
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh  # Rust
+brew install node                                               # or the installer from nodejs.org
+```
+
+**Linux**
+
+```sh
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh  # Rust
+```
+
+Install Node.js from your distribution's packages or [nodejs.org](https://nodejs.org).
+To build the desktop panel for replays, also install the [Tauri Linux packages](https://v2.tauri.app/start/prerequisites/#linux) (WebKitGTK 4.1).
+
+**Web drafter, all systems:** add the wasm target and `wasm-bindgen-cli` at the version in `Cargo.lock`:
 
 ```sh
 rustup target add wasm32-unknown-unknown
 cargo install wasm-bindgen-cli --version 0.2.130
 ```
 
-The League Client runs only on Windows and macOS.
-On Linux, the desktop panel works with recordings (`--replay`) only.
-
-## Desktop panel
-
-Build the page once, then start the app with a recording or with the live client:
+Then, from the repo root, install the UI packages once:
 
 ```sh
 npm --prefix ui install
+```
+
+## Desktop panel
+
+Build the page once, then start the app with the live client or with a recording:
+
+```sh
 npm --prefix ui run build -w @draftgpt/desktop
 
+cargo run -p desktop                # live: Windows or macOS, with the League Client open
 cargo run -p desktop -- --replay fixtures/16_22_draft_ban_and_pick_timeout_autolock.jsonl --speed 4
-cargo run -p desktop                # live: start it with the League Client open
 ```
 
 | Flag | Meaning |
@@ -49,7 +85,6 @@ For a release binary: `cargo build -p desktop --release` (the page must be built
 ## Web drafter
 
 ```sh
-npm --prefix ui install
 npm --prefix ui run dev -w @draftgpt/web    # http://localhost:5174
 ```
 
