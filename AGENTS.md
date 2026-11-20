@@ -40,12 +40,13 @@ Read it before structural changes and keep it up to date when the design changes
 
 ## Current scope
 
-Which branch builds what, and what's in progress, is in `notes/branches.txt`. It's local and
-gitignored; read it at the start of a task and update it as work progresses.
+Which branch builds what, and what's in progress, is in `dev_notes/branches.txt` (in git, so
+nothing identifying). Read it at the start of a task and update it as work progresses.
 `docs/arch.md` stays stable until the backend is designed, so don't edit it to record
 progress, only for real structural changes.
 
-The web drafter and a mock recommender exist (branch `ui-base`); the stats in `data/stats/`
+The web drafter and a mock recommender exist (branch `ui-base`). The UI is TBD: don't restyle
+or rework it until asked. The stats in `data/stats/`
 are generated placeholders. Don't plan or scaffold real scoring, the stats database or the
 analysis pipeline until asked.
 
