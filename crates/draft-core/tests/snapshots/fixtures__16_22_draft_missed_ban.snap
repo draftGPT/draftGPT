@@ -375,6 +375,7 @@ expression: states
     ally:
       - champion: ~
         cellId: 0
+        hover: ~
     enemy: []
   turn:
     kind: pick

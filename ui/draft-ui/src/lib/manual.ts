@@ -60,7 +60,7 @@ export function setBan(d: DraftState, side: Side, index: number, champion: numbe
   ids[index] = champion;
   // Empty spots at the end drop off; earlier ones stay as empty bans.
   while (ids.length && ids[ids.length - 1] == null) ids.pop();
-  const bans: Ban[] = ids.map((c) => ({ champion: c, cellId: null }));
+  const bans: Ban[] = ids.map((c) => ({ champion: c, cellId: null, hover: null }));
   return { ...next, bans: { ...next.bans, [side]: bans } };
 }
 
@@ -104,4 +104,89 @@ export function taken(d: DraftState): Set<number> {
     ...d.bans.enemy.map((b) => b.champion),
   ];
   return new Set(ids.filter((c): c is number => c != null));
+}
+
+// Draft order (manual input). The web drafter walks through these steps; you
+// can still click any spot to fix it.
+
+/** `ranked`: all ten bans at once, then picks. `tournament` (Clash): two ban and two pick phases. */
+export type DraftMode = "ranked" | "tournament";
+export type MapSide = "blue" | "red";
+
+export type Step = { phase: string; group: number; side: Side } & (
+  | { kind: "ban"; index: number }
+  | { kind: "pick"; cellId: number }
+);
+
+/**
+ * Every step of a draft in order. Steps with the same `group` happen at the
+ * same time (ranked bans) or back to back by one team (two picks in a row).
+ */
+export function draftOrder(mode: DraftMode, you: MapSide): Step[] {
+  const side = (team: MapSide): Side => (team === you ? "ally" : "enemy");
+  const steps: Step[] = [];
+  let group = 0;
+  const bans = (phase: string, team: MapSide, indices: number[]) => {
+    for (const index of indices) steps.push({ phase, group, side: side(team), kind: "ban", index });
+    group++;
+  };
+  // Picks: "B1 R1 R2 B2" → teams in turn, consecutive picks by one team grouped.
+  const picks = (phase: string, order: string) => {
+    let last = "";
+    for (const p of order.split(" ")) {
+      const team: MapSide = p[0] === "B" ? "blue" : "red";
+      if (last && last !== p[0]) group++;
+      last = p[0]!;
+      const s = side(team);
+      steps.push({ phase, group, side: s, kind: "pick", cellId: (s === "ally" ? 0 : 5) + Number(p.slice(1)) - 1 });
+    }
+    group++;
+  };
+  if (mode === "ranked") {
+    bans("Ban phase", you, [0, 1, 2, 3, 4]);
+    bans("Bans revealed", you === "blue" ? "red" : "blue", [0, 1, 2, 3, 4]);
+    picks("Pick phase", "B1 R1 R2 B2 B3 R3 R4 B4 B5 R5");
+  } else {
+    for (const i of [0, 1, 2]) {
+      bans("Ban phase 1", "blue", [i]);
+      bans("Ban phase 1", "red", [i]);
+    }
+    picks("Pick phase 1", "B1 R1 R2 B2 B3 R3");
+    for (const i of [3, 4]) {
+      bans("Ban phase 2", "red", [i]);
+      bans("Ban phase 2", "blue", [i]);
+    }
+    picks("Pick phase 2", "R4 B4 B5 R5");
+  }
+  return steps;
+}
+
+export function isFilled(d: DraftState, s: Step): boolean {
+  return s.kind === "ban"
+    ? d.bans[s.side][s.index]?.champion != null
+    : d[s.side].find((x) => x.cellId === s.cellId)?.champion != null;
+}
+
+/** The first step from `from` on that isn't filled yet; `steps.length` when done. */
+export function nextOpen(d: DraftState, steps: Step[], from = 0): number {
+  let i = Math.max(from, 0);
+  while (i < steps.length && isFilled(d, steps[i]!)) i++;
+  return i;
+}
+
+/** The draft with the turn and phase of step `i` (finalization once all are done). */
+export function withTurn(d: DraftState, steps: Step[], i: number): DraftState {
+  const step = steps[i];
+  if (!step) return { ...d, phase: "finalization", turn: null };
+  const cells = steps
+    .filter((s) => s.group === step.group)
+    .map((s) => (s.kind === "pick" ? s.cellId : (d[s.side][s.index]?.cellId ?? -1)));
+  const local = d.ally.find((s) => s.isLocal)?.cellId;
+  return {
+    ...d,
+    phase: "banPick",
+    turn: { kind: step.kind, cells, yours: local != null && cells.includes(local) },
+    ally: d.ally.map((s) => ({ ...s, picking: step.kind === "pick" && cells.includes(s.cellId) })),
+    enemy: d.enemy.map((s) => ({ ...s, picking: step.kind === "pick" && cells.includes(s.cellId) })),
+  };
 }

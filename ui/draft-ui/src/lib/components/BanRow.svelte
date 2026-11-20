@@ -16,6 +16,12 @@
   };
   let { bans, champions, side, label, slots = 0, selectedIndex = null, onBanClick }: Props = $props();
 
+  function title(ban: Ban | null): string {
+    if (ban?.champion != null) return champions.name(ban.champion);
+    if (ban?.hover != null) return `Banning ${champions.name(ban.hover)}…`;
+    return ban ? "Missed ban" : "";
+  }
+
   const spots = $derived(
     Array.from({ length: Math.max(slots, bans.length) }, (_, i) => bans[i] ?? null),
   );
@@ -35,8 +41,14 @@
         <ChampionIcon champion={ban?.champion ?? null} {champions} size={28} banned={ban?.champion != null} />
       </button>
     {:else}
-      <span class="spot" title={ban?.champion != null ? champions.name(ban.champion) : "Missed ban"}>
-        <ChampionIcon champion={ban?.champion ?? null} {champions} size={28} banned={ban?.champion != null} />
+      <span class="spot" title={title(ban)}>
+        <ChampionIcon
+          champion={ban?.champion ?? ban?.hover ?? null}
+          {champions}
+          size={28}
+          banned={ban?.champion != null}
+          hover={ban?.champion == null && ban?.hover != null}
+        />
       </span>
     {/if}
   {/each}

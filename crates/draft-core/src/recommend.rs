@@ -224,10 +224,14 @@ impl StatsRecommender {
         // Your team's champions, hovered ones included: bans protect them.
         // They're also never suggested: you don't ban your teammate's hover.
         let allies: Vec<ChampionId> = d.ally.iter().filter_map(|s| s.shown()).collect();
+        // A champion a teammate is already hovering to ban needs no second ban.
+        let hovered: Vec<ChampionId> = d.bans.ally.iter().filter_map(|b| b.hover).collect();
         let mut out: Vec<Recommendation> = self
             .champions
             .values()
-            .filter(|c| !taken.contains(&c.id) && !allies.contains(&c.id))
+            .filter(|c| {
+                !taken.contains(&c.id) && !allies.contains(&c.id) && !hovered.contains(&c.id)
+            })
             .filter_map(|c| {
                 let best = c.main_position()?;
                 let mut threats: Vec<Reason> = allies
@@ -356,6 +360,7 @@ mod tests {
                 ally: vec![Ban {
                     champion: Some(5),
                     cell_id: Some(0),
+                    hover: None,
                 }],
                 enemy: vec![],
             },
@@ -396,6 +401,19 @@ mod tests {
                 .any(|x| matches!(x, Reason::Threat { ally: 1, .. }))
         });
         assert!(threat.is_none(), "9 threatens 1 but is already picked");
+    }
+
+    #[test]
+    fn a_ban_a_teammate_hovers_isnt_suggested_again() {
+        let mut d = draft();
+        d.bans.ally.push(Ban {
+            champion: None,
+            cell_id: Some(1),
+            hover: Some(4),
+        });
+        let r = StatsRecommender::new(stats()).recommend(&d);
+        assert!(r.bans.iter().all(|b| b.champion != 4));
+        assert!(!d.unavailable().any(|c| c == 4), "not banned yet");
     }
 
     #[test]
