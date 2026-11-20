@@ -112,20 +112,23 @@ Everything written is redacted (player names, IDs, chat credentials), and the cl
   cargo run -p devserver -- --replay fixtures/16_22_draft_missed_ban.jsonl --speed 4   # any OS, no client
   ```
 
-  Options: `--port N`, `--out DIR` (default `captures/`), `--auto false` (record only when you press Start), `--wire false` (no raw frame file).
+  Options: `--port N`, `--out DIR` (default: the temp folder below), `--auto false` (record only when you press Start), `--wire false` (no raw frame file).
 
 - **capture**: the same recorder without the page.
 
   ```sh
-  cargo run -p capture -- --out captures              # record every champ select until Ctrl+C
+  cargo run -p capture                                # record every champ select until Ctrl+C
   cargo run -p capture -- record --label ranked_solo  # record everything from now until Ctrl+C
   ```
 
-Recordings land in `captures/` as `.jsonl` files.
-The `*.wire.jsonl` and `*.sweep.json` files next to them hold raw client data and are never committed.
-How to run a capture session, fix it when it doesn't connect, and turn recordings into fixtures: [crates/devserver/AGENTS.md](crates/devserver/AGENTS.md).
+Recordings go to `draftgpt-captures` in the OS temp folder, never into the repo; both tools print the path when they start.
 
-### More
+| OS | Folder |
+| --- | --- |
+| Windows | `%TEMP%\draftgpt-captures` |
+| macOS | `$TMPDIR/draftgpt-captures` |
+| Linux | `/tmp/draftgpt-captures` |
 
-- Architecture and crate layout: [docs/arch.md](docs/arch.md)
-- Project rules and all commands: [AGENTS.md](AGENTS.md)
+The temp folder gets emptied, so hand over the main `.jsonl` files right after the session (never `*.wire.jsonl` or `*.sweep.json`).
+**Don't copy recordings into `fixtures/` yourself:** only an agent does that.
+How to run a capture session, fix it when it doesn't connect, and the agent's steps for fixtures: [crates/devserver/AGENTS.md](crates/devserver/AGENTS.md).

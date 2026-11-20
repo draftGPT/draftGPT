@@ -20,6 +20,12 @@ Read it before structural changes and keep it up to date when the design changes
   credentials, anything named like a password/token/JWT (key fragments, case-insensitive),
   chat IDs by value. `capture::recorder::Recorder` does it, so every file it writes is
   redacted. Don't commit an unredacted capture.
+- **Recordings stay outside the repo; only an agent puts them into `fixtures/`.** `capture`
+  and `devserver` write to the OS temp directory by default (`capture::default_out_dir()`:
+  `draftgpt-captures` in `/tmp`, `$TMPDIR` on macOS, `%TEMP%` on Windows). People hand
+  over the main `.jsonl` files; you pick, check and copy them into `fixtures/` following
+  "After the session" in [crates/devserver/AGENTS.md](crates/devserver/AGENTS.md). Never
+  tell people to copy recordings into the repo, and never point `--out` inside it.
 - **Wire and sweep files (`*.wire.jsonl`, `*.sweep.json`) are local-only, never committed**
   (gitignored). Wire files hold every client frame while recording, including chat and lobby
   data; sweep files hold a GET of the spec plugins' endpoints that take no parameters, at the
@@ -114,9 +120,9 @@ cargo test --workspace                          # all tests (no League client ne
 cargo clippy --workspace --all-targets -- -D warnings
 cargo fmt --all
 INSTA_UPDATE=always cargo test -p draft-core    # accept changed DraftState snapshots (read the diff first)
-cargo run -p devserver -- --port 8790 --out captures      # dev page at http://127.0.0.1:8790
+cargo run -p devserver -- --port 8790   # dev page at http://127.0.0.1:8790, records to <temp>/draftgpt-captures
 cargo run -p devserver -- --replay fixtures/x.jsonl --speed 4   # replay instead of the client
-cargo run -p capture -- --out captures [auto | record --label x | help-dump --file f.json]
+cargo run -p capture -- [auto | record --label x | help-dump --file f.json]   # --out DIR to change
 cargo run -p capture -- convert-rcvolus in.json fixtures/rcvolus_x.jsonl   # old RCVolus files
 # both: --wire true|false (raw frame capture, default on); logs go to <out>/<binary>.log
 cargo build -p devserver --release              # on Windows: target/release/devserver.exe

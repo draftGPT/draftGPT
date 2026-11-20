@@ -13,7 +13,7 @@ use lcu::{Live, SourceEvent};
 #[command(about = "Record League client champ select events to redacted .jsonl files")]
 struct Args {
     /// Directory for recordings and the log file.
-    #[arg(long, global = true, default_value = "captures")]
+    #[arg(long, global = true, default_value_os_t = capture::default_out_dir())]
     out: PathBuf,
     /// Also record every raw client frame to <name>.wire.jsonl (local only).
     #[arg(long, global = true, default_value_t = true, action = ArgAction::Set)]
