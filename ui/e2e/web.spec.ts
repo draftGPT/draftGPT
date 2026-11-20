@@ -35,7 +35,7 @@ test("an enemy pick enters the suggestions as a matchup and can't be picked agai
   const enemyId = stats.champions.find((c) => c.id === top)!.matchups[0]!.champion;
   const enemy = list.champions.find((c) => c.id === enemyId)!.name;
 
-  await page.getByRole("region", { name: "Enemy team" }).locator('[data-cell="5"]').click();
+  await page.getByLabel("Champion, enemy 1").click();
   await pickChampion(page, enemy);
   await expect(page.getByRole("region", { name: "Enemy team" }).locator('[data-cell="5"]')).toContainText(enemy);
   // The picker moved on to the next enemy slot, where the champion is taken.
@@ -68,12 +68,32 @@ test("clicking a suggestion picks it for you; changing role changes suggestions"
   await picks.locator(".rec").first().click();
   await expect(page.getByRole("region", { name: "Your team" }).locator('[data-cell="0"]')).toContainText(name);
 
-  await page.getByLabel("Your role").selectOption("utility");
+  await page.getByLabel("Role, ally 1").selectOption("utility");
   await expect(picks.locator(".reasons > span:first-child").first()).toContainText("win rate Support");
 });
 
+test("roles swap within a team and You moves to another slot", async ({ page }) => {
+  const picks = page.getByRole("region", { name: "Suggested picks" });
+  await expect(page.getByLabel("You are ally 1")).toHaveAttribute("aria-pressed", "true");
+
+  // Taking ally 3's role (mid) gives ally 3 the old one (top).
+  await page.getByLabel("Role, ally 1").selectOption("middle");
+  await expect(page.getByLabel("Role, ally 3")).toHaveValue("top");
+
+  // Moving You to ally 3: suggestions follow that slot's role.
+  await page.getByLabel("You are ally 3").click();
+  await expect(page.getByLabel("You are ally 3")).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByLabel("You are ally 1")).toHaveAttribute("aria-pressed", "false");
+  await expect(picks.locator(".reasons > span:first-child").first()).toContainText("win rate Top");
+
+  // Enemy roles start unknown and stay separate from your team's.
+  await expect(page.getByLabel("Role, enemy 1")).toHaveValue("");
+  await page.getByLabel("Role, enemy 1").selectOption("middle");
+  await expect(page.getByLabel("Role, ally 1")).toHaveValue("middle");
+});
+
 test("reset clears the draft", async ({ page }) => {
-  await page.getByRole("region", { name: "Your team" }).locator('[data-cell="1"]').click();
+  await page.getByLabel("Champion, ally 2").click();
   await pickChampion(page, "Ahri");
   await page.getByRole("button", { name: "Reset" }).click();
   await expect(page.getByRole("region", { name: "Your team" })).not.toContainText("Ahri");

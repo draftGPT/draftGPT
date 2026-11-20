@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { Champions } from "../champions";
-  import { positionLabel } from "../format";
+  import { POSITIONS, positionLabel } from "../format";
+  import type { Position } from "../types/Position";
   import type { Slot } from "../types/Slot";
   import ChampionIcon from "./ChampionIcon.svelte";
 
@@ -10,10 +11,14 @@
     side: "ally" | "enemy";
     /** Highlighted as the slot being edited (manual input). */
     selected?: boolean;
-    /** Makes the row a button (manual input). */
+    /** Makes the champion a button (manual input). */
     onclick?: () => void;
+    /** Shows a role selector instead of the role text (manual input). */
+    onPositionChange?: (position: Position | null) => void;
+    /** Shows a "You" toggle on the row (manual input, your team). */
+    onMakeLocal?: () => void;
   };
-  let { slot, champions, side, selected = false, onclick }: Props = $props();
+  let { slot, champions, side, selected = false, onclick, onPositionChange, onMakeLocal }: Props = $props();
 
   const shown = $derived(slot.champion ?? slot.hover);
   const label = $derived(
@@ -25,57 +30,109 @@
           ? "Picking…"
           : "",
   );
+  const who = $derived(`${side === "ally" ? "ally" : "enemy"} ${(slot.cellId % 5) + 1}`);
+  const editable = $derived(onPositionChange != null || onMakeLocal != null);
 </script>
 
-{#snippet content()}
+{#snippet champion()}
   <ChampionIcon champion={shown} {champions} hover={slot.champion == null && slot.hover != null} />
   <span class="text">
-    <span class="name" class:muted={slot.champion == null}>{label || "—"}</span>
-    <span class="meta">
-      {#if slot.isLocal}<span class="you">You</span>{/if}
-      {positionLabel(slot.position)}
-    </span>
+    <span class="name" class:muted={slot.champion == null}>{label || (onclick ? "Choose…" : "—")}</span>
+    {#if !editable}
+      <span class="meta">
+        {#if slot.isLocal}<span class="you">You</span>{/if}
+        {positionLabel(slot.position)}
+      </span>
+    {/if}
   </span>
 {/snippet}
 
-{#if onclick}
-  <button
-    type="button"
-    class="slot {side} clickable"
-    class:local={slot.isLocal}
-    class:picking={slot.picking}
-    class:selected
-    data-cell={slot.cellId}
-    {onclick}
-  >
-    {@render content()}
-  </button>
-{:else}
-  <div class="slot {side}" class:local={slot.isLocal} class:picking={slot.picking} data-cell={slot.cellId}>
-    {@render content()}
-  </div>
-{/if}
+<div
+  class="slot {side}"
+  class:local={slot.isLocal}
+  class:picking={slot.picking}
+  class:selected
+  data-cell={slot.cellId}
+>
+  {#if onclick}
+    <button type="button" class="champion clickable" {onclick} aria-label="Champion, {who}">
+      {@render champion()}
+    </button>
+  {:else}
+    <div class="champion">{@render champion()}</div>
+  {/if}
+
+  {#if editable}
+    <div class="tags">
+      {#if onPositionChange}
+        <select
+          class="role"
+          class:unset={slot.position == null}
+          value={slot.position ?? ""}
+          aria-label="Role, {who}"
+          onchange={(e) => {
+            const v = e.currentTarget.value;
+            onPositionChange(v ? (v as Position) : null);
+          }}
+        >
+          <option value="">{side === "ally" ? "Any role" : "Role?"}</option>
+          {#each POSITIONS as p (p)}
+            <option value={p}>{positionLabel(p)}</option>
+          {/each}
+        </select>
+      {/if}
+      {#if onMakeLocal}
+        <button
+          type="button"
+          class="me"
+          class:on={slot.isLocal}
+          aria-pressed={slot.isLocal}
+          aria-label="You are {who}"
+          title={slot.isLocal ? "Suggestions are for this slot" : "Make this slot you"}
+          onclick={onMakeLocal}
+        >
+          You
+        </button>
+      {/if}
+    </div>
+  {/if}
+</div>
 
 <style>
   .slot {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 6px;
     width: 100%;
     padding: 6px 8px;
     border-radius: var(--radius);
     border: 1px solid transparent;
     background: var(--panel);
-    text-align: left;
   }
   .enemy {
+    flex-direction: row-reverse;
+  }
+  .champion {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    min-width: 0;
+    padding: 0;
+    border: none;
+    background: none;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+  }
+  .enemy .champion {
     flex-direction: row-reverse;
     text-align: right;
   }
   .clickable {
     cursor: pointer;
   }
-  .clickable:hover {
+  .slot:has(.clickable:hover) {
     border-color: var(--line);
   }
   .local {
@@ -87,7 +144,8 @@
   .enemy.picking {
     box-shadow: inset -3px 0 0 var(--enemy);
   }
-  .selected {
+  .selected,
+  .slot.selected:has(.clickable:hover) {
     border-color: var(--text);
   }
   .text {
@@ -113,5 +171,37 @@
     color: var(--gold);
     font-weight: 600;
     margin-right: 4px;
+  }
+  .tags {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .enemy .tags {
+    flex-direction: row-reverse;
+  }
+  .role,
+  .me {
+    font: inherit;
+    font-size: 12px;
+    padding: 3px 6px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--panel-2);
+    color: var(--text);
+    cursor: pointer;
+  }
+  .role.unset {
+    color: var(--muted);
+  }
+  .me {
+    color: var(--muted);
+  }
+  .me.on {
+    color: var(--bg);
+    background: var(--gold);
+    border-color: var(--gold);
+    font-weight: 600;
   }
 </style>
