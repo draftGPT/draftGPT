@@ -22,6 +22,8 @@ export type { DraftState } from "./types/DraftState";
 export type { Phase } from "./types/Phase";
 export type { Position } from "./types/Position";
 export type { Reason } from "./types/Reason";
+export type { Replay } from "./types/Replay";
+export type { ReplayStep } from "./types/ReplayStep";
 export type { Recommendation } from "./types/Recommendation";
 export type { Recommendations } from "./types/Recommendations";
 export type { Slot } from "./types/Slot";

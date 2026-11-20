@@ -242,3 +242,45 @@ export function nextGame(d: DraftState): DraftState {
     fearless: [...d.fearless, ...picked.filter((c) => !d.fearless.includes(c))],
   };
 }
+
+// Taking over a replayed draft (manual input).
+
+/**
+ * A draft from a recording as a manual draft: your team in cells 0–4, the
+ * enemy in 5–9, locked picks and bans kept, hovers dropped. Also guesses the
+ * map side and the mode (Clash queue 700 or spectated: tournament).
+ */
+export function fromReplay(d: DraftState): { draft: DraftState; side: MapSide; mode: DraftMode } {
+  const fresh = newManualDraft();
+  const red = !d.spectating && d.ally.length > 0 && d.ally.every((s) => s.cellId >= 5);
+  const take = (from: Slot[], into: Slot[]): Slot[] =>
+    into.map((slot, i) => {
+      const s = from[i];
+      return s ? { ...slot, isLocal: s.isLocal, position: s.position, champion: s.champion } : { ...slot, isLocal: false };
+    });
+  const ally = take(d.ally, fresh.ally);
+  // Spectating: nobody is you; keep slot 1 so suggestions have someone.
+  const withLocal = ally.some((s) => s.isLocal) ? ally : ally.map((s, i) => ({ ...s, isLocal: i === 0 }));
+  const ban = (b: Ban): Ban => ({ champion: b.champion, cellId: null, hover: null });
+  return {
+    draft: {
+      ...fresh,
+      queueId: d.queueId,
+      ally: withLocal,
+      enemy: take(d.enemy, fresh.enemy).map((s) => ({ ...s, isLocal: false })),
+      bans: { ally: d.bans.ally.filter((b) => b.hover == null).map(ban), enemy: d.bans.enemy.filter((b) => b.hover == null).map(ban) },
+    },
+    side: red ? "red" : "blue",
+    mode: d.queueId === 700 || d.spectating ? "tournament" : "ranked",
+  };
+}
+
+/**
+ * Where to continue a taken-over draft: the first step not done yet. A ban
+ * already in the list counts as done even when it was missed.
+ */
+export function resumeStep(d: DraftState, steps: Step[]): number {
+  const done = (s: Step) => isFilled(d, s) || (s.kind === "ban" && s.index < d.bans[s.side].length);
+  const i = steps.findIndex((s) => !done(s));
+  return i < 0 ? steps.length : i;
+}

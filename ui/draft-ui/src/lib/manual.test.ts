@@ -2,7 +2,9 @@ import { describe, expect, it } from "vitest";
 import {
   addFearless,
   draftOrder,
+  fromReplay,
   nextGame,
+  resumeStep,
   removeFearless,
   newManualDraft,
   nextOpen,
@@ -160,3 +162,43 @@ describe("fearless", () => {
     expect(removeFearless(d, 103).fearless).toEqual([157, 238]);
   });
 });
+
+describe("taking over a replay", () => {
+  it("moves a red-side draft into cells 0–9, keeps locks, drops hovers, and resumes after a missed ban", () => {
+    const live = newManualDraft();
+    const d = {
+      ...live,
+      queueId: 420,
+      ally: live.enemy.map((s, i) => ({ ...s, isLocal: i === 1, champion: i === 0 ? 103 : null, hover: i === 1 ? 7 : null })),
+      enemy: live.ally.map((s, i) => ({ ...s, champion: i === 0 ? 238 : null, position: null })),
+      bans: {
+        ally: [
+          { champion: null, cellId: 5, hover: null },
+          { champion: 157, cellId: 6, hover: null },
+          { champion: null, cellId: 7, hover: 1 },
+        ],
+        enemy: [{ champion: 22, cellId: 0, hover: null }],
+      },
+    };
+    const t = fromReplay(d);
+    expect(t.side).toBe("red");
+    expect(t.mode).toBe("ranked");
+    expect(t.draft.ally.map((s) => s.cellId)).toEqual([0, 1, 2, 3, 4]);
+    expect(t.draft.ally[0]!.champion).toBe(103);
+    expect(t.draft.ally[1]).toMatchObject({ isLocal: true, champion: null, hover: null });
+    expect(t.draft.enemy[0]!.champion).toBe(238);
+    expect(t.draft.bans.ally.map((b) => b.champion)).toEqual([null, 157]);
+    // Two of your bans are done (one missed): continue at your third.
+    const steps = draftOrder("ranked", "red");
+    expect(steps[resumeStep(t.draft, steps)]).toMatchObject({ kind: "ban", side: "ally", index: 2 });
+  });
+
+  it("a spectated or Clash draft becomes a tournament draft with someone as you", () => {
+    const d = { ...newManualDraft(), spectating: true, ally: newManualDraft().ally.map((s) => ({ ...s, isLocal: false })) };
+    const t = fromReplay(d);
+    expect(t).toMatchObject({ mode: "tournament", side: "blue" });
+    expect(t.draft.ally.filter((s) => s.isLocal)).toHaveLength(1);
+    expect(fromReplay({ ...newManualDraft(), queueId: 700 }).mode).toBe("tournament");
+  });
+});
+

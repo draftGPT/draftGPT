@@ -154,6 +154,39 @@ test("fearless: the next game's picker and suggestions leave out earlier picks",
   await expect(picks.getByText("Garen", { exact: true })).toHaveCount(0);
 });
 
+test("replays a recording step by step and takes it over", async ({ page }) => {
+  await page.getByRole("button", { name: "Replay…" }).click();
+  await page.getByLabel("Recording", { exact: true }).selectOption("16_22_draft_ban_and_pick_timeout_autolock");
+  const bar = page.getByRole("region", { name: "Replay" });
+  await expect(bar).toContainText("step 1 /");
+  // Manual controls are hidden while replaying.
+  await expect(page.getByRole("group", { name: "Draft mode" })).toHaveCount(0);
+  await page.getByRole("button", { name: "Next step" }).click();
+  await expect(bar).toContainText("step 2 /");
+  await page.keyboard.press("End");
+  const total = Number((await bar.textContent())!.match(/step (\d+) \/ (\d+)/)![2]);
+  await expect(bar).toContainText(`step ${total} / ${total}`);
+  // The last step has your locked pick; suggestions still show.
+  const you = page.getByRole("region", { name: "Your team" }).locator(".slot.local .name");
+  const champion = (await you.textContent())!.trim();
+  expect(champion).not.toBe("—");
+  await expect(page.getByRole("region", { name: "Suggested picks" }).locator("[data-champion]").first()).toBeVisible();
+
+  // Back a few steps, then continue by hand.
+  await page.keyboard.press("Home");
+  await page.getByRole("button", { name: "Take over from here" }).click();
+  await expect(bar).toHaveCount(0);
+  await expect(page.getByRole("group", { name: "Draft mode" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Ranked" })).toHaveAttribute("aria-pressed", "true");
+  await expect(page.locator(".banner")).toContainText("Ban phase");
+});
+
+test("a broken recording file shows an error", async ({ page }) => {
+  await page.getByRole("button", { name: "Replay…" }).click();
+  await page.getByLabel("Open a recording file").setInputFiles({ name: "bad.jsonl", mimeType: "text/plain", buffer: Buffer.from("nope") });
+  await expect(page.getByRole("alert")).toContainText("Couldn't replay bad.jsonl");
+});
+
 test("reset clears the draft", async ({ page }) => {
   await page.getByLabel("Champion, ally 2").click();
   await pickChampion(page, "Ahri");
