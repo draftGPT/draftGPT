@@ -187,14 +187,26 @@ test("tournament on red: bans alternate from blue, two phases each", async ({
   page,
 }) => {
   await page.getByRole("button", { name: "Tournament" }).click();
-  await expect(page.getByLabel("Your team picks first")).toBeChecked();
-  await page.getByLabel("Enemy team picks first").check();
-  await expect(page.getByLabel("Your team picks first")).not.toBeChecked();
-  // Unchecking hands first pick back: always exactly one team.
-  await page.getByLabel("Enemy team picks first").uncheck();
-  await expect(page.getByLabel("Your team picks first")).toBeChecked();
-  await page.getByLabel("Your team picks first").uncheck();
-  await expect(page.getByLabel("Enemy team picks first")).toBeChecked();
+  await expect(page.getByLabel("Your team picks first")).toHaveAttribute(
+    "aria-pressed",
+    "true",
+  );
+  await page.getByLabel("Enemy team picks first").click();
+  await expect(page.getByLabel("Your team picks first")).toHaveAttribute(
+    "aria-pressed",
+    "false",
+  );
+  // Turning it off hands first pick back: always exactly one team.
+  await page.getByLabel("Enemy team picks first").click();
+  await expect(page.getByLabel("Your team picks first")).toHaveAttribute(
+    "aria-pressed",
+    "true",
+  );
+  await page.getByLabel("Your team picks first").click();
+  await expect(page.getByLabel("Enemy team picks first")).toHaveAttribute(
+    "aria-pressed",
+    "true",
+  );
   const banner = page.locator(".banner");
   await expect(banner).toContainText("Ban phase 1 · Enemy ban");
   await pickChampion(page, "Ahri");
@@ -213,9 +225,9 @@ test("tournament on red: bans alternate from blue, two phases each", async ({
 test("fearless: the next game's picker and suggestions leave out earlier picks", async ({
   page,
 }) => {
-  await expect(page.getByLabel("Fearless")).toHaveCount(0); // ranked: no series
+  await expect(page.getByRole("button", { name: "Fearless" })).toBeDisabled(); // ranked: no series
   await page.getByRole("button", { name: "Tournament" }).click();
-  await page.getByLabel("Fearless").check();
+  await page.getByRole("button", { name: "Fearless" }).click();
   const banner = page.locator(".banner");
   await expect(banner).toContainText("Game 1 · Ban phase 1 · Your ban");
   for (const name of ["Ahri", "Zed", "Yasuo", "Yone", "Lux", "Jinx"])
@@ -287,13 +299,11 @@ test("replays a recording step by step and takes it over", async ({ page }) => {
 
 test("a broken recording file shows an error", async ({ page }) => {
   await page.getByRole("button", { name: "Replay…" }).click();
-  await page
-    .getByLabel("Open a recording file")
-    .setInputFiles({
-      name: "bad.jsonl",
-      mimeType: "text/plain",
-      buffer: Buffer.from("nope"),
-    });
+  await page.getByLabel("Open a recording file").setInputFiles({
+    name: "bad.jsonl",
+    mimeType: "text/plain",
+    buffer: Buffer.from("nope"),
+  });
   await expect(page.getByRole("alert")).toContainText(
     "Couldn't replay bad.jsonl",
   );

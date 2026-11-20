@@ -15,9 +15,9 @@
     onSlotClick?: (cellId: number) => void;
     onPositionChange?: (cellId: number, position: Position | null) => void;
     onMakeLocal?: (cellId: number) => void;
-    /** A "First pick" checkbox in the title (manual input); replaces the note. */
+    /** A "First pick" toggle in the title (manual input); replaces the note. */
     firstPick?: boolean;
-    onFirstPick?: (checked: boolean) => void;
+    onFirstPick?: (on: boolean) => void;
   };
   let {
     title,
@@ -36,14 +36,14 @@
 
 <section class="team {side}" aria-label={title}>
   <h3>
-    {title}{#if onFirstPick}<label class="first"
-        ><input
-          type="checkbox"
-          checked={firstPick}
-          onchange={(e) => onFirstPick(e.currentTarget.checked)}
-          aria-label={side === "ally" ? "Your team picks first" : "Enemy team picks first"}
-        />First pick</label
-      >{:else if note}<span class="note">{` · ${note}`}</span>{/if}
+    {title}{#if onFirstPick}<button
+        type="button"
+        class="first"
+        aria-pressed={firstPick}
+        onclick={() => onFirstPick(!firstPick)}
+        aria-label={side === "ally" ? "Your team picks first" : "Enemy team picks first"}
+        title="The first-pick team is blue side">First pick</button
+      >{:else if note}<span class="note">{`· ${note}`}</span>{/if}
   </h3>
   {#if slots.length}
     {#each slots as slot (slot.cellId)}
@@ -70,6 +70,10 @@
     min-width: 0;
   }
   h3 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 20px;
     margin: 0 0 2px;
     font-size: 12px;
     text-transform: uppercase;
@@ -80,20 +84,31 @@
   }
   .enemy h3 {
     color: var(--enemy);
-    text-align: right;
+    justify-content: flex-end;
   }
   .first {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    margin-left: 8px;
+    padding: 1px 7px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: none;
     color: var(--muted);
-    font-weight: 500;
+    font: inherit;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: inherit;
+    text-transform: inherit;
     cursor: pointer;
   }
-  .first input {
-    margin: 0;
-    accent-color: var(--gold);
+  .first:hover {
+    color: var(--text);
+  }
+  .first[aria-pressed="true"] {
+    background: var(--panel-2);
+    border-color: currentColor;
+    color: inherit;
+  }
+  .enemy .first {
+    order: -1;
   }
   .note {
     color: var(--muted);
