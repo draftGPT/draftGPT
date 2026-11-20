@@ -81,7 +81,7 @@ frontend-core  (current; holds test-capture + mock-input at e4aa94e, pushed 2026
   draft-core: state + reducer
   desktop: Tauri side panel + dock
 
-ui-base        (current; from frontend-core e4aa94e, 2026-11-16; merges back into frontend-core)
+ui-base        (merged into frontend-core b8d8d0a, 2026-11-20; from frontend-core e4aa94e)
   decided 2026-11-16: Tauri (Rust) + Svelte/Vite page; shared Svelte lib ui/draft-ui used by
     ui/desktop now and ui/web (web drafter) later; components take DraftState + recs as
     props, only the input differs (live events vs manual picks); TS types generated from
@@ -132,7 +132,7 @@ ui-base        (current; from frontend-core e4aa94e, 2026-11-16; merges back int
     page; web drafter at 375px: no overflow (cosmetic: ban row wraps, picker at the bottom)
   can't test here: Windows (dock, live client, Windows build: ring needs MSVC/mingw), macOS
     lockfile path, multi-player recordings (trades, ranked hidden names, enemy dodge)
-  next: push ui-base, merge into frontend-core (not master); Windows: dock + live panel
+  next: Windows: dock + live panel
 
 later
   sweep: <name>.sweep.json = GET of 135 no-parameter endpoints of the 9 spec plugins, first
@@ -153,7 +153,7 @@ reference sources found (spec search, 2026-11-15)
     Mayhem sample has REAL player data — never copy
   avoid nebil175/lcu_dumper (malware-lure pattern)
 
-2026-11-20 ui-base additions (unpushed):
+2026-11-20 ui-base additions (merged into frontend-core):
 - README.md (run per OS) + README-dev.md (checks, release, capture)
 - capture/devserver default --out = <OS temp>/draftgpt-captures; only agents copy into fixtures/ (AGENTS.md rule)
 - web: per-row role select (swaps within team) + "You" toggle; header menus removed
