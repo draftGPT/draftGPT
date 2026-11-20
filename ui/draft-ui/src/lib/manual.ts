@@ -69,8 +69,18 @@ export function setLocal(d: DraftState, cellId: number): DraftState {
   return { ...d, ally: d.ally.map((s) => ({ ...s, isLocal: s.cellId === cellId })) };
 }
 
-export function setPosition(d: DraftState, cellId: number, position: Position | null): DraftState {
-  return { ...d, ally: d.ally.map((s) => (s.cellId === cellId ? { ...s, position } : s)) };
+/**
+ * Gives a slot a position. A team has each position once: the slot that held
+ * it gets this slot's old position instead (the two swap).
+ */
+export function setPosition(d: DraftState, side: Side, cellId: number, position: Position | null): DraftState {
+  const old = d[side].find((s) => s.cellId === cellId)?.position ?? null;
+  return {
+    ...d,
+    [side]: d[side].map((s) =>
+      s.cellId === cellId ? { ...s, position } : position != null && s.position === position ? { ...s, position: old } : s,
+    ),
+  };
 }
 
 /** The draft with `champion` removed from every slot and ban. */

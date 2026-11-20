@@ -37,7 +37,22 @@ describe("manual draft", () => {
 
   it("sets who you are and your role", () => {
     let d = setLocal(newManualDraft(), 4);
-    d = setPosition(d, 4, null);
+    d = setPosition(d, "ally", 4, null);
     expect(d.ally.find((s) => s.isLocal)).toMatchObject({ cellId: 4, position: null });
+  });
+
+  it("swaps positions so a team has each one once", () => {
+    let d = setPosition(newManualDraft(), "ally", 0, "utility");
+    expect(d.ally.map((s) => s.position)).toEqual(["utility", "jungle", "middle", "bottom", "top"]);
+    d = setPosition(d, "ally", 1, null);
+    d = setPosition(d, "ally", 2, "jungle");
+    expect(d.ally.map((s) => s.position)).toEqual(["utility", null, "jungle", "bottom", "top"]);
+  });
+
+  it("gives enemies positions without touching your team", () => {
+    let d = setPosition(newManualDraft(), "enemy", 5, "middle");
+    d = setPosition(d, "enemy", 6, "middle");
+    expect(d.enemy.map((s) => s.position)).toEqual([null, "middle", null, null, null]);
+    expect(d.ally.map((s) => s.position)).toEqual(newManualDraft().ally.map((s) => s.position));
   });
 });

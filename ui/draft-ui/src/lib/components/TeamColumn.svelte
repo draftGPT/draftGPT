@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { Champions } from "../champions";
+  import type { Position } from "../types/Position";
   import type { Slot } from "../types/Slot";
   import SlotRow from "./SlotRow.svelte";
 
@@ -10,8 +11,11 @@
     side: "ally" | "enemy";
     selectedCell?: number | null;
     onSlotClick?: (cellId: number) => void;
+    onPositionChange?: (cellId: number, position: Position | null) => void;
+    onMakeLocal?: (cellId: number) => void;
   };
-  let { title, slots, champions, side, selectedCell = null, onSlotClick }: Props = $props();
+  let { title, slots, champions, side, selectedCell = null, onSlotClick, onPositionChange, onMakeLocal }: Props =
+    $props();
 </script>
 
 <section class="team {side}" aria-label={title}>
@@ -24,6 +28,8 @@
         {side}
         selected={selectedCell === slot.cellId}
         onclick={onSlotClick ? () => onSlotClick(slot.cellId) : undefined}
+        onPositionChange={onPositionChange ? (p) => onPositionChange(slot.cellId, p) : undefined}
+        onMakeLocal={onMakeLocal ? () => onMakeLocal(slot.cellId) : undefined}
       />
     {/each}
   {:else}

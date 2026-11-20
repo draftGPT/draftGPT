@@ -5,17 +5,14 @@
     ChampionPicker,
     DraftView,
     MAX_BANS,
-    POSITIONS,
     champions,
     newManualDraft,
-    positionLabel,
     setBan,
     setChampion,
     setLocal,
     setPosition,
     taken,
     type DraftState,
-    type Position,
     type Recommendations,
   } from "@draftgpt/draft-ui";
   import { createRecommender, type Recommend } from "./engine";
@@ -68,16 +65,6 @@
     }
   }
 
-  function onLocalChange(e: Event) {
-    draft = setLocal(draft, Number((e.currentTarget as HTMLSelectElement).value));
-  }
-
-  function onPositionChange(e: Event) {
-    if (!local) return;
-    const v = (e.currentTarget as HTMLSelectElement).value;
-    draft = setPosition(draft, local.cellId, v ? (v as Position) : null);
-  }
-
   function reset() {
     draft = newManualDraft();
     selection = null;
@@ -88,23 +75,6 @@
   <header>
     <h1>draftGPT <span>drafter</span></h1>
     <div class="controls">
-      <label>
-        You are
-        <select value={local?.cellId ?? 0} onchange={onLocalChange} aria-label="Your slot">
-          {#each draft.ally as s (s.cellId)}
-            <option value={s.cellId}>Slot {s.cellId + 1}</option>
-          {/each}
-        </select>
-      </label>
-      <label>
-        Role
-        <select value={local?.position ?? ""} onchange={onPositionChange} aria-label="Your role">
-          <option value="">Any</option>
-          {#each POSITIONS as p (p)}
-            <option value={p}>{positionLabel(p)}</option>
-          {/each}
-        </select>
-      </label>
       <button type="button" onclick={reset}>Reset</button>
     </div>
   </header>
@@ -122,6 +92,8 @@
     onSlotClick={(side, cellId) => (selection = { kind: "slot", side, cellId })}
     onBanClick={(side, index) => (selection = { kind: "ban", side, index })}
     {onRecPick}
+    onPositionChange={(side, cellId, p) => (draft = setPosition(draft, side, cellId, p))}
+    onMakeLocal={(cellId) => (draft = setLocal(draft, cellId))}
   />
 
   {#if selection}
@@ -134,7 +106,7 @@
       <ChampionPicker {champions} unavailable={taken(draft)} onPick={pick} onClear={() => pick(null)} />
     </section>
   {:else}
-    <p class="hint">Click a slot or a ban to set a champion. Click a suggestion to take it.</p>
+    <p class="hint">Click a slot or a ban to set a champion, a suggestion to take it.</p>
   {/if}
 </main>
 
@@ -168,13 +140,6 @@
     align-items: center;
     flex-wrap: wrap;
   }
-  label {
-    display: flex;
-    gap: 6px;
-    align-items: center;
-    color: var(--muted);
-  }
-  select,
   .controls button {
     padding: 6px 8px;
     border-radius: var(--radius);

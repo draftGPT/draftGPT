@@ -4,6 +4,7 @@
   // click handlers for manual input. Props only; no data loading here.
   import type { Champions } from "../champions";
   import type { DraftState } from "../types/DraftState";
+  import type { Position } from "../types/Position";
   import type { Recommendations } from "../types/Recommendations";
   import BanRow from "./BanRow.svelte";
   import RecommendationList from "./RecommendationList.svelte";
@@ -31,6 +32,10 @@
     onSlotClick?: (side: "ally" | "enemy", cellId: number) => void;
     onBanClick?: (side: "ally" | "enemy", index: number) => void;
     onRecPick?: (champion: number, kind: "pick" | "ban") => void;
+    /** Role selectors on every slot (manual input). */
+    onPositionChange?: (side: "ally" | "enemy", cellId: number, position: Position | null) => void;
+    /** "You" toggles on your team's slots (manual input). */
+    onMakeLocal?: (cellId: number) => void;
   };
   let {
     draft,
@@ -44,6 +49,8 @@
     onSlotClick,
     onBanClick,
     onRecPick,
+    onPositionChange,
+    onMakeLocal,
   }: Props = $props();
 
   const banning = $derived(draft.turn?.kind === "ban" || (draft.phase === "planning" && !draft.turn));
@@ -87,6 +94,8 @@
     side="ally"
     selectedCell={sel("ally")}
     onSlotClick={onSlotClick ? (c) => onSlotClick("ally", c) : undefined}
+    onPositionChange={onPositionChange ? (c, p) => onPositionChange("ally", c, p) : undefined}
+    {onMakeLocal}
   />
 
   <div class="middle">
@@ -123,6 +132,7 @@
     side="enemy"
     selectedCell={sel("enemy")}
     onSlotClick={onSlotClick ? (c) => onSlotClick("enemy", c) : undefined}
+    onPositionChange={onPositionChange ? (c, p) => onPositionChange("enemy", c, p) : undefined}
   />
 
   {#if draft.bench.length || draft.offered.length}
