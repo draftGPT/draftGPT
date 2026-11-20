@@ -15,7 +15,10 @@ use std::io;
 use std::path::{Path, PathBuf};
 
 use lcu::types::GameflowPhase;
-use lcu::{ClientInfo, EventKind, RawEvent, SourceEvent, WireFrame};
+use lcu::{
+    CLASH_TOURNAMENT_STATE_INFO, CLASH_TOURNAMENT_SUMMARY, ClientInfo, EventKind, RawEvent,
+    SourceEvent, WireFrame,
+};
 use serde::Serialize;
 
 use crate::auto::{self, AutoAction};
@@ -205,6 +208,8 @@ impl Controller {
         if let Some(phase) = auto::phase_of(ev) {
             self.phase = phase;
             notices.extend(self.apply_auto());
+        } else if is_clash_state_uri(&ev.uri) {
+            notices.extend(self.apply_auto());
         }
         notices
     }
@@ -225,10 +230,34 @@ impl Controller {
         }
     }
 
+    /// A Clash tournament the player is in is in lock-in, scouting or in game.
+    pub fn clash_active(&self) -> bool {
+        auto::clash_active(
+            [
+                CLASH_TOURNAMENT_SUMMARY.uri,
+                CLASH_TOURNAMENT_STATE_INFO.uri,
+            ]
+            .iter()
+            .filter_map(|uri| self.latest.get(*uri))
+            .map(|ev| &ev.data),
+        )
+    }
+
+    pub fn is_recording(&self) -> bool {
+        self.active.is_some()
+    }
+
+    /// The latest data of one resource.
+    pub fn latest_of(&self, uri: &str) -> Option<&RawEvent> {
+        self.latest.get(uri)
+    }
+
     fn apply_auto(&mut self) -> Vec<Notice> {
         let by_auto = self.active.as_ref().map(|a| a.by_auto);
-        match auto::decide(self.auto_enabled, self.phase, by_auto) {
-            Some(AutoAction::Start) => vec![match self.start_inner("auto", true) {
+        let clash = self.clash_active();
+        let label = if clash { "clash" } else { "auto" };
+        match auto::decide(self.auto_enabled, self.phase, clash, by_auto) {
+            Some(AutoAction::Start) => vec![match self.start_inner(label, true) {
                 Ok(info) => Notice::Started(info),
                 Err(e) => Notice::Error(format!("couldn't start recording: {e}")),
             }],
@@ -291,6 +320,10 @@ impl Controller {
             Err(e) => Some(Notice::Error(format!("finishing recording failed: {e}"))),
         }
     }
+}
+
+fn is_clash_state_uri(uri: &str) -> bool {
+    uri == CLASH_TOURNAMENT_SUMMARY.uri || uri == CLASH_TOURNAMENT_STATE_INFO.uri
 }
 
 #[cfg(test)]
@@ -400,6 +433,75 @@ mod tests {
             assert_eq!(find_unredacted(&e.data), Vec::<String>::new(), "{e:?}");
         }
         assert_eq!(events[2].data["myTeam"][0]["championId"], json!(103));
+    }
+
+    #[test]
+    fn auto_records_a_clash_round_from_scouting_to_game_start() {
+        use lcu::{CLASH_TOURNAMENT_SUMMARY, Live};
+        let dir = tempfile::tempdir().unwrap();
+        let mut f = Feed::new();
+        let mut c = Controller::new(dir.path(), true);
+        c.handle(&connected());
+        c.handle(&f.phase("Lobby"));
+        let summary = |state: &str| json!([{"state": state, "tournamentId": 4321, "rosterId": "778899", "bracketId": 5}]);
+        assert!(
+            c.handle(&f.event(
+                CLASH_TOURNAMENT_SUMMARY.uri,
+                EventKind::Update,
+                summary("UPCOMING")
+            ))
+            .is_empty()
+        );
+
+        let n = c.handle(&f.event(
+            CLASH_TOURNAMENT_SUMMARY.uri,
+            EventKind::Update,
+            summary("SCOUTING"),
+        ));
+        let [Notice::Started(info)] = n.as_slice() else {
+            panic!("{n:?}")
+        };
+        assert!(info.name.ends_with("_clash"), "{}", info.name);
+        let roster = json!({"id": "778899", "name": "Team Real Name", "members": [{"summonerId": 12_345_678_901_u64, "position": "TOP"}]});
+        c.handle(&f.event("/lol-clash/v1/roster/778899", EventKind::Snapshot, roster));
+        c.handle(&f.phase("ChampSelect"));
+        c.handle(&f.session(1));
+        let path = stopped_path(&c.handle(&f.phase("GameStart")));
+        // During the game: nothing, even with the tournament still on.
+        assert!(c.handle(&f.phase("InProgress")).is_empty());
+        // Next round after the game: a new recording.
+        let n = c.handle(&f.phase("Lobby"));
+        assert!(matches!(n.as_slice(), [Notice::Started(_)]), "{n:?}");
+        let n = c.handle(&f.event(
+            CLASH_TOURNAMENT_SUMMARY.uri,
+            EventKind::Update,
+            summary("RESULTS"),
+        ));
+        assert!(matches!(n.as_slice(), [Notice::Stopped(_)]), "{n:?}");
+
+        let (_, events) = read_file(&path).unwrap();
+        let uris: Vec<_> = events.iter().map(|e| e.uri.as_str()).collect();
+        assert!(uris.contains(&SESSION_URI), "{uris:?}");
+        let roster_ev = events
+            .iter()
+            .find(|e| e.uri.starts_with("/lol-clash/v1/roster/"))
+            .unwrap();
+        assert!(
+            roster_ev.uri.starts_with("/lol-clash/v1/roster/redacted-"),
+            "{}",
+            roster_ev.uri
+        );
+        assert_eq!(roster_ev.data["members"][0]["position"], "TOP");
+        for ev in &events {
+            assert_eq!(
+                crate::redact::find_unredacted_at(&ev.uri, &ev.data),
+                Vec::<String>::new(),
+                "{}",
+                ev.uri
+            );
+        }
+        // The default live source doesn't forward Clash; capture turns it on.
+        assert!(!(Live::default().also_forward)("/lol-clash/v1/roster/1"));
     }
 
     #[test]

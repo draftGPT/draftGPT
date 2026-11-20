@@ -13,6 +13,7 @@ pub mod page;
 use std::path::PathBuf;
 use std::sync::{Arc, Mutex, MutexGuard};
 
+use capture::clash::{self, ClashPoller};
 use capture::{CaptureError, Controller, Notice, RecordingExtras, RecordingInfo, Status};
 use futures::StreamExt;
 use lcu::{LiveHandle, SourceEvent, SourceStream};
@@ -169,8 +170,50 @@ fn lock<T>(m: &Mutex<T>) -> MutexGuard<'_, T> {
 /// Feeds a source into the controller and the page until the source ends.
 /// Locks are only held for synchronous work, never across an await.
 pub async fn run_source(state: Arc<AppState>, mut stream: SourceStream) {
-    while let Some(ev) = stream.next().await {
+    let mut poller = ClashPoller::new();
+    let (clash_tx, mut clash_rx) = tokio::sync::mpsc::channel(4);
+    let mut tick = tokio::time::interval(std::time::Duration::from_secs(1));
+    loop {
+        let ev = tokio::select! {
+            ev = stream.next() => match ev {
+                Some(ev) => ev,
+                None => break,
+            },
+            _ = tick.tick() => {
+                let wanted = {
+                    let c = state.controller();
+                    c.is_recording() && c.clash_active()
+                };
+                poller.maybe_start(wanted, state.live.as_ref().and_then(LiveHandle::http), &clash_tx);
+                continue;
+            }
+            Some(fetched) = clash_rx.recv() => {
+                let fresh = {
+                    let c = state.controller();
+                    poller.done(fetched, |uri| c.latest_of(uri).map(|e| &e.data))
+                };
+                for ev in fresh {
+                    handle_event(&state, &mut poller, SourceEvent::Event(ev));
+                }
+                continue;
+            }
+        };
+        handle_event(&state, &mut poller, ev);
+    }
+}
+
+/// One event: controller, page, notices.
+fn handle_event(state: &Arc<AppState>, poller: &mut ClashPoller, ev: SourceEvent) {
+    match &ev {
+        SourceEvent::Event(raw) if clash::is_trigger(raw) => poller.poke(),
+        SourceEvent::Connected(_) => poller.reset(),
+        _ => {}
+    }
+    {
         let notices = state.controller().handle(&ev);
+        if notices.iter().any(|n| matches!(n, Notice::Started(_))) {
+            poller.poke();
+        }
         match &ev {
             SourceEvent::Event(raw) => {
                 let msg = lock(&state.feed).event(raw);

@@ -4,7 +4,7 @@
 
 use std::path::{Path, PathBuf};
 
-use capture::redact::find_unredacted;
+use capture::redact::find_unredacted_at;
 use lcu::recording::{Header, read_file};
 use lcu::types::{
     self, ActionType, ChampSelectSession, DodgeState, GameflowPhase, Matchmaking,
@@ -104,7 +104,11 @@ fn every_fixture_parses_is_redacted_and_typed() {
         );
         for (i, ev) in events.iter().enumerate() {
             let at = format!("{name} event {i} ({} {:?})", ev.uri, ev.kind);
-            assert_eq!(find_unredacted(&ev.data), Vec::<String>::new(), "{at}");
+            assert_eq!(
+                find_unredacted_at(&ev.uri, &ev.data),
+                Vec::<String>::new(),
+                "{at}"
+            );
             if ev.kind == EventKind::Delete || ev.data.is_null() {
                 continue;
             }
@@ -127,6 +131,9 @@ fn every_fixture_parses_is_redacted_and_typed() {
                     let m: Matchmaking = types::parse(&ev.data).expect(&at);
                     assert_ne!(m.dodge_data.state, DodgeState::Unknown, "{at}");
                 }
+                // Clash recordings: untyped for now; redaction checked above.
+                uri if lcu::is_recorded_clash_uri(uri)
+                    || uri.starts_with("/lol-clash/v1/roster/redacted-") => {}
                 other => panic!("{at}: not a core resource: {other}"),
             }
         }

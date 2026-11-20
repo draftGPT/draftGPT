@@ -174,7 +174,9 @@ impl Recorder {
     }
 
     fn write_redacted(&mut self, mut event: RawEvent) -> io::Result<()> {
-        self.redactor.redact(&mut event.data);
+        // Rules by the original URI, then its ID segments (Clash roster IDs).
+        self.redactor.redact_at(&event.uri, &mut event.data);
+        event.uri = self.redactor.redact_uri(&event.uri);
         self.out.write(&event)?;
         self.info.events += 1;
         Ok(())

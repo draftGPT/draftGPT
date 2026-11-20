@@ -44,6 +44,8 @@ Everything written is redacted (player names, IDs, chat credentials), and the cl
   cargo run -p capture -- record --label ranked_solo  # record everything from now until Ctrl+C
   ```
 
+**Clash evenings** are recorded too, by both tools in auto mode: start one **before lock-in** and leave it running. It records each round from lock-in and scouting (the opponent team, the bracket, every team's roster) through champ select, stops when the game starts, and starts again for the next round. Files are named `<date>_<time>_clash.jsonl`. Team names and IDs are redacted like player names. Not yet tested in a live Clash: the runbook ("Clash weekends" in [crates/devserver/AGENTS.md](crates/devserver/AGENTS.md)) says how to check it's working and what to do if it isn't.
+
 Recordings go to `draftgpt-captures` in the OS temp folder, never into the repo; both tools print the path when they start.
 
 | OS | Folder |
@@ -52,6 +54,6 @@ Recordings go to `draftgpt-captures` in the OS temp folder, never into the repo;
 | macOS | `$TMPDIR/draftgpt-captures` |
 | Linux | `/tmp/draftgpt-captures` |
 
-The temp folder gets emptied, so hand over the main `.jsonl` files right after the session.
+The temp folder gets emptied, so hand over the main `.jsonl` files right after the session (after Clash: all `*_clash.jsonl` and `capture.log`, plus your team's name and tag and the opponents' you saw, for the leak check).
 **Don't copy recordings into `fixtures/` yourself:** only an agent does that.
 How to run a capture session, fix it when it doesn't connect, and the agent's steps for fixtures: [crates/devserver/AGENTS.md](crates/devserver/AGENTS.md).

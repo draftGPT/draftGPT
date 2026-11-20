@@ -24,6 +24,16 @@ they lack those events. Not covered yet (needs other players): teammate hovers, 
 swap requests, ranked (hidden names, positions), the simultaneous-ban reveal, another player
 dodging.
 
+## Clash
+
+None yet (first Clash recordings expected 2026-11-21/22). Named `<client>_clash_<situation>`,
+one per round. Besides the champ select resources they hold `/lol-clash/` events: the
+tournament summary and state (`LOCK_IN`, `SCOUTING`, `IN_GAME`), the bracket, every
+bracket team's roster and stats, team data, and scouting match history, as `Snapshot`
+events whenever they changed (also mid-recording). Team names, roster IDs and player IDs
+are fakes; the same team has the same fake throughout a file (`redacted-N` as a string,
+`N` as a number in brackets). How they're recorded: `crates/capture/src/clash.rs`.
+
 ## Converted RCVolus recordings
 
 `rcvolus_*` files are converted from the sample recordings in
