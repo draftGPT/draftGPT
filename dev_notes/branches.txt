@@ -1,0 +1,166 @@
+Dev notes, in git. Branch status and what's in progress. Update freely; nothing identifying.
+
+UI: TBD. Look and layout of the web drafter and the desktop panel aren't settled. Don't
+restyle or rework the UI until asked; functional fixes only.
+
+test-capture   (merged into frontend-core) — live-tested on Windows 2026-11-15 (client 16.22.834.8910)
+  (cd02112). Reopen for capture fixes found in later live sessions.
+  done:
+    lcu-model: raw, types (+ null-tolerant parse), recording format, resource consts (wasm32 ok)
+    lcu: discovery, transport
+         (custom Riot-root TLS verifier), source (Live w/ wire frames + LiveHandle, ChannelSource)
+    capture: recorder (+ wire file), redact (case-insensitive, obfuscated*, gameId, chat bodies),
+             help_dump (cached per client version, atomic), auto, controller, logging, CLI
+    devserver: api (Host/Origin guard), check, redacted page feed, dev page
+    review round 1 (validator + PR reviewer) fixed: CLI help clash, page PII leak + CSRF,
+      swallowed Disconnected, task leak, t clock, API shape, deps, flaky test
+    review round 2 fixed: wire identity leak (key fragments, chat IDs by value, chat text,
+      URI ids), Recorder owns redaction + clock, wire pre-roll (trigger frame), stale-clock gap,
+      log password cap (tungstenite etc. pinned to warn), help cache races, HelpDumps shared,
+      Live discovery hook + Outage tests, named JsonLines reader, page.rs split
+    spec research applied: team-builder session URI also recorded, legacy plugin gone (16.20),
+      championId -1 = missed ban, vote/phase_transition action types, /help Console format,
+      real 16.20 draft snapshots (dosxnjos, MIT) in lcu tests/data
+    data model moved to its own crate lcu-model (replaced the `client` feature)
+    lcu source split: source.rs (trait, events, ChannelSource) + source/live.rs (Live)
+    opaque string `id`s (session UUID) redacted too; fixtures rewritten in place (cd02112)
+    tests: 120 passing (2026-11-15), clippy -D warnings clean, fmt clean, wasm32 model builds
+  live test round 1 (Windows, 2026-11-15) — confirmed working:
+    Riot-root TLS, lockfile discovery, /help dump (now once per client build →
+      docs/lcu-spec/help/client-<ver>.help.json), wire capture, auto recording
+    fixes from it: empty response body = null, wire preroll no longer delays the clock,
+      initial page state in time order, live file sizes on Windows, LF via .gitattributes,
+      redaction of hovercards / encoded URI IDs / JSON nested in strings,
+      ARAM bench + rerolls on the page, subset champion list + matchmaking (dodges) recorded,
+      sweep once per client launch, compact, Clash endpoints only in Clash
+    7 fixtures in fixtures/ (README lists them) + crates/capture/tests/fixtures.rs
+      (parse, redaction, situation checks); PII scan on pull: all identity fields redacted
+  open:
+    - situations not covered (need other players): teammate hovers, trades/swap requests,
+      ranked (hidden names, positions), simultaneous-ban reveal, another player dodging
+    - RUST_LOG=trace password check not explicitly confirmed
+  windows: build natively on the Windows machine (no cross-compile from Linux)
+  wire and sweep files stay local, never commit them
+
+mock-input     (merged into frontend-core) — reviewed (tester + reviewer, 3 rounds); pushed, e4aa94e
+  done:
+    lcu::source::Replay (open .jsonl, Speed::Times(f) / Instant, Connected with header
+      client_version, events keep recorded t, stream ends) — 9e4f62d
+    devserver --replay FILE --speed N|instant (auto off, no extras, "finished" notice,
+      page shows "Replaying a recording") — checked end to end over the event socket
+    capture convert-rcvolus IN OUT (crates/capture/src/rcvolus.rs): polls deduped,
+      Snapshot/Create/Update/Delete, redacted, summoners dropped, label "rcvolus", no
+      client_version — 2f01a5a
+    3 converted fixtures (RCVolus/lol-pick-ban-ui recordings/, MIT, attribution in
+      fixtures/README.md): 2019 + 2022 solo custom ban/pick, 2019 spectated 5v5 tournament
+      draft (20 turns, second ban phase). Leak scan vs originals: clean
+    tests: 129 passing, clippy/fmt clean, wasm32 model builds
+  note: RCVolus does NOT cover ranked, teammate hovers or trades (earlier assumption wrong)
+  open / later:
+    - replay starts at server start; at 1x, events before the page opens show only as
+      initial state (fine so far; a "start when page connects" option if it gets annoying)
+    - no runtime replay switch from the page (CLI only)
+  also on mock-input: macOS default lockfile path (discovery), CLAUDE.md → AGENTS.md
+    (CLAUDE.md = `@AGENTS.md` import), crates/devserver/AGENTS.md (run, troubleshoot,
+    hotfix rules, recordings → fixtures steps)
+  review fixes: speed limited 0.01..1000 + saturating delay; converter starts at first
+    session (no null snapshot), monotonic t, never overwrites; replay mode never records
+    (Controller::without_recording, 409, page controls disabled); MIT notice
+    fixtures/LICENSE-rcvolus; redactor: id-like needs a digit (restored
+    disallowBanningTeammateHoveredChampions in 16_22 fixtures), x@pvp.net caught,
+    find_unredacted checks map keys; recording reader refuses newer format_version, strips BOM
+  known, left: a page opened after a replay ended doesn't learn it ended (would need an
+    Ended state that keeps latest); notificationsServiceEndpointV2 /
+    timeOfLastUpToDateCheckISO8601 still faked as map keys (not core resources)
+  tests: 138 passing
+  next: start frontend-core (draft-core state + reducer)
+
+frontend-core  (current; holds test-capture + mock-input at e4aa94e, pushed 2026-11-16)
+  master stays at bdea37f (Initial commit) until asked; it was fast-forwarded by mistake
+  and force-reset 2026-11-16
+  draft-core: state + reducer
+  desktop: Tauri side panel + dock
+
+ui-base        (current; from frontend-core e4aa94e, 2026-11-16; merges back into frontend-core)
+  decided 2026-11-16: Tauri (Rust) + Svelte/Vite page; shared Svelte lib ui/draft-ui used by
+    ui/desktop now and ui/web (web drafter) later; components take DraftState + recs as
+    props, only the input differs (live events vs manual picks); TS types generated from
+    Rust (ts-rs); mock BE = static stats JSON per patch through fetch+cache code;
+    bundled champion list (names, roles); extra wanted: Rust-side docked/floating window
+  order: 1 draft-core (DraftState, reducer, insta snapshots over fixtures, wasm)
+         2 mock recommender + static stats   3 ui/draft-ui components
+         4 crates/desktop + ui/desktop (replay/live)   5 docking (Windows-only, cfg)
+  not now: web drafter app, CI, README, devserver draft view, Data Dragon icons
+  step 1 done (b9b272f, local): crates/draft-core: DraftState (phase, ally/enemy slots with
+    champion/hover/picking/position, bans with missed=None, turn kind/cells/yours, timer
+    ends_at_ms, bench, offered, rerolls), from_session, Tracker (ends on team-builder
+    session delete or gameflow != ChampSelect: 16.22 never deletes the main session URI;
+    old clients w/o isInProgress: first open action group = turn). insta snapshots for all
+    10 fixtures, reviewed (missed-ban flow, tournament turn order 0-5-0-5-0-5/0-5-6-1-2-7/...).
+    155 tests, wasm ok
+  2026-11-16 user: "do both UIs, test it and code review with clean context agent"
+  steps 2-5 done (local, not pushed): 5650267 recommender + data + ts types; b662833 timer =
+    remainingMs; 4065ed0 ui/draft-ui + ui/web + crates/draft-wasm; c743067 crates/desktop
+    (Tauri 2, binary draftgpt, custom-protocol default) + ui/desktop + e2e + docs
+  verified: 167 Rust tests, clippy all-features, wasm (draft-core, draft-wasm); svelte-check x3
+    0 warnings; vitest 11; playwright 9 (3 runs stable, CHROMIUM_PATH=/usr/bin/chromium);
+    real Tauri window on Linux with --replay (screenshot ok); dock::windows type-checked +
+    clippy for x86_64-pc-windows-gnu in a scratch crate (full desktop windows check needs
+    mingw for ring). NOT run on Windows: docking, live client in the panel.
+  installed: wasm-bindgen-cli 0.2.130 in ~/.cargo/bin (must match wasm-bindgen crate)
+  clean-context review (20 findings) → fixed in c89e639: timer counts down from first sight of
+    a measurement (client repeats stale timer), desktop re-sent updates count down + seq,
+    dock uses RCLIENT (not the game's RiotWindowClass), inner/outer size, docks only during
+    a draft; bans skip ally hovers; ARAM/subset picks limited to bench/offer; stats cache
+    keyed by hash + validated; ban auto-advance; demos out of the bundle; capability narrowed;
+    fs.allow narrowed; release build needs the UI. Left: taken() duplicates unavailable().
+  checks after fixes: 171 Rust tests, clippy, wasm; svelte-check x3; vitest 11; e2e 11;
+    relaunched Tauri with replay (events + latest still work with narrowed permissions)
+  re-review of c89e639: 16/18 fixed; leftovers fixed in the next commit: release build
+    refuses the placeholder page (marker), timer ignores missing internalNow and keys on
+    (internalNow, left, phase), subset events advance the timer clock, stats fetched with
+    ?h=<hash> + no-cache (content-type check dropped; Engine validates), poisoned-cache e2e
+    waits for the first cache write, @types/node pinned
+  synthetic 5v5 normal draft: tools/synth_fixture.py (committed b1aafe5) →
+    fixtures/synthetic/normal_draft_5v5.jsonl (gitignored, not versioned); replays clean
+  state: review done, all checks green (172 Rust, 11 vitest, 11 e2e); not pushed
+  extra testing 2026-11-16 (df17a54): fresh worktree: cargo test 172 ok, placeholder page made,
+    release check refuses it; npm ci + check/vitest/build/e2e 11 ok. Found + fixed: build.rs
+    used env!(CARGO_MANIFEST_DIR) (stale with shared target dir), wasm script ignored
+    CARGO_TARGET_DIR (now ui/web/scripts/wasm.mjs, Windows-friendly). Release binary builds
+    (19.5 MB Linux) and runs the synthetic replay. Synthetic draft renders right in the panel
+    page; web drafter at 375px: no overflow (cosmetic: ban row wraps, picker at the bottom)
+  can't test here: Windows (dock, live client, Windows build: ring needs MSVC/mingw), macOS
+    lockfile path, multi-player recordings (trades, ranked hidden names, enemy dodge)
+  next: push ui-base, merge into frontend-core (not master); Windows: dock + live panel
+
+later
+  sweep: <name>.sweep.json = GET of 135 no-parameter endpoints of the 9 spec plugins, first
+    recording per client launch (list: crates/capture/sweep-paths.txt, exclusions in tools/lcu_spec.py); local only
+  idea: fetch each player's champion pool by puuid (Riot API champion-mastery) for whole-lobby
+    recommendations; only possible where identities are visible (not ranked, policy forbids
+    de-anonymizing); analysis decides
+  web drafter (manual input, Svelte, draft-core wasm)
+  analysis/ -> DB, scoring
+  stats: all regions, ranked solo queue first, other modes later
+
+reference sources found (spec search, 2026-11-15)
+  hasagi-types: still the best per-patch spec (keep as docs/lcu-spec placeholder)
+  KebsCS/lcu-and-riotclient-api: raw /help Full dump (data_info.json) + Riot Client spec; NO licence
+  dosxnjos/lol-client (MIT): real 16.20 draft fixture + empirical notes (docs/ARMADILHAS.md)
+  LeagueAkari (MIT): hand-written champ select types, widest action type list
+  Sazzlez/DirkDraft recordings (no licence), sunerpy/winer fixtures; tanvoid0/wingbot ARAM
+    Mayhem sample has REAL player data — never copy
+  avoid nebil175/lcu_dumper (malware-lure pattern)
+
+2026-11-20 ui-base additions (unpushed):
+- README.md (run per OS) + README-dev.md (checks, release, capture)
+- capture/devserver default --out = <OS temp>/draftgpt-captures; only agents copy into fixtures/ (AGENTS.md rule)
+- web: per-row role select (swaps within team) + "You" toggle; header menus removed
+- draft-core: Ban.hover (teammates' unlocked bans); ban suggestions skip hovered bans
+- web: draft modes ranked (5 ally bans, enemy reveal, 1-2-2-2-2-1) / tournament (B R x3, picks B R R B B R, bans R B x2, picks R B B R), side blue/red, "No ban" skip
+- Draft rules checked against wiki.leagueoflegends.com/en-us/Team_drafting (2025-09): tournament bans by captain (slot 1), ranked blind bans may duplicate across teams
+- Open: enemy roles unused by recommender; Fearless draft not modelled
+- web: Replay… (fixtures served at /recordings/, or a local .jsonl) with stepping + take over; draft_core::replay + wasm replay()
+- web: mode toggle Ranked/Tournament, Fearless checkbox (tournament only), First pick checkboxes on team titles (mutex) replace Blue/Red
+- ui: toggle buttons for Fearless/First pick (14f88ee), LoL palette in theme.css (808004e; muted and red lightened for contrast). UI now TBD.
