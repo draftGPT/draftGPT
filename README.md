@@ -98,6 +98,34 @@ cargo clippy --workspace --all-targets -- -D warnings
 cd ui && npm run check && npm test
 ```
 
+Tests replay the recordings in `fixtures/`, so no League Client is needed.
+
+### Recording drafts (capture and devserver)
+
+New fixtures come from recording real champ selects on Windows or macOS.
+Everything written is redacted (player names, IDs, chat credentials), and the client is only ever read.
+
+- **devserver**: a local page that shows what the client sends and records each champ select.
+
+  ```sh
+  cargo run -p devserver --release    # with the League Client open, then open http://127.0.0.1:8790
+  cargo run -p devserver -- --replay fixtures/16_22_draft_missed_ban.jsonl --speed 4   # any OS, no client
+  ```
+
+  Options: `--port N`, `--out DIR` (default `captures/`), `--auto false` (record only when you press Start), `--wire false` (no raw frame file).
+
+- **capture**: the same recorder without the page.
+
+  ```sh
+  cargo run -p capture -- --out captures              # record every champ select until Ctrl+C
+  cargo run -p capture -- record --label ranked_solo  # record everything from now until Ctrl+C
+  ```
+
+Recordings land in `captures/` as `.jsonl` files.
+The `*.wire.jsonl` and `*.sweep.json` files next to them hold raw client data and are never committed.
+How to run a capture session, fix it when it doesn't connect, and turn recordings into fixtures: [crates/devserver/AGENTS.md](crates/devserver/AGENTS.md).
+
+### More
+
 - Architecture and crate layout: [docs/arch.md](docs/arch.md)
 - Project rules and all commands: [AGENTS.md](AGENTS.md)
-- Recording drafts from the client (devserver) and turning them into fixtures: [crates/devserver/AGENTS.md](crates/devserver/AGENTS.md)
