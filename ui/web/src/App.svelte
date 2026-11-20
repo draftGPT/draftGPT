@@ -59,7 +59,10 @@
   function pick(champion: number | null) {
     const s = selection;
     if (!s) return;
-    draft = s.kind === "slot" ? setChampion(draft, s.side, s.cellId, champion) : setBan(draft, s.side, s.index, champion);
+    draft =
+      s.kind === "slot"
+        ? setChampion(draft, s.side, s.cellId, champion)
+        : setBan(draft, s.side, s.index, champion, { blind: mode === "ranked" });
     if (champion != null && same(s, target(current))) step = nextOpen(draft, steps, step + 1);
     selection = target(steps[step]);
   }
@@ -79,7 +82,7 @@
     } else if (kind === "ban") {
       const index = draft.bans.ally.findIndex((b) => b.champion == null);
       const at = index >= 0 ? index : draft.bans.ally.length;
-      if (at < MAX_BANS) draft = setBan(draft, "ally", at, champion);
+      if (at < MAX_BANS) draft = setBan(draft, "ally", at, champion, { blind: mode === "ranked" });
     }
   }
 
@@ -147,7 +150,7 @@
           <button type="button" class="close" onclick={() => (selection = null)} aria-label="Close">×</button>
         </span>
       </h2>
-      <ChampionPicker {champions} unavailable={taken(draft)} onPick={pick} onClear={() => pick(null)} />
+      <ChampionPicker {champions} unavailable={taken(draft, mode === "ranked" && selection.kind === "ban" ? selection.side : undefined)} onPick={pick} onClear={() => pick(null)} />
     </section>
   {:else}
     <p class="hint">

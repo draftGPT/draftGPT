@@ -52,9 +52,18 @@ export function setChampion(
 
 export const MAX_BANS = 5;
 
-/** Sets ban `index` (0–4) of a side; `null` clears it. */
-export function setBan(d: DraftState, side: Side, index: number, champion: number | null): DraftState {
-  const next = champion == null ? d : without(d, champion);
+/**
+ * Sets ban `index` (0–4) of a side; `null` clears it. With `blind` (ranked:
+ * both teams ban at once) the other team may ban the same champion.
+ */
+export function setBan(
+  d: DraftState,
+  side: Side,
+  index: number,
+  champion: number | null,
+  { blind = false } = {},
+): DraftState {
+  const next = champion == null ? d : without(d, champion, blind ? other(side) : undefined);
   const ids: (number | null)[] = next.bans[side].map((b) => b.champion);
   while (ids.length <= index) ids.push(null);
   ids[index] = champion;
@@ -83,25 +92,33 @@ export function setPosition(d: DraftState, side: Side, cellId: number, position:
   };
 }
 
-/** The draft with `champion` removed from every slot and ban. */
-function without(d: DraftState, champion: number): DraftState {
+const other = (side: Side): Side => (side === "ally" ? "enemy" : "ally");
+
+/** The draft with `champion` removed from every slot and ban (except `keepBans`' bans). */
+function without(d: DraftState, champion: number, keepBans?: Side): DraftState {
   const clear = (s: Slot): Slot => (s.champion === champion ? { ...s, champion: null } : s);
   const unban = (b: Ban): Ban => (b.champion === champion ? { ...b, champion: null } : b);
   return {
     ...d,
     ally: d.ally.map(clear),
     enemy: d.enemy.map(clear),
-    bans: { ally: d.bans.ally.map(unban), enemy: d.bans.enemy.map(unban) },
+    bans: {
+      ally: keepBans === "ally" ? d.bans.ally : d.bans.ally.map(unban),
+      enemy: keepBans === "enemy" ? d.bans.enemy : d.bans.enemy.map(unban),
+    },
   };
 }
 
-/** Champions already picked or banned. */
-export function taken(d: DraftState): Set<number> {
+/**
+ * Champions already picked or banned. `blindBan`: for a ranked ban by that
+ * team, where the other team's bans don't count (blind bans can match).
+ */
+export function taken(d: DraftState, blindBan?: Side): Set<number> {
   const ids = [
     ...d.ally.map((s) => s.champion),
     ...d.enemy.map((s) => s.champion),
-    ...d.bans.ally.map((b) => b.champion),
-    ...d.bans.enemy.map((b) => b.champion),
+    ...(blindBan === "enemy" ? [] : d.bans.ally.map((b) => b.champion)),
+    ...(blindBan === "ally" ? [] : d.bans.enemy.map((b) => b.champion)),
   ];
   return new Set(ids.filter((c): c is number => c != null));
 }
@@ -113,9 +130,10 @@ export function taken(d: DraftState): Set<number> {
 export type DraftMode = "ranked" | "tournament";
 export type MapSide = "blue" | "red";
 
-export type Step = { phase: string; group: number; side: Side } & (
+/** `cellId`: who acts (in tournament draft the captain, slot 1, makes every ban). */
+export type Step = { phase: string; group: number; side: Side; cellId: number } & (
   | { kind: "ban"; index: number }
-  | { kind: "pick"; cellId: number }
+  | { kind: "pick" }
 );
 
 /**
@@ -126,8 +144,14 @@ export function draftOrder(mode: DraftMode, you: MapSide): Step[] {
   const side = (team: MapSide): Side => (team === you ? "ally" : "enemy");
   const steps: Step[] = [];
   let group = 0;
+  const base = (s: Side) => (s === "ally" ? 0 : 5);
+  // Ranked: every player bans one. Tournament: the captain (first slot) bans.
   const bans = (phase: string, team: MapSide, indices: number[]) => {
-    for (const index of indices) steps.push({ phase, group, side: side(team), kind: "ban", index });
+    const s = side(team);
+    for (const index of indices) {
+      const cellId = base(s) + (mode === "ranked" ? index : 0);
+      steps.push({ phase, group, side: s, cellId, kind: "ban", index });
+    }
     group++;
   };
   // Picks: "B1 R1 R2 B2" → teams in turn, consecutive picks by one team grouped.
@@ -138,7 +162,7 @@ export function draftOrder(mode: DraftMode, you: MapSide): Step[] {
       if (last && last !== p[0]) group++;
       last = p[0]!;
       const s = side(team);
-      steps.push({ phase, group, side: s, kind: "pick", cellId: (s === "ally" ? 0 : 5) + Number(p.slice(1)) - 1 });
+      steps.push({ phase, group, side: s, kind: "pick", cellId: base(s) + Number(p.slice(1)) - 1 });
     }
     group++;
   };
@@ -178,9 +202,7 @@ export function nextOpen(d: DraftState, steps: Step[], from = 0): number {
 export function withTurn(d: DraftState, steps: Step[], i: number): DraftState {
   const step = steps[i];
   if (!step) return { ...d, phase: "finalization", turn: null };
-  const cells = steps
-    .filter((s) => s.group === step.group)
-    .map((s) => (s.kind === "pick" ? s.cellId : (d[s.side][s.index]?.cellId ?? -1)));
+  const cells = steps.filter((s) => s.group === step.group).map((s) => s.cellId);
   const local = d.ally.find((s) => s.isLocal)?.cellId;
   return {
     ...d,

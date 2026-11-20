@@ -94,6 +94,30 @@ describe("draft order", () => {
     expect([...new Set(steps.map((s) => s.phase))]).toEqual(["Ban phase 1", "Pick phase 1", "Ban phase 2", "Pick phase 2"]);
   });
 
+  it("ranked bans are blind: both teams can ban the same champion, one team can't twice", () => {
+    let d = setBan(newManualDraft(), "ally", 0, 157, { blind: true });
+    d = setBan(d, "enemy", 0, 157, { blind: true });
+    expect([d.bans.ally[0]!.champion, d.bans.enemy[0]!.champion]).toEqual([157, 157]);
+    expect(taken(d, "enemy").has(157)).toBe(true);
+    expect(taken(newManualDraft(), "enemy").size).toBe(0);
+    const onlyAlly = setBan(newManualDraft(), "ally", 0, 157, { blind: true });
+    expect(taken(onlyAlly, "enemy").has(157)).toBe(false);
+    d = setBan(d, "ally", 1, 157, { blind: true });
+    expect(d.bans.ally.map((b) => b.champion)).toEqual([null, 157]);
+    // Not blind (tournament): banning moves the champion.
+    const t = setBan(setBan(newManualDraft(), "ally", 0, 157), "enemy", 0, 157);
+    expect([t.bans.ally[0]?.champion ?? null, t.bans.enemy[0]!.champion]).toEqual([null, 157]);
+  });
+
+  it("tournament bans belong to each team's captain (slot 1)", () => {
+    const steps = draftOrder("tournament", "blue");
+    const d = newManualDraft(3);
+    const ban = steps.findIndex((s) => s.kind === "ban" && s.side === "ally");
+    expect(withTurn(d, steps, ban).turn).toEqual({ kind: "ban", cells: [0], yours: false });
+    expect(withTurn(newManualDraft(0), steps, ban).turn).toMatchObject({ yours: true });
+    expect(steps.filter((s) => s.kind === "ban").map((s) => s.cellId % 5)).toEqual(Array(10).fill(0));
+  });
+
   it("turns follow the steps: yours when you're in the group, finalization at the end", () => {
     const steps = draftOrder("ranked", "blue");
     let d = newManualDraft(2);

@@ -93,8 +93,9 @@ pub struct Ban {
     pub champion: Option<ChampionId>,
     /// The banning cell, if known (older clients only give the champion list).
     pub cell_id: Option<i64>,
-    /// A ban not locked yet: the champion a teammate is hovering to ban
-    /// (only your team's are visible; `champion` is `None` until it locks).
+    /// A ban not locked yet: the champion being hovered to ban (your team's
+    /// in ranked, both teams' in tournament draft; `champion` is `None` until
+    /// it locks).
     #[serde(default)]
     pub hover: Option<ChampionId>,
 }
