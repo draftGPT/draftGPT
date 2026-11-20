@@ -86,7 +86,7 @@ cargo run -p desktop -- --replay fixtures/16_22_draft_ban_and_pick_timeout_autol
 npm --prefix ui run dev -w @draftgpt/web    # http://localhost:5174
 ```
 
-Pick the mode (Ranked, Tournament or Fearless) and your side, then fill the draft in order; suggestions update as you go.
+Pick the mode (Ranked or Tournament, optionally Fearless) and which team picks first, then fill the draft in order; suggestions update as you go.
 **Replay…** steps through a recorded draft (the repo's fixtures, or a `.jsonl` file from a capture) with suggestions at every step; **Take over from here** continues it by hand.
 
 ## Development

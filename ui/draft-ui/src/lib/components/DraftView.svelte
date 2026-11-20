@@ -44,6 +44,8 @@
     phase?: string;
     /** Your team's map side, shown in the team titles (manual input). */
     allySide?: "blue" | "red";
+    /** "First pick" checkboxes on both teams, one checked: first pick is blue side (manual input). */
+    onAllySideChange?: (side: "blue" | "red") => void;
     /** "You" toggles on your team's slots (manual input). */
     onMakeLocal?: (cellId: number) => void;
   };
@@ -63,6 +65,7 @@
     onMakeLocal,
     phase,
     allySide,
+    onAllySideChange,
     onFearlessAdd,
     onFearlessRemove,
   }: Props = $props();
@@ -144,6 +147,8 @@
     onSlotClick={onSlotClick ? (c) => onSlotClick("ally", c) : undefined}
     onPositionChange={onPositionChange ? (c, p) => onPositionChange("ally", c, p) : undefined}
     {onMakeLocal}
+    firstPick={allySide === "blue"}
+    onFirstPick={onAllySideChange ? (on) => onAllySideChange(on ? "blue" : "red") : undefined}
   />
 
   <div class="middle">
@@ -182,6 +187,8 @@
     selectedCell={sel("enemy")}
     onSlotClick={onSlotClick ? (c) => onSlotClick("enemy", c) : undefined}
     onPositionChange={onPositionChange ? (c, p) => onPositionChange("enemy", c, p) : undefined}
+    firstPick={allySide === "red"}
+    onFirstPick={onAllySideChange ? (on) => onAllySideChange(on ? "red" : "blue") : undefined}
   />
 
   {#if draft.bench.length || draft.offered.length}

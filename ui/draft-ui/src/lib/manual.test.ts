@@ -142,10 +142,6 @@ describe("draft order", () => {
 });
 
 describe("fearless", () => {
-  it("follows the tournament order", () => {
-    expect(draftOrder("fearless", "red")).toEqual(draftOrder("tournament", "red"));
-  });
-
   it("a fearless champion leaves the board and can't be taken; the next game keeps roles and adds picks", () => {
     let d = setLocal(setPosition(newManualDraft(), "ally", 0, "middle"), 2);
     d = setChampion(d, "ally", 2, 103);
