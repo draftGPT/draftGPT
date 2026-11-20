@@ -130,10 +130,10 @@ export function taken(d: DraftState, blindBan?: Side): Set<number> {
 
 /**
  * `ranked`: all ten bans at once, then picks. `tournament` (Clash): two ban
- * and two pick phases. `fearless`: tournament, plus every champion picked in
- * earlier games of the series is out for both teams.
+ * and two pick phases. A Fearless series is tournament draft plus the draft's
+ * `fearless` list.
  */
-export type DraftMode = "ranked" | "tournament" | "fearless";
+export type DraftMode = "ranked" | "tournament";
 export type MapSide = "blue" | "red";
 
 /** `cellId`: who acts (in tournament draft the captain, slot 1, makes every ban). */

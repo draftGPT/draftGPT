@@ -1,6 +1,7 @@
 <script lang="ts">
   // The web drafter: the shared DraftView with manual input. It walks through
-  // the draft order of the chosen mode (ranked, tournament, fearless); click
+  // the draft order of the chosen mode (ranked, tournament, optionally a
+  // Fearless series); click
   // any spot to fix it. A recording can be replayed step by step and taken
   // over at any step. Recommendations update as the draft changes.
   import {
@@ -40,6 +41,8 @@
 
   let mode = $state<DraftMode>("ranked");
   let side = $state<MapSide>("blue");
+  /** Tournament only: a Fearless series. */
+  let fearless = $state(false);
   let draft = $state<DraftState>(newManualDraft());
   /** The step of the draft order being filled; past the end when done. */
   let step = $state(0);
@@ -114,10 +117,18 @@
     }
   }
 
+  /** Fearless off: the earlier games are gone. */
+  function setFearless(on: boolean) {
+    fearless = on;
+    if (!on) {
+      draft = { ...draft, fearless: [] };
+      game = 1;
+    }
+  }
+
   /** Mode or side changed: keep what's entered, continue at the first open step. */
   function setOrder(m: DraftMode, s: MapSide) {
-    if (m !== "fearless" && draft.fearless.length) draft = { ...draft, fearless: [] };
-    if (m !== "fearless") game = 1;
+    if (m !== "tournament") setFearless(false);
     mode = m;
     side = s;
     step = nextOpen(draft, draftOrder(m, s));
@@ -163,6 +174,7 @@
     const t = fromReplay(d);
     mode = t.mode;
     side = t.side;
+    fearless = false;
     draft = t.draft;
     game = 1;
     step = resumeStep(t.draft, draftOrder(t.mode, t.side));
@@ -187,13 +199,13 @@
       <div class="seg" role="group" aria-label="Draft mode">
         <button type="button" aria-pressed={mode === "ranked"} onclick={() => setOrder("ranked", side)} title="All ten bans at once, then picks">Ranked</button>
         <button type="button" aria-pressed={mode === "tournament"} onclick={() => setOrder("tournament", side)} title="Clash: two ban phases and two pick phases">Tournament</button>
-        <button type="button" aria-pressed={mode === "fearless"} onclick={() => setOrder("fearless", side)} title="Tournament draft in a series: champions picked in earlier games are out for both teams">Fearless</button>
       </div>
-      <div class="seg" role="group" aria-label="Your side">
-        <button type="button" class="blue" aria-pressed={side === "blue"} onclick={() => setOrder(mode, "blue")}>Blue</button>
-        <button type="button" class="red" aria-pressed={side === "red"} onclick={() => setOrder(mode, "red")}>Red</button>
-      </div>
-      {#if mode === "fearless"}
+      {#if mode === "tournament"}
+        <label class="check" title="A series: champions picked in earlier games are out for both teams">
+          <input type="checkbox" checked={fearless} onchange={(e) => setFearless(e.currentTarget.checked)} />Fearless
+        </label>
+      {/if}
+      {#if fearless}
         <button type="button" onclick={startNextGame} title="This game's picks become unavailable">Next game</button>
       {/if}
       <button type="button" onclick={reset}>Reset</button>
@@ -239,10 +251,11 @@
   <DraftView
     draft={shown}
     {recs}
-    phase={mode === "fearless" ? `Game ${game}${current ? ` · ${current.phase}` : ""}` : current?.phase}
-    onFearlessAdd={mode === "fearless" ? () => (selection = { kind: "fearless" }) : undefined}
-    onFearlessRemove={mode === "fearless" ? (c) => (draft = removeFearless(draft, c)) : undefined}
+    phase={fearless ? `Game ${game}${current ? ` · ${current.phase}` : ""}` : current?.phase}
+    onFearlessAdd={fearless ? () => (selection = { kind: "fearless" }) : undefined}
+    onFearlessRemove={fearless ? (c) => (draft = removeFearless(draft, c)) : undefined}
     allySide={side}
+    onAllySideChange={(s) => setOrder(mode, s)}
     {champions}
     layout="wide"
     show="both"
@@ -417,11 +430,15 @@
   .seg button[aria-pressed="false"] {
     color: var(--muted);
   }
-  .seg .blue[aria-pressed="true"] {
-    border-color: var(--ally);
+  .check {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    cursor: pointer;
   }
-  .seg .red[aria-pressed="true"] {
-    border-color: var(--enemy);
+  .check input {
+    margin: 0;
+    accent-color: var(--gold);
   }
   .close {
     background: none;
