@@ -21,6 +21,9 @@ export type Update = {
 export type Source = {
   start(onUpdate: (u: Update) => void): Promise<void>;
   setFloating?(on: boolean): Promise<void>;
+  /** The panel has no native title bar in the app; these replace its buttons. */
+  minimize?(): Promise<void>;
+  close?(): Promise<void>;
 };
 
 export function inTauri(): boolean {
@@ -38,6 +41,14 @@ export function tauriSource(): Source {
     async setFloating(on) {
       const { invoke } = await import("@tauri-apps/api/core");
       await invoke("set_floating", { on });
+    },
+    async minimize() {
+      const { getCurrentWindow } = await import("@tauri-apps/api/window");
+      await getCurrentWindow().minimize();
+    },
+    async close() {
+      const { getCurrentWindow } = await import("@tauri-apps/api/window");
+      await getCurrentWindow().close();
     },
   };
 }

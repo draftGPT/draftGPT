@@ -76,6 +76,9 @@ fn run(args: Args) -> Result<(), Box<dyn std::error::Error>> {
             if let Ok(dir) = app.path().app_log_dir() {
                 capture::logging::init(&dir, "draftgpt");
             }
+            // `setup` runs outside Tokio; Live::spawn needs a runtime to spawn its task on.
+            let runtime = tauri::async_runtime::handle();
+            let _in_runtime = runtime.inner().enter();
             let (stream, name) = match replay {
                 Some((r, name)) => (Box::new(r).into_stream(), Some(name)),
                 None => (Box::new(Live::default()).into_stream(), None),

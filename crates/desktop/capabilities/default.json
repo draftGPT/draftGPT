@@ -1,7 +1,13 @@
 {
   "$schema": "../gen/schemas/desktop-schema.json",
   "identifier": "default",
-  "description": "The panel page only listens to draft updates. App commands (latest, set_floating) need no permission.",
+  "description": "The panel page listens to draft updates and, having no native title bar, drags, minimizes and closes its own window. App commands (latest, set_floating) need no permission.",
   "windows": ["panel"],
-  "permissions": ["core:event:allow-listen", "core:event:allow-unlisten"]
+  "permissions": [
+    "core:event:allow-listen",
+    "core:event:allow-unlisten",
+    "core:window:allow-start-dragging",
+    "core:window:allow-minimize",
+    "core:window:allow-close"
+  ]
 }
