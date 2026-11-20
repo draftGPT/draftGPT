@@ -1,7 +1,8 @@
 <script lang="ts">
   // The web drafter: the shared DraftView with manual input. It walks through
-  // the draft order of the chosen mode (ranked or tournament); click any spot
-  // to fix it. Recommendations update as the draft changes.
+  // the draft order of the chosen mode (ranked, tournament, fearless); click
+  // any spot to fix it. A recording can be replayed step by step and taken
+  // over at any step. Recommendations update as the draft changes.
   import {
     ChampionPicker,
     addFearless,
@@ -11,7 +12,9 @@
     MAX_BANS,
     champions,
     draftOrder,
+    fromReplay,
     newManualDraft,
+    resumeStep,
     nextOpen,
     setBan,
     setChampion,
@@ -23,9 +26,11 @@
     type DraftState,
     type MapSide,
     type Recommendations,
+    type Replay,
     type Step,
   } from "@draftgpt/draft-ui";
-  import { createRecommender, type Recommend } from "./engine";
+  import { createRecommender, fetchRecording, listRecordings, replayRecording, type Recommend } from "./engine";
+  import ReplayBar from "./ReplayBar.svelte";
 
   type Selection =
     | { kind: "slot"; side: "ally" | "enemy"; cellId: number }
@@ -44,6 +49,12 @@
   let recommend = $state<Recommend | null>(null);
   let error = $state<string | null>(null);
 
+  /** Replay: the recording being stepped through, and the step shown. */
+  let replay = $state<{ name: string; data: Replay } | null>(null);
+  let replayIndex = $state(0);
+  let chooser = $state(false);
+  let recordings = $state<string[]>([]);
+
   createRecommender().then(
     (r) => (recommend = r),
     (e: unknown) => (error = `Couldn't load the recommender: ${e instanceof Error ? e.message : String(e)}`),
@@ -52,7 +63,13 @@
   const steps = $derived(draftOrder(mode, side));
   const current = $derived<Step | undefined>(steps[step]);
   const shown = $derived(withTurn(draft, steps, step));
-  const recs = $derived<Recommendations | null>(recommend ? recommend($state.snapshot(shown)) : null);
+  // A replayed step, timer stopped (it would count down from when you got there).
+  const replayed = $derived.by<DraftState | null>(() => {
+    const d = replay?.data.steps[replayIndex]?.draft;
+    return d ? { ...d, timer: { ...d.timer, remainingMs: null } } : null;
+  });
+  const view = $derived(replayed ?? shown);
+  const recs = $derived<Recommendations | null>(recommend ? recommend($state.snapshot(view)) : null);
   const local = $derived(draft.ally.find((s) => s.isLocal));
 
   const target = (s: Step | undefined): Selection =>
@@ -115,6 +132,44 @@
     selection = target(steps[0]);
   }
 
+  async function openChooser() {
+    chooser = !chooser;
+    if (chooser && !recordings.length) recordings = await listRecordings().catch(() => []);
+  }
+
+  async function load(name: string, text: Promise<string>) {
+    try {
+      const data = await replayRecording(await text);
+      if (!data.steps.length) throw new Error("no champ select in this recording");
+      replay = { name, data };
+      replayIndex = 0;
+      chooser = false;
+      error = null;
+    } catch (e) {
+      error = `Couldn't replay ${name}: ${e instanceof Error ? e.message : String(e)}`;
+    }
+  }
+
+  function onFile(e: Event & { currentTarget: HTMLInputElement }) {
+    const file = e.currentTarget.files?.[0];
+    if (file) void load(file.name, file.text());
+    e.currentTarget.value = "";
+  }
+
+  /** Continue the replayed draft by hand from the step shown. */
+  function takeOver() {
+    const d = replay?.data.steps[replayIndex]?.draft;
+    if (!d) return;
+    const t = fromReplay(d);
+    mode = t.mode;
+    side = t.side;
+    draft = t.draft;
+    game = 1;
+    step = resumeStep(t.draft, draftOrder(t.mode, t.side));
+    selection = target(draftOrder(t.mode, t.side)[step]);
+    replay = null;
+  }
+
   function reset() {
     draft = newManualDraft();
     game = 1;
@@ -127,6 +182,8 @@
   <header>
     <h1>draftGPT <span>drafter</span></h1>
     <div class="controls">
+      <button type="button" aria-expanded={chooser} onclick={openChooser} title="Step through a recorded draft">Replay…</button>
+      {#if !replay}
       <div class="seg" role="group" aria-label="Draft mode">
         <button type="button" aria-pressed={mode === "ranked"} onclick={() => setOrder("ranked", side)} title="All ten bans at once, then picks">Ranked</button>
         <button type="button" aria-pressed={mode === "tournament"} onclick={() => setOrder("tournament", side)} title="Clash: two ban phases and two pick phases">Tournament</button>
@@ -140,11 +197,45 @@
         <button type="button" onclick={startNextGame} title="This game's picks become unavailable">Next game</button>
       {/if}
       <button type="button" onclick={reset}>Reset</button>
+      {/if}
     </div>
   </header>
 
+  {#if chooser}
+    <section class="chooser" aria-label="Choose a recording">
+      <label>
+        Recording
+        <select
+          aria-label="Recording"
+          onchange={(e) => {
+            const n = e.currentTarget.value;
+            if (n) void load(n, fetchRecording(n));
+          }}
+        >
+          <option value="">Choose…</option>
+          {#each recordings as r (r)}<option value={r}>{r}</option>{/each}
+        </select>
+      </label>
+      <label class="file">
+        or open a file (.jsonl from a capture)
+        <input type="file" accept=".jsonl" onchange={onFile} aria-label="Open a recording file" />
+      </label>
+    </section>
+  {/if}
+
   {#if error}<p class="error" role="alert">{error}</p>{/if}
 
+  {#if replay}
+    <ReplayBar
+      replay={replay.data}
+      name={replay.name}
+      index={replayIndex}
+      onIndex={(i) => (replayIndex = i)}
+      onTakeOver={takeOver}
+      onClose={() => (replay = null)}
+    />
+    <DraftView draft={view} {recs} {champions} layout="wide" show="both" />
+  {:else}
   <DraftView
     draft={shown}
     {recs}
@@ -199,6 +290,7 @@
       {#if current}<button type="button" class="link" onclick={() => (selection = target(current))}>Continue</button>{/if}
     </p>
   {/if}
+  {/if}
 </main>
 
 <style>
@@ -241,6 +333,31 @@
   }
   .controls button {
     cursor: pointer;
+  }
+  .chooser {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 24px;
+    align-items: center;
+    padding: 10px 12px;
+    border-radius: var(--radius);
+    background: var(--panel);
+    border: 1px solid var(--line);
+  }
+  .chooser label {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    color: var(--muted);
+  }
+  .chooser select {
+    padding: 5px 8px;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    background: var(--panel-2);
+    color: var(--text);
+    font: inherit;
+    max-width: 100%;
   }
   .picking {
     background: var(--panel);

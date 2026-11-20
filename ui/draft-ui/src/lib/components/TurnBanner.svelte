@@ -26,6 +26,7 @@
     const what = t.kind === "ban" ? "ban" : "pick";
     if (t.yours) return `Your ${what}`;
     const ally = t.cells.some((c) => draft.ally.some((s) => s.cellId === c));
+    if (draft.spectating) return ally ? `Blue ${what}` : `Red ${what}`;
     return ally ? `Ally ${what}` : `Enemy ${what}`;
   });
 </script>

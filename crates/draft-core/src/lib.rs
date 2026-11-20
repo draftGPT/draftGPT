@@ -7,10 +7,12 @@
 
 pub mod recommend;
 pub mod reducer;
+pub mod replay;
 pub mod state;
 
 pub use recommend::{
     Reason, Recommendation, Recommendations, Recommender, Stats, StatsRecommender,
 };
 pub use reducer::{Tracker, from_session};
+pub use replay::{Replay, ReplayStep, replay};
 pub use state::{Ban, Bans, ChampionId, DraftState, Phase, Position, Slot, Timer, Turn, TurnKind};
