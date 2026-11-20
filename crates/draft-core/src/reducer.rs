@@ -231,7 +231,7 @@ fn bans(s: &ChampSelectSession) -> Bans {
     let allies: Vec<i64> = s.my_team.iter().map(|p| p.cell_id).collect();
     let mut out = Bans::default();
     // Locked bans, and bans being hovered (an unfinished ban action with a
-    // champion; the client only shows your team's).
+    // champion; ranked shows only your team's, tournament draft both).
     let shown = |a: &&Action| a.kind == ActionType::Ban && (a.completed || a.champion().is_some());
     for a in actions(s).filter(shown) {
         let ban = Ban {

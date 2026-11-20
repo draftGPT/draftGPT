@@ -98,7 +98,10 @@ test("ranked: your bans, then the enemy's revealed, then picks in order; a ban c
   for (const name of ["Ahri", "Zed", "Yasuo", "Yone"]) await pickChampion(page, name);
   await page.getByRole("button", { name: "No ban" }).click();
   await expect(banner).toContainText("Bans revealed · Enemy ban");
-  for (const name of ["Lux", "Jinx", "Thresh", "Vi", "Garen"]) await pickChampion(page, name);
+  // Blind bans: the enemy may ban one of yours again.
+  for (const name of ["Ahri", "Jinx", "Thresh", "Vi", "Garen"]) await pickChampion(page, name);
+  await expect(page.getByLabel("Your bans").locator('[data-ban="0"]')).toHaveAttribute("title", "Ahri");
+  await expect(page.getByLabel("Enemy bans").locator('[data-ban="0"]')).toHaveAttribute("title", "Ahri");
   // Blue picks first: you (blue 1).
   await expect(banner).toContainText("Pick phase · Your pick");
   await pickChampion(page, "Darius");
@@ -122,8 +125,8 @@ test("tournament on red: bans alternate from blue, two phases each", async ({ pa
   await pickChampion(page, "Garen");
   await expect(banner).toContainText("Pick phase 1 · Your pick");
   for (const name of ["Darius", "Vi", "Thresh", "Leona", "Jax"]) await pickChampion(page, name);
-  // Phase 2 bans start with red, your team's 4th ban (player 4, not you).
-  await expect(banner).toContainText("Ban phase 2 · Ally ban");
+  // Phase 2 bans start with red; the captain (slot 1, you) makes every ban.
+  await expect(banner).toContainText("Ban phase 2 · Your ban");
 });
 
 test("reset clears the draft", async ({ page }) => {
