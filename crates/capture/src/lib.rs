@@ -3,6 +3,7 @@
 //! dump per client version. The file format is defined in `lcu::recording`.
 
 pub mod auto;
+pub mod clash;
 pub mod controller;
 pub mod extras;
 mod fsutil;

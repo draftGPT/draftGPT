@@ -49,7 +49,8 @@ impl PageFeed {
     /// values out of problem messages (which also go to the log).
     pub fn event(&mut self, ev: &RawEvent) -> PageMsg {
         let mut event = ev.clone();
-        self.redactor.redact(&mut event.data);
+        self.redactor.redact_at(&event.uri, &mut event.data);
+        event.uri = self.redactor.redact_uri(&event.uri);
         let problem = check::check(&event);
         if let Some(p) = &problem
             && self.logged_problems.insert(p.clone())

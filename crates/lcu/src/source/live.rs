@@ -18,8 +18,12 @@ use crate::{CORE_RESOURCES, Resource, WIRE_EVENTS};
 /// of each core resource, then forwards events. Reconnects (and finds the
 /// client again, since port and password change) whenever the connection drops.
 pub struct Live {
-    /// Resources emitted as [`SourceEvent::Event`].
+    /// Resources emitted as [`SourceEvent::Event`], each snapshotted on connect.
     pub resources: Vec<Resource>,
+    /// Further URIs emitted as events (no snapshot), e.g. a whole prefix.
+    pub also_forward: fn(&str) -> bool,
+    /// Further events to subscribe to for `also_forward` when `wire` is off.
+    pub also_subscribe: &'static [&'static str],
     /// Also subscribe to every client event and emit each frame as
     /// [`SourceEvent::Wire`].
     pub wire: bool,
@@ -32,6 +36,8 @@ impl Default for Live {
     fn default() -> Self {
         Self {
             resources: CORE_RESOURCES.to_vec(),
+            also_forward: |_| false,
+            also_subscribe: &[],
             wire: false,
             retry: Duration::from_secs(2),
             discover: discovery::discover,
@@ -181,6 +187,7 @@ async fn connect(live: &Live) -> Result<(LcuHttp, ws::WsStream, ClientInfo), Str
     } else {
         // Several resources share a prefix event; subscribe to each once.
         let mut events: Vec<&str> = live.resources.iter().map(|r| r.event).collect();
+        events.extend(live.also_subscribe);
         events.sort_unstable();
         events.dedup();
         events
@@ -257,7 +264,7 @@ async fn forward(
             }
         }
         match ws::parse_frame(&text) {
-            Ok(Some(w)) if core.contains(w.uri.as_str()) => {
+            Ok(Some(w)) if core.contains(w.uri.as_str()) || (live.also_forward)(&w.uri) => {
                 let ev = RawEvent {
                     t,
                     uri: w.uri,

@@ -59,6 +59,12 @@ pub const SENSITIVE_KEY_PARTS: &[&str] = &[
     // Player names in a friend's party, and linked accounts.
     "partysummoners",
     "discord",
+    // Clash: a roster (team) ID finds the team and its players through the
+    // public API; covers rosterId1/2, forfeitRosterId, winnerRosterId.
+    "rosterid",
+    "winnerid",
+    "inviterid",
+    "invitationid",
     // Chat rooms and credentials.
     "multiuserchatid",
     "chatroomname",
@@ -80,6 +86,14 @@ pub fn is_sensitive_key(key: &str) -> bool {
     SENSITIVE_KEY_PARTS.iter().any(|p| lower.contains(p))
         || SENSITIVE_EXACT_KEYS.contains(&lower.as_str())
 }
+
+/// Keys replaced only in Clash resources, where they hold user-chosen team
+/// names (elsewhere `name` is a champion or queue name).
+const CLASH_TEXT_KEYS: &[&str] = &["name", "shortname", "rostername", "rostershortname"];
+
+/// Path segments that are always an ID, whatever they look like: the one after
+/// `roster` (Clash team IDs aren't always long or numeric).
+const ID_AFTER_SEGMENT: &[&str] = &["roster"];
 
 /// Chat IDs look like `<puuid>@eu1.pvp.net`, `<room>@sec.pvp.net` or
 /// `<id>@pvp.net`.
@@ -212,6 +226,45 @@ impl Redactor {
         }
     }
 
+    /// Redacts an event's data, with the extra rules for the resource at `uri`
+    /// (Clash team names and IDs). Use this whenever the URI is known.
+    pub fn redact_at(&mut self, uri: &str, value: &mut Value) {
+        if lcu::is_clash_uri(uri) {
+            self.redact_clash(value);
+        }
+        self.redact(value);
+    }
+
+    /// Clash only: team names, string `id`s (roster IDs) and maps keyed by
+    /// summoner-sized numbers (per-player stats and bids).
+    fn redact_clash(&mut self, value: &mut Value) {
+        match value {
+            Value::Object(map) => {
+                if map.keys().any(|k| is_numeric_id(k)) {
+                    let entries = std::mem::take(map);
+                    for (k, v) in entries {
+                        let key = if is_numeric_id(&k) {
+                            self.fake_string(k)
+                        } else {
+                            k
+                        };
+                        map.insert(key, v);
+                    }
+                }
+                for (k, v) in map.iter_mut() {
+                    let lower = k.to_ascii_lowercase();
+                    if CLASH_TEXT_KEYS.contains(&lower.as_str()) || (k == "id" && v.is_string()) {
+                        self.replace_all(v);
+                    } else {
+                        self.redact_clash(v);
+                    }
+                }
+            }
+            Value::Array(items) => items.iter_mut().for_each(|v| self.redact_clash(v)),
+            _ => {}
+        }
+    }
+
     /// Redacts a whole wire frame (`[opcode, event, payload]`): the usual keys,
     /// plus ID segments in the payload URI, plus all text of chat resources.
     pub fn redact_frame(&mut self, frame: &mut Value) {
@@ -221,10 +274,12 @@ impl Redactor {
                 .and_then(Value::as_str)
                 .map(str::to_owned);
             if let Some(uri) = uri {
-                if is_chat_uri(&uri)
-                    && let Some(data) = payload.get_mut("data")
-                {
-                    self.replace_chat_text(data);
+                if let Some(data) = payload.get_mut("data") {
+                    if is_chat_uri(&uri) {
+                        self.replace_chat_text(data);
+                    } else if lcu::is_clash_uri(&uri) {
+                        self.redact_clash(data);
+                    }
                 }
                 payload["uri"] = Value::String(self.redact_uri(&uri));
             }
@@ -237,10 +292,13 @@ impl Redactor {
     /// segments (`v1`, `session`, champion IDs) stay. Fakes match the ones the
     /// same value gets elsewhere in the recording.
     pub fn redact_uri(&mut self, uri: &str) -> String {
+        let mut previous = "";
         uri.split('/')
             .map(|seg| {
+                let after_id_segment = ID_AFTER_SEGMENT.contains(&previous) && !seg.is_empty();
+                previous = seg;
                 let decoded = percent_decode(seg);
-                if is_id_like(&decoded) {
+                if after_id_segment || is_id_like(&decoded) {
                     self.fake_string(decoded)
                 } else if is_numeric_id(&decoded) {
                     self.fake_for(decoded).to_string()
@@ -307,6 +365,52 @@ pub fn find_unredacted(value: &Value) -> Vec<String> {
     found
 }
 
+/// [`find_unredacted`] plus the rules for the resource at `uri`: in Clash data,
+/// team names, string `id`s and summoner-sized map keys must be fakes, and so
+/// must ID segments of the URI.
+pub fn find_unredacted_at(uri: &str, value: &Value) -> Vec<String> {
+    let mut found = find_unredacted(value);
+    if lcu::is_clash_uri(uri) {
+        walk_clash(value, "", &mut found);
+        let mut previous = "";
+        for seg in uri.split('/') {
+            if ID_AFTER_SEGMENT.contains(&previous)
+                && !seg.is_empty()
+                && !seg.starts_with("redacted-")
+            {
+                found.push(format!("uri segment after {previous}"));
+            }
+            previous = seg;
+        }
+    }
+    found
+}
+
+fn walk_clash(value: &Value, path: &str, found: &mut Vec<String>) {
+    match value {
+        Value::Object(map) => {
+            for (k, v) in map {
+                let p = format!("{path}.{k}");
+                if is_numeric_id(k) {
+                    found.push(format!("{p} (key)"));
+                }
+                let lower = k.to_ascii_lowercase();
+                if CLASH_TEXT_KEYS.contains(&lower.as_str()) || (k == "id" && v.is_string()) {
+                    check_leaves(v, &p, found);
+                } else {
+                    walk_clash(v, &p, found);
+                }
+            }
+        }
+        Value::Array(items) => {
+            for (i, v) in items.iter().enumerate() {
+                walk_clash(v, &format!("{path}[{i}]"), found);
+            }
+        }
+        _ => {}
+    }
+}
+
 fn walk(value: &Value, path: &str, found: &mut Vec<String>) {
     match value {
         Value::Object(map) => {
@@ -362,6 +466,136 @@ fn check_leaves(value: &Value, path: &str, found: &mut Vec<String>) {
 mod tests {
     use super::*;
     use serde_json::json;
+
+    /// Shapes from the 16.23 spec (`LolClashRoster`, `LolClashBracket`, ...).
+    #[test]
+    fn clash_rosters_brackets_and_stats_are_redacted_consistently() {
+        let mut r = Redactor::new();
+        let mut summary = json!([{"state": "SCOUTING", "tournamentId": 4321, "rosterId": "778899", "bracketId": 556677}]);
+        let mut roster = json!({
+            "id": "778899", "tournamentId": 4321, "name": "Team Real Name", "shortName": "TRN",
+            "captainSummonerId": 12_345_678_901_u64, "invitationId": "inv-1234", "tier": 3,
+            "members": [
+                {"summonerId": 12_345_678_901_u64, "position": "MIDDLE", "tier": 3, "inviterId": 98_765_432_101_u64, "replacedSummonerId": 0},
+                {"summonerId": 22_345_678_901_u64, "position": "UTILITY", "tier": 3}
+            ],
+            "suggestedInvites": [{"summonerId": 32_345_678_901_u64}]
+        });
+        let mut bracket = json!({
+            "id": 556677, "tournamentId": 4321, "size": 8,
+            "rosters": [{"rosterId": 778899, "name": "Team Real Name", "shortName": "TRN", "logo": 5},
+                        {"rosterId": 112233, "name": "Other Team", "shortName": "OTH", "logo": 2}],
+            "matches": [{"id": 1, "round": 1, "rosterId1": 778899, "rosterId2": 112233, "winnerId": 0,
+                         "gameId": 7_000_000_001_u64, "status": "UPCOMING"}]
+        });
+        let mut stats = json!({"rosterId": 778899, "rosterName": "Team Real Name", "rosterShortName": "TRN",
+            "tournamentNameLocKey": "clash_name_x",
+            "playerStats": {"12345678901": {"rawStatsSum": {"KILLS": 4}}},
+            "periodStats": [{"period": 1, "playerBids": {"22345678901": 400}}]});
+        let mut team_data = json!({"captain": {"summonerId": 12_345_678_901_u64, "role": "MIDDLE"},
+            "members": [{"summonerId": 22_345_678_901_u64, "role": "UTILITY"}]});
+
+        let roster_uri = r.redact_uri("/lol-clash/v1/roster/778899");
+        let stats_uri = r.redact_uri("/lol-clash/v1/roster/778899/stats");
+        for (uri, v) in [
+            ("/lol-clash/v1/tournament-summary", &mut summary),
+            ("/lol-clash/v1/roster/778899", &mut roster),
+            ("/lol-clash/v1/bracket/556677", &mut bracket),
+            ("/lol-clash/v1/roster/778899/stats", &mut stats),
+            ("/lol-clash/v1/thirdparty/team-data", &mut team_data),
+        ] {
+            r.redact_at(uri, v);
+            assert_eq!(
+                find_unredacted_at(&r.redact_uri(uri), v),
+                Vec::<String>::new(),
+                "{uri}: {v}"
+            );
+        }
+        // Same team, same fake: URI, roster id, summary and bracket.
+        let fake = roster["id"].as_str().unwrap().to_string();
+        assert!(fake.starts_with("redacted-"), "{fake}");
+        assert_eq!(roster_uri, format!("/lol-clash/v1/roster/{fake}"));
+        assert_eq!(stats_uri, format!("/lol-clash/v1/roster/{fake}/stats"));
+        assert_eq!(summary[0]["rosterId"], json!(fake));
+        let n: u64 = fake.trim_start_matches("redacted-").parse().unwrap();
+        assert_eq!(bracket["matches"][0]["rosterId1"], json!(n));
+        assert_eq!(bracket["rosters"][0]["rosterId"], json!(n));
+        // Same player across roster, stats keys and team data.
+        assert_eq!(
+            roster["members"][0]["summonerId"],
+            team_data["captain"]["summonerId"]
+        );
+        // Team names gone, drafting and tournament data kept.
+        assert!(roster["name"].as_str().unwrap().starts_with("redacted-"));
+        assert!(
+            bracket["rosters"][1]["shortName"]
+                .as_str()
+                .unwrap()
+                .starts_with("redacted-")
+        );
+        assert!(
+            stats["rosterName"]
+                .as_str()
+                .unwrap()
+                .starts_with("redacted-")
+        );
+        assert!(
+            stats["playerStats"]
+                .as_object()
+                .unwrap()
+                .keys()
+                .all(|k| k.starts_with("redacted-"))
+        );
+        assert_eq!(roster["members"][1]["position"], "UTILITY");
+        assert_eq!(roster["members"][0]["replacedSummonerId"], 0);
+        assert_eq!(summary[0]["state"], "SCOUTING");
+        assert_eq!(summary[0]["tournamentId"], 4321);
+        assert_eq!(bracket["id"], 556677);
+        assert_eq!(bracket["matches"][0]["status"], "UPCOMING");
+        assert_eq!(stats["tournamentNameLocKey"], "clash_name_x");
+        assert_eq!(
+            stats["playerStats"]
+                .as_object()
+                .unwrap()
+                .values()
+                .next()
+                .unwrap()["rawStatsSum"]["KILLS"],
+            4
+        );
+    }
+
+    #[test]
+    fn clash_rules_stay_out_of_other_resources() {
+        let mut r = Redactor::new();
+        let mut v = json!({"name": "Ahri", "id": "some-id", "map": {"12345678901": 1}});
+        r.redact_at("/lol-champ-select/v1/session", &mut v);
+        assert_eq!(v["name"], "Ahri");
+        assert_eq!(v["id"], "some-id");
+        assert!(v["map"].get("12345678901").is_some());
+        assert_eq!(
+            r.redact_uri("/lol-champ-select/v1/session"),
+            "/lol-champ-select/v1/session"
+        );
+    }
+
+    #[test]
+    fn clash_wire_frames_get_clash_rules() {
+        let mut r = Redactor::new();
+        let mut frame = json!([8, "OnJsonApiEvent", {"uri": "/lol-clash/v1/roster/abc", "eventType": "Update",
+            "data": {"id": "abc", "name": "Team Real Name", "members": [{"summonerId": 12_345_678_901_u64}]}}]);
+        r.redact_frame(&mut frame);
+        let p = &frame[2];
+        assert!(
+            p["uri"]
+                .as_str()
+                .unwrap()
+                .ends_with(p["data"]["id"].as_str().unwrap())
+        );
+        assert_eq!(
+            find_unredacted_at(p["uri"].as_str().unwrap(), &p["data"]),
+            Vec::<String>::new()
+        );
+    }
 
     fn is_fake(v: &Value) -> bool {
         match v {

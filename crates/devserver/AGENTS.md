@@ -74,6 +74,100 @@ When a code change is needed to get recording at all:
 - Say in the commit or the hand-off what was only checked on this OS. Platform-specific code
   goes behind `#[cfg(...)]` with the other platforms unchanged.
 
+## Clash weekends
+
+Clash is the reason to record on a Clash evening: the opponent team is known before
+champ select (the scouting phase), and we want all of it on file so the panel can be
+built and tested against replays later. **Live behaviour of this code is unconfirmed**
+(written 2026-11-20 from the 16.23 spec, no Clash recording existed yet). The first
+evening is its test; expect to hotfix. Background: [dev_notes/clash.md](../../dev_notes/clash.md).
+
+### What happens during a Clash evening
+
+| Clash `state` (`/lol-clash/v1/tournament-summary`) | In the client | What capture does |
+|---|---|---|
+| `UPCOMING` | Team registered, waiting | Nothing |
+| `LOCK_IN` | Lock-in window (up to ~2 h, tier-dependent) | Starts a recording `<date>_<time>_clash.jsonl` |
+| `SCOUTING` | Opponent known, scouting tab (minutes) | Same recording; fetches bracket and rosters |
+| `IN_GAME` | Queue, champ select, game, waiting for next round | Records queue and champ select; **stops at game start** (no game time recorded); starts a new `_clash` recording after the game if the tournament is still on |
+| `RESULTS` / `IDLE` | Done | Stops |
+
+While a Clash recording runs, `crates/capture/src/clash.rs` fetches every 10 s (GET only):
+tournament summary and state, `/lol-clash/v1/player`, `thirdparty/team-data`,
+`tournament/{id}` (+ `/player`), `bracket/{bracketId}`, and `roster/{id}` + `/stats` for
+**every team in the bracket**, plus `scouting/matchhistory` once per set of opponents. Only
+changed data is written. Clash events the client pushes by itself are recorded too
+(`is_recorded_clash_uri` in `crates/lcu-model/src/lib.rs`). Not fetched yet, on purpose:
+anything by puuid (`scouting/champions`), summoner lookups, POST endpoints.
+
+### Running it
+
+Same setup as "Running it" above, on the branch you were asked to test. Start it **before
+lock-in** and leave it running all evening:
+
+```sh
+cargo run -p capture --release            # auto mode; logs to <temp>/draftgpt-captures/capture.log
+# or, with the dev page (problem flags visible): cargo run -p devserver --release
+```
+
+Run one of the two, not both (each would record and poll). Ctrl+C at the end of the
+evening finishes the open recording.
+
+**Fallback if auto doesn't start at lock-in** (no `recording started: …_clash.jsonl` line
+within a minute of lock-in): stop it and record the whole evening by hand, which records
+everything including the Clash fetches until Ctrl+C:
+
+```sh
+cargo run -p capture --release -- record --label clash_evening
+```
+
+### Is it working? (check after lock-in and after the first champ select)
+
+In `capture.log`:
+- `recording started: …_clash.jsonl` at lock-in (or at scouting).
+- `Clash fetch: N changed, 0 failed` lines: N > 0 at the start and whenever something
+  changes, then quiet. Repeated `failed` counts mean an endpoint misbehaves (below).
+- `recording stopped` at game start, a new `recording started` after the game.
+
+In the recording (agent; PowerShell or bash, any tool that counts lines):
+```sh
+grep -o '"uri":"[^"]*"' <file>.jsonl | sort | uniq -c
+```
+Expect `/lol-clash/v1/tournament-summary`, `/lol-clash/v1/bracket/<n>`,
+`/lol-clash/v1/roster/redacted-N` (several teams), `/lol-clash/v1/roster/redacted-N/stats`
+and the champ select session. Open one roster event: `members[].position` readable,
+`summonerId`, `name`, `shortName`, `id` all `redacted-…` or small numbers.
+
+### When it doesn't work (Clash)
+
+Find the truth in the wire file first: it holds every frame the client sent while
+recording. `grep -o '"uri":"/lol-clash[^"]*"' <name>.wire.jsonl | sort | uniq -c` lists
+which Clash resources the client really uses and how often.
+
+| Symptom | Cause and fix |
+|---|---|
+| No recording at lock-in or scouting | Auto starts on states in `CLASH_ACTIVE_STATES` (`crates/capture/src/auto.rs`). Look at the real `state` values in the wire file / log (the dev page flags unknown ones). Add the missing one there and to `CLASH_KNOWN_STATES`, with a test. Meanwhile use the manual fallback. |
+| `Clash fetch … failed` repeatedly | An endpoint's URI or parameters differ from the spec. Compare with the URIs in the wire file and adjust `fetch` in `crates/capture/src/clash.rs`. A failed fetch never stops the recording; if unsure, leave it failing. |
+| No bracket / roster events | `tournament-summary` may carry no `bracketId`/`rosterId` (or names differ). Check its data in the recording; `tournaments()` in `clash.rs` reads `tournamentId`, `rosterId`, `bracketId`. `/lol-clash/v1/tournament/{id}/player` also has `rosterId` and `bracketId`. |
+| `scouting/matchhistory` fails | Its query format (`summonerIds=[…]`) is a guess. Harmless; fix only if it's trivial. |
+| Recording runs during the game | `in_game()` in `auto.rs` lists the gameflow phases treated as the game. |
+| Something identifying in a roster/bracket event | Fix `crates/capture/src/redact.rs` (`CLASH_TEXT_KEYS`, `SENSITIVE_KEY_PARTS`, `ID_AFTER_SEGMENT`) with a test; the recording stays local until fixed. Never weaken redaction. |
+
+Hotfix rules are the ones above ("Hotfixing on the capture machine"); for Clash changes
+run `cargo test -p capture -p lcu-model -p devserver` at least. Say in the commit that it
+was found live in Clash, with the client version.
+
+### Handing over after a Clash evening
+
+Hand over all `*_clash.jsonl` (and `*_auto.jsonl` from the same evening),
+`client-<version>.help.json` if new, and `capture.log`. Keep the wire files locally
+until the project owner says whether they're needed for debugging; never commit or post
+them. Note for the hand-over: tier, how many rounds were played, anything odd (a
+forfeit, a bye, a dodge, a reconnect). Open questions the recordings should answer (see
+`dev_notes/clash.md`): does the Clash champ select session carry `puuid`s, what
+`nameVisibilityType` is in Clash, what `thirdparty/team-data` returns, how fast the
+bracket updates between rounds.
+
 ## After the session: recordings to fixtures
 
 Recordings and logs go to `draftgpt-captures` in the OS temp directory, never into the repo:
@@ -112,15 +206,25 @@ Steps (for the agent):
 2. **Copy and rename** each into `fixtures/` as `<client>_<situation>.jsonl`: `<client>` is
    major and minor from the header's `client_version` (`16.23.x.y` → `16_23`), `<situation>`
    says what happens, in snake case (`16_23_ranked_teammate_trade.jsonl`). Copy, don't edit
-   the content.
+   the content. Clash recordings: `<client>_clash_<situation>`, one file per round as
+   recorded (`16_23_clash_round1_scouting_to_draft.jsonl`, `16_23_clash_round2_bye`). Keep
+   at least one full round (lock-in or scouting through champ select) even if a later one
+   looks similar: the bracket and rosters differ per round. Don't trim the long lock-in
+   wait at the start; it's the realistic input for a replay.
 3. **Copy a new schema dump** `client-<version>.help.json` into `docs/lcu-spec/help/`.
 4. **Check for leaks yourself**, besides the tests: ask the person who recorded for their
    Riot ID, summoner name and tag and anyone else's they saw in the lobby, and search the
    new files for each (`grep -il "theirname" fixtures/*.jsonl`). Nothing may match. All identity fields
-   should read `redacted-N`, and numeric IDs should be small numbers.
+   should read `redacted-N`, and numeric IDs should be small numbers. For Clash files also
+   ask for their team's name and tag and the opponents' they saw (on the scouting screen
+   and in the bracket) and search for each; every `name`/`shortName` in `/lol-clash/`
+   events and every roster URI must read `redacted-…`.
 5. **Document and test**: add a row per file to the table in `fixtures/README.md`, and a
    test in `crates/capture/tests/fixtures.rs` that checks the situation the file is named
-   for (see the existing ones).
+   for (see the existing ones). For Clash: a summary in `SCOUTING` (or `LOCK_IN`), a
+   bracket, rosters of both teams with readable `members[].position`, and the champ
+   select session. If a Clash fixture shows something the typed structs or the code don't
+   expect, write it into `dev_notes/clash.md` (open questions there).
 6. **Run the checks**:
 
    ```sh

@@ -135,6 +135,13 @@ ui-base        (merged into frontend-core b8d8d0a, 2026-11-20; from frontend-cor
   next: Windows: dock + live panel
 
 later
+  clash: research in dev_notes/clash.md (2026-11-20): opponent roster reachable by GET
+    (tournament-summary → bracket → roster); pools need puuids (lookup or champ select
+    session, later)
+    capture for Clash built 2026-11-20 (auto lock-in → game start per round, poller for
+    bracket/rosters, Clash redaction); runbook "Clash weekends" in crates/devserver/AGENTS.md
+    for collaborators recording 2026-11-21/22. Smoke-tested live without a team only.
+    Checks: workspace tests + clippy green on Windows; wasm32 check not run (no target)
   sweep: <name>.sweep.json = GET of 135 no-parameter endpoints of the 9 spec plugins, first
     recording per client launch (list: crates/capture/sweep-paths.txt, exclusions in tools/lcu_spec.py); local only
   idea: fetch each player's champion pool by puuid (Riot API champion-mastery) for whole-lobby
@@ -164,3 +171,39 @@ reference sources found (spec search, 2026-11-15)
 - web: Replay… (fixtures served at /recordings/, or a local .jsonl) with stepping + take over; draft_core::replay + wasm replay()
 - web: mode toggle Ranked/Tournament, Fearless checkbox (tournament only), First pick checkboxes on team titles (mutex) replace Blue/Red
 - ui: toggle buttons for Fearless/First pick (14f88ee), LoL palette in theme.css (808004e; muted and red lightened for contrast). UI now TBD.
+
+2026-11-20 first Windows run of the desktop panel (client 16.23.840.5218):
+- fixed: live mode panicked at start (Live::spawn needs a Tokio runtime; Tauri setup isn't in one)
+- user asked: panel hidden outside champ select, shows docked when a draft starts; no native
+  title bar (decorations off, header = drag region, own minimize/close)
+- dock rework (user: gap, shorter panel, jumpy following; "make a proper dock"):
+    owned window: panel's owner (GWLP_HWNDPARENT) = RCLIENT while docked → stays just above
+      the client, not above other apps (always-on-top dropped), minimizes with it
+    follows via SetWinEventHook(EVENT_OBJECT_LOCATIONCHANGE) on the client pid (out-of-context,
+      installed on Tauri's main thread) → same-frame moves; 250 ms poll only for show/hide etc.
+    visible bounds via DWMWA_EXTENDED_FRAME_BOUNDS: our undecorated window still has 7 px
+      invisible borders (left/right/bottom), the client none; one SetWindowPos (move+size)
+    owner dropped on the client window's HIDE/DESTROY event (Windows destroys owned windows
+      with their owner) and when undocking; re-owned by the poll
+    rejected: SetParent into the client (cross-process child window, shares CEF input queue)
+    checked with a replay + live client window: rects match exactly, owner set
+- macOS dock (todo, same shape: dock::follow per OS, docked_rect shared):
+    find client: CGWindowListCopyWindowInfo, owner LeagueClientUx / "League of Legends",
+      kCGWindowBounds + owner PID (bounds/PID need no Screen Recording permission, titles do)
+    follow: AXObserver on the client's AXUIElement, kAXMovedNotification/kAXResizedNotification
+      (needs the Accessibility permission, ask via AXIsProcessTrustedWithOptions); without it,
+      poll CGWindowList ~60 Hz
+    stacking: no cross-process owned/child windows (addChildWindow is same-process only); try
+      orderWindow(.above, relativeTo: <client window number>) and re-order on
+      NSWorkspace didActivateApplication; fallback: floating level only while the client is
+      frontmost. Verify on a Mac
+    coordinates: CG is top-left-origin points, NSWindow bottom-left; Retina scale factor;
+      CG bounds exclude the shadow (no invisible border problem like Windows)
+    fullscreen client lives in its own Space → float
+- 16.23 /help (docs/lcu-spec/help/client-16-23-840-5218.help.json, scope "relevant") vs 16.22:
+  functions 150 and types 185 identical; events: only the named event
+  lol-champ-select_v1_current-champion dropped (unused; the GET is unchanged, sweep still fine)
+- 16.23 recordings (3, custom 2v2 bots queue 3130, one full draft to finalization): 0 leaks,
+  0 problem flags, all events typed, draft-core replays them right. Not copied into fixtures/
+- checked live by the user: owned dock follows the client smoothly when dragged, panel shows
+  docked at champ select and hides after

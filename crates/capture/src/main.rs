@@ -4,10 +4,11 @@
 
 use std::path::{Path, PathBuf};
 
+use capture::clash::{self, ClashPoller};
 use capture::{Controller, Notice, RecordingExtras, help_dump, rcvolus};
 use clap::{ArgAction, Parser, Subcommand};
 use futures::StreamExt;
-use lcu::{Live, SourceEvent};
+use lcu::SourceEvent;
 
 #[derive(Parser)]
 #[command(about = "Record League client champ select events to redacted .jsonl files")]
@@ -82,11 +83,10 @@ async fn main() {
 
 async fn record(out: &Path, wire: bool, mode: Mode) {
     let mut controller = Controller::new(out, matches!(mode, Mode::Auto));
-    let (mut stream, live) = Live {
-        wire,
-        ..Live::default()
-    }
-    .spawn();
+    let (mut stream, live) = clash::live_source(wire).spawn();
+    let mut poller = ClashPoller::new();
+    let (clash_tx, mut clash_rx) = tokio::sync::mpsc::channel(4);
+    let mut tick = tokio::time::interval(std::time::Duration::from_secs(1));
     let mut manual_label = match mode {
         Mode::Manual { label } => Some(label),
         Mode::Auto => None,
@@ -99,6 +99,11 @@ async fn record(out: &Path, wire: bool, mode: Mode) {
         tokio::select! {
             ev = stream.next() => {
                 let Some(ev) = ev else { break };
+                match &ev {
+                    SourceEvent::Event(raw) if clash::is_trigger(raw) => poller.poke(),
+                    SourceEvent::Connected(_) => poller.reset(),
+                    _ => {}
+                }
                 let mut notices = controller.handle(&ev);
                 // A manual recording starts once connected, so its first
                 // events are the snapshots sent on connect.
@@ -114,10 +119,29 @@ async fn record(out: &Path, wire: bool, mode: Mode) {
                             if let Some(http) = live.http() {
                                 extras.spawn(http, info);
                             }
+                            poller.poke();
                         }
                         // Started/stopped are already logged by the controller.
                         Notice::Stopped(_) => {}
                         Notice::Error(_) => tracing::error!("{n}"),
+                    }
+                }
+            }
+            _ = tick.tick() => {
+                let wanted = controller.is_recording() && controller.clash_active();
+                poller.maybe_start(wanted, live.http(), &clash_tx);
+            }
+            Some(fetched) = clash_rx.recv() => {
+                let failed = fetched.failed;
+                let fresh = poller.done(fetched, |uri| controller.latest_of(uri).map(|e| &e.data));
+                if !fresh.is_empty() || failed > 0 {
+                    tracing::info!("Clash fetch: {} changed, {failed} failed", fresh.len());
+                }
+                for ev in fresh {
+                    for n in controller.handle(&SourceEvent::Event(ev)) {
+                        if let Notice::Error(_) = n {
+                            tracing::error!("{n}");
+                        }
                     }
                 }
             }

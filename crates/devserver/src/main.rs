@@ -6,7 +6,7 @@ use std::net::{Ipv4Addr, SocketAddr};
 use std::path::PathBuf;
 
 use clap::{ArgAction, Parser};
-use lcu::{EventSource, Live, Replay, Speed};
+use lcu::{EventSource, Replay, Speed};
 
 #[derive(Parser)]
 #[command(about = "Dev page for testing LCU capture (binds to 127.0.0.1 only)")]
@@ -55,11 +55,7 @@ async fn main() {
             }
         },
         None => {
-            let (stream, live) = Live {
-                wire: args.wire,
-                ..Live::default()
-            }
-            .spawn();
+            let (stream, live) = capture::clash::live_source(args.wire).spawn();
             (stream, Some(live))
         }
     };

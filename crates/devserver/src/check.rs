@@ -8,8 +8,8 @@ use lcu::types::{
     SubsetChampionList, TimerPhase,
 };
 use lcu::{
-    EventKind, GAMEFLOW_PHASE_URI, MATCHMAKING_URI, RawEvent, SUBSET_CHAMPION_LIST_URI,
-    is_session_uri,
+    CLASH_TOURNAMENT_STATE_INFO, CLASH_TOURNAMENT_SUMMARY, EventKind, GAMEFLOW_PHASE_URI,
+    MATCHMAKING_URI, RawEvent, SUBSET_CHAMPION_LIST_URI, is_session_uri,
 };
 use serde_json::Value;
 
@@ -23,9 +23,22 @@ pub fn check(ev: &RawEvent) -> Option<String> {
         GAMEFLOW_PHASE_URI => check_phase(&ev.data),
         SUBSET_CHAMPION_LIST_URI => check_subset(&ev.data),
         MATCHMAKING_URI => check_matchmaking(&ev.data),
+        uri if uri == CLASH_TOURNAMENT_SUMMARY.uri || uri == CLASH_TOURNAMENT_STATE_INFO.uri => {
+            check_clash_states(&ev.data)
+        }
         _ => return None,
     };
     (!problems.is_empty()).then(|| problems.join("; "))
+}
+
+/// Clash tournament states auto mode doesn't know (it records during lock-in,
+/// scouting and in game; a new state might need adding there).
+fn check_clash_states(data: &Value) -> Vec<String> {
+    capture::auto::clash_states(data)
+        .into_iter()
+        .filter(|s| !capture::auto::CLASH_KNOWN_STATES.contains(s))
+        .map(|s| format!("unknown Clash tournament state {s:?}"))
+        .collect()
 }
 
 fn check_subset(data: &Value) -> Vec<String> {
@@ -142,6 +155,14 @@ mod tests {
     fn reports_type_errors() {
         let msg = check(&ev(SESSION_URI, json!({"myTeam": "oops"}))).unwrap();
         assert!(msg.contains("session parse failed"), "{msg}");
+    }
+
+    #[test]
+    fn clash_states() {
+        let uri = lcu::CLASH_TOURNAMENT_SUMMARY.uri;
+        assert_eq!(check(&ev(uri, json!([{"state": "SCOUTING"}]))), None);
+        let msg = check(&ev(uri, json!([{"state": "DRAFTING"}]))).unwrap();
+        assert!(msg.contains("DRAFTING"), "{msg}");
     }
 
     #[test]
