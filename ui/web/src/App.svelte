@@ -200,14 +200,16 @@
         <button type="button" aria-pressed={mode === "ranked"} onclick={() => setOrder("ranked", side)} title="All ten bans at once, then picks">Ranked</button>
         <button type="button" aria-pressed={mode === "tournament"} onclick={() => setOrder("tournament", side)} title="Clash: two ban phases and two pick phases">Tournament</button>
       </div>
-      {#if mode === "tournament"}
-        <label class="check" title="A series: champions picked in earlier games are out for both teams">
-          <input type="checkbox" checked={fearless} onchange={(e) => setFearless(e.currentTarget.checked)} />Fearless
-        </label>
-      {/if}
-      {#if fearless}
-        <button type="button" onclick={startNextGame} title="This game's picks become unavailable">Next game</button>
-      {/if}
+      <button
+        type="button"
+        class="toggle"
+        aria-pressed={fearless}
+        disabled={mode !== "tournament"}
+        onclick={() => setFearless(!fearless)}
+        title={mode === "tournament" ? "A series: champions picked in earlier games are out for both teams" : "Fearless is a tournament draft series"}
+      >Fearless</button>
+      <!-- Hidden, not removed: the header doesn't shift when Fearless toggles. -->
+      <button type="button" class:hidden={!fearless} disabled={!fearless} onclick={startNextGame} title="This game's picks become unavailable">Next game</button>
       <button type="button" onclick={reset}>Reset</button>
       {/if}
     </div>
@@ -430,15 +432,19 @@
   .seg button[aria-pressed="false"] {
     color: var(--muted);
   }
-  .check {
-    display: flex;
-    gap: 6px;
-    align-items: center;
-    cursor: pointer;
+  .toggle[aria-pressed="true"] {
+    background: var(--panel-2);
+    border-color: var(--gold);
   }
-  .check input {
-    margin: 0;
-    accent-color: var(--gold);
+  .toggle[aria-pressed="false"] {
+    color: var(--muted);
+  }
+  .controls button:disabled {
+    opacity: 0.4;
+    cursor: default;
+  }
+  .controls .hidden {
+    visibility: hidden;
   }
   .close {
     background: none;
