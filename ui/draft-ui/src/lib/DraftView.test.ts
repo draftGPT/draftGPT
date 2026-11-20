@@ -28,7 +28,7 @@ function draft(turn: DraftState["turn"]): DraftState {
     spectating: false,
     ally: [slot(0, null, true), slot(1, 266)],
     enemy: [slot(5, 122)],
-    bans: { ally: [{ champion: null, cellId: 0 }], enemy: [] },
+    bans: { ally: [{ champion: null, cellId: 0, hover: null }], enemy: [] },
     turn,
     timer: { remainingMs: 25_000, totalMs: 30_000 },
     bench: [],
@@ -65,4 +65,12 @@ describe("DraftView", () => {
     expect(within(screen.getByRole("region", { name: "Suggested bans" })).getByText("Yasuo")).toBeTruthy();
     expect(screen.getByTitle("Missed ban")).toBeTruthy();
   });
+
+  it("shows a teammate's unlocked ban as a hover", () => {
+    const d = draft({ kind: "ban", cells: [0, 1], yours: true });
+    d.bans.ally = [{ champion: null, cellId: 1, hover: 157 }];
+    render(DraftView, { draft: d, recs, champions });
+    expect(screen.getByTitle("Banning Yasuo…")).toBeTruthy();
+  });
 });
+

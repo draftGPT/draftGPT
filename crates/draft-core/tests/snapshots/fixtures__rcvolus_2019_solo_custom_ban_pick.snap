@@ -39,7 +39,10 @@ expression: states
       picking: false
   enemy: []
   bans:
-    ally: []
+    ally:
+      - champion: ~
+        cellId: 0
+        hover: 103
     enemy: []
   turn:
     kind: ban
@@ -67,6 +70,7 @@ expression: states
     ally:
       - champion: 103
         cellId: 0
+        hover: ~
     enemy: []
   turn:
     kind: ban
@@ -94,6 +98,10 @@ expression: states
     ally:
       - champion: 103
         cellId: 0
+        hover: ~
+      - champion: ~
+        cellId: 0
+        hover: 202
     enemy: []
   turn:
     kind: ban
@@ -121,8 +129,10 @@ expression: states
     ally:
       - champion: 103
         cellId: 0
+        hover: ~
       - champion: 202
         cellId: 0
+        hover: ~
     enemy: []
   turn:
     kind: ban
@@ -150,8 +160,13 @@ expression: states
     ally:
       - champion: 103
         cellId: 0
+        hover: ~
       - champion: 202
         cellId: 0
+        hover: ~
+      - champion: ~
+        cellId: 0
+        hover: 25
     enemy: []
   turn:
     kind: ban
@@ -179,10 +194,13 @@ expression: states
     ally:
       - champion: 103
         cellId: 0
+        hover: ~
       - champion: 202
         cellId: 0
+        hover: ~
       - champion: 25
         cellId: 0
+        hover: ~
     enemy: []
   turn:
     kind: pick
@@ -210,10 +228,13 @@ expression: states
     ally:
       - champion: 103
         cellId: 0
+        hover: ~
       - champion: 202
         cellId: 0
+        hover: ~
       - champion: 25
         cellId: 0
+        hover: ~
     enemy: []
   turn:
     kind: pick
@@ -241,10 +262,13 @@ expression: states
     ally:
       - champion: 103
         cellId: 0
+        hover: ~
       - champion: 202
         cellId: 0
+        hover: ~
       - champion: 25
         cellId: 0
+        hover: ~
     enemy: []
   turn: ~
   timer:
@@ -268,10 +292,13 @@ expression: states
     ally:
       - champion: 103
         cellId: 0
+        hover: ~
       - champion: 202
         cellId: 0
+        hover: ~
       - champion: 25
         cellId: 0
+        hover: ~
     enemy: []
   turn: ~
   timer:
@@ -295,10 +322,13 @@ expression: states
     ally:
       - champion: 103
         cellId: 0
+        hover: ~
       - champion: 202
         cellId: 0
+        hover: ~
       - champion: 25
         cellId: 0
+        hover: ~
     enemy: []
   turn: ~
   timer:
@@ -322,10 +352,13 @@ expression: states
     ally:
       - champion: 103
         cellId: 0
+        hover: ~
       - champion: 202
         cellId: 0
+        hover: ~
       - champion: 25
         cellId: 0
+        hover: ~
     enemy: []
   turn: ~
   timer:

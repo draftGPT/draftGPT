@@ -14,10 +14,16 @@
   let query = $state("");
   const results = $derived(champions.search(query));
 
+  /** Picks and empties the search for the next spot. */
+  function choose(id: number) {
+    query = "";
+    onPick(id);
+  }
+
   function onkeydown(e: KeyboardEvent) {
     if (e.key === "Enter") {
       const first = results.find((c) => !unavailable.has(c.id));
-      if (first) onPick(first.id);
+      if (first) choose(first.id);
     }
   }
 </script>
@@ -39,7 +45,7 @@
         data-champion={c.id}
         aria-label={c.name}
         title={c.name}
-        onclick={() => onPick(c.id)}
+        onclick={() => choose(c.id)}
       >
         <ChampionIcon champion={c.id} {champions} size={44} />
         <span>{c.name}</span>

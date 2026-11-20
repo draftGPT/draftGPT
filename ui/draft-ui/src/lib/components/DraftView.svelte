@@ -34,6 +34,10 @@
     onRecPick?: (champion: number, kind: "pick" | "ban") => void;
     /** Role selectors on every slot (manual input). */
     onPositionChange?: (side: "ally" | "enemy", cellId: number, position: Position | null) => void;
+    /** Phase name for the turn banner (manual input). */
+    phase?: string;
+    /** Your team's map side, shown in the team titles (manual input). */
+    allySide?: "blue" | "red";
     /** "You" toggles on your team's slots (manual input). */
     onMakeLocal?: (cellId: number) => void;
   };
@@ -51,11 +55,14 @@
     onRecPick,
     onPositionChange,
     onMakeLocal,
+    phase,
+    allySide,
   }: Props = $props();
 
   const banning = $derived(draft.turn?.kind === "ban" || (draft.phase === "planning" && !draft.turn));
   const showBans = $derived(show === "both" || banning);
   const showPicks = $derived(show === "both" || !banning);
+  const enemySide = $derived(allySide === "blue" ? "Red side" : allySide === "red" ? "Blue side" : undefined);
   const sel = (side: "ally" | "enemy") =>
     selection?.kind === "slot" && selection.side === side ? selection.cellId : null;
   const selBan = (side: "ally" | "enemy") =>
@@ -64,7 +71,7 @@
 
 <div class="draft {layout}">
   <div class="top">
-    <TurnBanner {draft} {receivedAt} />
+    <TurnBanner {draft} {receivedAt} {phase} />
     <div class="bans-line">
       <BanRow
         bans={draft.bans.ally}
@@ -89,6 +96,7 @@
 
   <TeamColumn
     title={draft.spectating ? "Blue side" : "Your team"}
+    note={allySide === "blue" ? "Blue side" : allySide === "red" ? "Red side" : undefined}
     slots={draft.ally}
     {champions}
     side="ally"
@@ -127,6 +135,7 @@
 
   <TeamColumn
     title={draft.spectating ? "Red side" : "Enemy team"}
+    note={enemySide}
     slots={draft.enemy}
     {champions}
     side="enemy"

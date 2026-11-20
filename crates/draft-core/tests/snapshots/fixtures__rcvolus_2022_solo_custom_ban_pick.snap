@@ -39,7 +39,10 @@ expression: states
       picking: false
   enemy: []
   bans:
-    ally: []
+    ally:
+      - champion: ~
+        cellId: 0
+        hover: 103
     enemy: []
   turn:
     kind: ban
@@ -64,7 +67,10 @@ expression: states
       picking: false
   enemy: []
   bans:
-    ally: []
+    ally:
+      - champion: ~
+        cellId: 0
+        hover: 523
     enemy: []
   turn:
     kind: ban
@@ -89,7 +95,10 @@ expression: states
       picking: false
   enemy: []
   bans:
-    ally: []
+    ally:
+      - champion: ~
+        cellId: 0
+        hover: 28
     enemy: []
   turn:
     kind: ban
@@ -117,6 +126,7 @@ expression: states
     ally:
       - champion: 28
         cellId: 0
+        hover: ~
     enemy: []
   turn:
     kind: ban
@@ -144,6 +154,10 @@ expression: states
     ally:
       - champion: 28
         cellId: 0
+        hover: ~
+      - champion: ~
+        cellId: 0
+        hover: 42
     enemy: []
   turn:
     kind: ban
@@ -171,8 +185,10 @@ expression: states
     ally:
       - champion: 28
         cellId: 0
+        hover: ~
       - champion: 42
         cellId: 0
+        hover: ~
     enemy: []
   turn:
     kind: ban
@@ -200,8 +216,13 @@ expression: states
     ally:
       - champion: 28
         cellId: 0
+        hover: ~
       - champion: 42
         cellId: 0
+        hover: ~
+      - champion: ~
+        cellId: 0
+        hover: 51
     enemy: []
   turn:
     kind: ban
@@ -229,10 +250,13 @@ expression: states
     ally:
       - champion: 28
         cellId: 0
+        hover: ~
       - champion: 42
         cellId: 0
+        hover: ~
       - champion: 51
         cellId: 0
+        hover: ~
     enemy: []
   turn:
     kind: pick
@@ -260,10 +284,13 @@ expression: states
     ally:
       - champion: 28
         cellId: 0
+        hover: ~
       - champion: 42
         cellId: 0
+        hover: ~
       - champion: 51
         cellId: 0
+        hover: ~
     enemy: []
   turn:
     kind: pick
@@ -291,10 +318,13 @@ expression: states
     ally:
       - champion: 28
         cellId: 0
+        hover: ~
       - champion: 42
         cellId: 0
+        hover: ~
       - champion: 51
         cellId: 0
+        hover: ~
     enemy: []
   turn: ~
   timer:

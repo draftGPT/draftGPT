@@ -150,6 +150,7 @@ expression: states
     ally:
       - champion: 266
         cellId: 0
+        hover: ~
     enemy: []
   turn:
     kind: ban
@@ -231,9 +232,11 @@ expression: states
     ally:
       - champion: 266
         cellId: 0
+        hover: ~
     enemy:
       - champion: 136
         cellId: 5
+        hover: ~
   turn:
     kind: ban
     cells:
@@ -314,11 +317,14 @@ expression: states
     ally:
       - champion: 266
         cellId: 0
+        hover: ~
       - champion: 119
         cellId: 0
+        hover: ~
     enemy:
       - champion: 136
         cellId: 5
+        hover: ~
   turn:
     kind: ban
     cells:
@@ -399,13 +405,17 @@ expression: states
     ally:
       - champion: 266
         cellId: 0
+        hover: ~
       - champion: 119
         cellId: 0
+        hover: ~
     enemy:
       - champion: 136
         cellId: 5
+        hover: ~
       - champion: 51
         cellId: 5
+        hover: ~
   turn:
     kind: ban
     cells:
@@ -486,15 +496,20 @@ expression: states
     ally:
       - champion: 266
         cellId: 0
+        hover: ~
       - champion: 119
         cellId: 0
+        hover: ~
       - champion: 126
         cellId: 0
+        hover: ~
     enemy:
       - champion: 136
         cellId: 5
+        hover: ~
       - champion: 51
         cellId: 5
+        hover: ~
   turn:
     kind: ban
     cells:
@@ -575,17 +590,23 @@ expression: states
     ally:
       - champion: 266
         cellId: 0
+        hover: ~
       - champion: 119
         cellId: 0
+        hover: ~
       - champion: 126
         cellId: 0
+        hover: ~
     enemy:
       - champion: 136
         cellId: 5
+        hover: ~
       - champion: 51
         cellId: 5
+        hover: ~
       - champion: 26
         cellId: 5
+        hover: ~
   turn:
     kind: pick
     cells:
@@ -666,17 +687,23 @@ expression: states
     ally:
       - champion: 266
         cellId: 0
+        hover: ~
       - champion: 119
         cellId: 0
+        hover: ~
       - champion: 126
         cellId: 0
+        hover: ~
     enemy:
       - champion: 136
         cellId: 5
+        hover: ~
       - champion: 51
         cellId: 5
+        hover: ~
       - champion: 26
         cellId: 5
+        hover: ~
   turn:
     kind: pick
     cells:
@@ -757,17 +784,23 @@ expression: states
     ally:
       - champion: 266
         cellId: 0
+        hover: ~
       - champion: 119
         cellId: 0
+        hover: ~
       - champion: 126
         cellId: 0
+        hover: ~
     enemy:
       - champion: 136
         cellId: 5
+        hover: ~
       - champion: 51
         cellId: 5
+        hover: ~
       - champion: 26
         cellId: 5
+        hover: ~
   turn:
     kind: pick
     cells:
@@ -848,17 +881,23 @@ expression: states
     ally:
       - champion: 266
         cellId: 0
+        hover: ~
       - champion: 119
         cellId: 0
+        hover: ~
       - champion: 126
         cellId: 0
+        hover: ~
     enemy:
       - champion: 136
         cellId: 5
+        hover: ~
       - champion: 51
         cellId: 5
+        hover: ~
       - champion: 26
         cellId: 5
+        hover: ~
   turn:
     kind: pick
     cells:
@@ -939,17 +978,23 @@ expression: states
     ally:
       - champion: 266
         cellId: 0
+        hover: ~
       - champion: 119
         cellId: 0
+        hover: ~
       - champion: 126
         cellId: 0
+        hover: ~
     enemy:
       - champion: 136
         cellId: 5
+        hover: ~
       - champion: 51
         cellId: 5
+        hover: ~
       - champion: 26
         cellId: 5
+        hover: ~
   turn:
     kind: pick
     cells:
@@ -1030,17 +1075,23 @@ expression: states
     ally:
       - champion: 266
         cellId: 0
+        hover: ~
       - champion: 119
         cellId: 0
+        hover: ~
       - champion: 126
         cellId: 0
+        hover: ~
     enemy:
       - champion: 136
         cellId: 5
+        hover: ~
       - champion: 51
         cellId: 5
+        hover: ~
       - champion: 26
         cellId: 5
+        hover: ~
   turn:
     kind: pick
     cells:
@@ -1121,17 +1172,23 @@ expression: states
     ally:
       - champion: 266
         cellId: 0
+        hover: ~
       - champion: 119
         cellId: 0
+        hover: ~
       - champion: 126
         cellId: 0
+        hover: ~
     enemy:
       - champion: 136
         cellId: 5
+        hover: ~
       - champion: 51
         cellId: 5
+        hover: ~
       - champion: 26
         cellId: 5
+        hover: ~
   turn:
     kind: pick
     cells:
@@ -1212,17 +1269,23 @@ expression: states
     ally:
       - champion: 266
         cellId: 0
+        hover: ~
       - champion: 119
         cellId: 0
+        hover: ~
       - champion: 126
         cellId: 0
+        hover: ~
     enemy:
       - champion: 136
         cellId: 5
+        hover: ~
       - champion: 51
         cellId: 5
+        hover: ~
       - champion: 26
         cellId: 5
+        hover: ~
   turn:
     kind: pick
     cells:
@@ -1303,17 +1366,23 @@ expression: states
     ally:
       - champion: 266
         cellId: 0
+        hover: ~
       - champion: 119
         cellId: 0
+        hover: ~
       - champion: 126
         cellId: 0
+        hover: ~
     enemy:
       - champion: 136
         cellId: 5
+        hover: ~
       - champion: 51
         cellId: 5
+        hover: ~
       - champion: 26
         cellId: 5
+        hover: ~
   turn:
     kind: pick
     cells:
@@ -1394,17 +1463,23 @@ expression: states
     ally:
       - champion: 266
         cellId: 0
+        hover: ~
       - champion: 119
         cellId: 0
+        hover: ~
       - champion: 126
         cellId: 0
+        hover: ~
     enemy:
       - champion: 136
         cellId: 5
+        hover: ~
       - champion: 51
         cellId: 5
+        hover: ~
       - champion: 26
         cellId: 5
+        hover: ~
   turn:
     kind: pick
     cells:
@@ -1485,17 +1560,23 @@ expression: states
     ally:
       - champion: 266
         cellId: 0
+        hover: ~
       - champion: 119
         cellId: 0
+        hover: ~
       - champion: 126
         cellId: 0
+        hover: ~
     enemy:
       - champion: 136
         cellId: 5
+        hover: ~
       - champion: 51
         cellId: 5
+        hover: ~
       - champion: 26
         cellId: 5
+        hover: ~
   turn:
     kind: pick
     cells:
@@ -1576,17 +1657,23 @@ expression: states
     ally:
       - champion: 266
         cellId: 0
+        hover: ~
       - champion: 119
         cellId: 0
+        hover: ~
       - champion: 126
         cellId: 0
+        hover: ~
     enemy:
       - champion: 136
         cellId: 5
+        hover: ~
       - champion: 51
         cellId: 5
+        hover: ~
       - champion: 26
         cellId: 5
+        hover: ~
   turn:
     kind: pick
     cells:
@@ -1667,17 +1754,23 @@ expression: states
     ally:
       - champion: 266
         cellId: 0
+        hover: ~
       - champion: 119
         cellId: 0
+        hover: ~
       - champion: 126
         cellId: 0
+        hover: ~
     enemy:
       - champion: 136
         cellId: 5
+        hover: ~
       - champion: 51
         cellId: 5
+        hover: ~
       - champion: 26
         cellId: 5
+        hover: ~
   turn:
     kind: ban
     cells:
@@ -1758,19 +1851,26 @@ expression: states
     ally:
       - champion: 266
         cellId: 0
+        hover: ~
       - champion: 119
         cellId: 0
+        hover: ~
       - champion: 126
         cellId: 0
+        hover: ~
     enemy:
       - champion: 136
         cellId: 5
+        hover: ~
       - champion: 51
         cellId: 5
+        hover: ~
       - champion: 26
         cellId: 5
+        hover: ~
       - champion: 8
         cellId: 5
+        hover: ~
   turn:
     kind: ban
     cells:
@@ -1851,21 +1951,29 @@ expression: states
     ally:
       - champion: 266
         cellId: 0
+        hover: ~
       - champion: 119
         cellId: 0
+        hover: ~
       - champion: 126
         cellId: 0
+        hover: ~
       - champion: 61
         cellId: 0
+        hover: ~
     enemy:
       - champion: 136
         cellId: 5
+        hover: ~
       - champion: 51
         cellId: 5
+        hover: ~
       - champion: 26
         cellId: 5
+        hover: ~
       - champion: 8
         cellId: 5
+        hover: ~
   turn:
     kind: ban
     cells:
@@ -1946,23 +2054,32 @@ expression: states
     ally:
       - champion: 266
         cellId: 0
+        hover: ~
       - champion: 119
         cellId: 0
+        hover: ~
       - champion: 126
         cellId: 0
+        hover: ~
       - champion: 61
         cellId: 0
+        hover: ~
     enemy:
       - champion: 136
         cellId: 5
+        hover: ~
       - champion: 51
         cellId: 5
+        hover: ~
       - champion: 26
         cellId: 5
+        hover: ~
       - champion: 8
         cellId: 5
+        hover: ~
       - champion: 1
         cellId: 5
+        hover: ~
   turn:
     kind: ban
     cells:
@@ -2043,25 +2160,35 @@ expression: states
     ally:
       - champion: 266
         cellId: 0
+        hover: ~
       - champion: 119
         cellId: 0
+        hover: ~
       - champion: 126
         cellId: 0
+        hover: ~
       - champion: 61
         cellId: 0
+        hover: ~
       - champion: 80
         cellId: 0
+        hover: ~
     enemy:
       - champion: 136
         cellId: 5
+        hover: ~
       - champion: 51
         cellId: 5
+        hover: ~
       - champion: 26
         cellId: 5
+        hover: ~
       - champion: 8
         cellId: 5
+        hover: ~
       - champion: 1
         cellId: 5
+        hover: ~
   turn:
     kind: pick
     cells:
@@ -2142,25 +2269,35 @@ expression: states
     ally:
       - champion: 266
         cellId: 0
+        hover: ~
       - champion: 119
         cellId: 0
+        hover: ~
       - champion: 126
         cellId: 0
+        hover: ~
       - champion: 61
         cellId: 0
+        hover: ~
       - champion: 80
         cellId: 0
+        hover: ~
     enemy:
       - champion: 136
         cellId: 5
+        hover: ~
       - champion: 51
         cellId: 5
+        hover: ~
       - champion: 26
         cellId: 5
+        hover: ~
       - champion: 8
         cellId: 5
+        hover: ~
       - champion: 1
         cellId: 5
+        hover: ~
   turn:
     kind: pick
     cells:
@@ -2241,25 +2378,35 @@ expression: states
     ally:
       - champion: 266
         cellId: 0
+        hover: ~
       - champion: 119
         cellId: 0
+        hover: ~
       - champion: 126
         cellId: 0
+        hover: ~
       - champion: 61
         cellId: 0
+        hover: ~
       - champion: 80
         cellId: 0
+        hover: ~
     enemy:
       - champion: 136
         cellId: 5
+        hover: ~
       - champion: 51
         cellId: 5
+        hover: ~
       - champion: 26
         cellId: 5
+        hover: ~
       - champion: 8
         cellId: 5
+        hover: ~
       - champion: 1
         cellId: 5
+        hover: ~
   turn:
     kind: pick
     cells:
@@ -2340,25 +2487,35 @@ expression: states
     ally:
       - champion: 266
         cellId: 0
+        hover: ~
       - champion: 119
         cellId: 0
+        hover: ~
       - champion: 126
         cellId: 0
+        hover: ~
       - champion: 61
         cellId: 0
+        hover: ~
       - champion: 80
         cellId: 0
+        hover: ~
     enemy:
       - champion: 136
         cellId: 5
+        hover: ~
       - champion: 51
         cellId: 5
+        hover: ~
       - champion: 26
         cellId: 5
+        hover: ~
       - champion: 8
         cellId: 5
+        hover: ~
       - champion: 1
         cellId: 5
+        hover: ~
   turn:
     kind: pick
     cells:
@@ -2439,25 +2596,35 @@ expression: states
     ally:
       - champion: 266
         cellId: 0
+        hover: ~
       - champion: 119
         cellId: 0
+        hover: ~
       - champion: 126
         cellId: 0
+        hover: ~
       - champion: 61
         cellId: 0
+        hover: ~
       - champion: 80
         cellId: 0
+        hover: ~
     enemy:
       - champion: 136
         cellId: 5
+        hover: ~
       - champion: 51
         cellId: 5
+        hover: ~
       - champion: 26
         cellId: 5
+        hover: ~
       - champion: 8
         cellId: 5
+        hover: ~
       - champion: 1
         cellId: 5
+        hover: ~
   turn:
     kind: pick
     cells:
@@ -2538,25 +2705,35 @@ expression: states
     ally:
       - champion: 266
         cellId: 0
+        hover: ~
       - champion: 119
         cellId: 0
+        hover: ~
       - champion: 126
         cellId: 0
+        hover: ~
       - champion: 61
         cellId: 0
+        hover: ~
       - champion: 80
         cellId: 0
+        hover: ~
     enemy:
       - champion: 136
         cellId: 5
+        hover: ~
       - champion: 51
         cellId: 5
+        hover: ~
       - champion: 26
         cellId: 5
+        hover: ~
       - champion: 8
         cellId: 5
+        hover: ~
       - champion: 1
         cellId: 5
+        hover: ~
   turn:
     kind: pick
     cells:
@@ -2637,25 +2814,35 @@ expression: states
     ally:
       - champion: 266
         cellId: 0
+        hover: ~
       - champion: 119
         cellId: 0
+        hover: ~
       - champion: 126
         cellId: 0
+        hover: ~
       - champion: 61
         cellId: 0
+        hover: ~
       - champion: 80
         cellId: 0
+        hover: ~
     enemy:
       - champion: 136
         cellId: 5
+        hover: ~
       - champion: 51
         cellId: 5
+        hover: ~
       - champion: 26
         cellId: 5
+        hover: ~
       - champion: 8
         cellId: 5
+        hover: ~
       - champion: 1
         cellId: 5
+        hover: ~
   turn:
     kind: pick
     cells:
@@ -2736,25 +2923,35 @@ expression: states
     ally:
       - champion: 266
         cellId: 0
+        hover: ~
       - champion: 119
         cellId: 0
+        hover: ~
       - champion: 126
         cellId: 0
+        hover: ~
       - champion: 61
         cellId: 0
+        hover: ~
       - champion: 80
         cellId: 0
+        hover: ~
     enemy:
       - champion: 136
         cellId: 5
+        hover: ~
       - champion: 51
         cellId: 5
+        hover: ~
       - champion: 26
         cellId: 5
+        hover: ~
       - champion: 8
         cellId: 5
+        hover: ~
       - champion: 1
         cellId: 5
+        hover: ~
   turn:
     kind: pick
     cells:
@@ -2835,25 +3032,35 @@ expression: states
     ally:
       - champion: 266
         cellId: 0
+        hover: ~
       - champion: 119
         cellId: 0
+        hover: ~
       - champion: 126
         cellId: 0
+        hover: ~
       - champion: 61
         cellId: 0
+        hover: ~
       - champion: 80
         cellId: 0
+        hover: ~
     enemy:
       - champion: 136
         cellId: 5
+        hover: ~
       - champion: 51
         cellId: 5
+        hover: ~
       - champion: 26
         cellId: 5
+        hover: ~
       - champion: 8
         cellId: 5
+        hover: ~
       - champion: 1
         cellId: 5
+        hover: ~
   turn: ~
   timer:
     remainingMs: 59858
@@ -2930,25 +3137,35 @@ expression: states
     ally:
       - champion: 266
         cellId: 0
+        hover: ~
       - champion: 119
         cellId: 0
+        hover: ~
       - champion: 126
         cellId: 0
+        hover: ~
       - champion: 61
         cellId: 0
+        hover: ~
       - champion: 80
         cellId: 0
+        hover: ~
     enemy:
       - champion: 136
         cellId: 5
+        hover: ~
       - champion: 51
         cellId: 5
+        hover: ~
       - champion: 26
         cellId: 5
+        hover: ~
       - champion: 8
         cellId: 5
+        hover: ~
       - champion: 1
         cellId: 5
+        hover: ~
   turn: ~
   timer:
     remainingMs: 55459
@@ -3025,25 +3242,35 @@ expression: states
     ally:
       - champion: 266
         cellId: 0
+        hover: ~
       - champion: 119
         cellId: 0
+        hover: ~
       - champion: 126
         cellId: 0
+        hover: ~
       - champion: 61
         cellId: 0
+        hover: ~
       - champion: 80
         cellId: 0
+        hover: ~
     enemy:
       - champion: 136
         cellId: 5
+        hover: ~
       - champion: 51
         cellId: 5
+        hover: ~
       - champion: 26
         cellId: 5
+        hover: ~
       - champion: 8
         cellId: 5
+        hover: ~
       - champion: 1
         cellId: 5
+        hover: ~
   turn: ~
   timer:
     remainingMs: 53824
@@ -3120,25 +3347,35 @@ expression: states
     ally:
       - champion: 266
         cellId: 0
+        hover: ~
       - champion: 119
         cellId: 0
+        hover: ~
       - champion: 126
         cellId: 0
+        hover: ~
       - champion: 61
         cellId: 0
+        hover: ~
       - champion: 80
         cellId: 0
+        hover: ~
     enemy:
       - champion: 136
         cellId: 5
+        hover: ~
       - champion: 51
         cellId: 5
+        hover: ~
       - champion: 26
         cellId: 5
+        hover: ~
       - champion: 8
         cellId: 5
+        hover: ~
       - champion: 1
         cellId: 5
+        hover: ~
   turn: ~
   timer:
     remainingMs: 52059
@@ -3215,25 +3452,35 @@ expression: states
     ally:
       - champion: 266
         cellId: 0
+        hover: ~
       - champion: 119
         cellId: 0
+        hover: ~
       - champion: 126
         cellId: 0
+        hover: ~
       - champion: 61
         cellId: 0
+        hover: ~
       - champion: 80
         cellId: 0
+        hover: ~
     enemy:
       - champion: 136
         cellId: 5
+        hover: ~
       - champion: 51
         cellId: 5
+        hover: ~
       - champion: 26
         cellId: 5
+        hover: ~
       - champion: 8
         cellId: 5
+        hover: ~
       - champion: 1
         cellId: 5
+        hover: ~
   turn: ~
   timer:
     remainingMs: 49019
@@ -3310,25 +3557,35 @@ expression: states
     ally:
       - champion: 266
         cellId: 0
+        hover: ~
       - champion: 119
         cellId: 0
+        hover: ~
       - champion: 126
         cellId: 0
+        hover: ~
       - champion: 61
         cellId: 0
+        hover: ~
       - champion: 80
         cellId: 0
+        hover: ~
     enemy:
       - champion: 136
         cellId: 5
+        hover: ~
       - champion: 51
         cellId: 5
+        hover: ~
       - champion: 26
         cellId: 5
+        hover: ~
       - champion: 8
         cellId: 5
+        hover: ~
       - champion: 1
         cellId: 5
+        hover: ~
   turn: ~
   timer:
     remainingMs: 45908
@@ -3405,25 +3662,35 @@ expression: states
     ally:
       - champion: 266
         cellId: 0
+        hover: ~
       - champion: 119
         cellId: 0
+        hover: ~
       - champion: 126
         cellId: 0
+        hover: ~
       - champion: 61
         cellId: 0
+        hover: ~
       - champion: 80
         cellId: 0
+        hover: ~
     enemy:
       - champion: 136
         cellId: 5
+        hover: ~
       - champion: 51
         cellId: 5
+        hover: ~
       - champion: 26
         cellId: 5
+        hover: ~
       - champion: 8
         cellId: 5
+        hover: ~
       - champion: 1
         cellId: 5
+        hover: ~
   turn: ~
   timer:
     remainingMs: 44239
@@ -3500,25 +3767,35 @@ expression: states
     ally:
       - champion: 266
         cellId: 0
+        hover: ~
       - champion: 119
         cellId: 0
+        hover: ~
       - champion: 126
         cellId: 0
+        hover: ~
       - champion: 61
         cellId: 0
+        hover: ~
       - champion: 80
         cellId: 0
+        hover: ~
     enemy:
       - champion: 136
         cellId: 5
+        hover: ~
       - champion: 51
         cellId: 5
+        hover: ~
       - champion: 26
         cellId: 5
+        hover: ~
       - champion: 8
         cellId: 5
+        hover: ~
       - champion: 1
         cellId: 5
+        hover: ~
   turn: ~
   timer:
     remainingMs: 42092
@@ -3595,25 +3872,35 @@ expression: states
     ally:
       - champion: 266
         cellId: 0
+        hover: ~
       - champion: 119
         cellId: 0
+        hover: ~
       - champion: 126
         cellId: 0
+        hover: ~
       - champion: 61
         cellId: 0
+        hover: ~
       - champion: 80
         cellId: 0
+        hover: ~
     enemy:
       - champion: 136
         cellId: 5
+        hover: ~
       - champion: 51
         cellId: 5
+        hover: ~
       - champion: 26
         cellId: 5
+        hover: ~
       - champion: 8
         cellId: 5
+        hover: ~
       - champion: 1
         cellId: 5
+        hover: ~
   turn: ~
   timer:
     remainingMs: 40430
@@ -3690,25 +3977,35 @@ expression: states
     ally:
       - champion: 266
         cellId: 0
+        hover: ~
       - champion: 119
         cellId: 0
+        hover: ~
       - champion: 126
         cellId: 0
+        hover: ~
       - champion: 61
         cellId: 0
+        hover: ~
       - champion: 80
         cellId: 0
+        hover: ~
     enemy:
       - champion: 136
         cellId: 5
+        hover: ~
       - champion: 51
         cellId: 5
+        hover: ~
       - champion: 26
         cellId: 5
+        hover: ~
       - champion: 8
         cellId: 5
+        hover: ~
       - champion: 1
         cellId: 5
+        hover: ~
   turn: ~
   timer:
     remainingMs: 37615
@@ -3785,25 +4082,35 @@ expression: states
     ally:
       - champion: 266
         cellId: 0
+        hover: ~
       - champion: 119
         cellId: 0
+        hover: ~
       - champion: 126
         cellId: 0
+        hover: ~
       - champion: 61
         cellId: 0
+        hover: ~
       - champion: 80
         cellId: 0
+        hover: ~
     enemy:
       - champion: 136
         cellId: 5
+        hover: ~
       - champion: 51
         cellId: 5
+        hover: ~
       - champion: 26
         cellId: 5
+        hover: ~
       - champion: 8
         cellId: 5
+        hover: ~
       - champion: 1
         cellId: 5
+        hover: ~
   turn: ~
   timer:
     remainingMs: 36879
@@ -3880,25 +4187,35 @@ expression: states
     ally:
       - champion: 266
         cellId: 0
+        hover: ~
       - champion: 119
         cellId: 0
+        hover: ~
       - champion: 126
         cellId: 0
+        hover: ~
       - champion: 61
         cellId: 0
+        hover: ~
       - champion: 80
         cellId: 0
+        hover: ~
     enemy:
       - champion: 136
         cellId: 5
+        hover: ~
       - champion: 51
         cellId: 5
+        hover: ~
       - champion: 26
         cellId: 5
+        hover: ~
       - champion: 8
         cellId: 5
+        hover: ~
       - champion: 1
         cellId: 5
+        hover: ~
   turn: ~
   timer:
     remainingMs: 33723
@@ -3975,25 +4292,35 @@ expression: states
     ally:
       - champion: 266
         cellId: 0
+        hover: ~
       - champion: 119
         cellId: 0
+        hover: ~
       - champion: 126
         cellId: 0
+        hover: ~
       - champion: 61
         cellId: 0
+        hover: ~
       - champion: 80
         cellId: 0
+        hover: ~
     enemy:
       - champion: 136
         cellId: 5
+        hover: ~
       - champion: 51
         cellId: 5
+        hover: ~
       - champion: 26
         cellId: 5
+        hover: ~
       - champion: 8
         cellId: 5
+        hover: ~
       - champion: 1
         cellId: 5
+        hover: ~
   turn: ~
   timer:
     remainingMs: 31208
@@ -4070,25 +4397,35 @@ expression: states
     ally:
       - champion: 266
         cellId: 0
+        hover: ~
       - champion: 119
         cellId: 0
+        hover: ~
       - champion: 126
         cellId: 0
+        hover: ~
       - champion: 61
         cellId: 0
+        hover: ~
       - champion: 80
         cellId: 0
+        hover: ~
     enemy:
       - champion: 136
         cellId: 5
+        hover: ~
       - champion: 51
         cellId: 5
+        hover: ~
       - champion: 26
         cellId: 5
+        hover: ~
       - champion: 8
         cellId: 5
+        hover: ~
       - champion: 1
         cellId: 5
+        hover: ~
   turn: ~
   timer:
     remainingMs: 24960
@@ -4165,25 +4502,35 @@ expression: states
     ally:
       - champion: 266
         cellId: 0
+        hover: ~
       - champion: 119
         cellId: 0
+        hover: ~
       - champion: 126
         cellId: 0
+        hover: ~
       - champion: 61
         cellId: 0
+        hover: ~
       - champion: 80
         cellId: 0
+        hover: ~
     enemy:
       - champion: 136
         cellId: 5
+        hover: ~
       - champion: 51
         cellId: 5
+        hover: ~
       - champion: 26
         cellId: 5
+        hover: ~
       - champion: 8
         cellId: 5
+        hover: ~
       - champion: 1
         cellId: 5
+        hover: ~
   turn: ~
   timer:
     remainingMs: 20677
@@ -4260,25 +4607,35 @@ expression: states
     ally:
       - champion: 266
         cellId: 0
+        hover: ~
       - champion: 119
         cellId: 0
+        hover: ~
       - champion: 126
         cellId: 0
+        hover: ~
       - champion: 61
         cellId: 0
+        hover: ~
       - champion: 80
         cellId: 0
+        hover: ~
     enemy:
       - champion: 136
         cellId: 5
+        hover: ~
       - champion: 51
         cellId: 5
+        hover: ~
       - champion: 26
         cellId: 5
+        hover: ~
       - champion: 8
         cellId: 5
+        hover: ~
       - champion: 1
         cellId: 5
+        hover: ~
   turn: ~
   timer:
     remainingMs: 17901
@@ -4355,25 +4712,35 @@ expression: states
     ally:
       - champion: 266
         cellId: 0
+        hover: ~
       - champion: 119
         cellId: 0
+        hover: ~
       - champion: 126
         cellId: 0
+        hover: ~
       - champion: 61
         cellId: 0
+        hover: ~
       - champion: 80
         cellId: 0
+        hover: ~
     enemy:
       - champion: 136
         cellId: 5
+        hover: ~
       - champion: 51
         cellId: 5
+        hover: ~
       - champion: 26
         cellId: 5
+        hover: ~
       - champion: 8
         cellId: 5
+        hover: ~
       - champion: 1
         cellId: 5
+        hover: ~
   turn: ~
   timer:
     remainingMs: 4128

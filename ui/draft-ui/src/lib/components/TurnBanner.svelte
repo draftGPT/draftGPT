@@ -6,8 +6,10 @@
     draft: DraftState;
     /** When this draft arrived (`Date.now()`); the countdown runs from here. */
     receivedAt: number;
+    /** Shown before the turn, e.g. "Ban phase 2" (manual input knows the phase). */
+    phase?: string;
   };
-  let { draft, receivedAt }: Props = $props();
+  let { draft, receivedAt, phase }: Props = $props();
 
   let now = $state(Date.now());
   $effect(() => {
@@ -29,13 +31,17 @@
 </script>
 
 <div class="banner" class:yours={draft.turn?.yours}>
-  <span class="turn">{turnText}</span>
+  <span class="turn">{#if phase}<span class="phase">{`${phase} · `}</span>{/if}{turnText}</span>
   {#if left != null}
     <span class="timer" class:low={left < 10_000}>{seconds(left)}</span>
   {/if}
 </div>
 
 <style>
+  .phase {
+    color: var(--muted);
+    font-weight: 500;
+  }
   .banner {
     display: flex;
     justify-content: space-between;

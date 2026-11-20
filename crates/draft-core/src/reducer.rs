@@ -230,10 +230,14 @@ fn turn(s: &ChampSelectSession, phase: Phase, local: Option<i64>) -> Option<Turn
 fn bans(s: &ChampSelectSession) -> Bans {
     let allies: Vec<i64> = s.my_team.iter().map(|p| p.cell_id).collect();
     let mut out = Bans::default();
-    for a in actions(s).filter(|a| a.kind == ActionType::Ban && a.completed) {
+    // Locked bans, and bans being hovered (an unfinished ban action with a
+    // champion; the client only shows your team's).
+    let shown = |a: &&Action| a.kind == ActionType::Ban && (a.completed || a.champion().is_some());
+    for a in actions(s).filter(shown) {
         let ban = Ban {
-            champion: a.champion(),
+            champion: a.completed.then(|| a.champion()).flatten(),
             cell_id: Some(a.actor_cell_id),
+            hover: (!a.completed).then(|| a.champion()).flatten(),
         };
         if allies.contains(&a.actor_cell_id) {
             out.ally.push(ban);
@@ -241,17 +245,23 @@ fn bans(s: &ChampSelectSession) -> Bans {
             out.enemy.push(ban);
         }
     }
-    if out.ally.is_empty() && out.enemy.is_empty() {
+    let locked = |b: &Vec<Ban>| b.iter().any(|b| b.hover.is_none());
+    if !locked(&out.ally) && !locked(&out.enemy) {
+        // Old recordings: locked bans only in the summary; hovers go after them.
         let listed = |ids: &[i64]| -> Vec<Ban> {
             ids.iter()
                 .map(|&c| Ban {
                     champion: (c > 0).then_some(c),
                     cell_id: None,
+                    hover: None,
                 })
                 .collect()
         };
+        let hovers = std::mem::take(&mut out);
         out.ally = listed(&s.bans.my_team_bans);
+        out.ally.extend(hovers.ally);
         out.enemy = listed(&s.bans.their_team_bans);
+        out.enemy.extend(hovers.enemy);
     }
     out
 }
@@ -338,14 +348,16 @@ mod tests {
             b.ally,
             vec![Ban {
                 champion: None,
-                cell_id: Some(0)
+                cell_id: Some(0),
+                hover: None
             }]
         );
         assert_eq!(
             b.enemy,
             vec![Ban {
                 champion: Some(266),
-                cell_id: Some(5)
+                cell_id: Some(5),
+                hover: None
             }]
         );
         let old = session(json!({"bans": {"myTeamBans": [1, 2], "theirTeamBans": [3]}}));
@@ -355,9 +367,40 @@ mod tests {
             b.enemy[0],
             Ban {
                 champion: Some(3),
-                cell_id: None
+                cell_id: None,
+                hover: None
             }
         );
+    }
+
+    #[test]
+    fn a_teammates_unlocked_ban_is_a_hover() {
+        let s = session(json!({
+            "myTeam": [{"cellId": 0}, {"cellId": 1}], "theirTeam": [{"cellId": 5}],
+            "actions": [[
+                {"actorCellId": 0, "type": "ban", "championId": 157, "isInProgress": true},
+                {"actorCellId": 1, "type": "ban", "championId": 238, "completed": true},
+                {"actorCellId": 5, "type": "ban", "championId": 0, "isInProgress": true}
+            ]]
+        }));
+        let b = from_session(&s).bans;
+        let shown: Vec<_> = b.ally.iter().map(|b| (b.champion, b.hover)).collect();
+        assert_eq!(shown, vec![(None, Some(157)), (Some(238), None)]);
+        assert!(b.enemy.is_empty());
+        // A hovered ban isn't banned yet.
+        assert!(!from_session(&s).unavailable().any(|c| c == 157));
+        // Old recordings: summary bans first, hovers after.
+        let old = session(json!({
+            "myTeam": [{"cellId": 0}], "bans": {"myTeamBans": [1], "theirTeamBans": []},
+            "actions": [[{"actorCellId": 0, "type": "ban", "championId": 157, "isInProgress": true}]]
+        }));
+        let shown: Vec<_> = from_session(&old)
+            .bans
+            .ally
+            .iter()
+            .map(|b| (b.champion, b.hover))
+            .collect();
+        assert_eq!(shown, vec![(Some(1), None), (None, Some(157))]);
     }
 
     #[test]

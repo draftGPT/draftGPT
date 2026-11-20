@@ -8,4 +8,9 @@ champion: number | null,
 /**
  * The banning cell, if known (older clients only give the champion list).
  */
-cellId: number | null, };
+cellId: number | null, 
+/**
+ * A ban not locked yet: the champion a teammate is hovering to ban
+ * (only your team's are visible; `champion` is `None` until it locks).
+ */
+hover: number | null, };

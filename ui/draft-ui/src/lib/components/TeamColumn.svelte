@@ -6,6 +6,8 @@
 
   type Props = {
     title: string;
+    /** Shown after the title, e.g. the map side. */
+    note?: string;
     slots: Slot[];
     champions: Champions;
     side: "ally" | "enemy";
@@ -14,12 +16,12 @@
     onPositionChange?: (cellId: number, position: Position | null) => void;
     onMakeLocal?: (cellId: number) => void;
   };
-  let { title, slots, champions, side, selectedCell = null, onSlotClick, onPositionChange, onMakeLocal }: Props =
+  let { title, note, slots, champions, side, selectedCell = null, onSlotClick, onPositionChange, onMakeLocal }: Props =
     $props();
 </script>
 
 <section class="team {side}" aria-label={title}>
-  <h3>{title}</h3>
+  <h3>{title}{#if note}<span class="note">{` · ${note}`}</span>{/if}</h3>
   {#if slots.length}
     {#each slots as slot (slot.cellId)}
       <SlotRow
@@ -56,6 +58,10 @@
   .enemy h3 {
     color: var(--enemy);
     text-align: right;
+  }
+  .note {
+    color: var(--muted);
+    font-weight: 500;
   }
   .none {
     color: var(--muted);
