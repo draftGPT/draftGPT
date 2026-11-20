@@ -30,13 +30,23 @@
 </script>
 
 <main>
-  <header>
-    <span class="status" class:live={update?.draft != null}>{update?.status ?? (source ? "Starting…" : "Not running in the desktop app")}</span>
-    {#if source?.setFloating && update?.canDock}
-      <button type="button" onclick={toggleFloating} title="Dock next to the client or float freely">
-        {update?.floating ? "Dock" : "Float"}
-      </button>
-    {/if}
+  <!-- No native title bar in the app: the header is the drag handle (the attribute
+       only applies to the element itself, so the status text carries it too). -->
+  <header data-tauri-drag-region>
+    <span class="status" class:live={update?.draft != null} data-tauri-drag-region>{update?.status ?? (source ? "Starting…" : "Not running in the desktop app")}</span>
+    <span class="actions">
+      {#if source?.setFloating && update?.canDock}
+        <button type="button" onclick={toggleFloating} title="Dock next to the client or float freely">
+          {update?.floating ? "Dock" : "Float"}
+        </button>
+      {/if}
+      {#if source?.minimize}
+        <button type="button" class="icon" onclick={() => source?.minimize?.()} title="Minimize" aria-label="Minimize">–</button>
+      {/if}
+      {#if source?.close}
+        <button type="button" class="icon" onclick={() => source?.close?.()} title="Close" aria-label="Close">×</button>
+      {/if}
+    </span>
   </header>
 
   {#if error}
@@ -78,12 +88,30 @@
   .status.live::before {
     color: var(--good);
   }
+  header {
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .actions {
+    display: flex;
+    gap: 4px;
+  }
   header button {
     padding: 4px 10px;
     border-radius: var(--radius);
     border: 1px solid var(--line);
     background: var(--panel);
     cursor: pointer;
+  }
+  header button.icon {
+    padding: 4px 8px;
+    border-color: transparent;
+    background: transparent;
+    color: var(--muted);
+  }
+  header button.icon:hover {
+    color: var(--text, inherit);
+    border-color: var(--line);
   }
   .idle {
     color: var(--muted);
