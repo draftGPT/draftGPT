@@ -14,7 +14,7 @@ struct Args {
     #[arg(long, default_value_t = 8790)]
     port: u16,
     /// Directory for recordings and the log file.
-    #[arg(long, default_value = "captures")]
+    #[arg(long, default_value_os_t = capture::default_out_dir())]
     out: PathBuf,
     /// Record every champ select automatically. With --replay nothing is
     /// recorded, neither automatically nor by hand.

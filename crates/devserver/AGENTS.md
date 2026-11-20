@@ -21,7 +21,8 @@ The League client runs on Windows and macOS. Build on that machine, not cross-co
    cargo run -p devserver --release            # http://127.0.0.1:8790
    ```
 
-   Options: `--port N`, `--out DIR` (default `captures/`), `--auto false` (only record when
+   Options: `--port N`, `--out DIR` (default `draftgpt-captures` in the OS temp directory,
+   see below), `--auto false` (only record when
    you press Start), `--wire false` (no raw frame file).
 5. Open `http://127.0.0.1:8790`. The top line should say "League client connected" with the
    client version.
@@ -40,7 +41,7 @@ disables its recording controls.
 
 ## When it doesn't work
 
-Everything is logged to `captures/devserver.log`. Our crates log at `info` and above, so
+Everything is logged to `devserver.log` in the output folder (the path is printed at start). Our crates log at `info` and above, so
 `RUST_LOG=debug` adds nothing yet; when you need more detail, add `tracing::debug!` lines
 where you're looking and run with `RUST_LOG=debug` (cmd: `set RUST_LOG=debug`, PowerShell:
 `$env:RUST_LOG="debug"`). The client password never reaches the log; keep it that way if
@@ -75,7 +76,22 @@ When a code change is needed to get recording at all:
 
 ## After the session: recordings to fixtures
 
-`captures/` holds, per recording `<date>_<time>_<label>`:
+Recordings and logs go to `draftgpt-captures` in the OS temp directory, never into the repo:
+
+| OS | Folder |
+|---|---|
+| Windows | `%TEMP%\draftgpt-captures` (usually `C:\Users\<you>\AppData\Local\Temp\draftgpt-captures`) |
+| macOS | `$TMPDIR/draftgpt-captures` (a per-user folder under `/var/folders/`; `echo $TMPDIR`) |
+| Linux | `/tmp/draftgpt-captures` |
+
+The temp folder gets emptied, so hand recordings over right after the session.
+
+**If you recorded:** hand over the main `<name>.jsonl` files (and
+`client-<version>.help.json` if there is one). Don't copy anything into the repo yourself.
+
+**Only an agent saves recordings into `fixtures/`**, with the steps below.
+
+The folder holds, per recording `<date>_<time>_<label>`:
 
 | File | What happens to it |
 |---|---|
@@ -86,9 +102,9 @@ When a code change is needed to get recording at all:
 | `<name>.help.json` | Only when the version was unknown. Normally not needed. |
 | `devserver.log` | Not committed. Keep it with the wire files if something went wrong. |
 
-Wire and sweep files are gitignored, but don't copy them anywhere under the repo by hand.
+Wire and sweep files are gitignored, but never copy them anywhere under the repo.
 
-Steps:
+Steps (for the agent):
 
 1. **Pick the recordings worth keeping**: one per situation not yet in `fixtures/README.md`
    (for example teammate hovers, a trade, a ranked draft, a dodge by someone else). Skip
@@ -98,9 +114,9 @@ Steps:
    says what happens, in snake case (`16_23_ranked_teammate_trade.jsonl`). Copy, don't edit
    the content.
 3. **Copy a new schema dump** `client-<version>.help.json` into `docs/lcu-spec/help/`.
-4. **Check for leaks yourself**, besides the tests: search the new files for your Riot ID,
-   summoner name, tag and anyone else's you saw in the lobby
-   (`grep -il "yourname" fixtures/*.jsonl`). Nothing may match. All identity fields
+4. **Check for leaks yourself**, besides the tests: ask the person who recorded for their
+   Riot ID, summoner name and tag and anyone else's they saw in the lobby, and search the
+   new files for each (`grep -il "theirname" fixtures/*.jsonl`). Nothing may match. All identity fields
    should read `redacted-N`, and numeric IDs should be small numbers.
 5. **Document and test**: add a row per file to the table in `fixtures/README.md`, and a
    test in `crates/capture/tests/fixtures.rs` that checks the situation the file is named
