@@ -71,6 +71,7 @@ pub fn from_session(s: &ChampSelectSession) -> DraftState {
         bench: s.bench_champions.iter().map(|b| b.champion_id).collect(),
         offered: Vec::new(),
         rerolls_remaining: s.allow_rerolling.then_some(s.rerolls_remaining),
+        fearless: Vec::new(),
     }
 }
 

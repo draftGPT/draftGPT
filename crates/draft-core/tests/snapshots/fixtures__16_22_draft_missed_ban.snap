@@ -77,6 +77,7 @@ expression: states
   bench: []
   offered: []
   rerollsRemaining: ~
+  fearless: []
 - phase: planning
   queueId: 3130
   spectating: false
@@ -152,6 +153,7 @@ expression: states
   bench: []
   offered: []
   rerollsRemaining: ~
+  fearless: []
 - phase: banPick
   queueId: 3130
   spectating: false
@@ -227,6 +229,7 @@ expression: states
   bench: []
   offered: []
   rerollsRemaining: ~
+  fearless: []
 - phase: banPick
   queueId: 3130
   spectating: false
@@ -306,6 +309,7 @@ expression: states
   bench: []
   offered: []
   rerollsRemaining: ~
+  fearless: []
 - phase: banPick
   queueId: 3130
   spectating: false
@@ -388,4 +392,5 @@ expression: states
   bench: []
   offered: []
   rerollsRemaining: ~
+  fearless: []
 - ~

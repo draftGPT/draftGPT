@@ -7,6 +7,7 @@
   import type { Position } from "../types/Position";
   import type { Recommendations } from "../types/Recommendations";
   import BanRow from "./BanRow.svelte";
+  import ChampionIcon from "./ChampionIcon.svelte";
   import RecommendationList from "./RecommendationList.svelte";
   import TeamColumn from "./TeamColumn.svelte";
   import TurnBanner from "./TurnBanner.svelte";
@@ -14,6 +15,7 @@
   type Selection =
     | { kind: "slot"; side: "ally" | "enemy"; cellId: number }
     | { kind: "ban"; side: "ally" | "enemy"; index: number }
+    | { kind: "fearless" }
     | null;
 
   type Props = {
@@ -34,6 +36,10 @@
     onRecPick?: (champion: number, kind: "pick" | "ban") => void;
     /** Role selectors on every slot (manual input). */
     onPositionChange?: (side: "ally" | "enemy", cellId: number, position: Position | null) => void;
+    /** Fearless: add a champion from an earlier game (manual input). */
+    onFearlessAdd?: () => void;
+    /** Fearless: take a champion off the list (manual input). */
+    onFearlessRemove?: (champion: number) => void;
     /** Phase name for the turn banner (manual input). */
     phase?: string;
     /** Your team's map side, shown in the team titles (manual input). */
@@ -57,6 +63,8 @@
     onMakeLocal,
     phase,
     allySide,
+    onFearlessAdd,
+    onFearlessRemove,
   }: Props = $props();
 
   const banning = $derived(draft.turn?.kind === "ban" || (draft.phase === "planning" && !draft.turn));
@@ -92,6 +100,38 @@
         onBanClick={onBanClick ? (i) => onBanClick("enemy", i) : undefined}
       />
     </div>
+    {#if draft.fearless.length || onFearlessAdd}
+      <div class="fearless" role="group" aria-label="Fearless">
+        <span class="flabel" title="Picked in earlier games of the series: out for both teams">Fearless</span>
+        {#each draft.fearless as c (c)}
+          {#if onFearlessRemove}
+            <button
+              type="button"
+              class="fspot"
+              title="{champions.name(c)} (click to remove)"
+              aria-label="Remove {champions.name(c)}"
+              data-champion={c}
+              onclick={() => onFearlessRemove(c)}
+            >
+              <ChampionIcon champion={c} {champions} size={24} banned />
+            </button>
+          {:else}
+            <span class="fspot" title={champions.name(c)} data-champion={c}>
+              <ChampionIcon champion={c} {champions} size={24} banned />
+            </span>
+          {/if}
+        {/each}
+        {#if onFearlessAdd}
+          <button
+            type="button"
+            class="fadd"
+            class:selected={selection?.kind === "fearless"}
+            onclick={onFearlessAdd}
+            aria-label="Add a champion from an earlier game">+</button
+          >
+        {/if}
+      </div>
+    {/if}
   </div>
 
   <TeamColumn
@@ -201,6 +241,42 @@
     display: flex;
     justify-content: space-between;
     gap: 12px;
+  }
+  .fearless {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    align-items: center;
+  }
+  .flabel {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    margin-right: 4px;
+  }
+  .fspot {
+    padding: 0;
+    border: none;
+    background: none;
+    line-height: 0;
+  }
+  button.fspot {
+    cursor: pointer;
+  }
+  .fadd {
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    border: 1px dashed var(--line);
+    background: none;
+    color: var(--muted);
+    cursor: pointer;
+    font: inherit;
+  }
+  .fadd.selected {
+    border: 1px solid var(--text);
+    color: var(--text);
   }
   .middle {
     display: flex;

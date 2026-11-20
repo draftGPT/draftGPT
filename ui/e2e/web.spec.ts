@@ -129,6 +129,31 @@ test("tournament on red: bans alternate from blue, two phases each", async ({ pa
   await expect(banner).toContainText("Ban phase 2 · Your ban");
 });
 
+test("fearless: the next game's picker and suggestions leave out earlier picks", async ({ page }) => {
+  await page.getByRole("button", { name: "Fearless" }).click();
+  const banner = page.locator(".banner");
+  await expect(banner).toContainText("Game 1 · Ban phase 1 · Your ban");
+  for (const name of ["Ahri", "Zed", "Yasuo", "Yone", "Lux", "Jinx"]) await pickChampion(page, name);
+  await pickChampion(page, "Garen"); // blue pick 1: you
+  await page.getByRole("button", { name: "Next game" }).click();
+  await expect(banner).toContainText("Game 2 · Ban phase 1");
+  const row = page.getByRole("group", { name: "Fearless" });
+  await expect(row.locator("[data-champion]")).toHaveCount(1);
+  await expect(row.locator('button[title^="Garen"]')).toHaveCount(1);
+  await expect(page.getByRole("option", { name: "Garen", exact: true })).toBeDisabled();
+  // Ahri was only banned in game 1: free again.
+  await expect(page.getByRole("option", { name: "Ahri", exact: true })).toBeEnabled();
+
+  // Add one by hand, then take it off again.
+  await page.getByLabel("Add a champion from an earlier game").click();
+  await pickChampion(page, "Darius");
+  await expect(row.locator("[data-champion]")).toHaveCount(2);
+  await page.getByLabel("Remove Darius").click();
+  await expect(row.locator("[data-champion]")).toHaveCount(1);
+  const picks = page.getByRole("region", { name: "Suggested picks" });
+  await expect(picks.getByText("Garen", { exact: true })).toHaveCount(0);
+});
+
 test("reset clears the draft", async ({ page }) => {
   await page.getByLabel("Champion, ally 2").click();
   await pickChampion(page, "Ahri");
