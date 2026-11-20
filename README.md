@@ -80,8 +80,6 @@ cargo run -p desktop -- --replay fixtures/16_22_draft_ban_and_pick_timeout_autol
 | `--float` | start floating instead of docked (docking is Windows-only; elsewhere it always floats) |
 | `--stats FILE` | use this stats file instead of the bundled one |
 
-For a release binary: `cargo build -p desktop --release` (the page must be built first; the build fails without it).
-
 ## Web drafter
 
 ```sh
@@ -92,43 +90,4 @@ Click a slot or ban spot, then choose a champion; suggestions update as you go.
 
 ## Development
 
-```sh
-cargo test --workspace
-cargo clippy --workspace --all-targets -- -D warnings
-cd ui && npm run check && npm test
-```
-
-Tests replay the recordings in `fixtures/`, so no League Client is needed.
-
-### Recording drafts (capture and devserver)
-
-New fixtures come from recording real champ selects on Windows or macOS.
-Everything written is redacted (player names, IDs, chat credentials), and the client is only ever read.
-
-- **devserver**: a local page that shows what the client sends and records each champ select.
-
-  ```sh
-  cargo run -p devserver --release    # with the League Client open, then open http://127.0.0.1:8790
-  cargo run -p devserver -- --replay fixtures/16_22_draft_missed_ban.jsonl --speed 4   # any OS, no client
-  ```
-
-  Options: `--port N`, `--out DIR` (default: the temp folder below), `--auto false` (record only when you press Start), `--wire false` (no raw frame file).
-
-- **capture**: the same recorder without the page.
-
-  ```sh
-  cargo run -p capture                                # record every champ select until Ctrl+C
-  cargo run -p capture -- record --label ranked_solo  # record everything from now until Ctrl+C
-  ```
-
-Recordings go to `draftgpt-captures` in the OS temp folder, never into the repo; both tools print the path when they start.
-
-| OS | Folder |
-| --- | --- |
-| Windows | `%TEMP%\draftgpt-captures` |
-| macOS | `$TMPDIR/draftgpt-captures` |
-| Linux | `/tmp/draftgpt-captures` |
-
-The temp folder gets emptied, so hand over the main `.jsonl` files right after the session (never `*.wire.jsonl` or `*.sweep.json`).
-**Don't copy recordings into `fixtures/` yourself:** only an agent does that.
-How to run a capture session, fix it when it doesn't connect, and the agent's steps for fixtures: [crates/devserver/AGENTS.md](crates/devserver/AGENTS.md).
+Tests, release builds and recording drafts from the client: [README-dev.md](README-dev.md).
