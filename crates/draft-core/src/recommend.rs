@@ -417,6 +417,19 @@ mod tests {
     }
 
     #[test]
+    fn fearless_champions_are_neither_picked_nor_banned() {
+        let mut d = draft();
+        d.fearless = vec![2, 4];
+        let r = StatsRecommender::new(stats()).recommend(&d);
+        assert!(
+            r.picks
+                .iter()
+                .chain(&r.bans)
+                .all(|x| ![2, 4].contains(&x.champion))
+        );
+    }
+
+    #[test]
     fn without_a_position_picks_use_each_champions_main_position() {
         let mut d = draft();
         d.ally[0].position = None;

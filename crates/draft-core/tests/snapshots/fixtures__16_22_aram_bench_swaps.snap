@@ -84,6 +84,7 @@ expression: states
     - 266
   offered: []
   rerollsRemaining: 0
+  fearless: []
 - phase: finalization
   queueId: 2400
   spectating: false
@@ -166,6 +167,7 @@ expression: states
     - 266
   offered: []
   rerollsRemaining: 0
+  fearless: []
 - phase: finalization
   queueId: 2400
   spectating: false
@@ -248,6 +250,7 @@ expression: states
     - 266
   offered: []
   rerollsRemaining: 0
+  fearless: []
 - phase: finalization
   queueId: 2400
   spectating: false
@@ -330,6 +333,7 @@ expression: states
     - 266
   offered: []
   rerollsRemaining: 0
+  fearless: []
 - phase: finalization
   queueId: 2400
   spectating: false
@@ -412,6 +416,7 @@ expression: states
     - 266
   offered: []
   rerollsRemaining: 0
+  fearless: []
 - phase: finalization
   queueId: 2400
   spectating: false
@@ -494,6 +499,7 @@ expression: states
     - 266
   offered: []
   rerollsRemaining: 0
+  fearless: []
 - phase: gameStarting
   queueId: 2400
   spectating: false
@@ -576,4 +582,5 @@ expression: states
     - 266
   offered: []
   rerollsRemaining: 0
+  fearless: []
 - ~

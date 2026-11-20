@@ -1,6 +1,9 @@
 import { describe, expect, it } from "vitest";
 import {
+  addFearless,
   draftOrder,
+  nextGame,
+  removeFearless,
   newManualDraft,
   nextOpen,
   setBan,
@@ -43,7 +46,7 @@ describe("manual draft", () => {
     let d = setBan(newManualDraft(), "ally", 2, 1);
     expect(d.bans.ally.map((b) => b.champion)).toEqual([null, null, 1]);
     d = setBan(d, "ally", 2, null);
-    expect(d.bans.ally).toEqual([]);
+    expect(d.bans.ally[0]?.champion ?? null).toBeNull();
   });
 
   it("sets who you are and your role", () => {
@@ -136,3 +139,24 @@ describe("draft order", () => {
   });
 });
 
+describe("fearless", () => {
+  it("follows the tournament order", () => {
+    expect(draftOrder("fearless", "red")).toEqual(draftOrder("tournament", "red"));
+  });
+
+  it("a fearless champion leaves the board and can't be taken; the next game keeps roles and adds picks", () => {
+    let d = setLocal(setPosition(newManualDraft(), "ally", 0, "middle"), 2);
+    d = setChampion(d, "ally", 2, 103);
+    d = setChampion(d, "enemy", 5, 238);
+    d = setBan(d, "ally", 0, 157);
+    d = addFearless(d, 157);
+    expect(d.bans.ally[0]?.champion ?? null).toBeNull();
+    expect(taken(d).has(157)).toBe(true);
+    d = nextGame(d);
+    expect(d.fearless).toEqual([157, 103, 238]);
+    expect([...d.ally, ...d.enemy].every((s) => s.champion == null)).toBe(true);
+    expect(d.ally.find((s) => s.isLocal)?.cellId).toBe(2);
+    expect(d.ally[0]!.position).toBe("middle");
+    expect(removeFearless(d, 103).fearless).toEqual([157, 238]);
+  });
+});

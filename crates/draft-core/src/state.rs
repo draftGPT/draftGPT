@@ -33,6 +33,10 @@ pub struct DraftState {
     /// Champions offered to you in pick-one-of-few modes.
     pub offered: Vec<ChampionId>,
     pub rerolls_remaining: Option<i64>,
+    /// Fearless series: champions picked in earlier games, unavailable to both
+    /// teams. The client doesn't tell us, so it's only filled by manual input.
+    #[serde(default)]
+    pub fearless: Vec<ChampionId>,
 }
 
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq, Serialize, Deserialize)]
@@ -144,8 +148,8 @@ impl DraftState {
         self.ally.iter().find(|s| s.is_local)
     }
 
-    /// Every champion locked or banned by anyone: no longer available in modes
-    /// without duplicate picks.
+    /// Every champion locked or banned by anyone, or out from earlier games of
+    /// a Fearless series: no longer available in modes without duplicate picks.
     pub fn unavailable(&self) -> impl Iterator<Item = ChampionId> + '_ {
         let picked = self
             .ally
@@ -158,6 +162,6 @@ impl DraftState {
             .iter()
             .chain(&self.bans.enemy)
             .filter_map(|b| b.champion);
-        picked.chain(banned)
+        picked.chain(banned).chain(self.fearless.iter().copied())
     }
 }

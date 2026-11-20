@@ -34,6 +34,7 @@ function draft(turn: DraftState["turn"]): DraftState {
     bench: [],
     offered: [],
     rerollsRemaining: null,
+    fearless: [],
   };
 }
 
@@ -72,5 +73,13 @@ describe("DraftView", () => {
     render(DraftView, { draft: d, recs, champions });
     expect(screen.getByTitle("Banning Yasuo…")).toBeTruthy();
   });
-});
 
+  it("shows champions out from earlier Fearless games", () => {
+    const d = draft(null);
+    d.fearless = [157, 238];
+    render(DraftView, { draft: d, recs, champions });
+    const row = screen.getByRole("group", { name: "Fearless" });
+    const spots = [...row.querySelectorAll(".fspot")].map((e) => e.getAttribute("title"));
+    expect(spots).toEqual(["Yasuo", "Zed"]);
+  });
+});

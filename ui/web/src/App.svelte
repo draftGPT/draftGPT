@@ -4,6 +4,9 @@
   // to fix it. Recommendations update as the draft changes.
   import {
     ChampionPicker,
+    addFearless,
+    nextGame,
+    removeFearless,
     DraftView,
     MAX_BANS,
     champions,
@@ -27,6 +30,7 @@
   type Selection =
     | { kind: "slot"; side: "ally" | "enemy"; cellId: number }
     | { kind: "ban"; side: "ally" | "enemy"; index: number }
+    | { kind: "fearless" }
     | null;
 
   let mode = $state<DraftMode>("ranked");
@@ -34,6 +38,8 @@
   let draft = $state<DraftState>(newManualDraft());
   /** The step of the draft order being filled; past the end when done. */
   let step = $state(0);
+  /** Game of the Fearless series. */
+  let game = $state(1);
   let selection = $state<Selection>(null);
   let recommend = $state<Recommend | null>(null);
   let error = $state<string | null>(null);
@@ -59,6 +65,11 @@
   function pick(champion: number | null) {
     const s = selection;
     if (!s) return;
+    if (s.kind === "fearless") {
+      // Stays open: earlier games usually add several at once.
+      if (champion != null) draft = addFearless(draft, champion);
+      return;
+    }
     draft =
       s.kind === "slot"
         ? setChampion(draft, s.side, s.cellId, champion)
@@ -88,14 +99,25 @@
 
   /** Mode or side changed: keep what's entered, continue at the first open step. */
   function setOrder(m: DraftMode, s: MapSide) {
+    if (m !== "fearless" && draft.fearless.length) draft = { ...draft, fearless: [] };
+    if (m !== "fearless") game = 1;
     mode = m;
     side = s;
     step = nextOpen(draft, draftOrder(m, s));
     selection = target(draftOrder(m, s)[step]);
   }
 
+  /** Fearless: this game's picks become unavailable, the next game starts. */
+  function startNextGame() {
+    draft = nextGame(draft);
+    game++;
+    step = 0;
+    selection = target(steps[0]);
+  }
+
   function reset() {
     draft = newManualDraft();
+    game = 1;
     step = 0;
     selection = target(steps[0]);
   }
@@ -108,11 +130,15 @@
       <div class="seg" role="group" aria-label="Draft mode">
         <button type="button" aria-pressed={mode === "ranked"} onclick={() => setOrder("ranked", side)} title="All ten bans at once, then picks">Ranked</button>
         <button type="button" aria-pressed={mode === "tournament"} onclick={() => setOrder("tournament", side)} title="Clash: two ban phases and two pick phases">Tournament</button>
+        <button type="button" aria-pressed={mode === "fearless"} onclick={() => setOrder("fearless", side)} title="Tournament draft in a series: champions picked in earlier games are out for both teams">Fearless</button>
       </div>
       <div class="seg" role="group" aria-label="Your side">
         <button type="button" class="blue" aria-pressed={side === "blue"} onclick={() => setOrder(mode, "blue")}>Blue</button>
         <button type="button" class="red" aria-pressed={side === "red"} onclick={() => setOrder(mode, "red")}>Red</button>
       </div>
+      {#if mode === "fearless"}
+        <button type="button" onclick={startNextGame} title="This game's picks become unavailable">Next game</button>
+      {/if}
       <button type="button" onclick={reset}>Reset</button>
     </div>
   </header>
@@ -122,7 +148,9 @@
   <DraftView
     draft={shown}
     {recs}
-    phase={current?.phase}
+    phase={mode === "fearless" ? `Game ${game}${current ? ` · ${current.phase}` : ""}` : current?.phase}
+    onFearlessAdd={mode === "fearless" ? () => (selection = { kind: "fearless" }) : undefined}
+    onFearlessRemove={mode === "fearless" ? (c) => (draft = removeFearless(draft, c)) : undefined}
     allySide={side}
     {champions}
     layout="wide"
@@ -140,8 +168,12 @@
     <section class="picking" aria-label="Choose a champion">
       <h2>
         <span>
-          {selection.kind === "ban" ? "Ban" : "Pick"} for
-          {selection.side === "ally" ? "your team" : "the enemy"}
+          {#if selection.kind === "fearless"}
+            Picked in earlier games (out for both teams)
+          {:else}
+            {selection.kind === "ban" ? "Ban" : "Pick"} for
+            {selection.side === "ally" ? "your team" : "the enemy"}
+          {/if}
         </span>
         <span class="actions">
           {#if selection.kind === "ban" && same(selection, target(current))}
@@ -150,7 +182,16 @@
           <button type="button" class="close" onclick={() => (selection = null)} aria-label="Close">×</button>
         </span>
       </h2>
-      <ChampionPicker {champions} unavailable={taken(draft, mode === "ranked" && selection.kind === "ban" ? selection.side : undefined)} onPick={pick} onClear={() => pick(null)} />
+      {#if selection.kind === "fearless"}
+        <ChampionPicker {champions} unavailable={new Set(draft.fearless)} onPick={pick} />
+      {:else}
+        <ChampionPicker
+          {champions}
+          unavailable={taken(draft, mode === "ranked" && selection.kind === "ban" ? selection.side : undefined)}
+          onPick={pick}
+          onClear={() => pick(null)}
+        />
+      {/if}
     </section>
   {:else}
     <p class="hint">

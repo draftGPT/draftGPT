@@ -33,6 +33,7 @@ export function newManualDraft(localCell = 0): DraftState {
     bench: [],
     offered: [],
     rerollsRemaining: null,
+    fearless: [],
   };
 }
 
@@ -119,6 +120,7 @@ export function taken(d: DraftState, blindBan?: Side): Set<number> {
     ...d.enemy.map((s) => s.champion),
     ...(blindBan === "enemy" ? [] : d.bans.ally.map((b) => b.champion)),
     ...(blindBan === "ally" ? [] : d.bans.enemy.map((b) => b.champion)),
+    ...d.fearless,
   ];
   return new Set(ids.filter((c): c is number => c != null));
 }
@@ -126,8 +128,12 @@ export function taken(d: DraftState, blindBan?: Side): Set<number> {
 // Draft order (manual input). The web drafter walks through these steps; you
 // can still click any spot to fix it.
 
-/** `ranked`: all ten bans at once, then picks. `tournament` (Clash): two ban and two pick phases. */
-export type DraftMode = "ranked" | "tournament";
+/**
+ * `ranked`: all ten bans at once, then picks. `tournament` (Clash): two ban
+ * and two pick phases. `fearless`: tournament, plus every champion picked in
+ * earlier games of the series is out for both teams.
+ */
+export type DraftMode = "ranked" | "tournament" | "fearless";
 export type MapSide = "blue" | "red";
 
 /** `cellId`: who acts (in tournament draft the captain, slot 1, makes every ban). */
@@ -210,5 +216,29 @@ export function withTurn(d: DraftState, steps: Step[], i: number): DraftState {
     turn: { kind: step.kind, cells, yours: local != null && cells.includes(local) },
     ally: d.ally.map((s) => ({ ...s, picking: step.kind === "pick" && cells.includes(s.cellId) })),
     enemy: d.enemy.map((s) => ({ ...s, picking: step.kind === "pick" && cells.includes(s.cellId) })),
+  };
+}
+
+// Fearless series (manual input).
+
+/** Marks `champion` as out from an earlier game; it leaves any slot or ban. */
+export function addFearless(d: DraftState, champion: number): DraftState {
+  if (d.fearless.includes(champion)) return d;
+  const next = without(d, champion);
+  return { ...next, fearless: [...next.fearless, champion] };
+}
+
+export function removeFearless(d: DraftState, champion: number): DraftState {
+  return { ...d, fearless: d.fearless.filter((c) => c !== champion) };
+}
+
+/** The next game of a Fearless series: this game's picks join the fearless list, the board clears. */
+export function nextGame(d: DraftState): DraftState {
+  const picked = [...d.ally, ...d.enemy].map((s) => s.champion).filter((c): c is number => c != null);
+  const fresh = newManualDraft();
+  return {
+    ...fresh,
+    ally: d.ally.map((s) => ({ ...s, champion: null, hover: null, picking: false })),
+    fearless: [...d.fearless, ...picked.filter((c) => !d.fearless.includes(c))],
   };
 }

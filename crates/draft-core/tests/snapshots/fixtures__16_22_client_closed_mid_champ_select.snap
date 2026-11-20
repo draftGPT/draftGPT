@@ -27,6 +27,7 @@ expression: states
   bench: []
   offered: []
   rerollsRemaining: 0
+  fearless: []
 - phase: banPick
   queueId: 3270
   spectating: false
@@ -55,6 +56,7 @@ expression: states
     - 427
     - 161
   rerollsRemaining: 0
+  fearless: []
 - phase: finalization
   queueId: 3270
   spectating: false
@@ -81,6 +83,7 @@ expression: states
     - 427
     - 161
   rerollsRemaining: 0
+  fearless: []
 - phase: finalization
   queueId: 3270
   spectating: false
@@ -107,4 +110,5 @@ expression: states
     - 427
     - 161
   rerollsRemaining: 0
+  fearless: []
 - ~

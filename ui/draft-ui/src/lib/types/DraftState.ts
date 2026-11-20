@@ -30,4 +30,9 @@ bench: Array<number>,
 /**
  * Champions offered to you in pick-one-of-few modes.
  */
-offered: Array<number>, rerollsRemaining: number | null, };
+offered: Array<number>, rerollsRemaining: number | null, 
+/**
+ * Fearless series: champions picked in earlier games, unavailable to both
+ * teams. The client doesn't tell us, so it's only filled by manual input.
+ */
+fearless: Array<number>, };

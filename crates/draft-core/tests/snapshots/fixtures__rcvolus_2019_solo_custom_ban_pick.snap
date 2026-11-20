@@ -27,6 +27,7 @@ expression: states
   bench: []
   offered: []
   rerollsRemaining: ~
+  fearless: []
 - phase: banPick
   queueId: ~
   spectating: false
@@ -55,6 +56,7 @@ expression: states
   bench: []
   offered: []
   rerollsRemaining: ~
+  fearless: []
 - phase: banPick
   queueId: ~
   spectating: false
@@ -83,6 +85,7 @@ expression: states
   bench: []
   offered: []
   rerollsRemaining: ~
+  fearless: []
 - phase: banPick
   queueId: ~
   spectating: false
@@ -114,6 +117,7 @@ expression: states
   bench: []
   offered: []
   rerollsRemaining: ~
+  fearless: []
 - phase: banPick
   queueId: ~
   spectating: false
@@ -145,6 +149,7 @@ expression: states
   bench: []
   offered: []
   rerollsRemaining: ~
+  fearless: []
 - phase: banPick
   queueId: ~
   spectating: false
@@ -179,6 +184,7 @@ expression: states
   bench: []
   offered: []
   rerollsRemaining: ~
+  fearless: []
 - phase: banPick
   queueId: ~
   spectating: false
@@ -213,6 +219,7 @@ expression: states
   bench: []
   offered: []
   rerollsRemaining: ~
+  fearless: []
 - phase: banPick
   queueId: ~
   spectating: false
@@ -247,6 +254,7 @@ expression: states
   bench: []
   offered: []
   rerollsRemaining: ~
+  fearless: []
 - phase: finalization
   queueId: ~
   spectating: false
@@ -277,6 +285,7 @@ expression: states
   bench: []
   offered: []
   rerollsRemaining: ~
+  fearless: []
 - phase: finalization
   queueId: ~
   spectating: false
@@ -307,6 +316,7 @@ expression: states
   bench: []
   offered: []
   rerollsRemaining: ~
+  fearless: []
 - phase: finalization
   queueId: ~
   spectating: false
@@ -337,6 +347,7 @@ expression: states
   bench: []
   offered: []
   rerollsRemaining: ~
+  fearless: []
 - phase: finalization
   queueId: ~
   spectating: false
@@ -367,4 +378,5 @@ expression: states
   bench: []
   offered: []
   rerollsRemaining: ~
+  fearless: []
 - ~
