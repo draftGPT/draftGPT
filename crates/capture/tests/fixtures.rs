@@ -7,7 +7,7 @@ use std::path::{Path, PathBuf};
 use capture::redact::find_unredacted_at;
 use lcu::recording::{Header, read_file};
 use lcu::types::{
-    self, ActionType, ChampSelectSession, DodgeState, GameflowPhase, Matchmaking,
+    self, ActionType, ChampSelectSession, DodgeState, GameflowPhase, Matchmaking, Position,
     SubsetChampionList, SwapState, TimerPhase,
 };
 use lcu::{
@@ -300,6 +300,65 @@ fn normal_draft_pick_order_swap_stranger_dodge() {
         Some(&DodgeState::StrangerDodged)
     );
     assert_eq!(phases(&events).last(), Some(&GameflowPhase::Matchmaking));
+}
+
+#[test]
+fn draft_position_swap_and_back() {
+    let (header, events) = load("16_23_draft_position_swap_and_back");
+    assert!(header.client_version.unwrap().starts_with("16.23."));
+    let s = sessions(&events);
+    assert_eq!(s[0].queue_id, Some(3110));
+    // Positions of the local player and the teammate, deduplicated in order.
+    let mut positions: Vec<(Position, Position)> = s
+        .iter()
+        .map(|s| {
+            let me = s.local_player().unwrap().assigned_position;
+            let other = s
+                .my_team
+                .iter()
+                .find(|p| p.cell_id != s.local_player_cell_id)
+                .unwrap()
+                .assigned_position;
+            (me, other)
+        })
+        .collect();
+    positions.dedup();
+    // Swapped, then swapped back; cells stay put (unlike a pick-order swap).
+    assert_eq!(
+        positions,
+        [
+            (Position::Bottom, Position::Middle),
+            (Position::Middle, Position::Bottom),
+            (Position::Bottom, Position::Middle),
+        ]
+    );
+    assert!(s.iter().all(|s| s.local_player_cell_id == 0));
+    // Each swap is requested first (`SENT`), and the contract id moves on once done.
+    let sent = s
+        .iter()
+        .filter(|s| s.position_swaps.iter().any(|w| w.state == SwapState::Sent))
+        .count();
+    assert!(sent >= 2, "two requests: {sent}");
+    let mut ids: Vec<i64> = s
+        .iter()
+        .flat_map(|s| s.position_swaps.iter().map(|w| w.id))
+        .collect();
+    ids.dedup();
+    assert_eq!(ids, [0, 2, 4]);
+    // The swap back happens after the local player locked in.
+    let back = s
+        .iter()
+        .position(|s| {
+            s.local_player().unwrap().assigned_position == Position::Bottom && my_pick(s).completed
+        })
+        .expect("back to bottom after locking");
+    assert!(
+        s[..back].iter().any(
+            |s| s.local_player().unwrap().assigned_position == Position::Middle
+                && my_pick(s).completed
+        )
+    );
+    assert_eq!(s.last().unwrap().timer.phase, TimerPhase::Finalization);
 }
 
 #[test]
