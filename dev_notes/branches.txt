@@ -36,12 +36,24 @@ test-capture   (merged into frontend-core) — live-tested on Windows 2026-11-15
     7 fixtures in fixtures/ (README lists them) + crates/capture/tests/fixtures.rs
       (parse, redaction, situation checks); PII scan on pull: all identity fields redacted
   open:
-    - situations not covered: trades carried out, ranked (hidden names, positions).
+    - situations not covered: trades carried out, ranked solo/duo (teammates hidden).
       Covered 2026-11-21 (16.23 normal draft fixture): teammate hovers, pick-order
       swap (localPlayerCellId moves; player entries trade cells), simultaneous-ban reveal,
       StrangerDodged. Also 2026-11-21 (16_23_draft_position_swap_and_back): position swap
       (positionSwaps SENT, assignedPosition flips, cells stay, contract id +2 per swap),
       swap back after locking in; draft-core follows it (pending SENT not in DraftState)
+      Also 2026-11-21, ranked flex (queue 440): 16_23_ranked_flex_pick_order_swap_received_
+      stranger_dodge (red side, swap RECEIVED + accepted, StrangerDodged) and
+      16_23_ranked_flex_pick_order_swap_sent_game_start (full draft to GameStart). Enemies
+      HIDDEN with empty name fields, teammates VISIBLE (flex); `bans` field empty in ranked
+    - 2026-11-21 capture check (11 recordings, one devserver run 13:15–16:00): every main
+      file matches its wire file (all pushed core/Clash events present, Snapshots equal the
+      pre-roll state), redacted, typed. Fixed: wire files leaked the custom lobby name
+      ("<owner>'s Game", customLobbyName/lobbyName) → `lobbyname` key fragment in redact.rs
+    - seen, not fixed: after a WebSocket reconnect (same port/pid, 14:48) the state sweep ran
+      again (Extras forgets the swept launch?) and the reconnect logs no reason; 6 empty
+      (0-byte) frames in the pre-roll after it. The running devserver.exe predates
+      StrangerDodged in DodgeState (page warned "unknown value"); rebuild it
     - RUST_LOG=trace password check not explicitly confirmed
   windows: build natively on the Windows machine (no cross-compile from Linux)
   wire and sweep files stay local, never commit them

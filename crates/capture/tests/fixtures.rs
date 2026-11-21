@@ -411,3 +411,79 @@ fn rcvolus_2019_tournament_draft_spectated() {
     // Spectators see both teams' picks.
     assert!(last.their_team.iter().all(|p| p.champion().is_some()));
 }
+
+/// Checks shared by the ranked flex fixtures: 5v5, enemies hidden with empty
+/// name fields, teammates' names visible (redacted), a pick-order swap that
+/// moves the local player from `from` to `to` keeping their position.
+fn ranked_pick_order_swap(events: &[RawEvent], from: i64, to: i64, request: SwapState) {
+    // Name fields aren't typed; check them in the raw sessions.
+    for e in events
+        .iter()
+        .filter(|e| e.uri == SESSION_URI && !e.data.is_null())
+    {
+        for p in e.data["theirTeam"].as_array().unwrap() {
+            assert_eq!(p["nameVisibilityType"], "HIDDEN");
+            assert_eq!((&p["gameName"], &p["puuid"]), (&"".into(), &"".into()));
+        }
+        for p in e.data["myTeam"].as_array().unwrap() {
+            assert_eq!(p["nameVisibilityType"], "VISIBLE");
+            assert!(p["gameName"].as_str().unwrap().starts_with("redacted-"));
+        }
+    }
+    let s = sessions(events);
+    assert_eq!(s[0].queue_id, Some(440));
+    assert_eq!((s[0].my_team.len(), s[0].their_team.len()), (5, 5));
+    let mut cells: Vec<i64> = s.iter().map(|s| s.local_player_cell_id).collect();
+    cells.dedup();
+    assert_eq!(cells, [from, to]);
+    let requested = s
+        .iter()
+        .position(|s| s.pick_order_swaps.iter().any(|w| w.state == request))
+        .expect("the swap request");
+    assert_eq!(s[requested].timer.phase, TimerPhase::BanPick);
+    let mine = |s: &ChampSelectSession| s.local_player().unwrap().assigned_position;
+    assert_eq!(mine(&s[0]), mine(s.last().unwrap()));
+    assert_eq!(mine(&s[0]), Position::Utility);
+    // Ranked bans are simultaneous, then revealed; the `bans` field stays empty.
+    assert!(
+        s.iter()
+            .flat_map(|s| s.actions.iter().flatten())
+            .any(|a| a.kind == ActionType::TenBansReveal)
+    );
+    assert!(s.iter().all(|s| s.bans.my_team_bans.is_empty()));
+}
+
+#[test]
+fn ranked_flex_pick_order_swap_received_stranger_dodge() {
+    let (_, events) = load("16_23_ranked_flex_pick_order_swap_received_stranger_dodge");
+    let s = sessions(&events);
+    assert!(s[0].my_team.iter().all(|p| (5..=9).contains(&p.cell_id)));
+    ranked_pick_order_swap(&events, 7, 5, SwapState::Received);
+    assert_eq!(
+        dodge_states(&events).last(),
+        Some(&DodgeState::StrangerDodged)
+    );
+    assert_eq!(phases(&events).last(), Some(&GameflowPhase::Matchmaking));
+}
+
+#[test]
+fn ranked_flex_pick_order_swap_sent_game_start() {
+    let (_, events) = load("16_23_ranked_flex_pick_order_swap_sent_game_start");
+    let s = sessions(&events);
+    ranked_pick_order_swap(&events, 1, 0, SwapState::Sent);
+    let last = s.last().unwrap();
+    assert_eq!(last.timer.phase, TimerPhase::GameStarting);
+    // Every ban and pick is done; enemy picks became visible once locked.
+    for a in last.actions.iter().flatten() {
+        if matches!(a.kind, ActionType::Ban | ActionType::Pick) {
+            assert!(a.completed, "{a:?}");
+        }
+    }
+    assert!(last.their_team.iter().all(|p| p.champion().is_some()));
+    assert!(
+        last.their_team
+            .iter()
+            .all(|p| p.assigned_position == Position::Unassigned)
+    );
+    assert_eq!(phases(&events).last(), Some(&GameflowPhase::GameStart));
+}

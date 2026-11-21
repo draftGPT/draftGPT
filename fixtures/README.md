@@ -21,10 +21,12 @@ so teammate and enemy cells are filled from the start.
 | `16_22_client_closed_mid_champ_select` | 3270 | Client closed during champ select: phase goes to `None`, no dodge |
 | `16_23_normal_draft_pick_order_swap_stranger_dodge` | 400 (normal draft, real players) | Pick-order swap sent in planning (`SENT`), accepted in ban/pick: `localPlayerCellId` moves 6 → 5 and the two players' entries trade cells (actions stay with the cells); teammate hovers, simultaneous bans then `ten_bans_reveal`, trades `AVAILABLE` after both locked; another player dodged (`StrangerDodged`, back to `Matchmaking`) |
 | `16_23_draft_position_swap_and_back` | 3110 (custom draft, 2 players) | Position swap carried out: `positionSwaps` entry `SENT`, then both players' `assignedPosition` flip (bottom ↔ middle) while cells stay put, and the contract `id` moves 0 → 2; local player locks in, then swaps back after locking (`id` 2 → 4); finalization with trades `AVAILABLE`. Recorded during a Clash weekend, so it also holds `/lol-clash/` snapshots |
+| `16_23_ranked_flex_pick_order_swap_received_stranger_dodge` | 440 (ranked flex) | Red side (ally cells 5–9). Pick-order swap `RECEIVED` in ban/pick and accepted: `localPlayerCellId` 7 → 5, the local player keeps their position (utility). Enemies `HIDDEN` with empty name fields, teammates `VISIBLE`. Another player dodged (`StrangerDodged`, back to `Matchmaking`) |
+| `16_23_ranked_flex_pick_order_swap_sent_game_start` | 440 (ranked flex) | Full ranked draft to the end: planning with teammate intents, ten simultaneous bans (teammates' ban hovers visible) then `ten_bans_reveal`, pick-order swap `SENT` and accepted (`localPlayerCellId` 1 → 0), 1-2-2-2-2-1 picks with enemy picks shown only once locked, `FINALIZATION`, `GAME_STARTING`, gameflow `GameStart`. The session's `bans` field stays empty; bans are only in `actions` |
 
 The first two were recorded before matchmaking and the subset list were core resources, so
-they lack those events. Not covered yet: trades actually carried out, ranked (hidden names,
-positions).
+they lack those events. Not covered yet: trades actually carried out, ranked solo/duo
+(teammates hidden; in the flex fixtures all teammates are `VISIBLE`).
 
 ## Clash
 
