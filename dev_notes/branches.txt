@@ -36,10 +36,12 @@ test-capture   (merged into frontend-core) — live-tested on Windows 2026-11-15
     7 fixtures in fixtures/ (README lists them) + crates/capture/tests/fixtures.rs
       (parse, redaction, situation checks); PII scan on pull: all identity fields redacted
   open:
-    - situations not covered: trades / position swaps carried out, ranked (hidden names,
-      positions). Covered 2026-11-21 (16.23 normal draft fixture): teammate hovers, pick-order
+    - situations not covered: trades carried out, ranked (hidden names, positions).
+      Covered 2026-11-21 (16.23 normal draft fixture): teammate hovers, pick-order
       swap (localPlayerCellId moves; player entries trade cells), simultaneous-ban reveal,
-      StrangerDodged
+      StrangerDodged. Also 2026-11-21 (16_23_draft_position_swap_and_back): position swap
+      (positionSwaps SENT, assignedPosition flips, cells stay, contract id +2 per swap),
+      swap back after locking in; draft-core follows it (pending SENT not in DraftState)
     - RUST_LOG=trace password check not explicitly confirmed
   windows: build natively on the Windows machine (no cross-compile from Linux)
   wire and sweep files stay local, never commit them
