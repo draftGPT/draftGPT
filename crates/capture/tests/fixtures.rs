@@ -362,6 +362,108 @@ fn draft_position_swap_and_back() {
 }
 
 #[test]
+fn ranked_flex_position_swap_teammate_pick_order_swap() {
+    let (header, events) = load("16_23_ranked_flex_position_swap_teammate_pick_order_swap");
+    assert!(header.client_version.unwrap().starts_with("16.23."));
+    let raw: Vec<&serde_json::Value> = events
+        .iter()
+        .filter(|e| e.uri == SESSION_URI && e.kind != EventKind::Delete)
+        .map(|e| &e.data)
+        .collect();
+    let s = sessions(&events);
+    assert_eq!(s[0].queue_id, Some(440));
+    assert_eq!((s[0].my_team.len(), s[0].their_team.len()), (5, 5));
+    // The local player isn't part of either swap.
+    assert!(s.iter().all(|s| s.local_player_cell_id == 5));
+    let position = |s: &ChampSelectSession, cell| {
+        s.my_team
+            .iter()
+            .find(|p| p.cell_id == cell)
+            .unwrap()
+            .assigned_position
+    };
+    // Who sits in a cell (redacted, but stable within the file).
+    let player = |i: usize, cell: i64| {
+        raw[i]["myTeam"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|p| p["cellId"] == cell)
+            .unwrap()["puuid"]
+            .clone()
+    };
+    let last = s.len() - 1;
+    let busy = |swaps: &[types::SwapContract], a, b| {
+        [a, b].iter().all(|c| {
+            swaps
+                .iter()
+                .any(|w| w.cell_id == *c && w.state == SwapState::Busy)
+        })
+    };
+    // Position swap 8 <-> 9: asked twice (the first went nowhere), then done.
+    // Players keep their cells; only the positions trade.
+    let busy_runs = s
+        .windows(2)
+        .filter(|w| !busy(&w[0].position_swaps, 8, 9) && busy(&w[1].position_swaps, 8, 9))
+        .count();
+    assert_eq!(busy_runs, 2);
+    // A bystander never sees the request itself, only `BUSY` on both cells.
+    assert!(s.iter().all(|s| {
+        s.position_swaps
+            .iter()
+            .chain(&s.pick_order_swaps)
+            .all(|w| w.state != SwapState::Sent && w.state != SwapState::Received)
+    }));
+    assert_eq!(position(&s[0], 8), position(&s[last], 9));
+    assert_eq!(position(&s[0], 9), position(&s[last], 8));
+    assert_ne!(position(&s[0], 8), position(&s[0], 9));
+    assert_eq!(player(0, 8), player(last, 8));
+    assert_eq!(player(0, 9), player(last, 9));
+    // Pick-order swap 6 <-> 7 between two teammates: the player entries trade
+    // cells, positions included.
+    assert!(s.iter().any(|s| busy(&s.pick_order_swaps, 6, 7)));
+    assert_eq!(position(&s[0], 6), position(&s[last], 7));
+    assert_eq!(position(&s[0], 7), position(&s[last], 6));
+    assert_eq!(player(0, 6), player(last, 7));
+    assert_eq!(player(0, 7), player(last, 6));
+    // Ranked flex: teammates' names visible, the enemy's hidden.
+    let visibility = |team: &str| {
+        raw[0][team]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|p| p["nameVisibilityType"].as_str().unwrap().to_owned())
+            .collect::<Vec<_>>()
+    };
+    assert!(visibility("myTeam").iter().all(|v| v == "VISIBLE"));
+    assert!(visibility("theirTeam").iter().all(|v| v == "HIDDEN"));
+    // A full draft through to the game.
+    assert_eq!(s[last].timer.phase, TimerPhase::GameStarting);
+    let actions: Vec<_> = s[last].actions.iter().flatten().collect();
+    assert_eq!(
+        actions
+            .iter()
+            .filter(|a| a.kind == ActionType::Ban && a.completed)
+            .count(),
+        10
+    );
+    assert_eq!(
+        actions
+            .iter()
+            .filter(|a| a.kind == ActionType::Pick && a.completed && a.champion().is_some())
+            .count(),
+        10
+    );
+    assert!(s[last].their_team.iter().all(|p| p.champion().is_some()));
+    assert_eq!(phases(&events).last(), Some(&GameflowPhase::GameStart));
+    assert!(
+        dodge_states(&events)
+            .iter()
+            .all(|d| *d == DodgeState::Invalid)
+    );
+}
+
+#[test]
 fn rcvolus_solo_custom_ban_pick() {
     for name in [
         "rcvolus_2019_solo_custom_ban_pick",
