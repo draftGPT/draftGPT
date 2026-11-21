@@ -46,8 +46,8 @@ pub const SUBSET_CHAMPION_LIST: Resource = Resource {
 };
 
 /// Queue, ready check and dodge state. When champ select ends early,
-/// `dodgeData.state` says why (`PartyDodged` when the local party left); the
-/// session only disappears.
+/// `dodgeData.state` says why (`PartyDodged` when the local party left,
+/// `StrangerDodged` when someone else did); the session only disappears.
 pub const MATCHMAKING: Resource = Resource {
     event: "OnJsonApiEvent_lol-lobby-team-builder_v1_matchmaking",
     uri: "/lol-lobby-team-builder/v1/matchmaking",

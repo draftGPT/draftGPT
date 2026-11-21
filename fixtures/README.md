@@ -6,8 +6,9 @@ understood by the typed structs, and still shows the situation it's named for.
 The client's `/help` schema for each client build is in `docs/lcu-spec/help/`, named by the
 `client_version` in the recording's header.
 
-Named `<client>_<situation>`. All from client 16.22.834.8910 (Windows, 2026-11-15); customs
-have bots, so teammate and enemy cells are filled from the start.
+Named `<client>_<situation>`. The `16_22` files are from client 16.22.834.8910 (Windows,
+2026-11-15), the `16_23` files from 16.23.840.5218 (Windows, 2026-11-21). Customs have bots,
+so teammate and enemy cells are filled from the start.
 
 | File | Queue | What it shows |
 |---|---|---|
@@ -18,11 +19,11 @@ have bots, so teammate and enemy cells are filled from the start.
 | `16_22_draft_pick_timeout_kicked` | 3130 | Pick timer ran out with no hover: removed from champ select, `PartyDodged` like a manual leave |
 | `16_22_subset_pick_swaps_dodge` | 3270 (pick one of three) | `subset-champion-list` offer, pick, swaps between the offered champions, left (`PartyDodged`) |
 | `16_22_client_closed_mid_champ_select` | 3270 | Client closed during champ select: phase goes to `None`, no dodge |
+| `16_23_normal_draft_pick_order_swap_stranger_dodge` | 400 (normal draft, real players) | Pick-order swap sent in planning (`SENT`), accepted in ban/pick: `localPlayerCellId` moves 6 → 5 and the two players' entries trade cells (actions stay with the cells); teammate hovers, simultaneous bans then `ten_bans_reveal`, trades `AVAILABLE` after both locked; another player dodged (`StrangerDodged`, back to `Matchmaking`) |
 
 The first two were recorded before matchmaking and the subset list were core resources, so
-they lack those events. Not covered yet (needs other players): teammate hovers, trades and
-swap requests, ranked (hidden names, positions), the simultaneous-ban reveal, another player
-dodging.
+they lack those events. Not covered yet: trades and position swaps actually carried out,
+ranked (hidden names, positions).
 
 ## Clash
 

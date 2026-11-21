@@ -8,7 +8,7 @@ use capture::redact::find_unredacted_at;
 use lcu::recording::{Header, read_file};
 use lcu::types::{
     self, ActionType, ChampSelectSession, DodgeState, GameflowPhase, Matchmaking,
-    SubsetChampionList, TimerPhase,
+    SubsetChampionList, SwapState, TimerPhase,
 };
 use lcu::{
     EventKind, GAMEFLOW_PHASE_URI, MATCHMAKING_URI, RawEvent, SESSION_URI,
@@ -254,6 +254,52 @@ fn client_closed_mid_champ_select() {
     assert_eq!(phases(&events).last(), Some(&GameflowPhase::None));
     // Closing the client isn't a dodge.
     assert!(!dodge_states(&events).contains(&DodgeState::PartyDodged));
+}
+
+#[test]
+fn normal_draft_pick_order_swap_stranger_dodge() {
+    let (header, events) = load("16_23_normal_draft_pick_order_swap_stranger_dodge");
+    assert!(header.client_version.unwrap().starts_with("16.23."));
+    let s = sessions(&events);
+    assert_eq!(s[0].queue_id, Some(400));
+    assert_eq!((s[0].my_team.len(), s[0].their_team.len()), (5, 5));
+    // The request goes out in planning.
+    assert!(s.iter().any(|s| {
+        s.timer.phase == TimerPhase::Planning
+            && s.pick_order_swaps
+                .iter()
+                .any(|w| w.state == SwapState::Sent)
+    }));
+    // Accepted: the local player moves to the other cell, and the two player
+    // entries trade cells, positions included.
+    let cells: Vec<i64> = s.iter().map(|s| s.local_player_cell_id).collect();
+    assert_eq!((cells[0], *cells.last().unwrap()), (6, 5));
+    let position = |s: &ChampSelectSession, cell| {
+        s.my_team
+            .iter()
+            .find(|p| p.cell_id == cell)
+            .unwrap()
+            .assigned_position
+    };
+    let (first, last) = (&s[0], s.last().unwrap());
+    assert_eq!(position(first, 6), position(last, 5));
+    assert_eq!(position(first, 5), position(last, 6));
+    assert_ne!(position(first, 5), position(first, 6));
+    // Teammates' hovers are visible.
+    assert!(s.iter().any(|s| {
+        s.my_team
+            .iter()
+            .any(|p| p.cell_id != s.local_player_cell_id && p.hover().is_some())
+    }));
+    assert!(
+        s.iter()
+            .any(|s| s.trades.iter().any(|t| t.state == SwapState::Available))
+    );
+    assert_eq!(
+        dodge_states(&events).last(),
+        Some(&DodgeState::StrangerDodged)
+    );
+    assert_eq!(phases(&events).last(), Some(&GameflowPhase::Matchmaking));
 }
 
 #[test]

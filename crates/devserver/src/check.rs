@@ -181,12 +181,14 @@ mod tests {
         let dodged = json!({"dodgeData": {"dodgerId": 9, "state": "PartyDodged"}});
         assert_eq!(check(&ev(MATCHMAKING_URI, dodged)), None);
         assert_eq!(check(&ev(MATCHMAKING_URI, json!(null))), None);
+        let stranger = json!({"dodgeData": {"dodgerId": 0, "state": "StrangerDodged"}});
+        assert_eq!(check(&ev(MATCHMAKING_URI, stranger)), None);
         let msg = check(&ev(
             MATCHMAKING_URI,
-            json!({"dodgeData": {"state": "StrangerDodged"}}),
+            json!({"dodgeData": {"state": "SomethingNew"}}),
         ))
         .unwrap();
-        assert!(msg.contains("dodgeData.state: \"StrangerDodged\""), "{msg}");
+        assert!(msg.contains("dodgeData.state: \"SomethingNew\""), "{msg}");
     }
 
     #[test]

@@ -263,12 +263,14 @@ pub struct DodgeData {
     pub state: DodgeState,
 }
 
-/// Values from 16.22 captures. `Invalid` is "no dodge".
+/// Values from 16.22 and 16.23 captures. `Invalid` is "no dodge".
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq, Deserialize)]
 pub enum DodgeState {
     Invalid,
     /// The local party (you) left champ select.
     PartyDodged,
+    /// Another player left champ select; you're put back in the queue.
+    StrangerDodged,
     #[default]
     #[serde(other)]
     Unknown,

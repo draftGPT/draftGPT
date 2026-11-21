@@ -137,6 +137,19 @@ fn subset_offer_reaches_the_draft() {
 }
 
 #[test]
+fn pick_order_swap_moves_the_local_slot() {
+    let states = replay("16_23_normal_draft_pick_order_swap_stranger_dodge");
+    assert_eq!(states.last(), Some(&None), "a stranger dodged");
+    let d: Vec<DraftState> = states.into_iter().flatten().collect();
+    let (first, last) = (d.first().unwrap(), d.last().unwrap());
+    let (before, after) = (first.local().unwrap(), last.local().unwrap());
+    assert_eq!((before.cell_id, after.cell_id), (6, 5));
+    // You keep your position; the other player takes yours over.
+    assert_eq!(before.position, after.position);
+    assert_eq!(last.ally.iter().filter(|s| s.is_local).count(), 1);
+}
+
+#[test]
 fn spectated_tournament_draft_ends_with_ten_bans_and_ten_picks() {
     let d = drafts("rcvolus_2019_tournament_draft_spectated");
     let last = d.last().unwrap();

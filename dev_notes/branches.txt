@@ -36,8 +36,10 @@ test-capture   (merged into frontend-core) — live-tested on Windows 2026-11-15
     7 fixtures in fixtures/ (README lists them) + crates/capture/tests/fixtures.rs
       (parse, redaction, situation checks); PII scan on pull: all identity fields redacted
   open:
-    - situations not covered (need other players): teammate hovers, trades/swap requests,
-      ranked (hidden names, positions), simultaneous-ban reveal, another player dodging
+    - situations not covered: trades / position swaps carried out, ranked (hidden names,
+      positions). Covered 2026-11-21 (16.23 normal draft fixture): teammate hovers, pick-order
+      swap (localPlayerCellId moves; player entries trade cells), simultaneous-ban reveal,
+      StrangerDodged
     - RUST_LOG=trace password check not explicitly confirmed
   windows: build natively on the Windows machine (no cross-compile from Linux)
   wire and sweep files stay local, never commit them
