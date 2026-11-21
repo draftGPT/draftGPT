@@ -209,3 +209,10 @@ reference sources found (spec search, 2026-11-15)
   0 problem flags, all events typed, draft-core replays them right. Not copied into fixtures/
 - checked live by the user: owned dock follows the client smoothly when dragged, panel shows
   docked at champ select and hides after
+
+2026-11-21 first macOS run (devserver, live client 16.23.840.5218):
+- LCU discovery + TLS + WebSocket connect on macOS confirmed (devserver: "LCU connected", phase Lobby)
+- build needs rustc >= 1.95 (sysinfo 0.40.3 in Cargo.lock); README still says 1.85
+- mac toolchain gotcha: a stale MacOSX27.0.sdk left in CommandLineTools next to CLT 26.6 made
+  ld fail ("unknown architecture arm64e.x1"); fixed by reinstalling the CLT
+- desktop panel: user ran it on macOS 2026-11-21, works (floating; no dock on macOS yet)
