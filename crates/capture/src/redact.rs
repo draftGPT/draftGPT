@@ -53,6 +53,8 @@ pub const SENSITIVE_KEY_PARTS: &[&str] = &[
     // (matchmaking, while queued) the party.
     "gameid",
     "lobbyid",
+    // Custom lobby names default to "<owner's name>'s Game" (customLobbyName).
+    "lobbyname",
     // Lets anyone spectate or connect to the game.
     "spectatorkey",
     "serverip",
@@ -666,6 +668,7 @@ mod tests {
             "partySummoners",
             "discordId",
             "summoners",
+            "customLobbyName",
         ] {
             assert!(is_sensitive_key(key), "{key}");
         }
