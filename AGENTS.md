@@ -140,5 +140,11 @@ npm run dev -w @draftgpt/web                    # web drafter at http://localhos
 python3 tools/mock_stats.py                     # regenerate data/champions.json + mock stats
 ```
 
+`.claude/launch.json` has the same servers as named configurations for the Claude desktop
+app's preview pane: `devserver` (live, 8790), `devserver-replay` (8791, replays a fixture),
+`web` (5174) and `desktop-page` (1420). Keep it in sync when a command or port above changes.
+The Vite entries pass `--host 127.0.0.1` because on Windows Vite otherwise listens on `::1`
+only, which the preview can't reach.
+
 `DRAFTGPT_LCU_INSECURE_TLS=1` skips LCU certificate checks; it's a last resort if a client
 update breaks the Riot-root verification in `lcu::transport::tls`.

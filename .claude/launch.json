@@ -1,0 +1,38 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "devserver",
+      "runtimeExecutable": "cargo",
+      "runtimeArgs": ["run", "-p", "devserver", "--", "--port", "8790"],
+      "port": 8790,
+      "url": "http://127.0.0.1:8790"
+    },
+    {
+      "name": "devserver-replay",
+      "runtimeExecutable": "cargo",
+      "runtimeArgs": [
+        "run", "-p", "devserver", "--",
+        "--port", "8791",
+        "--replay", "fixtures/16_23_normal_draft_pick_order_swap_stranger_dodge.jsonl",
+        "--speed", "4"
+      ],
+      "port": 8791,
+      "url": "http://127.0.0.1:8791"
+    },
+    {
+      "name": "web",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "ui", "run", "dev", "-w", "@draftgpt/web", "--", "--host", "127.0.0.1"],
+      "port": 5174,
+      "url": "http://127.0.0.1:5174"
+    },
+    {
+      "name": "desktop-page",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "ui", "run", "dev", "-w", "@draftgpt/desktop", "--", "--host", "127.0.0.1"],
+      "port": 1420,
+      "url": "http://127.0.0.1:1420"
+    }
+  ]
+}
