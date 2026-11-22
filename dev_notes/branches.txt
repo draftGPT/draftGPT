@@ -238,3 +238,6 @@ reference sources found (spec search, 2026-11-15)
 - mac toolchain gotcha: a stale MacOSX27.0.sdk left in CommandLineTools next to CLT 26.6 made
   ld fail ("unknown architecture arm64e.x1"); fixed by reinstalling the CLT
 - desktop panel: user ran it on macOS 2026-11-21, works (floating; no dock on macOS yet)
+
+2026-11-22 test layout (branch refactor/test-layout, from master ff2d3d6 = PR #2 merged):
+- unit tests moved out of src/ into crates/*/tests/unit/<module>.rs (bin.rs for main.rs), included via #[cfg(test)] #[path] mod tests; same 205 tests by name; arch.md + AGENTS.md updated

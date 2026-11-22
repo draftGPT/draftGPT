@@ -3,7 +3,8 @@
 ```
 draftGPT/
 ├── Cargo.toml              workspace
-├── crates/
+├── crates/                 each crate: src/ is code only; tests/ holds integration tests and
+│   │                       tests/unit/<module>.rs, the unit tests of src/<module>.rs
 │   ├── lcu-model/          what the client sends, no I/O, native + wasm32
 │   │   ├── raw             RawEvent { t, uri, kind, data: Value }
 │   │   ├── types           lenient typed structs: ChampSelectSession, GameflowPhase,
@@ -88,6 +89,12 @@ draftGPT/
     client launch gets one, since it's mostly account state; later recordings get one only
     in a Clash queue, holding just the large Clash endpoints the full sweep skips elsewhere.
   - Wire and sweep files stay local and are never committed.
+
+- **Tests live outside `src/`.** A module's unit tests are in `tests/unit/<module>.rs` (a
+  binary's `main.rs` in `tests/unit/bin.rs`, since Cargo would build `tests/unit/main.rs` as
+  its own test). The module includes them with
+  `#[cfg(test)] #[path = "../tests/unit/<module>.rs"] mod tests;`, so they still see private
+  items. Other files directly in `tests/` are integration tests of the public API.
 
 - **One set of UI components.** `ui/draft-ui` renders a `DraftState` and
   `Recommendations` from props. The desktop panel feeds it live updates from Rust; the web

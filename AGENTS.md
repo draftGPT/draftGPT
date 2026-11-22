@@ -81,7 +81,9 @@ analysis pipeline until asked.
 - `devserver` binds to `127.0.0.1` only, never proxies arbitrary LCU requests and never
   exposes the LCU password.
 - Tests: every fixture must parse, golden `DraftState` snapshots (`insta`) from replays, and
-  redaction tests (no PII-shaped fields in recorder output).
+  redaction tests (no PII-shaped fields in recorder output). No tests in `src/`: unit tests go
+  in `tests/unit/<module>.rs` (`bin.rs` for `main.rs`), included by the module with
+  `#[cfg(test)] #[path = "..."] mod tests;`; see docs/arch.md.
 - Window tracking for the desktop dock is Windows-only and goes behind `#[cfg(windows)]` with
   a stub elsewhere. It's the only `unsafe` code (Win32 calls): `crates/desktop` sets
   `unsafe_code = "deny"` instead of the workspace's `forbid`, and only `dock::windows` allows it.

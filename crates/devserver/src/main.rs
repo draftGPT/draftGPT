@@ -104,12 +104,5 @@ async fn main() {
 }
 
 #[cfg(test)]
-mod tests {
-    use super::*;
-    use clap::CommandFactory;
-
-    #[test]
-    fn cli_definition_is_valid() {
-        Args::command().debug_assert();
-    }
-}
+#[path = "../tests/unit/bin.rs"]
+mod tests;

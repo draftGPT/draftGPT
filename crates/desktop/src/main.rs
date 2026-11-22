@@ -125,17 +125,5 @@ fn set_floating(on: bool, app: tauri::AppHandle, shared: State<'_, Arc<Shared>>)
 }
 
 #[cfg(test)]
-mod tests {
-    use super::*;
-    use clap::CommandFactory;
-
-    #[test]
-    fn cli_definition_is_valid() {
-        Args::command().debug_assert();
-    }
-
-    #[test]
-    fn bundled_stats_parse() {
-        StatsRecommender::from_json(BUNDLED_STATS).unwrap();
-    }
-}
+#[path = "../tests/unit/bin.rs"]
+mod tests;
