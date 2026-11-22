@@ -14,6 +14,7 @@ use lcu::{
     EventKind, GAMEFLOW_PHASE_URI, MATCHMAKING_URI, RawEvent, SESSION_URI,
     SUBSET_CHAMPION_LIST_URI, is_session_uri,
 };
+use serde_json::Value;
 
 fn fixtures_dir() -> PathBuf {
     Path::new(env!("CARGO_MANIFEST_DIR")).join("../../fixtures")
@@ -133,7 +134,9 @@ fn every_fixture_parses_is_redacted_and_typed() {
                 }
                 // Clash recordings: untyped for now; redaction checked above.
                 uri if lcu::is_recorded_clash_uri(uri)
-                    || uri.starts_with("/lol-clash/v1/roster/redacted-") => {}
+                    || uri.starts_with("/lol-clash/v1/roster/redacted-")
+                    || uri.starts_with("/lol-ranked/v1/ranked-stats/redacted-")
+                    || uri.starts_with("/lol-summoner/v1/summoners/redacted-") => {}
                 other => panic!("{at}: not a core resource: {other}"),
             }
         }
@@ -588,4 +591,239 @@ fn ranked_flex_pick_order_swap_sent_game_start() {
             .all(|p| p.assigned_position == Position::Unassigned)
     );
     assert_eq!(phases(&events).last(), Some(&GameflowPhase::GameStart));
+}
+
+#[test]
+fn clash_round1_scouting_to_draft() {
+    let (header, events) = load("16_23_clash_round1_scouting_to_draft");
+    assert_eq!(header.label, "clash");
+    assert!(header.client_version.unwrap().starts_with("16.23."));
+    // Clash data is untyped: read it raw, last value per URI.
+    let latest = |uri: &str| {
+        events
+            .iter()
+            .rev()
+            .find(|e| e.uri == uri && !e.data.is_null())
+            .map(|e| &e.data)
+    };
+    let mut states: Vec<String> = events
+        .iter()
+        .filter(|e| e.uri == "/lol-clash/v1/tournament-summary" && !e.data.is_null())
+        .map(|e| e.data[0]["state"].as_str().unwrap().to_owned())
+        .collect();
+    states.dedup();
+    assert_eq!(states, ["LOCK_IN", "SCOUTING", "IN_GAME"]);
+    let summary = &latest("/lol-clash/v1/tournament-summary").unwrap()[0];
+    let own_roster = summary["rosterId"].as_str().unwrap();
+    assert!(own_roster.starts_with("redacted-"));
+    // The bracket lists 16 teams, and every one of their rosters is recorded.
+    let bracket = latest(&format!(
+        "/lol-clash/v1/bracket/redacted-{}",
+        summary["bracketId"]
+    ))
+    .expect("the bracket");
+    let teams = bracket["rosters"].as_array().unwrap();
+    assert_eq!(teams.len(), 16);
+    let positions = |uri: &str| -> Vec<String> {
+        latest(uri).unwrap_or_else(|| panic!("{uri}"))["members"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|m| m["position"].as_str().unwrap().to_owned())
+            .collect()
+    };
+    // The same fake throughout: bracket roster N is `roster/redacted-N`.
+    for team in teams {
+        assert!(team["name"].as_str().unwrap().starts_with("redacted-"));
+        let uri = format!("/lol-clash/v1/roster/redacted-{}", team["rosterId"]);
+        let p = positions(&uri);
+        assert_eq!(p.len(), 5, "{uri}");
+        // The client gives other teams' positions only as FILL.
+        if !uri.ends_with(own_roster) {
+            assert!(p.iter().all(|p| p == "FILL"), "{uri}: {p:?}");
+        }
+    }
+    // Our own roster has five real positions.
+    let mut own = positions(&format!("/lol-clash/v1/roster/{own_roster}"));
+    own.sort();
+    assert_eq!(own, ["BOTTOM", "JUNGLE", "MIDDLE", "TOP", "UTILITY"]);
+    clash_tournament_draft(&events);
+    assert_eq!(
+        phases(&events),
+        [
+            GameflowPhase::None,
+            GameflowPhase::CheckedIntoTournament,
+            GameflowPhase::ReadyCheck,
+            GameflowPhase::ChampSelect,
+            GameflowPhase::GameStart,
+        ]
+    );
+}
+
+/// Clash champ select: a tournament draft to the end, enemies hidden like in
+/// ranked. Returns the last session.
+fn clash_tournament_draft(events: &[RawEvent]) -> ChampSelectSession {
+    for e in events
+        .iter()
+        .filter(|e| e.uri == SESSION_URI && !e.data.is_null())
+    {
+        for p in e.data["theirTeam"].as_array().unwrap() {
+            assert_eq!(p["nameVisibilityType"], "HIDDEN");
+            assert_eq!(p["puuid"], "");
+        }
+        for p in e.data["myTeam"].as_array().unwrap() {
+            assert_eq!(p["nameVisibilityType"], "VISIBLE");
+        }
+    }
+    let mut s = sessions(events);
+    assert_eq!(s[0].queue_id, Some(700));
+    let last = s.pop().unwrap();
+    assert_eq!(last.timer.phase, TimerPhase::GameStarting);
+    // A phase transition, then 3 ban pairs, 3 picks each, 2 ban pairs,
+    // 2 picks each, each block after its own transition.
+    use ActionType::{Ban as B, PhaseTransition as T, Pick as P};
+    let order: Vec<ActionType> = last.actions.iter().flatten().map(|a| a.kind).collect();
+    assert_eq!(
+        order,
+        [
+            T, B, B, B, B, B, B, T, P, P, P, P, P, P, T, B, B, B, B, T, P, P, P, P
+        ]
+    );
+    assert!(last.actions.iter().flatten().all(|a| a.completed));
+    // Bans by each team's captain only: one cell per side.
+    for ally in [true, false] {
+        let mut cells: Vec<i64> = last
+            .actions
+            .iter()
+            .flatten()
+            .filter(|a| a.kind == B && a.is_ally_action == Some(ally))
+            .map(|a| a.actor_cell_id)
+            .collect();
+        cells.dedup();
+        assert_eq!(cells.len(), 1, "ally {ally}: {cells:?}");
+    }
+    assert!(last.their_team.iter().all(|p| p.champion().is_some()));
+    assert!(last.bans.my_team_bans.is_empty() && last.bans.their_team_bans.is_empty());
+    last
+}
+
+#[test]
+fn clash_round3_scouting_snapshot_to_draft() {
+    let (header, events) = load("16_23_clash_round3_scouting_snapshot_to_draft");
+    assert_eq!(header.label, "clash");
+    let uris = |prefix: &str| -> Vec<&RawEvent> {
+        events
+            .iter()
+            .filter(|e| e.uri.starts_with(prefix) && !e.data.is_null())
+            .collect()
+    };
+    let mut states: Vec<&str> = uris("/lol-clash/v1/tournament-summary")
+        .iter()
+        .map(|e| e.data[0]["state"].as_str().unwrap())
+        .collect();
+    states.dedup();
+    assert_eq!(states, ["SCOUTING", "IN_GAME"]);
+    // The scouting snapshot, taken once: what the client's scouting tab
+    // shows for each opponent.
+    let champions = uris("/lol-clash/v1/scouting/champions");
+    assert_eq!(champions.len(), 1);
+    let players = champions[0].data.as_array().unwrap();
+    assert_eq!(players.len(), 5);
+    for p in players {
+        assert!(p["totalMasteryScore"].as_i64().unwrap() > 0);
+        assert!(!p["topMasteries"].as_array().unwrap().is_empty());
+        assert!(!p["topSeasonChampions"].as_array().unwrap().is_empty());
+    }
+    let ranked = uris("/lol-ranked/v1/ranked-stats/");
+    assert_eq!(ranked.len(), 5);
+    let mut distinct: Vec<&str> = ranked.iter().map(|e| e.uri.as_str()).collect();
+    distinct.sort();
+    distinct.dedup();
+    assert_eq!(distinct.len(), 5);
+    for e in &ranked {
+        assert!(e.uri.starts_with("/lol-ranked/v1/ranked-stats/redacted-"));
+        assert!(e.data["queueMap"]["RANKED_SOLO_5x5"]["tier"].is_string());
+    }
+    // The scouted players are the opponent's roster: the other side of our
+    // open match in the bracket.
+    let latest = |uri: &str| {
+        events
+            .iter()
+            .rev()
+            .find(|e| e.uri == uri && !e.data.is_null())
+            .map(|e| &e.data)
+            .unwrap_or_else(|| panic!("{uri}"))
+    };
+    let summary = &latest("/lol-clash/v1/tournament-summary")[0];
+    let ours: u64 = summary["rosterId"].as_str().unwrap()["redacted-".len()..]
+        .parse()
+        .unwrap();
+    let bracket = latest(&format!(
+        "/lol-clash/v1/bracket/redacted-{}",
+        summary["bracketId"]
+    ));
+    let open = bracket["matches"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .filter(|m| m["winnerId"] == 0 && (m["rosterId1"] == ours || m["rosterId2"] == ours))
+        .max_by_key(|m| m["round"].as_i64())
+        .expect("our open match");
+    let opp = if open["rosterId1"] == ours {
+        &open["rosterId2"]
+    } else {
+        &open["rosterId1"]
+    };
+    let members = |roster: &Value| -> Vec<(u64, String)> {
+        roster["members"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|m| {
+                (
+                    m["summonerId"].as_u64().unwrap(),
+                    m["position"].as_str().unwrap().to_owned(),
+                )
+            })
+            .collect()
+    };
+    let theirs = members(latest(&format!("/lol-clash/v1/roster/redacted-{opp}")));
+    let mut scouted: Vec<u64> = players
+        .iter()
+        .map(|p| p["playerId"].as_u64().unwrap())
+        .collect();
+    let mut roster_ids: Vec<u64> = theirs.iter().map(|(id, _)| *id).collect();
+    scouted.sort_unstable();
+    roster_ids.sort_unstable();
+    assert_eq!(scouted, roster_ids);
+    let mut own: Vec<String> = members(latest(&format!("/lol-clash/v1/roster/redacted-{ours}")))
+        .into_iter()
+        .map(|(_, p)| p)
+        .collect();
+    own.sort();
+    assert_eq!(own, ["BOTTOM", "JUNGLE", "MIDDLE", "TOP", "UTILITY"]);
+    // Clash match history is refused by the server (403); not recorded.
+    assert!(uris("/lol-clash/v1/scouting/matchhistory").is_empty());
+    let last = clash_tournament_draft(&events);
+    // Every enemy pick was in some opponent's scouting lists.
+    for c in last.their_team.iter().filter_map(|p| p.champion()) {
+        assert!(
+            players
+                .iter()
+                .any(|p| ["topMasteries", "topSeasonChampions"]
+                    .iter()
+                    .flat_map(|k| p[*k].as_array().unwrap())
+                    .any(|x| x["championId"] == c)),
+            "pick {c} not scouted"
+        );
+    }
+    assert_eq!(
+        phases(&events),
+        [
+            GameflowPhase::CheckedIntoTournament,
+            GameflowPhase::ReadyCheck,
+            GameflowPhase::ChampSelect,
+            GameflowPhase::GameStart,
+        ]
+    );
 }

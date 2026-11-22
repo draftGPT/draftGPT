@@ -31,13 +31,29 @@ they lack those events. Not covered yet: trades actually carried out, ranked sol
 
 ## Clash
 
-None yet (first Clash recordings expected 2026-11-21/22). Named `<client>_clash_<situation>`,
+Named `<client>_clash_<situation>`,
 one per round. Besides the champ select resources they hold `/lol-clash/` events: the
-tournament summary and state (`LOCK_IN`, `SCOUTING`, `IN_GAME`), the bracket, every
-bracket team's roster and stats, team data, and scouting match history, as `Snapshot`
-events whenever they changed (also mid-recording). Team names, roster IDs and player IDs
-are fakes; the same team has the same fake throughout a file (`redacted-N` as a string,
-`N` as a number in brackets). How they're recorded: `crates/capture/src/clash.rs`.
+tournament summary and state (`LOCK_IN`, `SCOUTING`, `IN_GAME`) and the bracket, as
+`Snapshot` events whenever they changed (also mid-recording), and the scouting snapshot
+once per opponent: our roster and theirs, `/lol-clash/v1/scouting/champions`,
+`/lol-ranked/v1/ranked-stats/redacted-N` per opponent and, from recordings made after
+2026-11-22, `/lol-summoner/v1/summoners/redacted-N` reduced to `{summonerId, puuid}`
+(links a ranked entry to a roster member). Round 1 was recorded by the earlier poller (every
+bracket team's roster and stats instead of the snapshot).
+
+Team names, roster, bracket, match and player IDs are fakes. The same value has the same
+fake throughout a file (`redacted-N` as a string, `N` as a number), but a team's ID can
+change: during lock-in our roster has a UUID (`redacted-1` in round 1), afterwards a number.
+Bracket slots of rounds not decided yet hold placeholder roster IDs that match no team.
+Scouting numbers are rounded (`capture::redact::ROUNDED_KEYS`: mastery points to 10k,
+ranked wins/losses to 10, LP to 25), since exact values can be looked up on leaderboards.
+The bracket IDs and rounding in these two files were applied after recording, with the same
+rules the redactor now has. How they're recorded: `crates/capture/src/clash.rs`.
+
+| File | Queue | What it shows |
+|---|---|---|
+| `16_23_clash_round1_scouting_to_draft` | 700 (Clash) | One full round, recorded from lock-in: summary `LOCK_IN` → `SCOUTING` (3 min) → `IN_GAME` (8 min), gameflow `CheckedIntoTournament` → `ReadyCheck` → `ChampSelect` → `GameStart` (recording stops there). Bracket of 16 teams and all 16 rosters (5 members each); our roster has real positions, every other team's come back as `FILL`; roster `/stats` are empty for every team. Champ select is a tournament draft: 4 `phase_transition` actions, 3 ban pairs, 3 picks each, 2 ban pairs, 2 picks each, enemy first pick; bans by the captains only, the session's `bans` field stays empty. Enemies `HIDDEN` with empty `puuid`, teammates `VISIBLE`. 13 snapshots from one fetch round were stamped up to 2 s early and written late; their `t` was raised to the previous event's (what the recorder does since) |
+| `16_23_clash_round3_scouting_snapshot_to_draft` | 700 (Clash) | Bracket round 3 (round 2 was won without a game, the opponent didn't show), recorded from `SCOUTING` (after a restart) with the scouting snapshot: once the bracket names the opponent, both rosters, `/lol-clash/v1/scouting/champions` (per opponent: `totalMasteryScore`, `topMasteries`, `topSeasonChampions` with wins, games, KDA) and `/lol-ranked/v1/ranked-stats/redacted-N` per opponent (puuid in the URI faked). No match history (the server answers 403). Tournament draft as in round 1, 24/24 actions; every enemy pick is in some opponent's scouting lists. Stops at `GameStart` |
 
 ## Converted RCVolus recordings
 
