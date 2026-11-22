@@ -1,0 +1,18 @@
+[package]
+name = "lcu-model"
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+
+# What the League client sends, with no I/O: raw events, typed resources, the
+# recording file format. Builds for wasm32; draft-core and the web drafter
+# depend on this, not on `lcu`.
+
+[lints]
+workspace = true
+
+[dependencies]
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true

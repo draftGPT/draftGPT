@@ -1,0 +1,1865 @@
+---
+source: crates/draft-core/tests/fixtures.rs
+expression: states
+---
+- phase: planning
+  queueId: 440
+  spectating: false
+  ally:
+    - cellId: 5
+      isLocal: false
+      position: top
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 6
+      isLocal: false
+      position: bottom
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 7
+      isLocal: true
+      position: utility
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 8
+      isLocal: false
+      position: jungle
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 9
+      isLocal: false
+      position: middle
+      champion: ~
+      hover: ~
+      picking: false
+  enemy:
+    - cellId: 0
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 1
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 2
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 3
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 4
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+  bans:
+    ally: []
+    enemy: []
+  turn: ~
+  timer:
+    remainingMs: 12000
+    totalMs: 12000
+  bench: []
+  offered: []
+  rerollsRemaining: ~
+  fearless: []
+- phase: banPick
+  queueId: 440
+  spectating: false
+  ally:
+    - cellId: 5
+      isLocal: false
+      position: top
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 6
+      isLocal: false
+      position: bottom
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 7
+      isLocal: true
+      position: utility
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 8
+      isLocal: false
+      position: jungle
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 9
+      isLocal: false
+      position: middle
+      champion: ~
+      hover: ~
+      picking: false
+  enemy:
+    - cellId: 0
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 1
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 2
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 3
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 4
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+  bans:
+    ally: []
+    enemy: []
+  turn:
+    kind: ban
+    cells:
+      - 0
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      - 7
+      - 8
+      - 9
+    yours: true
+  timer:
+    remainingMs: 24999
+    totalMs: 25000
+  bench: []
+  offered: []
+  rerollsRemaining: ~
+  fearless: []
+- phase: banPick
+  queueId: 440
+  spectating: false
+  ally:
+    - cellId: 5
+      isLocal: false
+      position: top
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 6
+      isLocal: false
+      position: bottom
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 7
+      isLocal: true
+      position: utility
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 8
+      isLocal: false
+      position: jungle
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 9
+      isLocal: false
+      position: middle
+      champion: ~
+      hover: ~
+      picking: false
+  enemy:
+    - cellId: 0
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 1
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 2
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 3
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 4
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+  bans:
+    ally:
+      - champion: ~
+        cellId: 8
+        hover: 91
+    enemy: []
+  turn:
+    kind: ban
+    cells:
+      - 0
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      - 7
+      - 8
+      - 9
+    yours: true
+  timer:
+    remainingMs: 22176
+    totalMs: 25000
+  bench: []
+  offered: []
+  rerollsRemaining: ~
+  fearless: []
+- phase: banPick
+  queueId: 440
+  spectating: false
+  ally:
+    - cellId: 5
+      isLocal: false
+      position: top
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 6
+      isLocal: false
+      position: bottom
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 7
+      isLocal: true
+      position: utility
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 8
+      isLocal: false
+      position: jungle
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 9
+      isLocal: false
+      position: middle
+      champion: ~
+      hover: ~
+      picking: false
+  enemy:
+    - cellId: 0
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 1
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 2
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 3
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 4
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+  bans:
+    ally:
+      - champion: 91
+        cellId: 8
+        hover: ~
+    enemy: []
+  turn:
+    kind: ban
+    cells:
+      - 0
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      - 7
+      - 9
+    yours: true
+  timer:
+    remainingMs: 21680
+    totalMs: 25000
+  bench: []
+  offered: []
+  rerollsRemaining: ~
+  fearless: []
+- phase: banPick
+  queueId: 440
+  spectating: false
+  ally:
+    - cellId: 5
+      isLocal: false
+      position: top
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 6
+      isLocal: false
+      position: bottom
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 7
+      isLocal: true
+      position: utility
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 8
+      isLocal: false
+      position: jungle
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 9
+      isLocal: false
+      position: middle
+      champion: ~
+      hover: ~
+      picking: false
+  enemy:
+    - cellId: 0
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 1
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 2
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 3
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 4
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+  bans:
+    ally:
+      - champion: 91
+        cellId: 8
+        hover: ~
+      - champion: ~
+        cellId: 9
+        hover: 711
+    enemy: []
+  turn:
+    kind: ban
+    cells:
+      - 0
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      - 7
+      - 9
+    yours: true
+  timer:
+    remainingMs: 19325
+    totalMs: 25000
+  bench: []
+  offered: []
+  rerollsRemaining: ~
+  fearless: []
+- phase: banPick
+  queueId: 440
+  spectating: false
+  ally:
+    - cellId: 5
+      isLocal: false
+      position: top
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 6
+      isLocal: false
+      position: bottom
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 7
+      isLocal: true
+      position: utility
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 8
+      isLocal: false
+      position: jungle
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 9
+      isLocal: false
+      position: middle
+      champion: ~
+      hover: ~
+      picking: false
+  enemy:
+    - cellId: 0
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 1
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 2
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 3
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 4
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+  bans:
+    ally:
+      - champion: ~
+        cellId: 5
+        hover: 122
+      - champion: 91
+        cellId: 8
+        hover: ~
+      - champion: ~
+        cellId: 9
+        hover: 711
+    enemy: []
+  turn:
+    kind: ban
+    cells:
+      - 0
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      - 7
+      - 9
+    yours: true
+  timer:
+    remainingMs: 19124
+    totalMs: 25000
+  bench: []
+  offered: []
+  rerollsRemaining: ~
+  fearless: []
+- phase: banPick
+  queueId: 440
+  spectating: false
+  ally:
+    - cellId: 5
+      isLocal: false
+      position: top
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 6
+      isLocal: false
+      position: bottom
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 7
+      isLocal: true
+      position: utility
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 8
+      isLocal: false
+      position: jungle
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 9
+      isLocal: false
+      position: middle
+      champion: ~
+      hover: ~
+      picking: false
+  enemy:
+    - cellId: 0
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 1
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 2
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 3
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 4
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+  bans:
+    ally:
+      - champion: ~
+        cellId: 5
+        hover: 122
+      - champion: 91
+        cellId: 8
+        hover: ~
+      - champion: 711
+        cellId: 9
+        hover: ~
+    enemy: []
+  turn:
+    kind: ban
+    cells:
+      - 0
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      - 7
+    yours: true
+  timer:
+    remainingMs: 18553
+    totalMs: 25000
+  bench: []
+  offered: []
+  rerollsRemaining: ~
+  fearless: []
+- phase: banPick
+  queueId: 440
+  spectating: false
+  ally:
+    - cellId: 5
+      isLocal: false
+      position: top
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 6
+      isLocal: false
+      position: bottom
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 7
+      isLocal: true
+      position: utility
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 8
+      isLocal: false
+      position: jungle
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 9
+      isLocal: false
+      position: middle
+      champion: ~
+      hover: ~
+      picking: false
+  enemy:
+    - cellId: 0
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 1
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 2
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 3
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 4
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+  bans:
+    ally:
+      - champion: 122
+        cellId: 5
+        hover: ~
+      - champion: 91
+        cellId: 8
+        hover: ~
+      - champion: 711
+        cellId: 9
+        hover: ~
+    enemy: []
+  turn:
+    kind: ban
+    cells:
+      - 0
+      - 1
+      - 2
+      - 3
+      - 4
+      - 6
+      - 7
+    yours: true
+  timer:
+    remainingMs: 18549
+    totalMs: 25000
+  bench: []
+  offered: []
+  rerollsRemaining: ~
+  fearless: []
+- phase: banPick
+  queueId: 440
+  spectating: false
+  ally:
+    - cellId: 5
+      isLocal: false
+      position: top
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 6
+      isLocal: false
+      position: bottom
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 7
+      isLocal: true
+      position: utility
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 8
+      isLocal: false
+      position: jungle
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 9
+      isLocal: false
+      position: middle
+      champion: ~
+      hover: 777
+      picking: false
+  enemy:
+    - cellId: 0
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 1
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 2
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 3
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 4
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+  bans:
+    ally:
+      - champion: 122
+        cellId: 5
+        hover: ~
+      - champion: 91
+        cellId: 8
+        hover: ~
+      - champion: 711
+        cellId: 9
+        hover: ~
+    enemy: []
+  turn:
+    kind: ban
+    cells:
+      - 0
+      - 1
+      - 2
+      - 3
+      - 4
+      - 6
+      - 7
+    yours: true
+  timer:
+    remainingMs: 14706
+    totalMs: 25000
+  bench: []
+  offered: []
+  rerollsRemaining: ~
+  fearless: []
+- phase: banPick
+  queueId: 440
+  spectating: false
+  ally:
+    - cellId: 5
+      isLocal: false
+      position: top
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 6
+      isLocal: false
+      position: bottom
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 7
+      isLocal: true
+      position: utility
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 8
+      isLocal: false
+      position: jungle
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 9
+      isLocal: false
+      position: middle
+      champion: ~
+      hover: 777
+      picking: false
+  enemy:
+    - cellId: 0
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 1
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 2
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 3
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 4
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+  bans:
+    ally:
+      - champion: 122
+        cellId: 5
+        hover: ~
+      - champion: 91
+        cellId: 8
+        hover: ~
+      - champion: 711
+        cellId: 9
+        hover: ~
+    enemy: []
+  turn:
+    kind: ban
+    cells:
+      - 0
+      - 1
+      - 2
+      - 3
+      - 4
+      - 6
+      - 7
+    yours: true
+  timer:
+    remainingMs: 10413
+    totalMs: 25000
+  bench: []
+  offered: []
+  rerollsRemaining: ~
+  fearless: []
+- phase: banPick
+  queueId: 440
+  spectating: false
+  ally:
+    - cellId: 5
+      isLocal: false
+      position: top
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 6
+      isLocal: false
+      position: bottom
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 7
+      isLocal: true
+      position: utility
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 8
+      isLocal: false
+      position: jungle
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 9
+      isLocal: false
+      position: middle
+      champion: ~
+      hover: 777
+      picking: false
+  enemy:
+    - cellId: 0
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 1
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 2
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 3
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 4
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+  bans:
+    ally:
+      - champion: 122
+        cellId: 5
+        hover: ~
+      - champion: ~
+        cellId: 7
+        hover: 143
+      - champion: 91
+        cellId: 8
+        hover: ~
+      - champion: 711
+        cellId: 9
+        hover: ~
+    enemy: []
+  turn:
+    kind: ban
+    cells:
+      - 0
+      - 1
+      - 2
+      - 3
+      - 4
+      - 6
+      - 7
+    yours: true
+  timer:
+    remainingMs: 8943
+    totalMs: 25000
+  bench: []
+  offered: []
+  rerollsRemaining: ~
+  fearless: []
+- phase: banPick
+  queueId: 440
+  spectating: false
+  ally:
+    - cellId: 5
+      isLocal: false
+      position: top
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 6
+      isLocal: false
+      position: bottom
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 7
+      isLocal: true
+      position: utility
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 8
+      isLocal: false
+      position: jungle
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 9
+      isLocal: false
+      position: middle
+      champion: ~
+      hover: 777
+      picking: false
+  enemy:
+    - cellId: 0
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 1
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 2
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 3
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 4
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+  bans:
+    ally:
+      - champion: 122
+        cellId: 5
+        hover: ~
+      - champion: 143
+        cellId: 7
+        hover: ~
+      - champion: 91
+        cellId: 8
+        hover: ~
+      - champion: 711
+        cellId: 9
+        hover: ~
+    enemy: []
+  turn:
+    kind: ban
+    cells:
+      - 0
+      - 1
+      - 2
+      - 3
+      - 4
+      - 6
+    yours: false
+  timer:
+    remainingMs: 8092
+    totalMs: 25000
+  bench: []
+  offered: []
+  rerollsRemaining: ~
+  fearless: []
+- phase: banPick
+  queueId: 440
+  spectating: false
+  ally:
+    - cellId: 5
+      isLocal: false
+      position: top
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 6
+      isLocal: false
+      position: bottom
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 7
+      isLocal: true
+      position: utility
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 8
+      isLocal: false
+      position: jungle
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 9
+      isLocal: false
+      position: middle
+      champion: ~
+      hover: 777
+      picking: false
+  enemy:
+    - cellId: 0
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 1
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 2
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 3
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 4
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+  bans:
+    ally:
+      - champion: 122
+        cellId: 5
+        hover: ~
+      - champion: ~
+        cellId: 6
+        hover: 222
+      - champion: 143
+        cellId: 7
+        hover: ~
+      - champion: 91
+        cellId: 8
+        hover: ~
+      - champion: 711
+        cellId: 9
+        hover: ~
+    enemy: []
+  turn:
+    kind: ban
+    cells:
+      - 0
+      - 1
+      - 2
+      - 3
+      - 4
+      - 6
+    yours: false
+  timer:
+    remainingMs: 0
+    totalMs: 25000
+  bench: []
+  offered: []
+  rerollsRemaining: ~
+  fearless: []
+- phase: banPick
+  queueId: 440
+  spectating: false
+  ally:
+    - cellId: 5
+      isLocal: false
+      position: top
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 6
+      isLocal: false
+      position: bottom
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 7
+      isLocal: true
+      position: utility
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 8
+      isLocal: false
+      position: jungle
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 9
+      isLocal: false
+      position: middle
+      champion: ~
+      hover: 777
+      picking: false
+  enemy:
+    - cellId: 0
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 1
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 2
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 3
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 4
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+  bans:
+    ally:
+      - champion: 122
+        cellId: 5
+        hover: ~
+      - champion: 222
+        cellId: 6
+        hover: ~
+      - champion: 143
+        cellId: 7
+        hover: ~
+      - champion: 91
+        cellId: 8
+        hover: ~
+      - champion: 711
+        cellId: 9
+        hover: ~
+    enemy: []
+  turn:
+    kind: ban
+    cells:
+      - 0
+      - 1
+      - 2
+      - 3
+      - 4
+    yours: false
+  timer:
+    remainingMs: 0
+    totalMs: 25000
+  bench: []
+  offered: []
+  rerollsRemaining: ~
+  fearless: []
+- phase: banPick
+  queueId: 440
+  spectating: false
+  ally:
+    - cellId: 5
+      isLocal: false
+      position: top
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 6
+      isLocal: false
+      position: bottom
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 7
+      isLocal: true
+      position: utility
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 8
+      isLocal: false
+      position: jungle
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 9
+      isLocal: false
+      position: middle
+      champion: ~
+      hover: ~
+      picking: false
+  enemy:
+    - cellId: 0
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 1
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 2
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 3
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 4
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+  bans:
+    ally:
+      - champion: 122
+        cellId: 5
+        hover: ~
+      - champion: 222
+        cellId: 6
+        hover: ~
+      - champion: 143
+        cellId: 7
+        hover: ~
+      - champion: 91
+        cellId: 8
+        hover: ~
+      - champion: 711
+        cellId: 9
+        hover: ~
+    enemy:
+      - champion: 105
+        cellId: 0
+        hover: ~
+      - champion: 777
+        cellId: 1
+        hover: ~
+      - champion: 805
+        cellId: 2
+        hover: ~
+      - champion: 895
+        cellId: 3
+        hover: ~
+      - champion: 51
+        cellId: 4
+        hover: ~
+  turn: ~
+  timer:
+    remainingMs: 31400
+    totalMs: 31400
+  bench: []
+  offered: []
+  rerollsRemaining: ~
+  fearless: []
+- phase: banPick
+  queueId: 440
+  spectating: false
+  ally:
+    - cellId: 5
+      isLocal: false
+      position: top
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 6
+      isLocal: false
+      position: bottom
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 7
+      isLocal: true
+      position: utility
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 8
+      isLocal: false
+      position: jungle
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 9
+      isLocal: false
+      position: middle
+      champion: ~
+      hover: ~
+      picking: false
+  enemy:
+    - cellId: 0
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: true
+    - cellId: 1
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 2
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 3
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 4
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+  bans:
+    ally:
+      - champion: 122
+        cellId: 5
+        hover: ~
+      - champion: 222
+        cellId: 6
+        hover: ~
+      - champion: 143
+        cellId: 7
+        hover: ~
+      - champion: 91
+        cellId: 8
+        hover: ~
+      - champion: 711
+        cellId: 9
+        hover: ~
+    enemy:
+      - champion: 105
+        cellId: 0
+        hover: ~
+      - champion: 777
+        cellId: 1
+        hover: ~
+      - champion: 805
+        cellId: 2
+        hover: ~
+      - champion: 895
+        cellId: 3
+        hover: ~
+      - champion: 51
+        cellId: 4
+        hover: ~
+  turn:
+    kind: pick
+    cells:
+      - 0
+    yours: false
+  timer:
+    remainingMs: 25009
+    totalMs: 31400
+  bench: []
+  offered: []
+  rerollsRemaining: ~
+  fearless: []
+- phase: banPick
+  queueId: 440
+  spectating: false
+  ally:
+    - cellId: 5
+      isLocal: false
+      position: top
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 6
+      isLocal: false
+      position: bottom
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 7
+      isLocal: true
+      position: utility
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 8
+      isLocal: false
+      position: jungle
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 9
+      isLocal: false
+      position: middle
+      champion: ~
+      hover: ~
+      picking: false
+  enemy:
+    - cellId: 0
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: true
+    - cellId: 1
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 2
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 3
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 4
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+  bans:
+    ally:
+      - champion: 122
+        cellId: 5
+        hover: ~
+      - champion: 222
+        cellId: 6
+        hover: ~
+      - champion: 143
+        cellId: 7
+        hover: ~
+      - champion: 91
+        cellId: 8
+        hover: ~
+      - champion: 711
+        cellId: 9
+        hover: ~
+    enemy:
+      - champion: 105
+        cellId: 0
+        hover: ~
+      - champion: 777
+        cellId: 1
+        hover: ~
+      - champion: 805
+        cellId: 2
+        hover: ~
+      - champion: 895
+        cellId: 3
+        hover: ~
+      - champion: 51
+        cellId: 4
+        hover: ~
+  turn:
+    kind: pick
+    cells:
+      - 0
+    yours: false
+  timer:
+    remainingMs: 23636
+    totalMs: 31400
+  bench: []
+  offered: []
+  rerollsRemaining: ~
+  fearless: []
+- phase: banPick
+  queueId: 440
+  spectating: false
+  ally:
+    - cellId: 5
+      isLocal: true
+      position: utility
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 6
+      isLocal: false
+      position: bottom
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 7
+      isLocal: false
+      position: top
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 8
+      isLocal: false
+      position: jungle
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 9
+      isLocal: false
+      position: middle
+      champion: ~
+      hover: ~
+      picking: false
+  enemy:
+    - cellId: 0
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: true
+    - cellId: 1
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 2
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 3
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 4
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+  bans:
+    ally:
+      - champion: 122
+        cellId: 5
+        hover: ~
+      - champion: 222
+        cellId: 6
+        hover: ~
+      - champion: 143
+        cellId: 7
+        hover: ~
+      - champion: 91
+        cellId: 8
+        hover: ~
+      - champion: 711
+        cellId: 9
+        hover: ~
+    enemy:
+      - champion: 105
+        cellId: 0
+        hover: ~
+      - champion: 777
+        cellId: 1
+        hover: ~
+      - champion: 805
+        cellId: 2
+        hover: ~
+      - champion: 895
+        cellId: 3
+        hover: ~
+      - champion: 51
+        cellId: 4
+        hover: ~
+  turn:
+    kind: pick
+    cells:
+      - 0
+    yours: false
+  timer:
+    remainingMs: 21314
+    totalMs: 31400
+  bench: []
+  offered: []
+  rerollsRemaining: ~
+  fearless: []
+- phase: banPick
+  queueId: 440
+  spectating: false
+  ally:
+    - cellId: 5
+      isLocal: true
+      position: utility
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 6
+      isLocal: false
+      position: bottom
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 7
+      isLocal: false
+      position: top
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 8
+      isLocal: false
+      position: jungle
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 9
+      isLocal: false
+      position: middle
+      champion: ~
+      hover: 517
+      picking: false
+  enemy:
+    - cellId: 0
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: true
+    - cellId: 1
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 2
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 3
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+    - cellId: 4
+      isLocal: false
+      position: ~
+      champion: ~
+      hover: ~
+      picking: false
+  bans:
+    ally:
+      - champion: 122
+        cellId: 5
+        hover: ~
+      - champion: 222
+        cellId: 6
+        hover: ~
+      - champion: 143
+        cellId: 7
+        hover: ~
+      - champion: 91
+        cellId: 8
+        hover: ~
+      - champion: 711
+        cellId: 9
+        hover: ~
+    enemy:
+      - champion: 105
+        cellId: 0
+        hover: ~
+      - champion: 777
+        cellId: 1
+        hover: ~
+      - champion: 805
+        cellId: 2
+        hover: ~
+      - champion: 895
+        cellId: 3
+        hover: ~
+      - champion: 51
+        cellId: 4
+        hover: ~
+  turn:
+    kind: pick
+    cells:
+      - 0
+    yours: false
+  timer:
+    remainingMs: 15136
+    totalMs: 31400
+  bench: []
+  offered: []
+  rerollsRemaining: ~
+  fearless: []
+- ~

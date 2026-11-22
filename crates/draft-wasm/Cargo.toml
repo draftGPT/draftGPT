@@ -1,0 +1,22 @@
+[package]
+name = "draft-wasm"
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+
+# draft-core for the browser: the web drafter calls the same recommender the
+# desktop app runs natively. Built by `npm run wasm -w @draftgpt/web` in ui/
+# (ui/web/scripts/wasm.mjs: cargo build --target wasm32-unknown-unknown, then
+# wasm-bindgen --target web).
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[lints]
+workspace = true
+
+[dependencies]
+draft-core.workspace = true
+serde_json.workspace = true
+wasm-bindgen = "0.2.130"

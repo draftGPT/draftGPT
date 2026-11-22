@@ -1,0 +1,28 @@
+[package]
+name = "draft-core"
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+
+# The draft as every frontend sees it: champ select session → DraftState. No
+# I/O; builds for wasm32 (the web drafter runs it through draft-wasm). Depends on lcu-model,
+# never on lcu.
+
+[lints]
+workspace = true
+
+[dependencies]
+lcu-model.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+ts-rs = { version = "12.0.1", optional = true }
+
+[features]
+# Generates the TypeScript types for the UIs (ui/draft-ui/src/lib/types/):
+# `cargo test -p draft-core --features ts export_bindings`.
+ts = ["dep:ts-rs"]
+
+[dev-dependencies]
+insta = { version = "1.49.0", features = ["yaml"] }
+

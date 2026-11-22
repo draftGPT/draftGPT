@@ -1,0 +1,47 @@
+/* Colours and sizes shared by both UIs. Dark by default, like the client. */
+:root {
+  /* League of Legends brand palette (colorpalettegenerator.ai). Muted text and
+     red are lighter than the palette's (Muted Bronze, Defeat Red), which are
+     under 4.5:1 on these backgrounds. */
+  --bg: #0a1428;
+  --panel: #111c2e;
+  --panel-2: #1a2636;
+  --line: #2c3548;
+  --text: #f0e6d2;
+  --muted: #a09b8c;
+  --ally: #5383e8;
+  --enemy: #ff4e50;
+  --gold: #c28f2c;
+  --good: #00a878;
+  --bad: #ff4e50;
+  --radius: 8px;
+  --font: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+  --bg: #f4f6fa;
+  --panel: #ffffff;
+  --panel-2: #eef1f6;
+  --line: #d6dbe6;
+  --text: #111827;
+  --muted: #5b6475;
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 14px/1.4 var(--font);
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}

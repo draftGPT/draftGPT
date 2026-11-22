@@ -1,0 +1,168 @@
+---
+source: crates/draft-core/tests/fixtures.rs
+expression: states
+---
+- phase: banPick
+  queueId: 3270
+  spectating: false
+  ally:
+    - cellId: 0
+      isLocal: true
+      position: ~
+      champion: ~
+      hover: ~
+      picking: true
+  enemy: []
+  bans:
+    ally: []
+    enemy: []
+  turn:
+    kind: pick
+    cells:
+      - 0
+    yours: true
+  timer:
+    remainingMs: 15000
+    totalMs: 15000
+  bench: []
+  offered: []
+  rerollsRemaining: 0
+  fearless: []
+- phase: banPick
+  queueId: 3270
+  spectating: false
+  ally:
+    - cellId: 0
+      isLocal: true
+      position: ~
+      champion: ~
+      hover: ~
+      picking: true
+  enemy: []
+  bans:
+    ally: []
+    enemy: []
+  turn:
+    kind: pick
+    cells:
+      - 0
+    yours: true
+  timer:
+    remainingMs: 15000
+    totalMs: 15000
+  bench: []
+  offered:
+    - 887
+    - 143
+    - 99
+  rerollsRemaining: 0
+  fearless: []
+- phase: finalization
+  queueId: 3270
+  spectating: false
+  ally:
+    - cellId: 0
+      isLocal: true
+      position: ~
+      champion: 99
+      hover: ~
+      picking: false
+  enemy: []
+  bans:
+    ally: []
+    enemy: []
+  turn: ~
+  timer:
+    remainingMs: 30000
+    totalMs: 30000
+  bench:
+    - 887
+    - 143
+  offered:
+    - 887
+    - 143
+    - 99
+  rerollsRemaining: 0
+  fearless: []
+- phase: finalization
+  queueId: 3270
+  spectating: false
+  ally:
+    - cellId: 0
+      isLocal: true
+      position: ~
+      champion: 887
+      hover: ~
+      picking: false
+  enemy: []
+  bans:
+    ally: []
+    enemy: []
+  turn: ~
+  timer:
+    remainingMs: 26444
+    totalMs: 30000
+  bench:
+    - 99
+    - 143
+  offered:
+    - 887
+    - 143
+    - 99
+  rerollsRemaining: 0
+  fearless: []
+- phase: finalization
+  queueId: 3270
+  spectating: false
+  ally:
+    - cellId: 0
+      isLocal: true
+      position: ~
+      champion: 143
+      hover: ~
+      picking: false
+  enemy: []
+  bans:
+    ally: []
+    enemy: []
+  turn: ~
+  timer:
+    remainingMs: 22627
+    totalMs: 30000
+  bench:
+    - 99
+    - 887
+  offered:
+    - 887
+    - 143
+    - 99
+  rerollsRemaining: 0
+  fearless: []
+- phase: finalization
+  queueId: 3270
+  spectating: false
+  ally:
+    - cellId: 0
+      isLocal: true
+      position: ~
+      champion: 887
+      hover: ~
+      picking: false
+  enemy: []
+  bans:
+    ally: []
+    enemy: []
+  turn: ~
+  timer:
+    remainingMs: 18875
+    totalMs: 30000
+  bench:
+    - 99
+    - 143
+  offered:
+    - 887
+    - 143
+    - 99
+  rerollsRemaining: 0
+  fearless: []
+- ~

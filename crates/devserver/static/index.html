@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>draftGPT devserver</title>
+<style>
+  :root {
+    --bg: #f6f7f9; --panel: #fff; --text: #1d2330; --muted: #6b7385; --line: #dfe3ea;
+    --accent: #2f6fde; --ok: #1f9d55; --warn: #c27c0e; --err: #d64545; --ally: #e8f0ff; --enemy: #ffecec;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #12151b; --panel: #1b2029; --text: #e3e7ef; --muted: #8b93a6; --line: #2b3240;
+      --accent: #6b9cff; --ok: #4cc38a; --warn: #e0a84a; --err: #f07272; --ally: #1d2a44; --enemy: #3a2124;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 14px/1.4 system-ui, sans-serif; }
+  header { display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: center; padding: 10px 16px;
+           background: var(--panel); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 1; }
+  header h1 { font-size: 15px; margin: 0; }
+  .pill { display: inline-flex; gap: 6px; align-items: center; color: var(--muted); }
+  .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--muted); }
+  .dot.ok { background: var(--ok); } .dot.err { background: var(--err); } .dot.rec { background: var(--err); animation: blink 1s infinite; }
+  @keyframes blink { 50% { opacity: .3; } }
+  main { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 16px; padding: 16px; }
+  @media (max-width: 900px) { main { grid-template-columns: 1fr; } }
+  section { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; min-width: 0; }
+  section h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin: 0 0 10px; }
+  .muted { color: var(--muted); }
+  .teams { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .cell { display: grid; grid-template-columns: 96px 1fr; gap: 2px 8px; padding: 6px 8px; border-radius: 6px; margin-bottom: 6px; }
+  .ally .cell { background: var(--ally); } .enemy .cell { background: var(--enemy); }
+  .cell.me { outline: 2px solid var(--accent); }
+  .cell.acting { box-shadow: inset 4px 0 0 var(--warn); }
+  .cell .pos { color: var(--muted); font-size: 12px; text-transform: uppercase; white-space: nowrap; }
+  .cell .champ { font-weight: 600; }
+  .cell .hover { color: var(--muted); font-style: italic; font-weight: 400; }
+  .bans { display: flex; flex-wrap: wrap; gap: 4px; margin: 4px 0 10px; }
+  .ban { font-size: 12px; padding: 1px 6px; border-radius: 4px; border: 1px solid var(--line); }
+  .bench { align-items: baseline; }
+  .ban.priority { border-color: var(--warn); }
+  .ban.picked { border-color: var(--accent); font-weight: 600; }
+  .offer { align-items: baseline; }
+  .timer { display: flex; gap: 16px; align-items: baseline; margin-bottom: 10px; }
+  .timer .big { font: 600 22px var(--mono); }
+  .controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 10px; }
+  input[type=text] { padding: 5px 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--text); }
+  button { padding: 5px 12px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--text); cursor: pointer; }
+  button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  button:disabled { opacity: .5; cursor: default; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  td { padding: 4px 6px; border-top: 1px solid var(--line); overflow-wrap: anywhere; }
+  td.num { text-align: right; white-space: nowrap; color: var(--muted); }
+  a { color: var(--accent); }
+  #log { max-height: 480px; overflow: auto; font: 12px var(--mono); }
+  .ev { border-top: 1px solid var(--line); padding: 3px 2px; cursor: pointer; }
+  .ev .meta { color: var(--muted); }
+  .ev.problem { color: var(--err); }
+  .ev pre { margin: 4px 0; white-space: pre-wrap; overflow-wrap: anywhere; color: var(--text); cursor: text; }
+  #notices div { font-size: 13px; padding: 2px 0; }
+  #notices .error { color: var(--err); }
+  #notices .warn { color: var(--warn); }
+  .wide { grid-column: 1 / -1; }
+</style>
+</head>
+<body>
+<header>
+  <h1>draftGPT devserver</h1>
+  <span class="pill"><span id="conn-dot" class="dot"></span><span id="conn">connecting to devserver…</span></span>
+  <span class="pill">phase <b id="phase">–</b></span>
+  <span class="pill"><span id="rec-dot" class="dot"></span><span id="rec">not recording</span></span>
+</header>
+<main>
+  <section>
+    <h2>Champ select</h2>
+    <div id="session" class="muted">No champ select session yet.</div>
+  </section>
+  <section>
+    <h2>Recording</h2>
+    <div class="controls">
+      <label><input type="checkbox" id="auto"> auto-record every champ select</label>
+    </div>
+    <div class="controls">
+      <input type="text" id="label" placeholder="label, e.g. ranked-dodge" maxlength="60">
+      <button id="start" class="primary">Start</button>
+      <button id="stop">Stop</button>
+    </div>
+    <div id="notices"></div>
+    <h2 style="margin-top:14px">Files <button id="refresh" style="float:right">Refresh</button></h2>
+    <table id="files"><tbody><tr><td class="muted">loading…</td></tr></tbody></table>
+  </section>
+  <section class="wide">
+    <h2>Event log</h2>
+    <div class="controls">
+      <input type="text" id="filter" placeholder="filter by uri">
+      <label><input type="checkbox" id="problems-only"> problems only</label>
+      <button id="clear">Clear</button>
+      <span class="muted" id="log-count"></span>
+    </div>
+    <div id="log"></div>
+  </section>
+</main>
+<script src="/app.js"></script>
+</body>
+</html>
