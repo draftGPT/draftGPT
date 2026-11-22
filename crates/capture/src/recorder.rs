@@ -64,6 +64,10 @@ pub struct Recorder {
     redactor: Redactor,
     /// Source time that is `t = 0`: the first live event or frame written.
     start_t: Option<u64>,
+    /// Latest `t` in the main file. Events can arrive stamped earlier (a Clash
+    /// fetch round stamps each response but delivers them together); they're
+    /// written at this time instead, so times never go backwards.
+    last_t: u64,
 }
 
 impl Recorder {
@@ -92,6 +96,7 @@ impl Recorder {
             },
             redactor: Redactor::new(),
             start_t: None,
+            last_t: 0,
         })
     }
 
@@ -102,9 +107,11 @@ impl Recorder {
         self.write_redacted(event)
     }
 
-    /// Writes a live event, redacted, with `t` relative to the recording start.
+    /// Writes a live event, redacted, with `t` relative to the recording start
+    /// (never before the previous event's).
     pub fn write(&mut self, mut event: RawEvent) -> io::Result<()> {
-        event.t = self.relative(event.t);
+        self.last_t = self.relative(event.t).max(self.last_t);
+        event.t = self.last_t;
         self.write_redacted(event)
     }
 
@@ -289,6 +296,24 @@ mod tests {
         for e in &events {
             assert!(e.data["puuid"].as_str().unwrap().starts_with("redacted-"));
         }
+    }
+
+    /// Found live in Clash (16.23): a fetch round delivered its snapshots ~2 s
+    /// after stamping them, behind a champ select event.
+    #[test]
+    fn late_stamped_events_never_go_back_in_time() {
+        let dir = tempfile::tempdir().unwrap();
+        let mut rec = Recorder::create(dir.path(), "x", None).unwrap();
+        rec.write(ev(1000, "/a")).unwrap();
+        rec.write(ev(3000, "/session")).unwrap();
+        rec.write(ev(1500, "/lol-clash/v1/bracket/1")).unwrap();
+        rec.write(ev(3200, "/b")).unwrap();
+        let info = rec.finish().unwrap();
+        let (_, events) = read_file(&info.path).unwrap();
+        assert_eq!(
+            events.iter().map(|e| e.t).collect::<Vec<_>>(),
+            vec![0, 2000, 2000, 2200]
+        );
     }
 
     #[test]
