@@ -14,12 +14,15 @@ Read it before structural changes and keep it up to date when the design changes
 - **Champ select only.** No in-game features, overlays or game process access.
 - **Never reveal hidden data**, such as teammate names in ranked champ select. Never request
   chat, store or auth endpoints. (The wire capture receives their events passively, only
-  into local files; nothing uses them.)
+  into local files; nothing uses them.) Summoner lookups and reads by puuid only for the
+  five Clash opponents during scouting, whom the client shows by name; never in champ
+  select, ranked or the sweep.
 - **Nothing identifying in fixtures.** Recordings are redacted on write by
   `capture::redact`: player, game and session IDs, Riot IDs and names, `obfuscated*`, chat
   credentials, anything named like a password/token/JWT (key fragments, case-insensitive),
-  chat IDs by value. `capture::recorder::Recorder` does it, so every file it writes is
-  redacted. Don't commit an unredacted capture.
+  chat IDs by value, Clash team names and roster/bracket IDs; scouting numbers (mastery,
+  ranked wins, LP) are rounded. `capture::recorder::Recorder` does it, so every file it
+  writes is redacted. Don't commit an unredacted capture.
 - **Recordings stay outside the repo; only an agent puts them into `fixtures/`.** `capture`
   and `devserver` write to the OS temp directory by default (`capture::default_out_dir()`:
   `draftgpt-captures` in `/tmp`, `$TMPDIR` on macOS, `%TEMP%` on Windows). People hand

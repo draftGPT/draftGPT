@@ -93,12 +93,19 @@ evening is its test; expect to hotfix. Background: [dev_notes/clash.md](../../de
 | `RESULTS` / `IDLE` | Done | Stops |
 
 While a Clash recording runs, `crates/capture/src/clash.rs` fetches every 10 s (GET only):
-tournament summary and state, `/lol-clash/v1/player`, `thirdparty/team-data`,
-`tournament/{id}` (+ `/player`), `bracket/{bracketId}`, and `roster/{id}` + `/stats` for
-**every team in the bracket**, plus `scouting/matchhistory` once per set of opponents. Only
-changed data is written. Clash events the client pushes by itself are recorded too
-(`is_recorded_clash_uri` in `crates/lcu-model/src/lib.rs`). Not fetched yet, on purpose:
-anything by puuid (`scouting/champions`), summoner lookups, POST endpoints.
+tournament summary and state, `/lol-clash/v1/player`, `tournament/{id}` (+ `/player`) and
+`bracket/{bracketId}`. Only changed data is written. Once per opponent, as soon as the
+bracket names it, it takes the **scouting snapshot**: our roster and theirs, then for their
+five players what the client's scouting tab shows: `scouting/champions` (mastery, season
+champions) and `ranked-stats/{puuid}`. The puuids come from `/lol-summoner/v1/summoners/{id}`
+(the opponents are shown by name in Clash), recorded reduced to `{summonerId, puuid}` so a
+ranked entry can be matched to a roster member. An incomplete snapshot is tried again on
+the next fetches, up to 3 times. Scouting data isn't carried into the next recording's
+snapshots, and its numbers are rounded on write (`ROUNDED_KEYS` in `redact.rs`). Clash events the
+client pushes by itself are recorded too (`is_recorded_clash_uri` in
+`crates/lcu-model/src/lib.rs`). Not fetched, on purpose: POST endpoints, `thirdparty/team-data`
+(500 every time), `scouting/matchhistory` (403 `RBAC: access denied` for any input). Summoner
+lookups only here, never in ranked or the sweep.
 
 ### Running it
 
@@ -125,8 +132,11 @@ cargo run -p capture --release -- record --label clash_evening
 
 In `capture.log`:
 - `recording started: …_clash.jsonl` at lock-in (or at scouting).
-- `Clash fetch: N changed, 0 failed` lines: N > 0 at the start and whenever something
-  changes, then quiet. Repeated `failed` counts mean an endpoint misbehaves (below).
+- Once the bracket names the opponent: `next opponent known, taking the snapshot (try 1)`,
+  `opponent roster has 5 players`, `5 of 5 puuids from the summoner lookup`. Until then
+  nothing (`RUST_LOG=capture=debug` shows `no open match` per fetch). `try 2`/`try 3` mean
+  the first try was incomplete; `giving up` that it stayed so.
+- No repeated `Clash fetch … failed` warnings; they mean an endpoint misbehaves (below).
 - `recording stopped` at game start, a new `recording started` after the game.
 
 In the recording (agent; PowerShell or bash, any tool that counts lines):
@@ -134,9 +144,12 @@ In the recording (agent; PowerShell or bash, any tool that counts lines):
 grep -o '"uri":"[^"]*"' <file>.jsonl | sort | uniq -c
 ```
 Expect `/lol-clash/v1/tournament-summary`, `/lol-clash/v1/bracket/<n>`,
-`/lol-clash/v1/roster/redacted-N` (several teams), `/lol-clash/v1/roster/redacted-N/stats`
-and the champ select session. Open one roster event: `members[].position` readable,
-`summonerId`, `name`, `shortName`, `id` all `redacted-…` or small numbers.
+`/lol-clash/v1/roster/redacted-N` (ours and the opponent's), one
+`/lol-clash/v1/scouting/champions`, five `/lol-summoner/v1/summoners/redacted-N` and five
+`/lol-ranked/v1/ranked-stats/redacted-N` and the
+champ select session. Open one roster event: `members[].position` readable (other teams
+come back as `FILL`), `summonerId`, `name`, `shortName`, `id` all `redacted-…` or small
+numbers.
 
 ### When it doesn't work (Clash)
 
@@ -149,7 +162,8 @@ which Clash resources the client really uses and how often.
 | No recording at lock-in or scouting | Auto starts on states in `CLASH_ACTIVE_STATES` (`crates/capture/src/auto.rs`). Look at the real `state` values in the wire file / log (the dev page flags unknown ones). Add the missing one there and to `CLASH_KNOWN_STATES`, with a test. Meanwhile use the manual fallback. |
 | `Clash fetch … failed` repeatedly | An endpoint's URI or parameters differ from the spec. Compare with the URIs in the wire file and adjust `fetch` in `crates/capture/src/clash.rs`. A failed fetch never stops the recording; if unsure, leave it failing. |
 | No bracket / roster events | `tournament-summary` may carry no `bracketId`/`rosterId` (or names differ). Check its data in the recording; `tournaments()` in `clash.rs` reads `tournamentId`, `rosterId`, `bracketId`. `/lol-clash/v1/tournament/{id}/player` also has `rosterId` and `bracketId`. |
-| `scouting/matchhistory` fails | Its query format (`summonerIds=[…]`) is a guess. Harmless; fix only if it's trivial. |
+| No scouting snapshot all through scouting (`no open match` at debug level) | `opponent()` in `clash.rs` looks for our `rosterId` (summary) in the bracket's `matches[].rosterId1/2` with `winnerId` 0, and takes the other side only if it's listed in `rosters[]` (undecided slots hold placeholder IDs). Compare with the bracket in the recording. |
+| `scouting/champions` fails | The `puuids=["…"]` query format comes from the spec and worked in 16.23; compare with the client's own request if it changes. |
 | Recording runs during the game | `in_game()` in `auto.rs` lists the gameflow phases treated as the game. |
 | Something identifying in a roster/bracket event | Fix `crates/capture/src/redact.rs` (`CLASH_TEXT_KEYS`, `SENSITIVE_KEY_PARTS`, `ID_AFTER_SEGMENT`) with a test; the recording stays local until fixed. Never weaken redaction. |
 

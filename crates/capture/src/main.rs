@@ -133,7 +133,8 @@ async fn record(out: &Path, wire: bool, mode: Mode) {
             }
             Some(fetched) = clash_rx.recv() => {
                 let failed = fetched.failed;
-                let fresh = poller.done(fetched, |uri| controller.latest_of(uri).map(|e| &e.data));
+                let recording = controller.is_recording();
+                let fresh = poller.done(fetched, recording, |uri| controller.latest_of(uri).map(|e| &e.data));
                 if !fresh.is_empty() || failed > 0 {
                     tracing::info!("Clash fetch: {} changed, {failed} failed", fresh.len());
                 }

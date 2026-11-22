@@ -34,8 +34,11 @@ staggers it) and is where the client shows the opponent team. Then queue → cha
    - `/lol-clash/v1/thirdparty/team-data` → `{captain, members[] {summonerId, role}}`; a
      Riot-made endpoint for third-party apps, but apparently *our own* team only. Verify.
 
-**Gap:** rosters give `summonerId`, scouting/champions wants `puuid`. Ways across, all
-need a decision:
+**Gap:** rosters give `summonerId`, scouting/champions wants `puuid`. **Decided
+2026-11-21 (live in Clash): the summoner lookup**, for the five Clash opponents only,
+during scouting (they're shown by name in the client's scouting tab), never in champ select,
+ranked or the sweep; the lookup is recorded reduced to `{summonerId, puuid}`. The options
+were:
 - `/lol-summoner/v1/summoners/{id}` is a lookup endpoint (our rules keep lookups out of
   the sweep). In Clash the opponent is shown by name in the client, so it's visible
   information, but it still crosses the "lookup" line we drew.
@@ -68,22 +71,47 @@ Runbook for whoever records: "Clash weekends" in `crates/devserver/AGENTS.md`.
 - Auto mode (`capture::auto`): records while a tournament is `LOCK_IN|SCOUTING|IN_GAME`,
   except during the game itself; label `clash`. One recording per round.
 - `capture::clash::ClashPoller`: every 10 s while recording in Clash: summary, state,
-  player, team-data, tournament/{id} (+player), bracket, roster + stats of every bracket
-  team, matchhistory once per opponent set. Writes only changes, as `Snapshot` events
-  (so snapshots can appear mid-recording).
+  player, tournament/{id} (+player), bracket. Once per opponent (up to 3 tries while
+  incomplete): both rosters, summoner lookups (recorded as `{summonerId, puuid}`),
+  scouting/champions, ranked-stats per opponent. Writes only changes, as `Snapshot`
+  events (so snapshots can appear mid-recording); scouting data isn't carried into the
+  next recording. (Until 2026-11-21: team-data, every bracket team's roster + stats,
+  matchhistory; see round 1.)
 - Redaction: roster IDs (`rosterid`, `winnerid`), `inviterid`, `invitationid`; in Clash
   data also team names (`name`, `shortName`, `rosterName`, `rosterShortName`), string
   `id`s and summoner-ID map keys; the URI segment after `roster` (event URIs are now
   redacted in main recordings too). Same team = same fake everywhere (`redacted-N` as
-  string, `N` as number in brackets). Bracket and tournament IDs are kept.
+  string, `N` as number). Bracket IDs (`bracketId`, the URI, the bracket's `id`) and
+  match IDs are faked, scouting numbers rounded (`ROUNDED_KEYS`); tournament IDs kept.
 - Smoke-tested live without a team (16.23, 2026-11-20): shapes match the spec;
   no team gives `bracketId: -1`, `rosterId: ""`, `tournament/{id}/player` →
   `NO_ROSTER`; `thirdparty/team-data` fails without a team. `tournament-state-info` also
   lists tournaments the player isn't in, so auto may record "clash" for a player without
   a team (harmless). Tournament 29241: next state change Sat 2026-11-21 17:15 CET.
-- Questions for the first real recording: puuids in the Clash champ select session?,
-  `nameVisibilityType` in Clash, timer/phase values, how fast bracket updates arrive,
-  what team-data returns, does `scouting/matchhistory?summonerIds=[…]` work.
+- First live Clash, 16.23, 2026-11-21, round 1 (`fixtures/16_23_clash_round1_scouting_to_draft`):
+  auto started at `LOCK_IN`, kept recording through `SCOUTING` and stopped at
+  `GameStart`. Answers:
+  - Champ select session (queue 700): enemies `HIDDEN`, `puuid` `""`, `summonerId` 0;
+    teammates `VISIBLE` with puuids. **No way across the puuid gap at champ select.**
+  - Tournament draft: `phase_transition` before each of the 4 blocks, bans by the captain
+    cell only, `bans` field empty.
+  - Rosters: every bracket team's members come back, but other teams' `position` is
+    `FILL` (the client's scouting tab shows no positions either). `/roster/{id}/stats`
+    is empty (`playerStats {}`, `periodStats []`) for every team, ours included; our own
+    roster's `/stats` got 400 for its UUID during lock-in.
+  - `thirdparty/team-data`: 500 on every poll (log spam; stop fetching it or back off).
+  - `scouting/matchhistory?summonerIds=[…]`: 403 `RBAC: access denied` for any input (all
+    players, the five opponents, one, our own, empty): Riot-side. Dropped.
+  - The client's scouting tab (rank, top season champions with win rate/KDA, mastery,
+    Clash history) isn't pushed as events: the UI fetches it over HTTP, so neither the
+    main nor the wire file has it. Now fetched once per opponent (scouting snapshot, see
+    `capture::clash`), checked live in round 2: every enemy pick was in their lists.
+  - Bracket: the match pairings match the roster list; only slots of rounds not decided
+    yet hold placeholder roster IDs. The bracket ID and match IDs are now faked, scouting
+    numbers rounded (leaderboard lookups).
+  - Recorder bug (fixed): a fetch round's snapshots were stamped per response but
+    written together ~2 s later, behind champ select events; times went backwards.
+  - Still open: timer values per Clash phase, how fast the bracket updates between rounds.
 
 ## Product ideas once data exists
 

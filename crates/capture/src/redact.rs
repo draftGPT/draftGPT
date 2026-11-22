@@ -3,8 +3,9 @@
 //! Values are swapped for stable fakes per recording: the same original value
 //! always maps to the same fake, so "this cell is the same player as that action"
 //! still holds, across the main recording and its wire file. Empty values (`0`,
-//! `""`, `null`) are kept as they are, because they carry meaning (bot, hidden
-//! name, not set).
+//! `""`, `null`) and small negative numbers (above [`NOT_SET_BELOW`]) are kept
+//! as they are, because they carry meaning (bot, hidden name, not set;
+//! `bracketId: -1` without a team).
 //!
 //! Four layers, from narrow to broad:
 //! 1. Keys containing an identity or secret fragment ([`SENSITIVE_KEY_PARTS`]).
@@ -67,6 +68,8 @@ pub const SENSITIVE_KEY_PARTS: &[&str] = &[
     "winnerid",
     "inviterid",
     "invitationid",
+    // A bracket ID finds all of its teams.
+    "bracketid",
     // Chat rooms and credentials.
     "multiuserchatid",
     "chatroomname",
@@ -75,6 +78,15 @@ pub const SENSITIVE_KEY_PARTS: &[&str] = &[
     "token",
     "jwt",
 ];
+
+/// Negative numbers above this are "not set" markers and kept; anything lower
+/// could be a real ID and is replaced.
+pub const NOT_SET_BELOW: i64 = -1000;
+
+/// `0` and small negative numbers mean "not set".
+fn is_not_set(n: &serde_json::Number) -> bool {
+    n.as_i64().is_some_and(|x| x <= 0 && x > NOT_SET_BELOW) || n.as_f64() == Some(0.0)
+}
 
 /// Keys sensitive only as a whole: as a fragment they'd also hit drafting
 /// data (`pinDropSummoners` in champ select holds positions).
@@ -94,8 +106,108 @@ pub fn is_sensitive_key(key: &str) -> bool {
 const CLASH_TEXT_KEYS: &[&str] = &["name", "shortname", "rostername", "rostershortname"];
 
 /// Path segments that are always an ID, whatever they look like: the one after
-/// `roster` (Clash team IDs aren't always long or numeric).
-const ID_AFTER_SEGMENT: &[&str] = &["roster"];
+/// `roster` (Clash team IDs aren't always long or numeric), `bracket`,
+/// `ranked-stats` (a puuid) and `summoners` (a summoner ID).
+const ID_AFTER_SEGMENT: &[&str] = &["roster", "bracket", "ranked-stats", "summoners"];
+
+/// Whether `seg`, after `previous`, is an ID ([`ID_AFTER_SEGMENT`]). Only
+/// `/lol-summoner/` has summoner IDs after `summoners`; champ select's
+/// `/lol-champ-select/v1/summoners/{cell}` has a cell index there, and
+/// `/lol-summoner/v2/summoners/puuid/{puuid}` a word.
+fn is_id_after(uri: &str, previous: &str, seg: &str) -> bool {
+    !seg.is_empty()
+        && ID_AFTER_SEGMENT.contains(&previous)
+        && (previous != "summoners"
+            || (uri.starts_with("/lol-summoner/") && seg.bytes().all(|b| b.is_ascii_digit())))
+}
+
+/// Opponents' scouting data (`/lol-clash/v1/scouting/`, `/lol-ranked/`): exact
+/// mastery points or ranked wins and LP can be looked up on public
+/// leaderboards, so these keys are rounded to a multiple of the step.
+/// Per-champion game counts, win rates and KDA stay exact.
+pub const ROUNDED_KEYS: &[(&str, i64)] = &[
+    ("championpoints", 10_000),
+    ("championpointssincelastlevel", 10_000),
+    ("championpointsuntilnextlevel", 10_000),
+    ("totalmasteryscore", 50),
+    ("wins", 10),
+    ("losses", 10),
+    ("leaguepoints", 25),
+    ("currentseasonwinsforrewards", 10),
+    ("previousseasonwinsforrewards", 10),
+    ("currentseasonsplitpoints", 100),
+    ("previousseasonsplitpoints", 100),
+    ("ratedrating", 100),
+];
+
+/// Resources whose numbers get [`ROUNDED_KEYS`].
+pub fn is_scouting_uri(uri: &str) -> bool {
+    uri.starts_with("/lol-clash/v1/scouting/") || uri.starts_with("/lol-ranked/")
+}
+
+fn round_step(key: &str) -> Option<i64> {
+    let lower = key.to_ascii_lowercase();
+    ROUNDED_KEYS
+        .iter()
+        .find(|(k, _)| *k == lower)
+        .map(|(_, step)| *step)
+}
+
+/// Rounds the [`ROUNDED_KEYS`] anywhere in `value` (half up). Zero and
+/// negative values (not set) stay; other numbers (floats, huge) become 0, since
+/// they can't be rounded to the step.
+pub fn round_scouting(value: &mut Value) {
+    match value {
+        Value::Object(map) => {
+            for (k, v) in map.iter_mut() {
+                let step = round_step(k).filter(|_| v.is_number());
+                match step {
+                    Some(step) => {
+                        let rounded = match v.as_i64() {
+                            Some(x) if x <= 0 => x,
+                            Some(x) => x.saturating_add(step / 2) / step * step,
+                            None => 0,
+                        };
+                        *v = Value::from(rounded);
+                    }
+                    None => round_scouting(v),
+                }
+            }
+        }
+        Value::Array(items) => items.iter_mut().for_each(round_scouting),
+        _ => {}
+    }
+}
+
+fn find_unrounded(value: &Value, path: &str, found: &mut Vec<String>) {
+    match value {
+        Value::Object(map) => {
+            for (k, v) in map {
+                let p = format!("{path}.{k}");
+                match (round_step(k), v) {
+                    (Some(step), Value::Number(n)) => {
+                        if n.as_i64().is_none_or(|x| x > 0 && x % step != 0) {
+                            found.push(format!("{p} (unrounded)"));
+                        }
+                    }
+                    (_, v) => find_unrounded(v, &p, found),
+                }
+            }
+        }
+        Value::Array(items) => {
+            for (i, v) in items.iter().enumerate() {
+                find_unrounded(v, &format!("{path}[{i}]"), found);
+            }
+        }
+        _ => {}
+    }
+}
+
+/// A Clash bracket's own ID and its matches' IDs (numbers, so the key rules
+/// don't catch them; the URI segment is [`ID_AFTER_SEGMENT`]).
+fn is_bracket_uri(uri: &str) -> bool {
+    uri.starts_with("/lol-clash/v1/bracket/")
+}
 
 /// Chat IDs look like `<puuid>@eu1.pvp.net`, `<room>@sec.pvp.net` or
 /// `<id>@pvp.net`.
@@ -234,7 +346,32 @@ impl Redactor {
         if lcu::is_clash_uri(uri) {
             self.redact_clash(value);
         }
+        if is_bracket_uri(uri) {
+            self.redact_bracket(value);
+        }
+        if is_scouting_uri(uri) {
+            round_scouting(value);
+        }
         self.redact(value);
+    }
+
+    /// The bracket's `id` and each `matches[].id`.
+    fn redact_bracket(&mut self, value: &mut Value) {
+        let mut ids: Vec<&mut Value> = Vec::new();
+        if let Some(Value::Object(map)) = Some(&mut *value) {
+            for (k, v) in map.iter_mut() {
+                match (k.as_str(), v) {
+                    ("id", v) => ids.push(v),
+                    ("matches", Value::Array(ms)) => {
+                        ids.extend(ms.iter_mut().filter_map(|m| m.get_mut("id")));
+                    }
+                    _ => {}
+                }
+            }
+        }
+        for v in ids {
+            self.replace_all(v);
+        }
     }
 
     /// Clash only: team names, string `id`s (roster IDs) and maps keyed by
@@ -297,7 +434,7 @@ impl Redactor {
         let mut previous = "";
         uri.split('/')
             .map(|seg| {
-                let after_id_segment = ID_AFTER_SEGMENT.contains(&previous) && !seg.is_empty();
+                let after_id_segment = is_id_after(uri, previous, seg);
                 previous = seg;
                 let decoded = percent_decode(seg);
                 if after_id_segment || is_id_like(&decoded) {
@@ -320,7 +457,7 @@ impl Redactor {
             Value::String(s) if !s.is_empty() => {
                 *value = Value::String(self.fake_string(s.clone()));
             }
-            Value::Number(n) if n.as_f64() != Some(0.0) => {
+            Value::Number(n) if !is_not_set(n) => {
                 *value = Value::from(self.fake_for(n.to_string()));
             }
             _ => {}
@@ -374,16 +511,29 @@ pub fn find_unredacted_at(uri: &str, value: &Value) -> Vec<String> {
     let mut found = find_unredacted(value);
     if lcu::is_clash_uri(uri) {
         walk_clash(value, "", &mut found);
-        let mut previous = "";
-        for seg in uri.split('/') {
-            if ID_AFTER_SEGMENT.contains(&previous)
-                && !seg.is_empty()
-                && !seg.starts_with("redacted-")
-            {
-                found.push(format!("uri segment after {previous}"));
-            }
-            previous = seg;
+    }
+    if is_bracket_uri(uri) {
+        let mut ids: Vec<(&str, &Value)> = value.get("id").map(|v| ("id", v)).into_iter().collect();
+        if let Some(ms) = value.get("matches").and_then(Value::as_array) {
+            ids.extend(
+                ms.iter()
+                    .filter_map(|m| m.get("id"))
+                    .map(|v| ("matches[].id", v)),
+            );
         }
+        for (p, v) in ids {
+            check_leaves(v, p, &mut found);
+        }
+    }
+    if is_scouting_uri(uri) {
+        find_unrounded(value, "", &mut found);
+    }
+    let mut previous = "";
+    for seg in uri.split('/') {
+        if is_id_after(uri, previous, seg) && !seg.starts_with("redacted-") {
+            found.push(format!("uri segment after {previous}"));
+        }
+        previous = seg;
     }
     found
 }
@@ -456,8 +606,9 @@ fn check_leaves(value: &Value, path: &str, found: &mut Vec<String>) {
         Value::String(s) if !s.is_empty() && !s.starts_with("redacted-") => {
             found.push(path.to_string());
         }
-        // Fakes are small counters; real IDs are large.
-        Value::Number(n) if n.as_u64().is_none_or(|x| x > 100_000) => {
+        // Fakes are small counters; real IDs are large. Small negative numbers
+        // are "not set" markers.
+        Value::Number(n) if n.as_i64().is_none_or(|x| x > 100_000 || x <= NOT_SET_BELOW) => {
             found.push(path.to_string());
         }
         _ => {}
@@ -552,7 +703,8 @@ mod tests {
         assert_eq!(roster["members"][0]["replacedSummonerId"], 0);
         assert_eq!(summary[0]["state"], "SCOUTING");
         assert_eq!(summary[0]["tournamentId"], 4321);
-        assert_eq!(bracket["id"], 556677);
+        // A bracket ID finds all of its teams: faked too.
+        assert_ne!(bracket["id"], 556677);
         assert_eq!(bracket["matches"][0]["status"], "UPCOMING");
         assert_eq!(stats["tournamentNameLocKey"], "clash_name_x");
         assert_eq!(
@@ -874,6 +1026,99 @@ mod tests {
         assert_eq!(
             r.redact_uri("/lol-champ-select/v1/skin-carousel-skins/266012"),
             "/lol-champ-select/v1/skin-carousel-skins/266012"
+        );
+    }
+
+    #[test]
+    fn scouting_numbers_are_rounded_and_bracket_ids_faked() {
+        let mut r = Redactor::new();
+        let mut champs = json!([{"playerId": 1234567, "totalMasteryScore": 669,
+            "topMasteries": [{"championId": 13, "championLevel": 105, "championPoints": 1129999}],
+            "topSeasonChampions": [{"championId": 101, "winCount": 35, "gameCount": 65, "kda": "4.2"}]}]);
+        r.redact_at("/lol-clash/v1/scouting/champions", &mut champs);
+        assert_eq!(champs[0]["totalMasteryScore"], 650);
+        assert_eq!(champs[0]["topMasteries"][0]["championPoints"], 1_130_000);
+        assert_eq!(champs[0]["topMasteries"][0]["championLevel"], 105);
+        assert_eq!(champs[0]["topSeasonChampions"][0]["gameCount"], 65);
+        assert_eq!(champs[0]["playerId"], 1);
+        let mut ranked = json!({"queueMap": {"RANKED_SOLO_5x5": {"wins": 114, "losses": 0, "leaguePoints": 38, "tier": "DIAMOND"}}});
+        r.redact_at("/lol-ranked/v1/ranked-stats/abc", &mut ranked);
+        let solo = &ranked["queueMap"]["RANKED_SOLO_5x5"];
+        assert_eq!(
+            (&solo["wins"], &solo["losses"], &solo["leaguePoints"]),
+            (&json!(110), &json!(0), &json!(50))
+        );
+        let mut edge = json!({"wins": -1, "losses": i64::MAX, "leaguePoints": 2.5});
+        round_scouting(&mut edge);
+        assert_eq!(
+            edge,
+            json!({"wins": -1, "losses": i64::MAX / 10 * 10, "leaguePoints": 0})
+        );
+        assert_eq!(
+            find_unredacted_at("/lol-ranked/x/redacted-1", &json!({"leaguePoints": 2.5})),
+            vec![".leaguePoints (unrounded)"]
+        );
+        // "Not set" stays; a large negative could be an ID.
+        let mut ids = json!({"summonerId": -1, "gameId": -4_000_000});
+        r.redact(&mut ids);
+        assert_eq!(ids["summonerId"], -1);
+        assert!(ids["gameId"].as_u64().is_some());
+        // Elsewhere numbers stay exact.
+        let mut other = json!({"wins": 7});
+        r.redact_at("/lol-clash/v1/roster/x", &mut other);
+        assert_eq!(other["wins"], 7);
+        assert_eq!(
+            find_unredacted_at(
+                "/lol-ranked/v1/ranked-stats/redacted-9",
+                &json!({"wins": 7})
+            ),
+            vec![".wins (unrounded)"]
+        );
+
+        let mut bracket =
+            json!({"id": 577523, "matches": [{"id": 6547731, "rosterId1": 7654321, "round": 1}]});
+        r.redact_at("/lol-clash/v1/bracket/577523", &mut bracket);
+        let fake = bracket["id"].as_u64().unwrap();
+        assert!(fake < 100, "{bracket}");
+        assert!(bracket["matches"][0]["id"].as_u64().unwrap() < 100);
+        assert_eq!(bracket["matches"][0]["round"], 1);
+        // The URI and `bracketId` elsewhere get the same fake.
+        assert_eq!(
+            r.redact_uri("/lol-clash/v1/bracket/577523"),
+            format!("/lol-clash/v1/bracket/redacted-{fake}")
+        );
+        let mut summary = json!({"bracketId": 577523});
+        r.redact_at("/lol-clash/v1/tournament-summary", &mut summary);
+        assert_eq!(summary["bracketId"], fake);
+        assert!(
+            !find_unredacted_at("/lol-clash/v1/bracket/577523", &json!({"id": 577523})).is_empty()
+        );
+    }
+
+    #[test]
+    fn id_segments_after_ranked_stats_and_summoners() {
+        let mut r = Redactor::new();
+        assert_eq!(
+            r.redact_uri("/lol-ranked/v1/ranked-stats/0a1b2c3d-1111-2222-3333-444455556666"),
+            "/lol-ranked/v1/ranked-stats/redacted-1"
+        );
+        // The summoner ID gets the fake the same number gets in data.
+        assert_eq!(
+            r.redact_uri("/lol-summoner/v1/summoners/123"),
+            "/lol-summoner/v1/summoners/redacted-2"
+        );
+        let mut roster = json!({"members": [{"summonerId": 123}]});
+        r.redact_at("/lol-clash/v1/roster/redacted-5", &mut roster);
+        assert_eq!(roster["members"][0]["summonerId"], 2);
+        // A cell index in champ select is not an ID.
+        assert_eq!(
+            r.redact_uri("/lol-champ-select/v1/summoners/3"),
+            "/lol-champ-select/v1/summoners/3"
+        );
+        assert!(find_unredacted_at("/lol-champ-select/v1/summoners/3", &json!({})).is_empty());
+        assert_eq!(
+            find_unredacted_at("/lol-ranked/v1/ranked-stats/rawpuuid", &json!({})),
+            vec!["uri segment after ranked-stats"]
         );
     }
 

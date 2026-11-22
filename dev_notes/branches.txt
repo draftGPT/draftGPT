@@ -158,6 +158,14 @@ later
     bracket/rosters, Clash redaction); runbook "Clash weekends" in crates/devserver/AGENTS.md
     for collaborators recording 2026-11-21/22. Smoke-tested live without a team only.
     Checks: workspace tests + clippy green on Windows; wasm32 check not run (no target)
+    first live Clash 2026-11-21 (test/16-23-clash-round1-fixture): bracket rounds 1 and 3 recorded
+    lock-in/scouting → game start (fixtures 16_23_clash_round1_*, _round3_*); recorder times
+    made monotonic; poller rebuilt live: state + bracket every 10 s, scouting snapshot once
+    per opponent (summoner lookup → scouting/champions + ranked-stats, up to 3 tries);
+    team-data and matchhistory dropped (500 / 403 RBAC). After review: logs without URLs,
+    scouting data not carried into later recordings, bracket/match IDs faked, scouting
+    numbers rounded (fixtures fixed the same way). Later rounds need a live re-check of
+    the retry and summoner links
   sweep: <name>.sweep.json = GET of 135 no-parameter endpoints of the 9 spec plugins, first
     recording per client launch (list: crates/capture/sweep-paths.txt, exclusions in tools/lcu_spec.py); local only
   idea: fetch each player's champion pool by puuid (Riot API champion-mastery) for whole-lobby

@@ -190,7 +190,7 @@ pub async fn run_source(state: Arc<AppState>, mut stream: SourceStream) {
             Some(fetched) = clash_rx.recv() => {
                 let fresh = {
                     let c = state.controller();
-                    poller.done(fetched, |uri| c.latest_of(uri).map(|e| &e.data))
+                    poller.done(fetched, c.is_recording(), |uri| c.latest_of(uri).map(|e| &e.data))
                 };
                 for ev in fresh {
                     handle_event(&state, &mut poller, SourceEvent::Event(ev));

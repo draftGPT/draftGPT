@@ -197,6 +197,8 @@ impl Controller {
         let mut notices = Vec::new();
         if ev.kind == EventKind::Delete {
             self.latest.remove(&ev.uri);
+        } else if crate::clash::is_scouting_snapshot(&ev.uri) {
+            // Recorded below, but not state for the next recording.
         } else {
             self.latest.insert(ev.uri.clone(), ev.clone());
         }
@@ -652,6 +654,34 @@ mod tests {
         assert_eq!(c.latest().count(), 1);
         c.handle(&f.event(SESSION_URI, EventKind::Delete, json!(null)));
         assert_eq!(c.latest().count(), 0);
+    }
+
+    /// Found live in Clash (16.23): round 2's ranked stats were snapshotted
+    /// into every later recording, a normal game's included.
+    #[test]
+    fn scouting_data_is_recorded_but_not_carried_into_the_next_recording() {
+        let dir = tempfile::tempdir().unwrap();
+        let mut f = Feed::new();
+        let mut c = Controller::new(dir.path(), false);
+        c.start("clash").unwrap();
+        for uri in [
+            "/lol-clash/v1/scouting/champions",
+            "/lol-ranked/v1/ranked-stats/x",
+            "/lol-summoner/v1/summoners/7",
+        ] {
+            c.handle(&f.event(uri, EventKind::Snapshot, json!({"x": 1})));
+        }
+        c.handle(&f.session(1));
+        let first = c.stop().unwrap().unwrap();
+        assert_eq!(read_file(&first.path).unwrap().1.len(), 4);
+        assert_eq!(c.latest().count(), 1);
+        let second = c.start("next").unwrap();
+        c.stop().unwrap();
+        let (_, events) = read_file(&second.path).unwrap();
+        assert_eq!(
+            events.iter().map(|e| e.uri.as_str()).collect::<Vec<_>>(),
+            [SESSION_URI]
+        );
     }
 
     #[test]
