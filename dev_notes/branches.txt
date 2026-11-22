@@ -241,3 +241,4 @@ reference sources found (spec search, 2026-11-15)
 
 2026-11-22 test layout (branch refactor/test-layout, from master ff2d3d6 = PR #2 merged):
 - unit tests moved out of src/ into crates/*/tests/unit/<module>.rs (bin.rs for main.rs), included via #[cfg(test)] #[path] mod tests; same 205 tests by name; arch.md + AGENTS.md updated
+- ui: draft-ui vitest files moved from src/lib/ to draft-ui/tests/ (same 23 tests); e2e already in ui/e2e/

@@ -49,6 +49,7 @@ draftGPT/
 ├── ui/                     npm workspace, Svelte 5 + Vite
 │   ├── draft-ui/           shared components (props only: DraftState + Recommendations in),
 │   │                       champion list, manual-draft helpers, generated types
+│   │                       (src/; vitest tests in tests/)
 │   ├── desktop/            the panel's page: live updates from Rust; ?demo= in a browser
 │   ├── web/                web drafter: manual picks, draft-core in wasm, stats fetched + cached
 │   └── e2e/                Playwright tests of both apps

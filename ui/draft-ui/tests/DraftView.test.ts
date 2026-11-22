@@ -1,9 +1,9 @@
 import { render, screen, within } from "@testing-library/svelte";
 import { describe, expect, it } from "vitest";
-import { champions } from "./champions";
-import DraftView from "./components/DraftView.svelte";
-import type { DraftState } from "./types/DraftState";
-import type { Recommendations } from "./types/Recommendations";
+import { champions } from "../src/lib/champions";
+import DraftView from "../src/lib/components/DraftView.svelte";
+import type { DraftState } from "../src/lib/types/DraftState";
+import type { Recommendations } from "../src/lib/types/Recommendations";
 
 const recs: Recommendations = {
   picks: [{ champion: 103, score: 0.55, reasons: [{ kind: "matchup", enemy: 122, delta: 0.03 }] }],

@@ -15,7 +15,7 @@ import {
   taken,
   withTurn,
   type Step,
-} from "./manual";
+} from "../src/lib/manual";
 
 describe("manual draft", () => {
   it("starts with five slots a side, roles for your team and you in slot 1", () => {
