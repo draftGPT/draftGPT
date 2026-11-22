@@ -32,6 +32,7 @@ use crate::engine::Shared;
 /// The client window's visible rectangle in physical pixels, and whether it
 /// covers its whole monitor.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[cfg_attr(not(windows), allow(dead_code))] // only the Windows tracker uses it
 pub struct ClientWindow {
     pub x: i32,
     pub y: i32,
@@ -45,6 +46,7 @@ pub struct ClientWindow {
 
 /// Where the docked panel's visible rectangle goes for a client window and a
 /// panel width.
+#[cfg_attr(not(windows), allow(dead_code))]
 pub fn docked_rect(c: &ClientWindow, panel_width: i32) -> (i32, i32, i32, i32) {
     let right = c.x + c.width;
     let x = if right + panel_width <= c.monitor_right || c.x - panel_width < c.monitor_left {
