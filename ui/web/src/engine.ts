@@ -27,7 +27,7 @@ export async function replayRecording(text: string): Promise<Replay> {
   return JSON.parse(replay(text)) as Replay;
 }
 
-/** Names of the recordings bundled with the drafter (the repo's fixtures). */
+/** Names of the repo's fixtures, served in dev and preview only (empty in a build). */
 export async function listRecordings(base: string = import.meta.env.BASE_URL): Promise<string[]> {
   const res = await fetch(`${base}recordings/index.json`);
   if (!res.ok) return [];

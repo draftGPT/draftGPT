@@ -5,7 +5,8 @@ import { defineConfig, type Connect, type Plugin } from "vite";
 
 // The repo's recordings (fixtures/*.jsonl, redacted) for replay in the
 // drafter: /recordings/index.json lists them, /recordings/<name>.jsonl serves
-// one. Served by the dev and preview servers and copied into the build.
+// one. Dev and preview servers only: fixtures are private, so a build never
+// contains them (its Replay… list is empty; local files still open).
 function recordings(): Plugin {
   const dir = join(import.meta.dirname, "../../fixtures");
   const names = () =>
@@ -28,13 +29,6 @@ function recordings(): Plugin {
     name: "draftgpt-recordings",
     configureServer: (server) => void server.middlewares.use(serve),
     configurePreviewServer: (server) => void server.middlewares.use(serve),
-    generateBundle() {
-      const list = names();
-      this.emitFile({ type: "asset", fileName: "recordings/index.json", source: JSON.stringify(list) });
-      for (const n of list) {
-        this.emitFile({ type: "asset", fileName: `recordings/${n}.jsonl`, source: readFileSync(join(dir, `${n}.jsonl`)) });
-      }
-    },
   };
 }
 

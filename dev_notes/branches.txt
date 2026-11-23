@@ -251,4 +251,4 @@ reference sources found (spec search, 2026-11-15)
 - fixture tests return early when the submodule is empty (30 of 205); include_str! of fixtures removed
 - planned: observed.json (enum values / sentinels seen in fixtures, keyed by /help type.field)
   + hand notes in lcu-spec; ingest/analysis gets its own repo later; no other code splits
-- note: web build copies fixtures/*.jsonl into dist/recordings; check before deploying publicly
+- web build no longer bundles fixtures (dev/preview serve them from the submodule only)
