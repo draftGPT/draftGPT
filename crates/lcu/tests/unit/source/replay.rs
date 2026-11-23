@@ -91,6 +91,10 @@ async fn times_waits_scaled_by_speed() {
 #[test]
 fn every_fixture_opens() {
     let dir = Path::new(env!("CARGO_MANIFEST_DIR")).join("../../fixtures");
+    if !dir.join("README.md").exists() {
+        eprintln!("skipped: fixtures submodule not checked out");
+        return;
+    }
     let mut n = 0;
     for entry in std::fs::read_dir(dir).unwrap() {
         let path = entry.unwrap().path();

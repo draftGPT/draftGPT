@@ -12,6 +12,10 @@ fn a_replayed_fixture_produces_drafts_with_recommendations_then_ends() {
         env!("CARGO_MANIFEST_DIR"),
         "/../../fixtures/16_22_draft_ban_and_pick_timeout_autolock.jsonl"
     );
+    if !std::path::Path::new(path).exists() {
+        eprintln!("skipped: fixtures submodule not checked out");
+        return;
+    }
     let (_, events) = read_file(path.as_ref()).unwrap();
     let shared = Shared::new(true, "Starting");
     let mut engine = Engine::new(recommender(), Some("x".into()));

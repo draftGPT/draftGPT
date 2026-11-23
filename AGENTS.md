@@ -63,7 +63,8 @@ analysis pipeline until asked.
   subset of the community spec (dysolix/hasagi-types, generated from the client's `/help`)
   for the plugins we use. `python3 tools/lcu_spec.py` rebuilds it and saves the full spec to
   `docs/lcu-spec/full/` (gitignored); to keep another plugin, add it to `PLUGINS` there.
-  Our own captures' `/help` dumps (`docs/lcu-spec/help/`, one per client build) replace it
+  Our own captures' `/help` dumps (`docs/lcu-spec/help/`, one per client build, submodule of
+  the private `draftGPT/lcu-spec`) replace it
   later. Recorded captures win over the spec
   wherever they disagree.
 - Keep raw and typed separate: the recorder never parses or types event data (it only
@@ -85,6 +86,10 @@ analysis pipeline until asked.
   in `tests/unit/<module>.rs` (`bin.rs` for `main.rs`), included by the module with
   `#[cfg(test)] #[path = "..."] mod tests;`; see docs/arch.md. UI tests: vitest in
   `ui/draft-ui/tests/`, Playwright in `ui/e2e/`.
+- `fixtures/` is a submodule of the private `draftGPT/fixtures` (`git submodule update
+  --init`). Tests that read it return early with `skipped: fixtures submodule not checked
+  out` when it's empty, so the public repo still builds and tests; never `include_str!` a
+  fixture.
 - Window tracking for the desktop dock is Windows-only and goes behind `#[cfg(windows)]` with
   a stub elsewhere. It's the only `unsafe` code (Win32 calls): `crates/desktop` sets
   `unsafe_code = "deny"` instead of the workspace's `forbid`, and only `dock::windows` allows it.

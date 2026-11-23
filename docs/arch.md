@@ -57,12 +57,14 @@ draftGPT/
 ├── tools/
 │   ├── lcu_spec.py         full LCU spec → docs/lcu-spec subset + capture/sweep-paths.txt
 │   └── mock_stats.py       data/champions.json + mock data/stats from Data Dragon
-├── fixtures/               *.jsonl recordings named by situation (README lists them)
+├── fixtures/               submodule (private draftGPT/fixtures): *.jsonl recordings named
+│                           by situation (README lists them)
 └── docs/
     ├── arch.md             this file
     └── lcu-spec/           LCU spec, subset: champ select, team builder, gameflow,
         │                   lobby, clash, ranked, champions, mastery, summoner
-        └── help/           our /help dumps, client-<version>.help.json per client build
+        └── help/           submodule (private draftGPT/lcu-spec): our /help dumps,
+                            client-<version>.help.json per client build
 ```
 
 ## Notes

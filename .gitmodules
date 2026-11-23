@@ -1,0 +1,6 @@
+[submodule "fixtures"]
+	path = fixtures
+	url = ../fixtures
+[submodule "docs/lcu-spec/help"]
+	path = docs/lcu-spec/help
+	url = ../lcu-spec

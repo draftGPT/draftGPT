@@ -197,7 +197,9 @@ The temp folder gets emptied, so hand recordings over right after the session.
 **If you recorded:** hand over the main `<name>.jsonl` files (and
 `client-<version>.help.json` if there is one). Don't copy anything into the repo yourself.
 
-**Only an agent saves recordings into `fixtures/`**, with the steps below.
+**Only an agent saves recordings into `fixtures/`**, with the steps below. `fixtures/` and
+`docs/lcu-spec/help/` are submodules of private repos (`draftGPT/fixtures`,
+`draftGPT/lcu-spec`); `git submodule update --init` if they're empty.
 
 The folder holds, per recording `<date>_<time>_<label>`:
 
@@ -251,7 +253,9 @@ Steps (for the agent):
    `redacted-N`, numbered above the file's highest (as in commit `cd02112`). Don't run the
    redactor over a redacted file again: it restarts the numbering and can merge different
    values. Never commit the file as is.
-7. **Commit** on a branch, only `fixtures/`, `docs/lcu-spec/help/` and the tests, with a
-   one-line message (subject only, no body), for example
-   `test: add 16.23 fixtures for ranked trades and dodges`. Check with `git status` that no
-   `*.wire.jsonl` or `*.sweep.json` is staged, then push and open a PR.
+7. **Commit** with one-line messages (subject only, no body). Check with `git status` in
+   each repo that no `*.wire.jsonl` or `*.sweep.json` is staged.
+   - In `fixtures/` (and `docs/lcu-spec/help/` for a new dump): commit on `main`, for
+     example `test: add 16.23 fixtures for ranked trades and dodges`, and push.
+   - In the main repo: commit the moved submodule pointers together with the tests
+     (`test: bump fixtures for ranked trades and dodges`), then push.

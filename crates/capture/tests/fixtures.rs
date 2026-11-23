@@ -20,6 +20,16 @@ fn fixtures_dir() -> PathBuf {
     Path::new(env!("CARGO_MANIFEST_DIR")).join("../../fixtures")
 }
 
+/// True when the fixtures submodule isn't checked out (`git submodule update --init`);
+/// fixture tests then return early and pass.
+fn missing() -> bool {
+    let missing = !fixtures_dir().join("README.md").exists();
+    if missing {
+        eprintln!("skipped: fixtures submodule not checked out");
+    }
+    missing
+}
+
 fn all_fixtures() -> Vec<PathBuf> {
     let mut files: Vec<_> = std::fs::read_dir(fixtures_dir())
         .expect("fixtures/ exists")
@@ -75,6 +85,9 @@ fn my_pick(s: &ChampSelectSession) -> &types::Action {
 
 #[test]
 fn every_fixture_parses_is_redacted_and_typed() {
+    if missing() {
+        return;
+    }
     let files = all_fixtures();
     assert!(files.len() >= 10, "{files:?}");
     for path in files {
@@ -145,6 +158,9 @@ fn every_fixture_parses_is_redacted_and_typed() {
 
 #[test]
 fn aram_bench_swaps() {
+    if missing() {
+        return;
+    }
     let (_, events) = load("16_22_aram_bench_swaps");
     let s = sessions(&events);
     assert!(s.iter().all(|s| s.bench_enabled));
@@ -161,6 +177,9 @@ fn aram_bench_swaps() {
 
 #[test]
 fn draft_planning_hovers() {
+    if missing() {
+        return;
+    }
     let (_, events) = load("16_22_draft_planning_hovers");
     let s = sessions(&events);
     assert_eq!(s[0].timer.phase, TimerPhase::Planning);
@@ -179,6 +198,9 @@ fn draft_planning_hovers() {
 
 #[test]
 fn draft_ban_and_pick_timeout_autolock() {
+    if missing() {
+        return;
+    }
     let (_, events) = load("16_22_draft_ban_and_pick_timeout_autolock");
     let s = sessions(&events);
     assert!(
@@ -201,6 +223,9 @@ fn draft_ban_and_pick_timeout_autolock() {
 
 #[test]
 fn draft_missed_ban() {
+    if missing() {
+        return;
+    }
     let (_, events) = load("16_22_draft_missed_ban");
     let last = sessions(&events).pop().unwrap();
     let ban = last
@@ -218,6 +243,9 @@ fn draft_missed_ban() {
 
 #[test]
 fn draft_pick_timeout_kicked() {
+    if missing() {
+        return;
+    }
     let (_, events) = load("16_22_draft_pick_timeout_kicked");
     let last = sessions(&events).pop().unwrap();
     let pick = my_pick(&last);
@@ -229,6 +257,9 @@ fn draft_pick_timeout_kicked() {
 
 #[test]
 fn subset_pick_swaps_dodge() {
+    if missing() {
+        return;
+    }
     let (_, events) = load("16_22_subset_pick_swaps_dodge");
     let offer: SubsetChampionList = events
         .iter()
@@ -253,6 +284,9 @@ fn subset_pick_swaps_dodge() {
 
 #[test]
 fn client_closed_mid_champ_select() {
+    if missing() {
+        return;
+    }
     let (_, events) = load("16_22_client_closed_mid_champ_select");
     assert_eq!(phases(&events).last(), Some(&GameflowPhase::None));
     // Closing the client isn't a dodge.
@@ -261,6 +295,9 @@ fn client_closed_mid_champ_select() {
 
 #[test]
 fn normal_draft_pick_order_swap_stranger_dodge() {
+    if missing() {
+        return;
+    }
     let (header, events) = load("16_23_normal_draft_pick_order_swap_stranger_dodge");
     assert!(header.client_version.unwrap().starts_with("16.23."));
     let s = sessions(&events);
@@ -307,6 +344,9 @@ fn normal_draft_pick_order_swap_stranger_dodge() {
 
 #[test]
 fn draft_position_swap_and_back() {
+    if missing() {
+        return;
+    }
     let (header, events) = load("16_23_draft_position_swap_and_back");
     assert!(header.client_version.unwrap().starts_with("16.23."));
     let s = sessions(&events);
@@ -366,6 +406,9 @@ fn draft_position_swap_and_back() {
 
 #[test]
 fn ranked_flex_position_swap_teammate_pick_order_swap() {
+    if missing() {
+        return;
+    }
     let (header, events) = load("16_23_ranked_flex_position_swap_teammate_pick_order_swap");
     assert!(header.client_version.unwrap().starts_with("16.23."));
     let raw: Vec<&serde_json::Value> = events
@@ -468,6 +511,9 @@ fn ranked_flex_position_swap_teammate_pick_order_swap() {
 
 #[test]
 fn rcvolus_solo_custom_ban_pick() {
+    if missing() {
+        return;
+    }
     for name in [
         "rcvolus_2019_solo_custom_ban_pick",
         "rcvolus_2022_solo_custom_ban_pick",
@@ -496,6 +542,9 @@ fn rcvolus_solo_custom_ban_pick() {
 
 #[test]
 fn rcvolus_2019_tournament_draft_spectated() {
+    if missing() {
+        return;
+    }
     let (_, events) = load("rcvolus_2019_tournament_draft_spectated");
     let s = sessions(&events);
     let last = s.last().unwrap();
@@ -560,6 +609,9 @@ fn ranked_pick_order_swap(events: &[RawEvent], from: i64, to: i64, request: Swap
 
 #[test]
 fn ranked_flex_pick_order_swap_received_stranger_dodge() {
+    if missing() {
+        return;
+    }
     let (_, events) = load("16_23_ranked_flex_pick_order_swap_received_stranger_dodge");
     let s = sessions(&events);
     assert!(s[0].my_team.iter().all(|p| (5..=9).contains(&p.cell_id)));
@@ -573,6 +625,9 @@ fn ranked_flex_pick_order_swap_received_stranger_dodge() {
 
 #[test]
 fn ranked_flex_pick_order_swap_sent_game_start() {
+    if missing() {
+        return;
+    }
     let (_, events) = load("16_23_ranked_flex_pick_order_swap_sent_game_start");
     let s = sessions(&events);
     ranked_pick_order_swap(&events, 1, 0, SwapState::Sent);
@@ -595,6 +650,9 @@ fn ranked_flex_pick_order_swap_sent_game_start() {
 
 #[test]
 fn clash_round1_scouting_to_draft() {
+    if missing() {
+        return;
+    }
     let (header, events) = load("16_23_clash_round1_scouting_to_draft");
     assert_eq!(header.label, "clash");
     assert!(header.client_version.unwrap().starts_with("16.23."));
@@ -709,6 +767,9 @@ fn clash_tournament_draft(events: &[RawEvent]) -> ChampSelectSession {
 
 #[test]
 fn clash_round3_scouting_snapshot_to_draft() {
+    if missing() {
+        return;
+    }
     let (header, events) = load("16_23_clash_round3_scouting_snapshot_to_draft");
     assert_eq!(header.label, "clash");
     let uris = |prefix: &str| -> Vec<&RawEvent> {

@@ -239,6 +239,16 @@ reference sources found (spec search, 2026-11-15)
   ld fail ("unknown architecture arm64e.x1"); fixed by reinstalling the CLT
 - desktop panel: user ran it on macOS 2026-11-21, works (floating; no dock on macOS yet)
 
-2026-11-22 test layout (branch refactor/test-layout, from master ff2d3d6 = PR #2 merged):
+2026-11-22 test layout (refactor/test-layout, fast-forwarded into master 2026-11-23):
 - unit tests moved out of src/ into crates/*/tests/unit/<module>.rs (bin.rs for main.rs), included via #[cfg(test)] #[path] mod tests; same 205 tests by name; arch.md + AGENTS.md updated
 - ui: draft-ui vitest files moved from src/lib/ to draft-ui/tests/ (same 23 tests); e2e already in ui/e2e/
+
+2026-11-23 org + data repos (on master, no PR):
+- repo transferred olexamatej/draftGPT -> draftGPT/draftGPT (public); remotes updated
+- fixtures/ -> submodule draftGPT/fixtures (private), docs/lcu-spec/help/ -> draftGPT/lcu-spec
+  (private); history kept via git subtree split; relative URLs in .gitmodules; old files stay
+  in main repo history (not rewritten, on purpose)
+- fixture tests return early when the submodule is empty (30 of 205); include_str! of fixtures removed
+- planned: observed.json (enum values / sentinels seen in fixtures, keyed by /help type.field)
+  + hand notes in lcu-spec; ingest/analysis gets its own repo later; no other code splits
+- note: web build copies fixtures/*.jsonl into dist/recordings; check before deploying publicly

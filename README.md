@@ -62,6 +62,9 @@ Then, from the repo root, install the UI packages once:
 npm --prefix ui install
 ```
 
+The recorded drafts in `fixtures/` are a private submodule.
+With access, fetch them with `git submodule update --init`; without it, replay your own `.jsonl` from a capture.
+
 ## Desktop panel
 
 Build the page once, then start the app with the live client or with a recording:

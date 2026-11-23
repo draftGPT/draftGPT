@@ -16,6 +16,16 @@ fn fixtures_dir() -> PathBuf {
     Path::new(env!("CARGO_MANIFEST_DIR")).join("../../fixtures")
 }
 
+/// True when the fixtures submodule isn't checked out (`git submodule update --init`);
+/// fixture tests then return early and pass.
+fn missing() -> bool {
+    let missing = !fixtures_dir().join("README.md").exists();
+    if missing {
+        eprintln!("skipped: fixtures submodule not checked out");
+    }
+    missing
+}
+
 /// The draft after every event that changed it, consecutive duplicates
 /// dropped; `None` when champ select ended.
 fn replay(name: &str) -> Vec<Option<DraftState>> {
@@ -40,6 +50,9 @@ fn drafts(name: &str) -> Vec<DraftState> {
 
 #[test]
 fn every_fixture_matches_its_snapshot() {
+    if missing() {
+        return;
+    }
     let mut names: Vec<String> = std::fs::read_dir(fixtures_dir())
         .unwrap()
         .filter_map(|e| {
@@ -61,6 +74,9 @@ fn every_fixture_matches_its_snapshot() {
 
 #[test]
 fn missed_ban_is_a_ban_without_champion() {
+    if missing() {
+        return;
+    }
     let last = drafts("16_22_draft_missed_ban").pop().unwrap();
     let local = last.local().unwrap().cell_id;
     let mine = last
@@ -74,6 +90,9 @@ fn missed_ban_is_a_ban_without_champion() {
 
 #[test]
 fn planning_hovers_show_as_hovers_without_a_turn() {
+    if missing() {
+        return;
+    }
     let d = drafts("16_22_draft_planning_hovers");
     assert!(
         d.iter()
@@ -86,6 +105,9 @@ fn planning_hovers_show_as_hovers_without_a_turn() {
 
 #[test]
 fn autolock_turns_the_hover_into_the_pick() {
+    if missing() {
+        return;
+    }
     let d = drafts("16_22_draft_ban_and_pick_timeout_autolock");
     let hovered = d
         .iter()
@@ -104,6 +126,9 @@ fn autolock_turns_the_hover_into_the_pick() {
 
 #[test]
 fn kicked_on_pick_timeout_ends_the_draft() {
+    if missing() {
+        return;
+    }
     let states = replay("16_22_draft_pick_timeout_kicked");
     assert_eq!(states.last(), Some(&None), "champ select ended");
     let last = states.iter().flatten().last().unwrap();
@@ -112,6 +137,9 @@ fn kicked_on_pick_timeout_ends_the_draft() {
 
 #[test]
 fn aram_has_a_bench_and_rerolls() {
+    if missing() {
+        return;
+    }
     let d = drafts("16_22_aram_bench_swaps");
     assert!(d.iter().all(|s| s.rerolls_remaining.is_some()));
     let mut benches: Vec<&Vec<i64>> = d.iter().map(|s| &s.bench).collect();
@@ -125,6 +153,9 @@ fn aram_has_a_bench_and_rerolls() {
 
 #[test]
 fn subset_offer_reaches_the_draft() {
+    if missing() {
+        return;
+    }
     let d = drafts("16_22_subset_pick_swaps_dodge");
     let offered = &d.last().unwrap().offered;
     assert_eq!(offered.len(), 3);
@@ -138,6 +169,9 @@ fn subset_offer_reaches_the_draft() {
 
 #[test]
 fn pick_order_swap_moves_the_local_slot() {
+    if missing() {
+        return;
+    }
     let states = replay("16_23_normal_draft_pick_order_swap_stranger_dodge");
     assert_eq!(states.last(), Some(&None), "a stranger dodged");
     let d: Vec<DraftState> = states.into_iter().flatten().collect();
@@ -151,6 +185,9 @@ fn pick_order_swap_moves_the_local_slot() {
 
 #[test]
 fn spectated_tournament_draft_ends_with_ten_bans_and_ten_picks() {
+    if missing() {
+        return;
+    }
     let d = drafts("rcvolus_2019_tournament_draft_spectated");
     let last = d.last().unwrap();
     assert!(last.spectating && last.local().is_none());

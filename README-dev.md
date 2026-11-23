@@ -14,6 +14,8 @@ CHROMIUM_PATH=/usr/bin/chromium npm run e2e   # browser tests; or `npx playwrigh
 ```
 
 Tests replay the recordings in `fixtures/`, so no League Client is needed.
+`fixtures/` and `docs/lcu-spec/help/` are submodules of private repos (`draftGPT/fixtures`, `draftGPT/lcu-spec`): `git submodule update --init`.
+Without them the fixture tests print `skipped: fixtures submodule not checked out` and pass.
 
 ## Release build
 
