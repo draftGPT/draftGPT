@@ -18,7 +18,7 @@ The stats in `data/stats/` are generated placeholders for now, so the suggestion
 
 ## Install
 
-Both apps need Rust (1.85 or newer, via rustup) and Node.js 22 or newer with npm.
+Both apps need Rust (1.95 or newer, via rustup) and Node.js 22 or newer with npm.
 
 **Windows**
 
