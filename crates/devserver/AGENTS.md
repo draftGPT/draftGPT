@@ -255,7 +255,9 @@ Steps (for the agent):
    values. Never commit the file as is.
 7. **Commit** with one-line messages (subject only, no body). Check with `git status` in
    each repo that no `*.wire.jsonl` or `*.sweep.json` is staged.
-   - In `fixtures/` (and `docs/lcu-spec/help/` for a new dump): commit on `main`, for
+   - Run `python3 tools/lcu_observed.py`: it regenerates `docs/lcu-spec/help/observed.json`
+     from the fixtures. New values show up in its diff; explain them in `notes.json` there.
+   - In `fixtures/` (and `docs/lcu-spec/help/` for a new dump or `observed.json`): commit on `main`, for
      example `test: add 16.23 fixtures for ranked trades and dodges`, and push.
    - In the main repo: commit the moved submodule pointers together with the tests
      (`test: bump fixtures for ranked trades and dodges`), then push.

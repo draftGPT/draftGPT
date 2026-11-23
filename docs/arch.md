@@ -56,7 +56,8 @@ draftGPT/
 ├── data/                   champions.json (Data Dragon) + stats/<patch>.json (MOCK for now)
 ├── tools/
 │   ├── lcu_spec.py         full LCU spec → docs/lcu-spec subset + capture/sweep-paths.txt
-│   └── mock_stats.py       data/champions.json + mock data/stats from Data Dragon
+│   ├── mock_stats.py       data/champions.json + mock data/stats from Data Dragon
+│   └── lcu_observed.py     fixtures + /help → lcu-spec observed.json (values the schema lacks)
 ├── fixtures/               submodule (private draftGPT/fixtures): *.jsonl recordings named
 │                           by situation (README lists them)
 └── docs/

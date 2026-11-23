@@ -254,14 +254,14 @@ reference sources found (spec search, 2026-11-15)
 - web build no longer bundles fixtures (dev/preview serve them from the submodule only)
 
 TODO (2026-11-23):
-- org access: olexamatej + tajborr into the draftGPT org (private fixtures + lcu-spec); old
-  clones: remove fixtures/* and docs/lcu-spec/help/*, pull, git submodule update --init
+- org access: DaveV6, Vacko32, tajborr have pending org invites (accept to get the private
+  repos; base permission read). JPod101010: outside collaborator on the public repo only.
+  Old clones: remove fixtures/* and docs/lcu-spec/help/*, pull, git submodule update --init
 - frontend-core: unused, left behind on purpose (not deleted)
 - lcu-spec: whole /help per build (`capture help-full`, ~10k requests, needs the client;
-  auto dumps are scope "relevant" = champselect + gameflow only); observed.json script
-  (enum values, sentinels, shapes from fixtures by /help type.field, flags values the Rust
-  enums don't know); hand notes seeded from AGENTS.md "LCU facts"; later swagger.json from
-  our own dump instead of hasagi-types. Current dumps checked: no IDs/names/paths, schema only
+  auto dumps are scope "relevant" = champselect + gameflow only); later swagger.json from
+  our own full dump instead of hasagi-types. Done 2026-11-23: observed.json +
+  notes.json (tools/lcu_observed.py); current dumps checked: schema only, nothing identifying
 - live (Windows/macOS): trades carried out, ranked solo/duo fixture; Clash later rounds
   (retry, summoner links, phase timers); macOS dock (design above)
 - product gaps: recommender ignores enemy roles; Fearless only a UI toggle (not in
