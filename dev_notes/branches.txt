@@ -266,4 +266,7 @@ TODO (2026-11-23):
   (retry, summoner links, phase timers); macOS dock (design above)
 - product gaps: recommender ignores enemy roles; Fearless only a UI toggle (not in
   draft-core); devserver replay switch from the page
-- waiting until asked: UI design, real stats/scoring, ingest/analysis repo
+- analysis: private repo draftGPT/analysis (2026-11-24), next to this one in ~/prog/draftgpt/;
+  plan in its dev_notes/plan.md. Analysis before ingest (one-off EUNE Master+ sample);
+  ingest gets its own repo later. Enemy-position estimates come from its data
+- waiting until asked: UI design
